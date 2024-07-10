@@ -1,0 +1,110 @@
+{
+    "margin-top": 10,
+    "margin-bottom": 0,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 4,
+		// try to keep it 4px across the config
+    "height":30,
+    "modules-left": ["hyprland/workspaces", "custom/layout"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["mpd", "custom/lan", "pulseaudio", "clock", "battery", "custom/recorder"],
+
+        /*
+        MODULES
+        */
+        "custom/icon": {
+        "exec": "~/.config/waybar/state",
+        "interval": "once",
+        "signal": 8
+		},
+        "tray": {
+            "spacing": 10
+        },
+        "clock": {
+                "format": "󰅐 {:%I:%M %p}"
+        },
+        "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰂄{capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-full": "󱊣 {capacity}%",
+        "format-icons": ["󱊡", "󱊢", "󱊣"]
+        },
+        "network": {
+        "format-wifi": "  {ipaddr}",
+        "format-ethernet": "󰤮 Disconnected",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "󰤮 Disconnected",
+                "tooltip-format-wifi": "  {signalStrength}% ⇅ {bandwidthDownBits}/{bandwidthUpBits}",
+        "on-click": "foot -e nmtui"
+        },
+        "pulseaudio": {
+                "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+                "format": "{icon}  {volume}%",
+                "format-muted": "󰖁 Muted",
+                "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", "", ""]
+        }
+    },
+
+    "custom/recorder": {
+                "format": " ",
+                "return-type": "json",
+                "interval": 1,
+                "exec": "echo '{\"class\": \"recording\"}'",
+                "exec-if": "pgrep wf-recorder"
+        },
+    "mpd": {
+        "format": "{artist} - {title}",
+        "format-stopped": "",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+    "custom/layout": {
+        "return-type": "json",
+        "exec": "hypr-layout",
+        "interval": 1,
+        "format": "{}",
+        "tooltip": true
+    },
+    "custom/lan": {
+        "return-type": "json",
+        "exec": "lantool",
+        "interval": 5,
+        "format": "{} ",
+        "tooltip": true,
+        "on-click": "google-chrome-stable"
+    }
+}
+

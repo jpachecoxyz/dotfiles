@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Get the current workspace ID
+CURRENT_WORKSPACE=$(hyprctl activeworkspace | grep workspace | awk '{print $4}')
+
+# Display the workspace name using notify-send
+notify-send "$CURRENT_WORKSPACE"
+

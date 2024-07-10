@@ -1,0 +1,41 @@
+#!/bin/sh
+
+# Función para obtener la dirección IP de una interfaz
+get_ip_address() {
+    ip -o -4 addr show dev "$1" | awk '{split($4,a,"/"); print a[1]}'
+}
+
+# Comprueba si hay alguna conexión activa
+if ip route | grep -q default; then
+    # Obtener la interfaz predeterminada
+    default_interface=$(ip route | awk '/default/ {print $5}')
+    ip_address=$(get_ip_address "$default_interface")
+    
+    # Comprueba si la interfaz predeterminada es Wi-Fi o Ethernet
+    if ifconfig "$default_interface" &>/dev/null; then
+        icon=" "
+        alt_i="Wi-Fi"
+    elif ip link show "$default_interface" &>/dev/null; then
+        icon="󰈀 "
+        alt_i="ETH"
+    else
+        icon=""
+    fi
+
+    ping -c 1 google.com 1> /dev/null 2>&1 && status="connected" || status="no_connected"
+    # Imprimir información en formato JSON
+    
+   json='{
+  "text": "'"${icon}"'",
+  "alt": "'"${alt_i}:${ip_address}"'",
+  "tooltip": "'"${default_interface}:${ip_address}"'",
+  "class": "'"${status}"'"
+    }' 
+    
+      echo $json  
+else
+    json='{
+    "text": "",
+    }'
+fi
+

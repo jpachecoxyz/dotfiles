@@ -1,0 +1,500 @@
+#+title: Hyprland_Configuration
+#+author: Javier Pacheco
+#+date: [2024-04-05 Fri 23:14]
+#+OPTIONS: toc:nil date:nil
+#+filetags: :config:hypr:
+#+identifier: 20240405T231454
+
+
+* Table :toc:
+:PROPERTIES:
+:CUSTOM_ID: h:024cead6-eb44-4beb-8ad4-4c459983aaba
+:END:
+- [[#my-hyprland-configuration][My hyprland configuration.]]
+  - [[#hyprlandconf][hyprland.conf]]
+  - [[#initconf][init.conf]]
+  - [[#generalconf][general.conf]]
+  - [[#envconf][env.conf]]
+  - [[#keybindsconf][keybinds.conf]]
+  - [[#scratchpadsconf][scratchpads.conf]]
+
+* My hyprland configuration.
+:PROPERTIES:
+:CUSTOM_ID: h:d4ea9924-72ba-41a2-b23a-b3eb61c0e114
+:END:
+My =Hyprland= configuration is split in multiple files for readable and a better understanding comprehension to me.
+
+#+begin_src example :tangle no
+./
+├── hyprland.conf*
+├── pyprland.toml
+└── src/
+    ├── env.conf*
+    ├── init.conf*
+    ├── general.conf*
+    ├── keybinds.conf*
+    ├── scratchpads.conf
+    └── windowrules.conf
+#+end_src
+
+** hyprland.conf
+:PROPERTIES:
+:CUSTOM_ID: h:15fd777b-acd8-4fd1-b333-2781dfe9f750
+:END:
+This is the main =hyprland= configuration file, this file will source every single file in the src folder.
+ 
+#+begin_src conf :tangle hyprland.conf :mkdirp yes
+# [[ Javier Hyprland configuration ]]
+
+source = ~/.config/hypr/src/init.conf
+source = ~/.config/hypr/src/general.conf
+source = ~/.config/hypr/src/env.conf
+source = ~/.config/hypr/src/keybinds.conf
+source = ~/.config/hypr/src/scratchpads.conf
+#+end_src
+
+** init.conf
+:PROPERTIES:
+:CUSTOM_ID: h:46885cb9-4d51-4c46-8ff7-22369e8150e7
+:END:
+
+#+begin_src conf :tangle src/init.conf :mkdirp yes
+# Prgrams that I run when Hyprland starts.
+
+exec-once = pypr
+exec-once = swww init
+exec-once = cron -f ~/.config/cron/cron.conf
+exec-once = waybar
+exec-once = mpd --no-daemon "$HOME"/.config/mpd/mpd.conf
+exec-once = pipewire
+exec-once = pipewire-pulse
+exec-once = wireplumber
+exec-once = foot --server
+exec-once = swayidle -w timeout 500 'swaylock' 
+exec-once = xrdb ~/.config/.Xdefaults
+
+#+end_src
+
+** general.conf
+:PROPERTIES:
+:CUSTOM_ID: h:7ef69ec9-ac23-4aec-84ba-5a194c11c24d
+:END:
+This file contains the monitor, keyboard, mouse, effects configuration.
+
+*** general.
+:PROPERTIES:
+:CUSTOM_ID: h:324c6c46-9c01-4fd9-9afc-a5c2b0a14aad
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+general {
+    gaps_in = 5
+    gaps_out = 10
+    border_size = 2
+    no_border_on_floating = 0
+    col.active_border = rgba(999999bb)
+    col.inactive_border = rgba(595959aa)
+    layout = master
+    allow_tearing = false
+    cursor_inactive_timeout = 2
+    resize_corner = 3
+}
+
+#+end_src
+
+*** input
+:PROPERTIES:
+:CUSTOM_ID: h:f65a6372-42eb-4ab7-941a-9c6f6d00a2df
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+input {
+    kb_layout = gb,us
+    kb_options=grp:win_space_toggle 
+    kb_variant = 
+    kb_model =
+    numlock_by_default = true
+    kb_options = ctrl:nocaps
+    kb_rules =
+
+    follow_mouse = 1
+
+    touchpad {
+        natural_scroll = no
+    }
+
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+}
+
+#+end_src
+
+*** decorations
+:PROPERTIES:
+:CUSTOM_ID: h:07517b93-fa09-41a0-ad10-3d18e3711010
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+decoration {
+    rounding = 0
+    blur {
+    size = 1
+    passes = 2
+    new_optimizations = true
+    xray = false
+    ignore_opacity = true
+    }
+
+    drop_shadow = no
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a1aee)
+    blurls = waybar
+}
+  
+#+end_src
+
+*** Animations
+:PROPERTIES:
+:CUSTOM_ID: h:3b06d9a1-6955-4fd8-a256-827255ce3848
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+animations {
+    enabled = no
+    # bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+    # animation = windows, 1, 7, myBezier
+    # animation = windowsOut, 1, 7, default, popin 80%
+    # animation = border, 1, 10, default
+    # animation = borderangle, 1, 8, default
+    # animation = fade, 1, 7, default
+    # animation = workspaces, 1, 6, default
+    animation=windows,1,8,default,popin 20%
+}
+  
+#+end_src
+
+*** misc 
+:PROPERTIES:
+:CUSTOM_ID: h:bb516991-5c9c-4cb0-be59-5c144e920576
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+misc {
+    # See https:/wiki.hyprland.org/.configuring/Variables/ for more
+    force_default_wallpaper = 0 
+    focus_on_activate = 1
+    enable_swallow = 1
+    swallow_regex = ^(Alacritty|foot|footclient)$
+}
+  
+#+end_src
+
+*** dwindle 
+:PROPERTIES:
+:CUSTOM_ID: h:b05cac98-e746-4f06-af33-3ac1fe2335c9
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+dwindle {
+    # See https:/wiki.hyprland.org/.configuring/Dwindle-Layout/ for more
+    pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = yes # you probably want this
+}
+  
+#+end_src
+
+*** master 
+:PROPERTIES:
+:CUSTOM_ID: h:68dbe5e0-9307-40bb-9b64-f3c638f6be50
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+master {
+    new_is_master = false
+    drop_at_cursor = false
+}
+
+#+end_src
+
+*** gestures 
+:PROPERTIES:
+:CUSTOM_ID: h:7800424f-3d0a-4363-bd69-d2171261518f
+:END:
+#+begin_src conf :tangle src/general.conf :mkdirp yes
+gestures {
+    # See https:/wiki.hyprland.org/.configuring/Variables/ for more
+    workspace_swipe = 1
+}
+#+end_src
+
+** env.conf
+:PROPERTIES:
+:CUSTOM_ID: h:cc9befd1-e7eb-471b-923f-409d7c628868
+:END:
+#+begin_src conf :tangle src/env.conf :mkdirp yes
+# hyprland env's
+
+env = QT_QPA_PLATFORM,wayland
+env = HYPRCURSOR_THEME,Breeze_Dark
+env = HYPRCURSOR_SIZE,24
+
+# Set variables
+monitor=eDP-1,1920x1080@60,0x0,1
+$terminal = footclient
+$menu = fuzzel_run
+
+#+end_src
+
+** keybinds.conf
+:PROPERTIES:
+:CUSTOM_ID: h:bb7c2d89-35f5-45af-a049-45cb462a392e
+:END:
+This are my keybinds that I use the most, 
+Here are some tips for the bind flags:
+#+begin_src example :tangle no
+Flags:
+
+l -> locked, aka. works also when an input inhibitor (e.g. a lockscreen) is active.
+r -> release, will trigger on release of a key.
+e -> repeat, will repeat when held.
+n -> non-consuming, key/mouse events will be passed to the active window in addition to triggering the dispatcher.
+m -> mouse, see below
+t -> transparent, cannot be shadowed by other binds.
+i -> ignore mods, will ignore modifiers.
+
+bind(flag) = command
+bindr = command
+#+end_src
+
+*** Main and most useful keybinds
+:PROPERTIES:
+:CUSTOM_ID: h:39185202-9fe1-42d1-878c-7c3b37068fce
+:END:
+#+begin_src conf :tangle src/keybinds.conf :mkdirp yes
+# [[ Keybinds ]]
+
+$mainMod = SUPER
+
+# Custom Keybinds.
+bind = $mainMod, return, exec, $terminal
+bindr= $mainMod, D, exec, $menu
+bind = $mainMod, w, exec, chromium
+bind = SUPER_SHIFT, w, exec, webcam
+      bind = ALT SHIFT, a, exec, toggle-animations
+bind = $mainMod, f, exec, hyprctl dispatch togglefloating; pkill -SIGRTMIN+8 waybar # hyprctl dispatch right in your script just so you can exec at the same time
+bind = $mainMod SHIFT, f, fullscreen, 
+bind = SUPER_SHIFT, l, exec, swaylock
+bind = $mainMod, q, killactive, 
+bind = SUPER_SHIFT, q, exec, sysact 
+bind = ,Print, exec, grimblast -n copy screen
+bind = $mainMod SHIFT, r , exec, screencast
+bind = $mainMod SHIFT, s, exec, grimblast -n copy area
+bind = ALT,m , exec, pypr menu
+bind = $mainMod SHIFT,Print, exec, shareurl.sh
+bind = ALT SHIFT, Return , exec, pypr expose
+bind = ,XF86PowerOff, exec, doas zzz -z
+
+#+end_src
+
+*** Keychords.
+:PROPERTIES:
+:CUSTOM_ID: h:23f65d16-bc68-40eb-92a4-9284897f0c3e
+:END:
+#+begin_src conf :tangle src/keybinds.conf :mkdirp yes
+# [[ KeyChords ]]
+bind = $mainMod, SPACE , submap, menusubmap
+submap = menusubmap
+bind = ,i,exec,foot -e nsxiv ~/pics/classic/art -t -g 1500x700
+bind = ,i,submap,reset
+bind = ,m,exec,dmenumount
+bind = ,m,submap,reset
+bind = ,u,exec,dmenuumount
+bind = ,u,submap,reset
+bind = ,q,exec,sysact
+bind = ,q,submap,reset
+bind=,escape,submap,reset 
+submap = reset
+
+#+end_src
+
+*** Window management.
+:PROPERTIES:
+:CUSTOM_ID: h:e3e1781d-c9a9-4e86-99bc-e316bd86b7ad
+:END:
+#+begin_src conf :tangle src/keybinds.conf :mkdirp yes
+# [[ Window management ]]
+# Move focus with mainMod + arrow keys
+bind = $mainMod, J, layoutmsg,cyclenext
+bind = $mainMod, K, layoutmsg,cycleprev
+
+# Swap windows
+bind = $mainMod SHIFT, J, swapnext, next
+bind = $mainMod SHIFT, K, swapnext, prev
+
+# Resize windows
+bind = $mainMod, l, resizeactive, 40 0
+bind = $mainMod, h, resizeactive, -40 0
+
+# Switch workspaces with mainMod + [0-9]
+bind = $mainMod, 1, workspace, 1
+bind = $mainMod, 2, workspace, 2
+bind = $mainMod, 3, workspace, 3
+bind = $mainMod, 4, workspace, 4
+bind = $mainMod, 5, workspace, 5
+bind = $mainMod, 6, workspace, 6
+bind = $mainMod, 7, workspace, 7
+bind = $mainMod, 8, workspace, 8
+bind = $mainMod, 9, workspace, 9
+bind = $mainMod, 0, workspace, 10
+
+# Cycle through ocuped workspaces
+bind = ALT, Tab, workspace, m+1
+bind = ALT SHIFT, Tab, workspace, m-1
+
+# Move active window to a workspace with mainMod + SHIFT + [0-9]
+bind = $mainMod SHIFT, 1, movetoworkspacesilent, 1
+bind = $mainMod SHIFT, 2, movetoworkspacesilent, 2
+bind = $mainMod SHIFT, 3, movetoworkspacesilent, 3
+bind = $mainMod SHIFT, 4, movetoworkspacesilent, 4
+bind = $mainMod SHIFT, 5, movetoworkspacesilent, 5
+bind = $mainMod SHIFT, 6, movetoworkspacesilent, 6
+bind = $mainMod SHIFT, 7, movetoworkspacesilent, 7
+bind = $mainMod SHIFT, 8, movetoworkspacesilent, 8
+bind = $mainMod SHIFT, 9, movetoworkspacesilent, 9
+bind = $mainMod SHIFT, 0, movetoworkspacesilent, 10
+
+# Scroll through existing workspaces with mainMod + scroll
+bind = $mainMod, mouse_down, workspace, e+1
+bind = $mainMod, mouse_up, workspace, e-1
+
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm = $mainMod, mouse:272, movewindow
+bindm = $mainMod, mouse:273, resizewindow
+
+#+end_src
+
+*** Media Keys
+:PROPERTIES:
+:CUSTOM_ID: h:b9b8f55c-1dc1-46b1-a54c-d14cbd0c91f3
+:END:
+#+begin_src conf :tangle src/keybinds.conf :mkdirp yes
+# Audio MPC commands
+bind = ,XF86AudioPlay, exec, mpc toggle
+bind = ,XF86AudioStop, exec, mpc stop
+bind = ,XF86AudioNext, exec, mpc next
+bind = ,XF86AudioPrev, exec, mpc prev
+binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+binde = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# Screen Brightness
+bind=,XF86MonBrightnessUp,exec,doas brightnessctl set +10%
+bind=,XF86MonBrightnessDown,exec,doas brightnessctl set 10%-
+
+#+end_src
+
+** scratchpads.conf
+:PROPERTIES:
+:CUSTOM_ID: h:53e0d958-1f6e-485d-b0ff-ca6a361e04b0
+:END:
+In order to make the scratchpads works, you need to install pyprland package through python pip package installation.
+
+#+begin_src shell :tangle no
+pip install pyprland
+#+end_src
+
+*** Pyprland
+:PROPERTIES:
+:CUSTOM_ID: h:bf6f7610-ed31-45a3-a797-e37c8fc8499b
+:END:
+this is the config file for declare the plugins that are used within =pypr=.
+
+#+begin_src toml :tangle pyprland.toml :mkdirp yes
+[pyprland]
+plugins = [
+  "scratchpads",
+  "shortcuts_menu",
+  "expose"
+]
+
+[scratchpads.term]
+animation = "fromTop"
+command = "foot -a term"
+class = "term"
+size = "75% 60%"
+max_size = "1920px 100%"
+margin = 50
+
+[scratchpads.music_player]
+animation = "fromRight"
+command = "foot -a music_player -e ncmpcpp"
+class = "music_player"
+size = "75% 60%"
+max_size = "1920px 100%"
+margin = 50
+
+[scratchpads.nnn]
+animation = "fromLeft"
+command = "foot -a nnn -e nnn"
+class = "nnn"
+size = "50% 40%"
+position = "5% 10%"
+max_size = "1920px 100%"
+margin = 50
+
+[scratchpads.fetch]
+animation = "fromLeft"
+command = "foot -a venom_fetch"
+class = "venom_fetch"
+size = "23% 48%"
+position = "5% 10%"
+max_size = "1920px 100%"
+margin = 50
+
+
+[shortcuts_menu]
+engine = "fuzzel --dmenu"
+# parameters = "-p '[prompt] 🍰 ' -dmenu -matching fuzzy -i"
+command_start = "💀"
+
+[shortcuts_menu.entries]
+
+"Restart Waybar" = "pkill -9 waybar ; setsid waybar"
+"Telegram" = "xdg-open https:/web.telegram.org/a/#-1421253041"
+"Cinny" = "xdg-open https:/app.cinny.in/"
+
+"Scratch" = [
+  {name="action", options=["sync", "sysup" ]},
+  "foot -e doas scratch [action]"
+  ]
+#+end_src
+
+*** keybinds and rules.
+:PROPERTIES:
+:CUSTOM_ID: h:b6c8a4a6-bd39-4f4d-8596-59da8900f9d8
+:END:
+The structure that I use is the bind, and next the window rule, I have this window rules apart from the =window management configuration= because I want to keep the binds an rules in the same file.
+
+#+begin_src conf :tangle src/scratchpads.conf :mkdirp yes
+  # [[ Scratchpads rules ]]
+# Keybind
+# window rules
+
+bind = $mainMod Shift,Return,exec,pypr toggle term
+$dropterm  = (term)$
+windowrule = float,$dropterm
+windowrule = workspace special silent,$dropterm
+windowrule = size 75% 60%,$dropterm
+
+bind = ALT,Return,exec,pypr toggle fetch
+$fetch  = (venom_fetch)$
+windowrule = float,$fetch
+windowrule = workspace special silent,$fetch
+windowrule = size 75% 60%,$fetch
+
+bind = $mainMod,m,exec,pypr toggle music_player
+$music_player  = (music_player)$
+windowrule = float,$music_player
+windowrule = workspace special silent,$music_player
+windowrule = size 75% 60%,$music_player
+
+bind = $mainMod,e,exec,pypr toggle nnn
+$nnn  = (nnn)$
+windowrule = float,$nnn
+windowrule = workspace special silent,$nnn
+windowrule = size 75% 60%,$nnn
+
+#+end_src

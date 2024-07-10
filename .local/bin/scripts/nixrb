@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 06/06/24
+# Project: Rebuild script for nixOX
+
+sudo nix-collect-garbage --delete-old && \
+    sudo /run/current-system/bin/switch-to-configuration boot

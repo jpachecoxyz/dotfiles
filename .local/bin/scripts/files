@@ -1,0 +1,22 @@
+#!/bin/sh
+
+MENU=$(echo "documentos\nimágenes\nmúsica\nvídeos" | dmenu -i -l 8)
+case $MENU in
+    documentos)
+        filter=".pdf"
+        ;;
+    imágenes)
+        filter=".png|.jpg|.jpeg"
+        ;;
+    música)
+        filter=".mp3|.flac|.wav|.ogg|.webm"
+        ;;
+    vídeos)
+        filter=".mp4|.avi|.mkv"
+        ;;
+esac
+
+if [ -n "$filter" ]; then
+    nuke $(find $HOME -type f | grep -E "$filter" | dmenu -i -l 10)
+
+fi

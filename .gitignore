@@ -1,0 +1,7 @@
+.config/mpd/log
+.config/mpd/pid
+
+
+.local/share/
+.local/src/
+.local/state/

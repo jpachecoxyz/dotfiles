@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# bind = pkill -SIGRTMIN+9 waybar # hyprctl dispatch right in your script just so you can exec at the same time
+
+icon="[ ]"
+window=$(hyprctl activewindow | grep floating: | awk -F: '{print $2}' | sed 's/ //')
+
+# 
+if [ $window = 1 ];
+then
+    icon="{ }"
+    json='{
+   "text": "'${icon}'",
+ }' 
+else
+    json='{
+   "text": "'${icon}'",
+ }' 
+fi
+
+echo $json  

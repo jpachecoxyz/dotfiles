@@ -1,0 +1,25 @@
+# [[ Mako config file - JP ]]
+
+font=IBM Plex Mono 14
+background-color=#1e1e1eaa
+text-color=#ffffff
+
+# Eyecandy config
+
+border-size=0
+border-color=#1e1e1e
+border-radius=0
+layer=overlay
+
+# Size
+width=300
+height=110
+
+# Show icons in notifications.
+icons=1
+max-icon-size=64
+
+# Text alignment
+text-alignment=left
+
+default-timeout=5000

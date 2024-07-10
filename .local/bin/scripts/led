@@ -1,0 +1,35 @@
+#!/bin/sh
+
+ask() { \
+	response=$(printf "ON\\nOFF" | dmenu -i -l 2 -p "Turn ON or OFF")
+	case "$response" in
+		ON) toggleon ;;
+		OFF) toggleoff ;;
+		*) return 1 ;;
+	esac
+	}
+
+toggleon() { \
+case "$(printf "sala\\ncomedor\\ncuarto\\njuegos" | dmenu -l 5 -i -p "Wich led to turn ON?")" in
+	sala) magic-home  state 10.0.0.3 on ;;
+	comedor) magic-home state 10.0.0.5  on  && notify-send "Comedor Luz encendida";;
+	cuarto) magic-home state 10.0.0.10  on ;;
+	juegos) magic-home state 10.0.0.13 on ;;
+esac
+}
+
+
+toggleoff() { \
+case "$(printf "sala\\ncomedor\\ncuarto\\njuegos" | dmenu -l 5 -i -p "Wich led to turn ON?")" in
+	sala) magic-home state 10.0.0.3 off ;;
+	comedor) magic-home state 10.0.0.5  off ;;
+	cuarto) magic-home state 10.0.0.10  off ;;
+	juegos) magic-home state 10.0.0.13 off ;;
+esac
+}
+
+case "$1" in 
+	on) toggleon ;;
+	off) toggleoff ;;
+	*)ask ;;
+esac

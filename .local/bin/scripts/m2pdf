@@ -1,0 +1,7 @@
+#!/bin/sh
+
+pandoc $1 \
+    -o $2.pdf \
+    --template eisvogel \
+    --listings \
+    && zathura $2.pdf & herbe $2.pdf was created...

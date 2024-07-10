@@ -1,0 +1,243 @@
+info_begin
+format: 2
+mpd_version: 0.23.15
+fs_charset: UTF-8
+tag: Artist
+tag: ArtistSort
+tag: Album
+tag: AlbumSort
+tag: AlbumArtist
+tag: AlbumArtistSort
+tag: Title
+tag: Track
+tag: Name
+tag: Genre
+tag: Date
+tag: OriginalDate
+tag: Composer
+tag: ComposerSort
+tag: Performer
+tag: Conductor
+tag: Work
+tag: Movement
+tag: MovementNumber
+tag: Ensemble
+tag: Location
+tag: Grouping
+tag: Disc
+tag: Label
+tag: MUSICBRAINZ_ARTISTID
+tag: MUSICBRAINZ_ALBUMID
+tag: MUSICBRAINZ_ALBUMARTISTID
+tag: MUSICBRAINZ_TRACKID
+tag: MUSICBRAINZ_RELEASETRACKID
+tag: MUSICBRAINZ_WORKID
+info_end
+song_begin: Slipknot - XIX.mp3
+Time: 190.176000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: XIX
+Album: .5: The Gray Chapter (Special Edition)
+Track: 1
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893842
+song_end
+song_begin: Slipknot - Sarcastrophe.mp3
+Time: 306.120000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Sarcastrophe
+Album: .5: The Gray Chapter (Special Edition)
+Track: 2
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893843
+song_end
+song_begin: Slipknot - AOV.mp3
+Time: 332.952000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: AOV
+Album: .5: The Gray Chapter (Special Edition)
+Track: 3
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893845
+song_end
+song_begin: Slipknot - The Devil in I.mp3
+Time: 342.864000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: The Devil in I
+Album: .5: The Gray Chapter (Special Edition)
+Track: 4
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893846
+song_end
+song_begin: Slipknot - Killpop.mp3
+Time: 225.096000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Killpop
+Album: .5: The Gray Chapter (Special Edition)
+Track: 5
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893856
+song_end
+song_begin: Slipknot - Skeptic.mp3
+Time: 286.584000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Skeptic
+Album: .5: The Gray Chapter (Special Edition)
+Track: 6
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893861
+song_end
+song_begin: Slipknot - Lech.mp3
+Time: 290.472000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Lech
+Album: .5: The Gray Chapter (Special Edition)
+Track: 7
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893862
+song_end
+song_begin: Slipknot - Goodbye.mp3
+Time: 275.160000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Goodbye
+Album: .5: The Gray Chapter (Special Edition)
+Track: 8
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893862
+song_end
+song_begin: Slipknot - Nomadic.mp3
+Time: 258.384000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Nomadic
+Album: .5: The Gray Chapter (Special Edition)
+Track: 9
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893871
+song_end
+song_begin: Slipknot - The One That Kills the Least.mp3
+Time: 251.544000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: The One That Kills the Least
+Album: .5: The Gray Chapter (Special Edition)
+Track: 10
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893878
+song_end
+song_begin: Slipknot - Custer.mp3
+Time: 254.496000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Custer
+Album: .5: The Gray Chapter (Special Edition)
+Track: 11
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893878
+song_end
+song_begin: Slipknot - Be Prepared for Hell.mp3
+Time: 117.960000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Be Prepared for Hell
+Album: .5: The Gray Chapter (Special Edition)
+Track: 12
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893874
+song_end
+song_begin: Slipknot - The Negative One.mp3
+Time: 325.200000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: The Negative One
+Album: .5: The Gray Chapter (Special Edition)
+Track: 13
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893886
+song_end
+song_begin: Slipknot - If Rain Is What You Want.mp3
+Time: 380.952000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: If Rain Is What You Want
+Album: .5: The Gray Chapter (Special Edition)
+Track: 14
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893892
+song_end
+song_begin: Slipknot - Override.mp3
+Time: 337.296000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: Override
+Album: .5: The Gray Chapter (Special Edition)
+Track: 15
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893894
+song_end
+song_begin: Slipknot - The Burden.mp3
+Time: 323.328000
+Artist: Slipknot
+AlbumArtist: Slipknot
+Title: The Burden
+Album: .5: The Gray Chapter (Special Edition)
+Track: 16
+Date: 2014-10-15
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1717893896
+song_end

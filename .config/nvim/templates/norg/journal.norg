@@ -1,0 +1,19 @@
+@document.meta
+title: 2023-10-27
+description:
+authors: francisco.pacheco
+categories:
+created: 2023-10-27
+updated: 2023-10-27T04:48:15-0600
+version: 1.0.0
+@end
+
+* 2023-10-27
+  #weather Sunny 
+  {:2023-10-26:}[Yesterday] - {:2023-10-28:}[Tomorrow]
+
+** Daily Review
+   - 
+
+** Today's Checklist
+   - ( ) Write my daily review

@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - jpacheco@cock.li
+# Created On: 23/10/2023
+# Project: Fetch tool
+
+#Informacion del sistema
+ 
+kernel="$(uname -r)"
+name="$(printf "javier@venom")"
+os="$(echo "$PRETTY_NAME")"
+sys="$(echo $(uname))"
+shell=$(printf "$(basename $SHELL)")
+init=$(cat /proc/1/comm)
+cpu="$(lscpu | awk '/name/ {print $3, $4}')"
+tr="$(printf "$TERM")"
+
+#Información del WM
+ui=$(echo "Hyprland")
+
+#Información del manejador de paquetes
+manager=$(echo "scratch")
+packages="$(ls /var/lib/scratchpkg/db | wc -l)"
+
+#Detección de ram
+memused=$( free -mh --si | awk '/^Mem:/ {print $3}')
+memtotal=$( free -mh --si | awk '/^Mem:/ {print $2}')
+
+#Detección de disco
+
+storageused=$(df -h / | grep "/" | awk '{print $3}')
+storageavail=$(df -h / | grep "/" | awk '{print $2}')
+st=$(df -h / | grep "/" | awk '{print $2" / " $4" / "$3}')
+
+cat <<EOF
+
+    ║ ║╔═╝╔═ ╔═║╔╔   ║  ╝╔═ ║ ║║ ║
+    ║ ║╔═╝║ ║║ ║║║║═╝║  ║║ ║║ ║ ╝ 
+     ╝ ══╝╝ ╝══╝╝╝╝  ══╝╝╝ ╝══╝╝ ╝
+$printf╭───────────────────────────────────╮$printf $rst
+     Host············${name}${reset}
+     Kernel··········${kernel}${reset}
+     WM··············${ui}${reset}
+     Packages········${packages}${reset}
+     Pkg Manager·····${manager}${reset}
+     Terminal········${tr}${reset}
+     Shell···········${shell}${reset}
+     Init············${init}${reset}
+     CPU·············${cpu}${reset}
+     Memory··········${memused}/${memtotal}${reset}
+     Storage·········${storageused}/${storageavail}
+$printf╰───────────────────────────────────╯$printf $rst
+EOF
+

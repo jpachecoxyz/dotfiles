@@ -1,0 +1,27 @@
+# Markdown
+
+snippet meta "Metadata for markdown files"
+	---
+	theme: ~/jp.json
+	title: ${1:Tittle}
+	author: ${2:Author}
+	date: `strftime("%d/%m/%Y")`
+	---
+
+	${0:Start your document...}
+
+
+# Language.
+snippet cb
+	\`\`\`${1:language}
+	${2:code}
+	\`\`\`
+
+
+# Definition lists
+snippet ~ Definition list
+	$1
+	: $0
+snippet ~~ Alternate definition list
+	$1
+	  - $0

@@ -1,0 +1,89 @@
+#!/bin/zsh
+
+# profile file. Runs on login. Environmental variables are set here.
+
+# If you don't plan on reverting to bash, you can remove the link in ~/.profile
+# to clean up.
+
+# Export all vars
+set -o allexport
+
+# Adds `~/.local/bin` to $PATH
+PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
+PATH=$PATH:/usr/local/bin:
+PATH=$PATH:/sbin:
+
+unsetopt PROMPT_SP
+
+# Default programs:
+EDITOR="nvim"
+TERMINAL="footclient"
+BROWSER="firefox"
+
+# ~/ Clean-up:
+XDG_CONFIG_HOME="$HOME/.config"
+XDG_DATA_HOME="$HOME/.local/share"
+XDG_CACHE_HOME="$HOME/.cache"
+XDG_RUNTIME_DIR=$(mktemp -d /tmp/$(id -u)-runtime-dir.XXX)
+XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
+NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
+GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
+LESSHISTFILE="-"
+WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
+INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
+ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+#export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
+WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
+HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
+MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
+ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
+BAT_THEME="gruvbox-dark"
+
+# Other program settings:
+DICS="/usr/share/stardict/dic/"
+SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+LESS=-R
+LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
+LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+LESS_TERMCAP_me="$(printf '%b' '[0m')"
+LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+LESS_TERMCAP_se="$(printf '%b' '[0m')"
+LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+LESS_TERMCAP_ue="$(printf '%b' '[0m')"
+LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
+QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
+MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
+AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
+_JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
+
+# [[ NNN ]]
+BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
+NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+
+NNN_BMS='r:~/code/rust/;p:~/.local/src/;s:~/.local/bin/;m:/mnt;M:/media'
+NNN_USE_EDITOR=1
+NNN_FIFO=/tmp/nnn.fifo
+NNN_PLUG_DEFAULT='1:ipinfo;p:preview-tabbed;o:fzz;b:nbak'
+NNN_OPENER="/home/javier/.local/bin/scripts/nuke"
+IMAGEVIEWER="nsxiv"
+NNN_PLUG='p:nuke;o:nuke;t:preview-tabbed;x:!chmod +x "$nnn";g:!lazygit;m:!dmenumount;u:!dmenuumount'
+NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
+
+
+[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
+
+# Start wayland server on user's current tty if not already running.
+[ "$(tty)" = "/dev/tty1" ] && exec Hyprland
+xrdb ~/.config/.Xdefaults
+# [ "$(tty)" = "/dev/tty1" ] && exec sway

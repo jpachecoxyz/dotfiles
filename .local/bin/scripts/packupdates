@@ -1,0 +1,19 @@
+#!/bin/bash
+
+icon="󱓈 "
+packages=$(scratch outdate | wc -l)
+pack_list=$(scratch outdate | awk '{print $1}')
+
+if [ $packages -gt 1 ];
+
+then
+    json='{
+   "text": "'"${packages} ${icon}"'",
+ }' 
+else
+    json='{
+   "text": "'"${icon}"'"},
+ }' 
+fi
+
+echo $json  

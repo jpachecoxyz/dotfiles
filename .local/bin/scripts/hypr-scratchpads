@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 13/03/24
+# Project: Scratchpads -- hyprland
+
+windows_in(){
+hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:$1\" )"
+}
+
+toggle_scratchpad(){
+    workspace_name="$1"
+    cmd="$2"
+
+    windows=$( windows_in "$workspace_name" )
+    # If not on latest , check the edit history of this post
+    if [ -z "$windows" ];then
+        hyprctl dispatch "exec [workspace special:$workspace_name] $cmd"
+        else
+        hyprctl dispatch togglespecialworkspace "$workspace_name"
+    fi
+}
+
+case "$1" in
+    terminal) toggle_scratchpad "terminal" "foot -a terminal -w 1250x700" ;;
+    file_manager) toggle_scratchpad "file_manager" "foot -a filemanager -e nnn" ;;
+    music_player) toggle_scratchpad "music_player" "foot -a musicplayer -e ncmpcpp" ;;
+    matrix) toggle_scratchpad "matrix" "foot -a matrix -e gomuks" ;;
+    webcam) toggle_scratchpad "webcam" "foot -a webcam -e webcam" ;;
+esac

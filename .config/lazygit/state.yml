@@ -1,0 +1,22 @@
+lastupdatecheck: 0
+recentrepos:
+- /home/javier/.emacs.d
+- /home/javier/.local/src/jpmacs
+- /home/javier/.local/src/noobemacs
+- /home/javier/.local/src/dwmblocks/dwmblocks
+- /home/javier/repos/dwm
+- /home/javier/notes
+- /home/javier/.dotfiles
+- /home/javier/.dotfiles/home/.config/nvim
+- /home/javier/.config/nvim
+- /home/javier/.local/src/classic
+- /home/javier/.dotfiles/home/.local/src/classic
+- /home/javier/pics/classic
+- /home/javier/repos/st
+- /home/javier/.local/src/void-packages
+- /home/javier/code/rust/d2b
+startuppopupversion: 5
+customcommandshistory:
+- q
+hidecommandlog: false
+ignorewhitespaceindiffview: false

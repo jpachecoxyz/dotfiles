@@ -1,0 +1,24 @@
+#!/bin/sh
+
+case "$(printf "extract\ncompress\ndelete" | fuzzel --dmenu -p 'What to do: ' )" in
+    'extract') cd /home/javier/vids/ && 7z e /home/javier/vids/.vids & notify-send "extracting files..."
+    ;;
+    'compress') cd /home/javier/vids/ && tar c /home/javier/vids/*.mp4 -f .vids && rm /home/javier/vids/*.mp4 & notify-send "compressing files..."
+    ;;
+    'delete') rm /home/javier/vids/*.mp4 && notify-send "deleting files..."
+    ;;
+    *) exit 1 & notify-send "nothing to do..."
+    ;;
+esac
+
+extract_files () {
+    cd /home/javier/vids/ && 7z e /home/javier/vids/.vids
+}
+
+compress_files () {
+    cd /home/javier/vids/ && tar c /home/javier/vids/*.mp4 -f /home/javier/vids/.vids && rm /home/javier/vids/*.mp4
+}
+
+remove_files () {
+    rm /home/javier/vids/*.mp4
+}

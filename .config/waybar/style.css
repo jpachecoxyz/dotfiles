@@ -1,0 +1,161 @@
+/* Fx */
+@keyframes animate{ 
+   0%{ 
+     opacity: 0.3; 
+   } 
+   50%{ 
+     opacity: 0.7; 
+   } 
+   100%{ 
+     opacity: 0.3; 
+   } 
+ } 
+
+@define-color bg #181818;
+@define-color accent #383838;
+@define-color text #f8f8f8;
+@define-color invText #f8f8f8;
+@define-color jp-red #c9545d;
+@define-color jp-green #a6e3a1;
+@define-color jp-blue #89b4fa;
+@define-color jp-yellow #f9e2af;
+
+* {
+    font-family: Iosevka;
+    font-size: 16px;
+    border-radius: 0px;
+    min-height: 0px;
+}
+
+window#waybar {
+    background-color: @bg;
+    color: @jp-yellow;
+    opacity: 0.8;
+}
+
+#workspaces {
+    background-color: transparent;
+}
+
+#workspaces button {
+    padding: 5px;
+    color: @jp-yellow;
+}
+
+#workspaces button.active {
+    background-color: transparent;
+    color: @invText;
+    box-shadow: inset 0 -3px @jp-yellow;
+}
+
+#workspaces button:hover {
+    background: @accent;
+}
+
+#custom-icon {
+    background-color: @bg;
+    color: @jp-yellow;
+    margin: 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+
+.modules-left {
+    background-color: @bg;
+    padding: 0px 0px 0px 0px;
+}
+
+#window {
+    color: @jp-yellow;
+    background-color: @bg;
+    padding-left: 4px;
+}
+
+.modules-right {
+    background-color: @bg;
+}
+
+#workspaces, #custom-date, #custom-recorder, 
+#bluetooth, #clock, #battery, #pulseaudio, 
+#custom-lan, #workspaces, #mpd, #custom-scratch {
+    padding: 0px 5px;
+}
+
+#custom-date {
+    color: @jp-yellow;
+}
+
+#clock {
+    color: @jp-yellow;
+}
+
+#battery {
+    color: @jp-green;
+}
+
+#battery.charging {
+    color: @jp-blue;
+    animation: animate 1.8s linear infinite; 
+}
+
+#battery.warning:not(.charging) {
+    color: @jp-red;
+    animation: animate .8s linear infinite; 
+}
+
+#pulseaudio {
+  color: @jp-yellow;
+}
+
+#custom-recodrder {
+  color: @jp-red;
+}
+
+#custom-scratch.green {
+  color: @jp-green;
+   font-size: 18px;
+}
+
+
+#custom-scratch.yellow {
+  color: @jp-yellow;
+   font-size: 18px;
+}
+
+#custom-scratch.red {
+  color: @jp-red;
+   font-size: 18px;
+}
+
+#bluetooth, #bluetooth.on, #bluetooth.connected {
+   background-color: transparent;
+   font-size: 16px;
+   color: @jp-blue;
+   border-radius: 1px;
+}
+
+#bluetooth.off {
+   background-color: transparent;
+   color: @jp-red;
+}
+
+#mpd {
+   color: @jp-yellow;
+   animation: animate 1.5s linear infinite; 
+}
+
+#custom-recorder {
+    color: @jp-red;
+    animation: animate 1.5s linear infinite; 
+}
+
+#custom-lan {
+}
+
+#custom-lan.connected {
+    color: @jp-green;
+}
+
+#custom-lan.no_connected {
+    color: @jp-red;
+}
