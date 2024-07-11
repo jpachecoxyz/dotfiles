@@ -233,6 +233,10 @@ in
   };
 
   services.getty.autologinUser = "javier";
+  services.locate = {
+    enable =true;
+    localuser = "javier";
+  };
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
