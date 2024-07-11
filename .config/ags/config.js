@@ -1,4 +1,5 @@
 const hyprland = await Service.import("hyprland")
+const notifications = await Service.import("notifications")
 const mpris = await Service.import("mpris")
 const audio = await Service.import("audio")
 const battery = await Service.import("battery")
@@ -140,6 +141,21 @@ function BatteryLabel() {
 }
 
 
+// function SysTray() {
+//     const items = systemtray.bind("items")
+//         .as(items => items.map(item => Widget.Button({
+//             child: Widget.Icon({ icon: item.bind("icon") }),
+//             on_primary_click: (_, event) => item.activate(event),
+//             on_secondary_click: (_, event) => item.openMenu(event),
+//             tooltip_markup: item.bind("tooltip_markup"),
+//         })))
+//
+//     return Widget.Box({
+//         children: items,
+//     })
+// }
+//
+//
 // layout of the bar
 function Left() {
     return Widget.Box({
@@ -156,6 +172,7 @@ function Center() {
         spacing: 8,
         children: [
             Media(),
+            Notification(),
         ],
     })
 }
@@ -168,6 +185,7 @@ function Right() {
             Volume(),
             BatteryLabel(),
             Clock(),
+            SysTray(),
         ],
     })
 }

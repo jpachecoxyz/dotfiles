@@ -25,7 +25,6 @@
     pkgs.nyxt
 
     # Development
-    pkgs-unstable.emacs-gtk
     # language servers
     pkgs.pyright
     pkgs.lua-language-server
@@ -36,7 +35,6 @@
     pkgs.zellij # Terminal multiplexer
 
     # Generic tools.
-    pkgs.tofi
     # pkgs-unstable.gparted
   ];
 
@@ -49,6 +47,13 @@
   home.sessionVariables = {
 
   };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 22;
+    };
 
   # zsh
   # programs.zsh = {

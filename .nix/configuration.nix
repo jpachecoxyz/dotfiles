@@ -111,6 +111,7 @@ in
   environment.systemPackages = (with pkgs; [
     # development
     (pkgs.writeScriptBin "sudo" ''exec doas "$@"'')
+    gcc
     wget
     git
     neovim
@@ -122,9 +123,12 @@ in
     direnv
 
     # enviroment
+    ags
     gtk3
+    libdbusmenu-gtk3
     graphite-gtk-theme 
     breeze-icons
+    bibata-cursors
     nwg-look
     libnotify
     networkmanager
@@ -148,7 +152,7 @@ in
     ffmpeg
     fastfetch
     wf-recorder
-    fuzzel
+    tofi
 
     # web
     firefox
@@ -207,7 +211,6 @@ in
     # vim
     
   ]);
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -13,7 +13,7 @@ fi
 
 speakers=$(pactl list sources | grep Name | grep monitor | awk '{print $2}')
 
-MENU="fuzzel --dmenu" 
+MENU="tofi" 
 OPT=$(printf "record\nrecord_no_sound\nsection\nsection_no_sound\nshare" | $MENU)
 
 remove_vid() {
