@@ -6,4 +6,5 @@
 .local/state/
 
 .config/dconf/
+.config/dconf/user
 .config/google-chrome/
