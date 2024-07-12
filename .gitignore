@@ -1,7 +1,9 @@
 .config/mpd/log
 .config/mpd/pid
 
-
 .local/share/
 .local/src/
 .local/state/
+
+.config/dconf/
+.config/google-chrome/
