@@ -45,15 +45,16 @@
   };
 
   home.sessionVariables = {
-
+    XCURSOR_THEME = "Bibata-Modern-Classic";
+    XCURSOR_SIZE = "22"; # Adjust the size as needed
   };
 
-  home.pointerCursor = {
-    gtk.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Classic";
-    size = 22;
-    };
+  # home.pointVerCursor = {
+  #   gtk.enable = true;
+  #   package = pkgs.bibata-cursors;
+  #   name = "Bibata-Modern-Classic";
+  #   size = 22;
+  #   };
 
   # zsh
   # programs.zsh = {
@@ -80,6 +81,68 @@
       init.DefaultBranch = "main";
     };
   };
+
+  # Themes GTK
+  gtk = {
+    enable = true;
+
+    cursorTheme.package = pkgs.bibata-cursors;
+    cursorTheme.name = "Bibata-Modern-Classic";
+    cursorTheme.size = 22;
+    theme.package = pkgs.gruvbox-dark-gtk;
+    theme.name = "gruvbox-dark";
+    gtk3.extraConfig = {
+      Settings = ''
+        gtk-application-prefer-dark-theme=1
+      '';
+    };
+    iconTheme = {
+      package = pkgs.gruvbox-dark-icons-gtk;
+      name  = "gruvbox-dark-icons";
+    };
+  };
+
+ #  gtk = {
+ #    enable = true;
+ #    font = {
+ #      package = (pkgs.nerdfonts.override { fonts = [ "Mononoki" ]; });
+ #      name = "Mononoki Nerd Font Regular";
+ #      size = 10;
+ #    };
+	#
+ #    theme = {
+ #      name = "Catppuccin-Macchiato-Compact-Pink-Dark";
+ #      package = pkgs.catppuccin-gtk.override {
+ #        accents = [ "pink" ];
+ #        size = "compact";
+ #        tweaks = [ "rimless" "black" ];
+ #        variant = "macchiato";
+ #      };
+ #    };
+	#
+ #    iconTheme = {
+ #      package = (pkgs.catppuccin-papirus-folders.override { flavor = "mocha"; accent = "pink"; });
+ #      name  = "Papirus-Dark";
+ #    };
+	#
+ #    cursorTheme = {
+ #      name = "Catppuccin-Mocha-Pink";
+ #      package = pkgs.catppuccin-cursors.mochaPink;
+ #    };
+	#
+ #    gtk3.extraConfig = {
+ #      Settings = ''
+ #        gtk-application-prefer-dark-theme=1
+ #      '';
+ #    };
+	#
+ #    gtk4.extraConfig = {
+ #      Settings = ''
+ #        gtk-application-prefer-dark-theme=1
+	# gtk-cursor-theme-name=Catppuccing-Mocha-Pink
+ #      '';
+ #    };
+ #  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

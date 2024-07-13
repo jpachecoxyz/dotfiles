@@ -125,6 +125,7 @@ in
     # enviroment
     ags
     gtk3
+    gtk4
     libdbusmenu-gtk3
     graphite-gtk-theme 
     breeze-icons
