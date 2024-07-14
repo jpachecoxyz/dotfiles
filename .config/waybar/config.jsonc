@@ -8,7 +8,7 @@
     "height":30,
     "modules-left": ["hyprland/workspaces", "custom/layout"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["mpd", "custom/lan", "pulseaudio", "clock", "battery", "custom/recorder"],
+    "modules-right": ["mpd",  "pulseaudio", "clock", "battery", "custom/lan", "custom/recorder"],
 
         /*
         MODULES
