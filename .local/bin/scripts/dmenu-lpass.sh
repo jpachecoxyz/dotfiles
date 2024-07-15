@@ -13,7 +13,7 @@ for item in `lpass ls --format "%ai %an %au"`;do
 	fi
 done
 
-selection=`printf '%s\n' "${!map[@]}" | fuzzel -i -p 'Account'`
+selection=`printf '%s\n' "${!map[@]}" | tofi --prompt 'Account'`
 if [ "$selection" != "" ]; then
     lpass show -c --password ${map[$selection]} &
 fi

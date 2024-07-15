@@ -130,6 +130,7 @@ in
     graphite-gtk-theme 
     breeze-icons
     bibata-cursors
+    brightnessctl
     nwg-look
     libnotify
     networkmanager

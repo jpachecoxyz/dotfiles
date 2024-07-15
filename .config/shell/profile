@@ -53,6 +53,7 @@ BAT_THEME="gruvbox-dark"
 # Other program settings:
 DICS="/usr/share/stardict/dic/"
 SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+DOAS_ASKPASS="$HOME/.local/bin/scripts/tofi-pass.sh"
 FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 LESS=-R
 LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"

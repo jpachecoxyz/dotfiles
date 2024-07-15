@@ -6,7 +6,7 @@
     "spacing": 4,
 		// try to keep it 4px across the config
     "height":30,
-    "modules-left": ["hyprland/workspaces", "custom/layout"],
+    "modules-left": ["custom/logo", "hyprland/workspaces", "custom/icon"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["mpd",  "pulseaudio", "clock", "battery", "custom/lan", "custom/recorder"],
 
@@ -31,9 +31,9 @@
         },
         "format": "{icon} {capacity}%",
         "format-charging": "󰂄 {capacity}%",
-        "format-plugged": "󰂄{capacity}%",
+        "format-plugged": "󰂄 {capacity}%",
         "format-alt": "{icon} {time}",
-        "format-full": "󱊣 {capacity}%",
+        "format-full": "󱊣  {capacity}%",
         "format-icons": ["󱊡", "󱊢", "󱊣"]
         },
         "network": {
@@ -105,6 +105,11 @@
         "format": "{} ",
         "tooltip": true,
         "on-click": "google-chrome-stable"
+    },
+    "custom/logo": {
+      "format": "    ",
+      "tooltip": false,
+      "on-click": "exec footclient"
     }
 }
 

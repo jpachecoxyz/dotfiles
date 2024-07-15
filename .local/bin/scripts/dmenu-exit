@@ -23,10 +23,10 @@ case $chosen in
       sleep 5 
       notify-send  "El sistema se apagara en...." "$( echo "5 segundos" )" &
       sleep 4
-      sudo shutdown -P now 
+      systemctl shutdown -P now 
         ;;
     $reboot)
-      sudo reboot
+      systemctl reboot
         ;;
     $hrestart)
       pkill Hyprland
