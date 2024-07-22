@@ -1,0 +1,49 @@
+
+estado_ant=nd
+
+estado() {
+  # Get the state of the focused window
+  WINDOW_STATE=$(hyprctl activewindow | awk '/floating/{print $2}' | grep -E '^[01]$')
+  echo "WINDOW_STATE =  $WINDOW_STATE"
+}
+
+flotando() {
+    json='{
+          "text": " ",
+          "alt": "Floating"
+        }'
+}
+
+tiled() {
+    json='{
+          "text": " ",
+          "alt": "Tiled"
+        }'
+}
+
+escribiendo() {
+  if [ "$estado_ant" = "$WINDOW_STATE" ]; then
+    echo "Archivo sin cambios"
+  else
+    echo "escribiendo cambios....."
+    if [ "$WINDOW_STATE" = 1 ]; then
+        flotando
+      else
+        tiled
+    fi
+    echo $json  > /tmp/hyprwindow
+  	pkill -SIGRTMIN+10 waybar
+
+    estado_ant=$WINDOW_STATE
+  fi
+}
+
+while true; do
+
+  estado
+  escribiendo
+
+  # Sleep for a short duration to avoid overloading the system
+  sleep 1
+done
+

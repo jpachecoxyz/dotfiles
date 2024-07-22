@@ -13,7 +13,7 @@ done; unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-	rb="reboot" \
+	rb="systemctl reboot" \
 	cp="cp -iv" \
 	de="sudo nvim" \
 	mv="mv -iv" \
@@ -32,12 +32,12 @@ alias \
 
 # Colorize commands when possible.
 alias \
-	ls="eza" \
+	ls="eza --icons --git  --group-directories-first" \
 	cat="bat" \
 	xw="setbg" \
-	lsa="eza -a" \
-	lsl="eza -l" \
-	lsla="eza -la" \
+	lsa="ls -a" \
+	lsl="ls -l" \
+	lsla="ls -la" \
 	grep="grep --color=auto" \
 	ccat="highlight --out-format=ansi"
 	# diff="diff --color=auto" \

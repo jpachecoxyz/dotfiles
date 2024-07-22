@@ -33,211 +33,3993 @@ tag: MUSICBRAINZ_TRACKID
 tag: MUSICBRAINZ_RELEASETRACKID
 tag: MUSICBRAINZ_WORKID
 info_end
-song_begin: Slipknot - XIX.mp3
-Time: 190.176000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: XIX
-Album: .5: The Gray Chapter (Special Edition)
+directory: Aventura
+mtime: 1721174462
+begin: Aventura
+song_begin: Pau Hernandez - Ay Linda Mujer.mp3
+Time: 152.328000
+Artist: Pau Hernandez
+AlbumArtist: Pau Hernandez
+Title: Ay Linda Mujer
+Album: Ay Linda Mujer
 Track: 1
-Date: 2014-10-15
-Genre: Alternative Metal
+Date: 2022-01-28
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893842
+mtime: 1721173343
 song_end
-song_begin: Slipknot - Sarcastrophe.mp3
-Time: 306.120000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Sarcastrophe
-Album: .5: The Gray Chapter (Special Edition)
-Track: 2
-Date: 2014-10-15
-Genre: Alternative Metal
+song_begin: Pau Hernandez - Ay Mi Rancherita Bachata.mp3
+Time: 163.776000
+Artist: Pau Hernandez
+AlbumArtist: Pau Hernandez
+Title: Ay Mi Rancherita Bachata
+Album: Ay Mi Rancherita Bachata
+Track: 1
+Date: 2022-10-06
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893843
+mtime: 1721173248
 song_end
-song_begin: Slipknot - AOV.mp3
-Time: 332.952000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: AOV
-Album: .5: The Gray Chapter (Special Edition)
-Track: 3
-Date: 2014-10-15
-Genre: Alternative Metal
+song_begin: Pau Hernandez - Bachata Chata.mp3
+Time: 152.952000
+Artist: Pau Hernandez
+AlbumArtist: Pau Hernandez
+Title: Bachata Chata
+Album: Bachata Chata
+Track: 1
+Date: 2021-07-29
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893845
+mtime: 1721173268
 song_end
-song_begin: Slipknot - The Devil in I.mp3
-Time: 342.864000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: The Devil in I
-Album: .5: The Gray Chapter (Special Edition)
-Track: 4
-Date: 2014-10-15
-Genre: Alternative Metal
+song_begin: Pau Hernandez - Bachata Feeling.mp3
+Time: 165.288000
+Artist: Pau Hernandez
+AlbumArtist: Pau Hernandez
+Title: Bachata Feeling
+Album: Bachata Feeling
+Track: 1
+Date: 2021-03-11
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893846
+mtime: 1721173283
 song_end
-song_begin: Slipknot - Killpop.mp3
-Time: 225.096000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Killpop
-Album: .5: The Gray Chapter (Special Edition)
-Track: 5
-Date: 2014-10-15
-Genre: Alternative Metal
-Disc: 1
-Format: 48000:24:2
-mtime: 1717893856
-song_end
-song_begin: Slipknot - Skeptic.mp3
-Time: 286.584000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Skeptic
-Album: .5: The Gray Chapter (Special Edition)
+song_begin: Blue, Elton John - Sorry Seems To Be The Hardest Word.mp3
+Time: 210.096000
+Artist: Blue/Elton John
+AlbumArtist: Blue
+Title: Sorry Seems To Be The Hardest Word
+Album: Best Of Blue
 Track: 6
-Date: 2014-10-15
-Genre: Alternative Metal
+Date: 2004-01-01
+Genre: Boy Band
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893861
+mtime: 1721173769
 song_end
-song_begin: Slipknot - Lech.mp3
-Time: 290.472000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Lech
-Album: .5: The Gray Chapter (Special Edition)
-Track: 7
-Date: 2014-10-15
-Genre: Alternative Metal
+song_begin: Aventura - Brindo Con Agua.mp3
+Time: 281.112000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Brindo Con Agua
+Album: Brindo Con Agua
+Track: 1
+Date: 2024-04-02
+Genre: Bachata
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893862
+mtime: 1721173558
 song_end
-song_begin: Slipknot - Goodbye.mp3
-Time: 275.160000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Goodbye
-Album: .5: The Gray Chapter (Special Edition)
-Track: 8
-Date: 2014-10-15
-Genre: Alternative Metal
-Disc: 1
-Format: 48000:24:2
-mtime: 1717893862
-song_end
-song_begin: Slipknot - Nomadic.mp3
-Time: 258.384000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Nomadic
-Album: .5: The Gray Chapter (Special Edition)
-Track: 9
-Date: 2014-10-15
-Genre: Alternative Metal
-Disc: 1
-Format: 48000:24:2
-mtime: 1717893871
-song_end
-song_begin: Slipknot - The One That Kills the Least.mp3
-Time: 251.544000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: The One That Kills the Least
-Album: .5: The Gray Chapter (Special Edition)
-Track: 10
-Date: 2014-10-15
-Genre: Alternative Metal
-Disc: 1
-Format: 48000:24:2
-mtime: 1717893878
-song_end
-song_begin: Slipknot - Custer.mp3
-Time: 254.496000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Custer
-Album: .5: The Gray Chapter (Special Edition)
-Track: 11
-Date: 2014-10-15
-Genre: Alternative Metal
-Disc: 1
-Format: 48000:24:2
-mtime: 1717893878
-song_end
-song_begin: Slipknot - Be Prepared for Hell.mp3
-Time: 117.960000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Be Prepared for Hell
-Album: .5: The Gray Chapter (Special Edition)
-Track: 12
-Date: 2014-10-15
-Genre: Alternative Metal
-Disc: 1
-Format: 48000:24:2
-mtime: 1717893874
-song_end
-song_begin: Slipknot - The Negative One.mp3
-Time: 325.200000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: The Negative One
-Album: .5: The Gray Chapter (Special Edition)
+song_begin: Angeles De La Bachata - Ya No Puedo Mas.mp3
+Time: 212.568000
+Artist: Angeles De La Bachata
+AlbumArtist: Angeles De La Bachata
+Title: Ya No Puedo Mas
+Album: Confesion
 Track: 13
-Date: 2014-10-15
+Date: 2011
+Genre: Cubaton
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173282
+song_end
+song_begin: Luis Miguel Del Amargue - De Rodillas Te Pido.mp3
+Time: 233.352000
+Artist: Luis Miguel Del Amargue
+AlbumArtist: Luis Miguel Del Amargue
+Title: De Rodillas Te Pido
+Album: De Rodillas Te Pido
+Track: 1
+Date: 2008-09-09
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173329
+song_end
+song_begin: Camila - Aléjate de Mí - Versión Bachata.mp3
+Time: 270.696000
+Artist: Camila
+AlbumArtist: Camila
+Title: Aléjate de Mí - Versión Bachata
+Album: Dejarte De Amar Edición Especial
+Track: 12
+Date: 2011-02-08
+Genre: Latin Arena Pop
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173361
+song_end
+song_begin: Pau Hernandez - Fin del Juego.mp3
+Time: 209.904000
+Artist: Pau Hernandez
+AlbumArtist: Pau Hernandez
+Title: Fin del Juego
+Album: Fin del Juego
+Track: 1
+Date: 2021-04-30
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173298
+song_end
+song_begin: Romeo Santos, Anthony Santos, Luis Vargas, Raulin Rodriguez - Debate De 4.mp3
+Time: 279.384000
+Artist: Romeo Santos/Anthony Santos/Luis Vargas/Raulin Rodriguez
+AlbumArtist: Romeo Santos
+Title: Debate De 4
+Album: Fórmula Vol. 1 (Deluxe Edition)
+Track: 10
+Date: 2012-08-27
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173313
+song_end
+song_begin: Aventura - Cuando Volveras.mp3
+Time: 210.816000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Cuando Volveras
+Album: Generation Next
+Track: 1
+Date: 1999
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173543
+song_end
+song_begin: Aventura - Alexandra.mp3
+Time: 245.064000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Alexandra
+Album: Generation Next
+Track: 2
+Date: 1999
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173572
+song_end
+song_begin: Aventura - La Novelita.mp3
+Time: 244.920000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: La Novelita
+Album: Generation Next
+Track: 4
+Date: 1999
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173545
+song_end
+song_begin: Aventura - Amor Bonito (Novela 2).mp3
+Time: 217.920000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Amor Bonito (Novela 2)
+Album: Generation Next
+Track: 5
+Date: 1999
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173597
+song_end
+song_begin: Aventura - Dime Si Te Gusto.mp3
+Time: 267.720000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Dime Si Te Gusto
+Album: Generation Next
+Track: 8
+Date: 1999
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173602
+song_end
+song_begin: Aventura - Angelito.mp3
+Time: 293.184000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Angelito
+Album: God's Project
+Track: 2
+Date: 2005-04-26
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173348
+song_end
+song_begin: Aventura - La Boda.mp3
+Time: 289.872000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: La Boda
+Album: God's Project
+Track: 3
+Date: 2005-04-26
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173309
+song_end
+song_begin: Aventura - Our Song.mp3
+Time: 268.080000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Our Song
+Album: God's Project
+Track: 7
+Date: 2005-04-26
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173561
+song_end
+song_begin: Aventura - Ella Y Yo - Featuring Don Omar.mp3
+Time: 267.816000
+Artist: Aventura/Don Omar
+AlbumArtist: Aventura
+Title: Ella Y Yo - Featuring Don Omar
+Album: God's Project
+Track: 9
+Date: 2005-04-26
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173235
+song_end
+song_begin: Aventura - Un Beso.mp3
+Time: 263.376000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Un Beso
+Album: God's Project
+Track: 10
+Date: 2005-04-26
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173237
+song_end
+song_begin: Aventura - Ciego De Amor - Featuring Anthony Santos.mp3
+Time: 307.968000
+Artist: Aventura/Anthony Santos
+AlbumArtist: Aventura
+Title: Ciego De Amor - Featuring Anthony Santos
+Album: God's Project
+Track: 12
+Date: 2005-04-26
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173267
+song_end
+song_begin: Romeo Santos - Sobredosis (feat. Ozuna).mp3
+Time: 198.360000
+Artist: Romeo Santos/Ozuna
+AlbumArtist: Romeo Santos
+Title: Sobredosis (feat. Ozuna)
+Album: Golden
+Track: 7
+Date: 2017-07-21
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173285
+song_end
+song_begin: Romeo Santos, Aventura - Inmortal - Live From MetLife Stadium.mp3
+Time: 310.800000
+Artist: Romeo Santos/Aventura
+AlbumArtist: Romeo Santos
+Title: Inmortal - Live From MetLife Stadium
+Album: Inmortal (Live From MetLife Stadium)
+Track: 1
+Date: 2021-08-20
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173358
+song_end
+song_begin: Aventura - Los Infieles.mp3
+Time: 257.232000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Los Infieles
+Album: K.O.B. Live
+Track: 2
+Date: 2006-12-19
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173523
+song_end
+song_begin: Aventura - Mi Corazoncito.mp3
+Time: 234.264000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Mi Corazoncito
+Album: K.O.B. Live
+Track: 3
+Date: 2006-12-19
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173525
+song_end
+song_begin: Aventura - El Perdedor.mp3
+Time: 215.256000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: El Perdedor
+Album: K.O.B. Live
+Track: 4
+Date: 2006-12-19
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173362
+song_end
+song_begin: Aventura - Controversia.mp3
+Time: 235.008000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Controversia
+Album: K.O.B. Live
+Track: 5
+Date: 2006-12-19
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173587
+song_end
+song_begin: Miri Ben-Ari, Aventura - José.mp3
+Time: 253.800000
+Artist: Miri Ben-Ari/Aventura
+AlbumArtist: Aventura
+Title: José
+Album: K.O.B. Live
+Track: 6
+Date: 2006-12-19
+Genre: Pop Violin
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173355
+song_end
+song_begin: Aventura - Alexandra  No Lo Perdona Dios  Amor Bonito  ¿cuándo Volverás - Live.mp3
+Time: 502.224000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Alexandra / No Lo Perdona Dios / Amor Bonito / ¿cuándo Volverás? - Live
+Album: Kings of Bachata: Sold Out at Madison Square Garden (Live)
+Track: 5
+Date: 2007-11-13
+Genre: Bachata
+Disc: 2
+Format: 48000:24:2
+mtime: 1721173597
+song_end
+song_begin: NATTI NATASHA, Romeo Santos - La Mejor Versión de Mi - Remix.mp3
+Time: 229.368000
+Artist: NATTI NATASHA/Romeo Santos
+AlbumArtist: NATTI NATASHA
+Title: La Mejor Versión de Mi - Remix
+Album: La Mejor Versión de Mi (Remix)
+Track: 1
+Date: 2019-10-04
+Genre: Latin Pop
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173329
+song_end
+song_begin: Aventura - La Pelicula.mp3
+Time: 332.088000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: La Pelicula
+Album: Love & Hate
+Track: 2
+Date: 2003-11-15
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173568
+song_end
+song_begin: Aventura - Hermanita.mp3
+Time: 277.152000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Hermanita
+Album: Love & Hate
+Track: 3
+Date: 2003-11-15
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173369
+song_end
+song_begin: Aventura - Mi Niña Cambió.mp3
+Time: 273.960000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Mi Niña Cambió
+Album: Love & Hate
+Track: 4
+Date: 2003-11-15
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173552
+song_end
+song_begin: Aventura - Defa Vú.mp3
+Time: 264.168000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Defa Vú
+Album: Love & Hate
+Track: 7
+Date: 2003-11-15
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173581
+song_end
+song_begin: Aventura - Llorar.mp3
+Time: 250.080000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Llorar
+Album: Love & Hate
+Track: 9
+Date: 2003-11-15
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173541
+song_end
+song_begin: Aventura - Te Invito.mp3
+Time: 213.312000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Te Invito
+Album: Love & Hate
+Track: 12
+Date: 2003-11-15
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173524
+song_end
+song_begin: Pau Hernandez - Mi Perdición (Bachata).mp3
+Time: 146.280000
+Artist: Pau Hernandez
+AlbumArtist: Pau Hernandez
+Title: Mi Perdición (Bachata)
+Album: Mi Perdición (Bachata)
+Track: 1
+Date: 2020-02-27
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173326
+song_end
+song_begin: Los Toros Band - Quizás Si, Quizás No.mp3
+Time: 272.424000
+Artist: Los Toros Band
+AlbumArtist: Various Artists
+Title: Quizás Si, Quizás No
+Album: Pasión Latina
+Track: 10
+Date: 2020-08-21
+Genre: Bachata Dominicana
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173345
+song_end
+song_begin: Ozuna, Anthony Santos - Señor Juez.mp3
+Time: 264.792000
+Artist: Ozuna/Anthony Santos
+AlbumArtist: Ozuna
+Title: Señor Juez
+Album: Señor Juez
+Track: 1
+Date: 2021-11-04
+Genre: Puerto Rican Pop
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173340
+song_end
+song_begin: Thalia, Lenny Santos - Equivocada - Bachata Version.mp3
+Time: 241.104000
+Artist: Thalia/Lenny Santos
+AlbumArtist: Thalia
+Title: Equivocada - Bachata Version
+Album: Thalia En Primera Fila... Un Año Después
+Track: 17
+Date: 2010-09-27
+Genre: Latin Pop
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173769
+song_end
+song_begin: Aventura - Por un Segundo.mp3
+Time: 255.072000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Por un Segundo
+Album: The Last
+Track: 2
+Date: 2010-04-06
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173258
+song_end
+song_begin: Aventura - Yo Quisiera Amarla.mp3
+Time: 306.360000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Yo Quisiera Amarla
+Album: The Last
+Track: 3
+Date: 2010-04-06
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173282
+song_end
+song_begin: Aventura - El Malo.mp3
+Time: 238.752000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: El Malo
+Album: The Last
+Track: 4
+Date: 2010-04-06
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173244
+song_end
+song_begin: Aventura - Dile al Amor.mp3
+Time: 229.392000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Dile al Amor
+Album: The Last
+Track: 5
+Date: 2010-04-06
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173235
+song_end
+song_begin: Aventura - Su Veneno - Bolero Version.mp3
+Time: 240.744000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Su Veneno - Bolero Version
+Album: The Last
+Track: 6
+Date: 2010-04-06
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173300
+song_end
+song_begin: Aventura - Su Veneno.mp3
+Time: 240.744000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Su Veneno
+Album: The Last
+Track: 6
+Date: 2009-06-09
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173527
+song_end
+song_begin: Aventura - Tu Jueguito.mp3
+Time: 222.432000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Tu Jueguito
+Album: The Last
+Track: 7
+Date: 2010-04-06
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173313
+song_end
+song_begin: Aventura - El Desprecio.mp3
+Time: 275.688000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: El Desprecio
+Album: The Last
+Track: 11
+Date: 2009-06-09
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173775
+song_end
+song_begin: Aventura - All Up 2 You (feat. Akon, Wisin & Yandel).mp3
+Time: 218.112000
+Artist: Aventura/Wisin & Yandel/Akon
+AlbumArtist: Aventura
+Title: All Up 2 You (feat. Akon, Wisin & Yandel)
+Album: The Last
+Track: 12
+Date: 2009-06-09
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173767
+song_end
+song_begin: Aventura - Todavía Me Amas.mp3
+Time: 285.264000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Todavía Me Amas
+Album: Todavía Me Amas: Lo Mejor de Aventura
+Track: 5
+Date: 2016-02-05
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173538
+song_end
+song_begin: Aventura - Amor de Madre.mp3
+Time: 350.784000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Amor de Madre
+Album: Todavía Me Amas: Lo Mejor de Aventura
+Track: 12
+Date: 2016-02-05
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173557
+song_end
+song_begin: Aventura - Lágrimas.mp3
+Time: 225.792000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Lágrimas
+Album: Todavía Me Amas: Lo Mejor de Aventura (Deluxe Edition)
+Track: 22
+Date: 2002
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173571
+song_end
+song_begin: Aventura - Inmortal.mp3
+Time: 256.464000
+Artist: Aventura
+AlbumArtist: Romeo Santos
+Title: Inmortal
+Album: Utopia
+Track: 13
+Date: 2019-04-05
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173330
+song_end
+song_begin: Aventura, Bad Bunny - Volví.mp3
+Time: 230.160000
+Artist: Aventura/Bad Bunny
+AlbumArtist: Aventura
+Title: Volví
+Album: Volví
+Track: 1
+Date: 2021-08-03
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173272
+song_end
+song_begin: Aventura, Judy Santos - Obsesion.mp3
+Time: 254.760000
+Artist: Aventura/Judy Santos
+AlbumArtist: Aventura
+Title: Obsesion
+Album: We Broke The Rules
+Track: 1
+Date: 2002-06-01
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173255
+song_end
+song_begin: Aventura - Enseñame a Olvidar.mp3
+Time: 348.864000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Enseñame a Olvidar
+Album: We Broke The Rules
+Track: 8
+Date: 2002-06-01
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173312
+song_end
+song_begin: Aventura - Nueve y Quince - 9- 15.mp3
+Time: 264.072000
+Artist: Aventura
+AlbumArtist: Aventura
+Title: Nueve y Quince - 9: 15
+Album: We Broke The Rules
+Track: 9
+Date: 2002-06-01
+Genre: Bachata
+Disc: 1
+Format: 48000:24:2
+mtime: 1721173576
+song_end
+end: Aventura
+directory: thrash
+mtime: 1721186230
+begin: thrash
+song_begin: Metallica - Blackened - Remastered.mp3
+Time: 402.168000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Blackened - Remastered
+Album: …And Justice for All (Remastered Deluxe Box Set)
+Track: 1
+Date: 1988-08-25
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185555
+song_end
+song_begin: Metallica - ...And Justice for All - Remastered.mp3
+Time: 585.552000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: ...And Justice for All - Remastered
+Album: …And Justice for All (Remastered Deluxe Box Set)
+Track: 2
+Date: 1988-08-25
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185940
+song_end
+song_begin: Kreator - 666 - World Divided.mp3
+Time: 284.760000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: 666 - World Divided
+Album: 666 - World Divided
+Track: 1
+Date: 2020-03-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185537
+song_end
+song_begin: Insanity Alert - All Mosh  No Brain.mp3
+Time: 92.640000
+Artist: Insanity Alert
+AlbumArtist: Insanity Alert
+Title: All Mosh / No Brain
+Album: 666-Pack
+Track: 3
+Date: 2019-01-25
+Genre: Austrian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185422
+song_end
+song_begin: Onslaught - A Perfect Day to Die.mp3
+Time: 230.712000
+Artist: Onslaught
+AlbumArtist: Onslaught
+Title: A Perfect Day to Die
+Album: A Perfect Day to Die
+Track: 1
+Date: 2019-03-08
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185405
+song_end
+song_begin: Vektor - Activate.mp3
+Time: 210.336000
+Artist: Vektor
+AlbumArtist: Vektor
+Title: Activate
+Album: Activate
+Track: 1
+Date: 2020-12-16
+Genre: Cosmic Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185144
+song_end
+song_begin: Sodom - After the Deluge.mp3
+Time: 303.576000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: After the Deluge
+Album: After the Deluge
+Track: 1
+Date: 2022-09-23
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186161
+song_end
+song_begin: Anthrax - Aftershock.mp3
+Time: 261.936000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Aftershock
+Album: Aftershock
+Track: 1
+Date: 2022-06-01
 Genre: Alternative Metal
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893886
+mtime: 1721186127
 song_end
-song_begin: Slipknot - If Rain Is What You Want.mp3
-Time: 380.952000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: If Rain Is What You Want
-Album: .5: The Gray Chapter (Special Edition)
-Track: 14
-Date: 2014-10-15
+song_begin: Sodom - Agent Orange.mp3
+Time: 365.352000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Agent Orange
+Album: Agent Orange
+Track: 1
+Date: 1989
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184909
+song_end
+song_begin: Sodom - Remember the Fallen.mp3
+Time: 261.264000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Remember the Fallen
+Album: Agent Orange
+Track: 4
+Date: 1989
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185132
+song_end
+song_begin: Sodom - Ausgebombt.mp3
+Time: 185.040000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Ausgebombt
+Album: Agent Orange
+Track: 7
+Date: 1989
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185277
+song_end
+song_begin: Annihilator - Alison Hell.mp3
+Time: 301.080000
+Artist: Annihilator
+AlbumArtist: Annihilator
+Title: Alison Hell
+Album: Alice In Hell
+Track: 2
+Date: 1989
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184930
+song_end
+song_begin: Annihilator - Wicked Mystic.mp3
+Time: 218.016000
+Artist: Annihilator
+AlbumArtist: Annihilator
+Title: Wicked Mystic
+Album: Alice In Hell
+Track: 4
+Date: 1989
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185644
+song_end
+song_begin: Anthrax - Among The Living.mp3
+Time: 316.896000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Among The Living
+Album: Among The Living
+Track: 1
+Date: 1987
 Genre: Alternative Metal
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893892
+mtime: 1721185590
 song_end
-song_begin: Slipknot - Override.mp3
-Time: 337.296000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: Override
-Album: .5: The Gray Chapter (Special Edition)
+song_begin: Anthrax - Indians.mp3
+Time: 341.376000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Indians
+Album: Among The Living
+Track: 6
+Date: 1987
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184913
+song_end
+song_begin: Anthrax - Caught In A Mosh.mp3
+Time: 300.216000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Caught In A Mosh
+Album: Among The Living (Deluxe Edition)
+Track: 2
+Date: 1987
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185106
+song_end
+song_begin: Anthrax - I Am The Law.mp3
+Time: 354.024000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: I Am The Law
+Album: Among The Living (Deluxe Edition)
+Track: 3
+Date: 1987
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185035
+song_end
+song_begin: Angelus Apatrida - Bleed the Crown.mp3
+Time: 266.376000
+Artist: Angelus Apatrida
+AlbumArtist: Angelus Apatrida
+Title: Bleed the Crown
+Album: Angelus Apatrida
+Track: 2
+Date: 2021-02-05
+Genre: Spanish Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186019
+song_end
+song_begin: Evildead - Annihilation of Civilization.mp3
+Time: 266.840000
+Artist: Evildead
+AlbumArtist: Evildead
+Title: Annihilation of Civilization
+Album: Annihilation of Civilization
+Track: 2
+Date: 1989-04-03
+Genre: Crossover Thrash
+Disc: 1
+Format: 44100:24:2
+mtime: 1721185269
+song_end
+song_begin: Annihilator - Armed To The Teeth.mp3
+Time: 266.040000
+Artist: Annihilator
+AlbumArtist: Annihilator
+Title: Armed To The Teeth
+Album: Armed To The Teeth
+Track: 1
+Date: 2019-12-13
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185706
+song_end
+song_begin: Legion Of The Damned - Beheading of the Godhead.mp3
+Time: 285.432000
+Artist: Legion Of The Damned
+AlbumArtist: Legion Of The Damned
+Title: Beheading of the Godhead
+Album: Beheading of the Godhead
+Track: 1
+Date: 2023-02-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186199
+song_end
+song_begin: Sepultura - Inner Self.mp3
+Time: 309.288000
+Artist: Sepultura
+AlbumArtist: Sepultura
+Title: Inner Self
+Album: Beneath the Remains
+Track: 2
+Date: 1989-04-07
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186001
+song_end
+song_begin: Tankard - (Empty) Tankard.mp3
+Time: 301.080000
+Artist: Tankard
+AlbumArtist: Tankard
+Title: (Empty) Tankard
+Album: Best Case Scenario - 25 Years in Beers
+Track: 3
+Date: 2007-08-31
+Genre: German Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185255
+song_end
+song_begin: Metal Church - Fake Healer.mp3
+Time: 357.120000
+Artist: Metal Church
+AlbumArtist: Metal Church
+Title: Fake Healer
+Album: Blessing In Disguise
+Track: 1
+Date: 1989-02-07
+Genre: Glam Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185352
+song_end
+song_begin: Exodus - Salt The Wound.mp3
+Time: 264.624000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: Salt The Wound
+Album: Blood In Blood Out
+Track: 4
+Date: 2014-10-10
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185089
+song_end
+song_begin: Sodom - Bombenhagel.mp3
+Time: 366.768000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Bombenhagel
+Album: Bombenhagel
+Track: 1
+Date: 2021-08-20
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186056
+song_end
+song_begin: Exodus - Bonded by Blood.mp3
+Time: 224.112000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: Bonded by Blood
+Album: Bonded by Blood
+Track: 1
+Date: 1985
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185161
+song_end
+song_begin: Lich King - Combat Mosh.mp3
+Time: 279.408000
+Artist: Lich King
+AlbumArtist: Lich King
+Title: Combat Mosh
+Album: Born Of The Bomb
+Track: 7
+Date: 2012-10-19
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185273
+song_end
+song_begin: Lost Society - P.S.T.88.mp3
+Time: 176.448000
+Artist: Lost Society
+AlbumArtist: Lost Society
+Title: P.S.T.88
+Album: Braindead
+Track: 8
+Date: 2016-02-12
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185176
+song_end
+song_begin: Testament - Brotherhood of the Snake.mp3
+Time: 254.016000
+Artist: Testament
+AlbumArtist: Testament
+Title: Brotherhood of the Snake
+Album: Brotherhood of the Snake
+Track: 1
+Date: 2016-10-28
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185392
+song_end
+song_begin: Carnivore - Male Supremacy.mp3
+Time: 448.536000
+Artist: Carnivore
+AlbumArtist: Carnivore
+Title: Male Supremacy
+Album: Carnivore
+Track: 3
+Date: 1985
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185811
+song_end
+song_begin: Sepultura - Refuse  Resist.mp3
+Time: 199.272000
+Artist: Sepultura
+AlbumArtist: Sepultura
+Title: Refuse / Resist
+Album: Chaos A.D.
+Track: 1
+Date: 1993-09-02
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185208
+song_end
+song_begin: Sepultura - Territory.mp3
+Time: 287.520000
+Artist: Sepultura
+AlbumArtist: Sepultura
+Title: Territory
+Album: Chaos A.D.
+Track: 2
+Date: 1993-09-02
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185609
+song_end
+song_begin: Dust Bolt - Chaos Possession.mp3
+Time: 233.712000
+Artist: Dust Bolt
+AlbumArtist: Dust Bolt
+Title: Chaos Possession
+Album: Chaos Possession
+Track: 1
+Date: 2020-02-20
+Genre: German Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185388
+song_end
+song_begin: Violator - Addicted to Mosh.mp3
+Time: 205.200000
+Artist: Violator
+AlbumArtist: Violator
+Title: Addicted to Mosh
+Album: Chemical Assault
+Track: 4
+Date: 2006-10-07
+Genre: Brazilian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184992
+song_end
+song_begin: Sadus - Certain Death.mp3
+Time: 254.856000
+Artist: Sadus
+AlbumArtist: Sadus
+Title: Certain Death
+Album: Chemical Exposure
+Track: 1
+Date: 1988-06-15
+Genre: Deathrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185614
+song_end
+song_begin: Toxic Holocaust - Acid Fuzz.mp3
+Time: 151.152000
+Artist: Toxic Holocaust
+AlbumArtist: Toxic Holocaust
+Title: Acid Fuzz
+Album: Chemistry of Consciousness
+Track: 6
+Date: 2013-10-29
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185655
+song_end
+song_begin: Kreator - People of the Lie.mp3
+Time: 197.664000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: People of the Lie
+Album: Coma of Souls
+Track: 3
+Date: 1990-11-06
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185915
+song_end
+song_begin: Sylosis - After Lifeless Years.mp3
+Time: 297.120000
+Artist: Sylosis
+AlbumArtist: Sylosis
+Title: After Lifeless Years
+Album: Conclusion of an Age
+Track: 2
+Date: 2008-10-24
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185867
+song_end
+song_begin: Sylosis - Teras.mp3
+Time: 320.112000
+Artist: Sylosis
+AlbumArtist: Sylosis
+Title: Teras
+Album: Conclusion of an Age
+Track: 8
+Date: 2008-10-24
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185626
+song_end
+song_begin: Megadeth - Symphony Of Destruction.mp3
+Time: 246.768000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: Symphony Of Destruction
+Album: Countdown To Extinction (Expanded Edition - Remastered)
+Track: 2
+Date: 1992-07-14
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185111
+song_end
+song_begin: Megadeth - Sweating Bullets - Remastered 2004.mp3
+Time: 327.072000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: Sweating Bullets - Remastered 2004
+Album: Countdown To Extinction (Expanded Edition - Remastered)
+Track: 5
+Date: 1992-07-14
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185409
+song_end
+song_begin: Pantera - Cowboys from Hell.mp3
+Time: 243.576000
+Artist: Pantera
+AlbumArtist: Pantera
+Title: Cowboys from Hell
+Album: Cowboys from Hell
+Track: 1
+Date: 1990-07-20
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185061
+song_end
+song_begin: Artillery - Khomaniac.mp3
+Time: 401.544000
+Artist: Artillery
+AlbumArtist: Artillery
+Title: Khomaniac
+Album: Deadly Relics
+Track: 2
+Date: 2019-12-06
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185945
+song_end
+song_begin: Gomorra - War of Control.mp3
+Time: 304.920000
+Artist: Gomorra
+AlbumArtist: Gomorra
+Title: War of Control
+Album: Dealer of Souls
+Track: 2
+Date: 2022-12-09
+Genre: Swiss Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186185
+song_end
+song_begin: Ultra-Violence - Dear Diary.mp3
+Time: 156.744000
+Artist: Ultra-Violence
+AlbumArtist: Ultra-Violence
+Title: Dear Diary
+Album: Dear Diary
+Track: 1
+Date: 2022-04-15
+Genre: New Wave Of Thrash Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186110
+song_end
+song_begin: Spiritworld - Relic of Damnation.mp3
+Time: 147.576000
+Artist: Spiritworld
+AlbumArtist: Spiritworld
+Title: Relic of Damnation
+Album: DEATHWESTERN
+Track: 3
+Date: 2022-11-25
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186183
+song_end
+song_begin: Exhorder - Year of the Goat.mp3
+Time: 206.688000
+Artist: Exhorder
+AlbumArtist: Exhorder
+Title: Year of the Goat
+Album: Defectum Omnium
+Track: 6
+Date: 2024-03-08
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186237
+song_end
+song_begin: Savage Messiah - Down and Out.mp3
+Time: 239.064000
+Artist: Savage Messiah
+AlbumArtist: Savage Messiah
+Title: Down and Out
+Album: Demons
+Track: 6
+Date: 2019-05-17
+Genre: British Power Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185726
+song_end
+song_begin: Destruction - Diabolical.mp3
+Time: 249.192000
+Artist: Destruction
+AlbumArtist: Destruction
+Title: Diabolical
+Album: Diabolical
+Track: 1
+Date: 2021-12-16
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186075
+song_end
+song_begin: Fueled By Fire - Disrupt.mp3
+Time: 242.064000
+Artist: Fueled By Fire
+AlbumArtist: Fueled By Fire
+Title: Disrupt
+Album: Disrupt
+Track: 1
+Date: 2021-11-17
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186067
+song_end
+song_begin: Gomorra - Flames of Death.mp3
+Time: 271.680000
+Artist: Gomorra
+AlbumArtist: Gomorra
+Title: Flames of Death
+Album: Divine Judgement
+Track: 3
+Date: 2020-05-22
+Genre: Swiss Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185747
+song_end
+song_begin: Suicidal Angels - Capital of War.mp3
+Time: 265.320000
+Artist: Suicidal Angels
+AlbumArtist: Suicidal Angels
+Title: Capital of War
+Album: Division of Blood
+Track: 1
+Date: 2016-05-27
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185466
+song_end
+song_begin: Flotsam & Jetsam - Hammerhead.mp3
+Time: 375.432000
+Artist: Flotsam & Jetsam
+AlbumArtist: Flotsam & Jetsam
+Title: Hammerhead
+Album: Doomsday for the Deceiver
+Track: 1
+Date: 1986
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185876
+song_end
+song_begin: Sabbat - The Clerical Conspiracy - 2007 Remaster.mp3
+Time: 337.824000
+Artist: Sabbat
+AlbumArtist: Sabbat
+Title: The Clerical Conspiracy - 2007 Remaster
+Album: Dreamweaver (Expanded Edition)
+Track: 2
+Date: 1989-05-15
+Genre: Black 'N' Roll
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185076
+song_end
+song_begin: Ghoul - Ghetto Blasters.mp3
+Time: 172.272000
+Artist: Ghoul
+AlbumArtist: Ghoul
+Title: Ghetto Blasters
+Album: Dungeon Bastards
+Track: 1
+Date: 2016-07-29
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185767
+song_end
+song_begin: Megadeth - Dystopia.mp3
+Time: 299.136000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: Dystopia
+Album: Dystopia
+Track: 2
+Date: 2016-01-22
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185573
+song_end
+song_begin: Kreator - Enemy of God.mp3
+Time: 343.944000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Enemy of God
+Album: Enemy of God
+Track: 1
+Date: 2005-01-10
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185312
+song_end
+song_begin: Evile - Thrasher.mp3
+Time: 189.384000
+Artist: Evile
+AlbumArtist: Evile
+Title: Thrasher
+Album: Enter The Grave
+Track: 2
+Date: 2007
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185038
+song_end
+song_begin: Hammerhedd - Disturbance.mp3
+Time: 357.960000
+Artist: Hammerhedd
+AlbumArtist: Hammerhedd
+Title: Disturbance
+Album: Essence of Iron
+Track: 2
+Date: 2018-11-09
+Genre: Deathrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185788
+song_end
+song_begin: Destruction - Upcoming Devastation.mp3
+Time: 246.024000
+Artist: Destruction
+AlbumArtist: Destruction
+Title: Upcoming Devastation
+Album: Eternal Devastation
+Track: 6
+Date: 1986
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185443
+song_end
+song_begin: Vio-Lence - Eternal Nightmare.mp3
+Time: 370.440000
+Artist: Vio-Lence
+AlbumArtist: Vio-Lence
+Title: Eternal Nightmare
+Album: Eternal Nightmare
+Track: 1
+Date: 2014-06-23
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185770
+song_end
+song_begin: Vio-Lence - Phobophobia.mp3
+Time: 391.152000
+Artist: Vio-Lence
+AlbumArtist: Vio-Lence
+Title: Phobophobia
+Album: Eternal Nightmare
+Track: 3
+Date: 2014-06-23
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185243
+song_end
+song_begin: Merciless Death - Slaughter Lord.mp3
+Time: 184.536000
+Artist: Merciless Death
+AlbumArtist: Merciless Death
+Title: Slaughter Lord
+Album: Evil in the Night
+Track: 1
+Date: 2007
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185300
+song_end
+song_begin: Razor - Cross Me Fool.mp3
+Time: 193.776000
+Artist: Razor
+AlbumArtist: Razor
+Title: Cross Me Fool
+Album: Evil Invaders
+Track: 2
+Date: 1985-01-01
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185324
+song_end
+song_begin: Razor - Evil Invaders.mp3
+Time: 230.376000
+Artist: Razor
+AlbumArtist: Razor
+Title: Evil Invaders
+Album: Evil Invaders
+Track: 4
+Date: 1985-01-01
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185570
+song_end
+song_begin: Traitor - Space Seed.mp3
+Time: 177.240000
+Artist: Traitor
+AlbumArtist: Traitor
+Title: Space Seed
+Album: Exiled To The Surface
+Track: 10
+Date: 2022-07-08
+Genre: German Thrash Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186142
+song_end
+song_begin: Harlott - First World Solutions.mp3
+Time: 235.104000
+Artist: Harlott
+AlbumArtist: Harlott
+Title: First World Solutions
+Album: Extinction
+Track: 2
+Date: 2017-04-07
+Genre: Australian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185675
+song_end
+song_begin: Exodus - The Toxic Waltz.mp3
+Time: 290.304000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: The Toxic Waltz
+Album: Fabulous Disaster
+Track: 3
+Date: 1989
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185002
+song_end
+song_begin: Mortal Sin - Voyage Of The Disturbed.mp3
+Time: 306.480000
+Artist: Mortal Sin
+AlbumArtist: Mortal Sin
+Title: Voyage Of The Disturbed
+Album: Face of Despair
+Track: 2
+Date: 1987
+Genre: Australian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184976
+song_end
+song_begin: Pantera - 5 Minutes Alone.mp3
+Time: 347.472000
+Artist: Pantera
+AlbumArtist: Pantera
+Title: 5 Minutes Alone
+Album: Far Beyond Driven
+Track: 3
+Date: 1994
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185131
+song_end
+song_begin: Pantera - I'm Broken.mp3
+Time: 264.840000
+Artist: Pantera
+AlbumArtist: Pantera
+Title: I'm Broken
+Album: Far Beyond Driven
+Track: 4
+Date: 1994
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185112
+song_end
+song_begin: Lost Society - Trash All over You.mp3
+Time: 221.136000
+Artist: Lost Society
+AlbumArtist: Lost Society
+Title: Trash All over You
+Album: Fast Loud Death
+Track: 2
+Date: 2013-03-15
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185368
+song_end
+song_begin: Annihilator - Deadlock.mp3
+Time: 263.136000
+Artist: Annihilator
+AlbumArtist: Annihilator
+Title: Deadlock
+Album: Feast
+Track: 1
+Date: 2013-08-26
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185898
+song_end
+song_begin: Annihilator - King Of The Kill.mp3
+Time: 195.600000
+Artist: Annihilator
+AlbumArtist: Annihilator
+Title: King Of The Kill
+Album: Feast
+Track: 3
+Date: 2013-08-26
+Genre: Canadian Metal
+Disc: 2
+Format: 48000:24:2
+mtime: 1721185328
+song_end
+song_begin: Internal Corrosion - Legacy of Blood.mp3
+Time: 284.736000
+Artist: Internal Corrosion
+AlbumArtist: Internal Corrosion
+Title: Legacy of Blood
+Album: Feast Or Famine
+Track: 1
+Date: 2010-10-18
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185209
+song_end
+song_begin: Anthrax - Deathrider.mp3
+Time: 192.912000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Deathrider
+Album: Fistful of Metal
+Track: 1
+Date: 1984
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185122
+song_end
+song_begin: Anthrax - Metal Thrashing Mad.mp3
+Time: 162.384000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Metal Thrashing Mad
+Album: Fistful of Metal
+Track: 2
+Date: 1984
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185147
+song_end
+song_begin: Evile - Cult.mp3
+Time: 291.984000
+Artist: Evile
+AlbumArtist: Evile
+Title: Cult
+Album: Five Serpent's Teeth
+Track: 3
+Date: 2011-09-26
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185010
+song_end
+song_begin: Vio-Lence - Flesh from Bone.mp3
+Time: 302.880000
+Artist: Vio-Lence
+AlbumArtist: Vio-Lence
+Title: Flesh from Bone
+Album: Flesh from Bone
+Track: 1
+Date: 2022-01-10
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186096
+song_end
+song_begin: Xentrix - Questions.mp3
+Time: 309.840000
+Artist: Xentrix
+AlbumArtist: Xentrix
+Title: Questions
+Album: For Whose Advantage?
+Track: 1
+Date: 1990-08-21
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185095
+song_end
+song_begin: Forbidden - Through Eyes of Glass.mp3
+Time: 384.888000
+Artist: Forbidden
+AlbumArtist: Forbidden
+Title: Through Eyes of Glass
+Album: Forbidden Evil
+Track: 3
+Date: 1988
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185630
+song_end
+song_begin: Exodus - Good Day To Die.mp3
+Time: 287.712000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: Good Day To Die
+Album: Force Of Habit (Reissue)
+Track: 11
+Date: 1992
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185844
+song_end
+song_begin: Death Angel - Bored.mp3
+Time: 208.176000
+Artist: Death Angel
+AlbumArtist: Death Angel
+Title: Bored
+Album: Frolic Through The Park
+Track: 4
+Date: 1988
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185812
+song_end
+song_begin: Crisix - Extreme Fire Hazard.mp3
+Time: 203.568000
+Artist: Crisix
+AlbumArtist: Crisix
+Title: Extreme Fire Hazard
+Album: Full HD
+Track: 2
+Date: 2022-04-15
+Genre: Metal Catala
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186112
+song_end
+song_begin: Onslaught - Bow Down to the Clowns.mp3
+Time: 290.640000
+Artist: Onslaught
+AlbumArtist: Onslaught
+Title: Bow Down to the Clowns
+Album: Generation Antichrist
+Track: 3
+Date: 2020-08-07
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185730
+song_end
+song_begin: Slayer - Disciple.mp3
+Time: 215.736000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Disciple
+Album: God Hates Us All
+Track: 2
+Date: 2001-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185926
+song_end
+song_begin: Kreator - Satan Is Real.mp3
+Time: 278.232000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Satan Is Real
+Album: Gods of Violence
+Track: 3
+Date: 2017-01-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185632
+song_end
+song_begin: Kreator - Hail to the Hordes.mp3
+Time: 242.352000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Hail to the Hordes
+Album: Gods of Violence
+Track: 7
+Date: 2017-01-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185521
+song_end
+song_begin: Kreator - Fallen Brother.mp3
+Time: 277.032000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Fallen Brother
+Album: Gods of Violence
+Track: 9
+Date: 2017-01-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186003
+song_end
+song_begin: Municipal Waste - Grave Dive.mp3
+Time: 151.104000
+Artist: Municipal Waste
+AlbumArtist: Municipal Waste
+Title: Grave Dive
+Album: Grave Dive
+Track: 1
+Date: 2022-04-01
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186108
+song_end
+song_begin: Nuclear Assault - Critical Mass.mp3
+Time: 198.984000
+Artist: Nuclear Assault
+AlbumArtist: Nuclear Assault
+Title: Critical Mass
+Album: Handle With Care
+Track: 2
+Date: 1989
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185044
+song_end
+song_begin: Metallica - Hardwired.mp3
+Time: 191.376000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Hardwired
+Album: Hardwired…To Self-Destruct
+Track: 1
+Date: 2016-11-18
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185155
+song_end
+song_begin: Metallica - Moth Into Flame.mp3
+Time: 350.688000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Moth Into Flame
+Album: Hardwired…To Self-Destruct
+Track: 4
+Date: 2016-11-18
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185590
+song_end
+song_begin: Kreator - Hate Über Alles.mp3
+Time: 228.720000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Hate Über Alles
+Album: Hate Über Alles
+Track: 1
+Date: 2022-02-04
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186076
+song_end
+song_begin: Kreator - Strongest Of The Strong.mp3
+Time: 241.200000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Strongest Of The Strong
+Album: Hate Über Alles
+Track: 5
+Date: 2022-06-10
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186129
+song_end
+song_begin: Kreator - Hordes of Chaos (A Necrologue for the Elite).mp3
+Time: 304.200000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Hordes of Chaos (A Necrologue for the Elite)
+Album: Hordes of Chaos
+Track: 1
+Date: 2009-01-13
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185397
+song_end
+song_begin: Power Trip - Hornet's Nest.mp3
+Time: 279.840000
+Artist: Power Trip
+AlbumArtist: Power Trip
+Title: Hornet's Nest
+Album: Hornet's Nest
+Track: 1
+Date: 2019-10-08
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185025
+song_end
+song_begin: Overkill - Frankenstein.mp3
+Time: 208.824000
+Artist: Overkill
+AlbumArtist: Overkill
+Title: Frankenstein
+Album: Horrorscope
+Track: 8
+Date: 1991-08-30
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185779
+song_end
+song_begin: Suicidal Tendencies - How Will I Laugh Tomorrow.mp3
+Time: 403.440000
+Artist: Suicidal Tendencies
+AlbumArtist: Suicidal Tendencies
+Title: How Will I Laugh Tomorrow
+Album: How Will I Laugh Tomorrow When I Can't Even Smile Today
+Track: 4
+Date: 1988-09-02
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185963
+song_end
+song_begin: Death Angel - Humanicide.mp3
+Time: 342.312000
+Artist: Death Angel
+AlbumArtist: Death Angel
+Title: Humanicide
+Album: Humanicide
+Track: 1
+Date: 2019-05-31
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185078
+song_end
+song_begin: Kerry King - Idle Hands.mp3
+Time: 224.448000
+Artist: Kerry King
+AlbumArtist: Kerry King
+Title: Idle Hands
+Album: Idle Hands
+Track: 1
+Date: 2024-02-05
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186223
+song_end
+song_begin: Sacred Reich - Death Squad.mp3
+Time: 264.984000
+Artist: Sacred Reich
+AlbumArtist: Sacred Reich
+Title: Death Squad
+Album: Ignorance
+Track: 1
+Date: 1987-10-13
+Genre: Funk Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186001
+song_end
+song_begin: Sacred Reich - Surf Nicaragua.mp3
+Time: 280.440000
+Artist: Sacred Reich
+AlbumArtist: Sacred Reich
+Title: Surf Nicaragua
+Album: Ignorance & Surf Nicaragua
+Track: 1
+Date: 2007-06-14
+Genre: Funk Metal
+Disc: 2
+Format: 48000:24:2
+mtime: 1721184992
+song_end
+song_begin: Sodom - In War and Pieces.mp3
+Time: 251.424000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: In War and Pieces
+Album: In War and Pieces
+Track: 1
+Date: 2010-11-19
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185909
+song_end
+song_begin: Tonic Breed - Crypto Knight.mp3
+Time: 196.968000
+Artist: Tonic Breed
+AlbumArtist: Tonic Breed
+Title: Crypto Knight
+Album: Install Memory
+Track: 1
+Date: 2018-09-14
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185598
+song_end
+song_begin: Sepultura - Isolation.mp3
+Time: 296.112000
+Artist: Sepultura
+AlbumArtist: Sepultura
+Title: Isolation
+Album: Isolation
+Track: 1
+Date: 2019-11-08
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185012
+song_end
+song_begin: Sadus - It's The Sickness.mp3
+Time: 270.528000
+Artist: Sadus
+AlbumArtist: Sadus
+Title: It's The Sickness
+Album: It's The Sickness
+Track: 1
+Date: 2022-11-18
+Genre: Deathrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186177
+song_end
+song_begin: Nervosa - Endless Ambition.mp3
+Time: 203.184000
+Artist: Nervosa
+AlbumArtist: Nervosa
+Title: Endless Ambition
+Album: Jailbreak
+Track: 1
+Date: 2023-09-29
+Genre: Brazilian Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186213
+song_end
+song_begin: Metallica - The Four Horsemen - Remastered.mp3
+Time: 432.576000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: The Four Horsemen - Remastered
+Album: Kill 'Em All (Deluxe / Remastered)
+Track: 2
+Date: 1983-07-24
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185140
+song_end
+song_begin: Metallica - Seek & Destroy - Remastered.mp3
+Time: 414.744000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Seek & Destroy - Remastered
+Album: Kill 'Em All (Deluxe / Remastered)
+Track: 9
+Date: 1983-07-24
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184990
+song_end
+song_begin: Metallica - Whiplash - Remastered.mp3
+Time: 247.056000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Whiplash - Remastered
+Album: Kill 'Em All (Remastered)
+Track: 6
+Date: 1983-07-24
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185486
+song_end
+song_begin: Enforced - Malignance.mp3
+Time: 261.144000
+Artist: Enforced
+AlbumArtist: Enforced
+Title: Malignance
+Album: Kill Grid
+Track: 4
+Date: 2021-03-12
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186035
+song_end
+song_begin: Voivod - Ravenous Medicine.mp3
+Time: 262.632000
+Artist: Voivod
+AlbumArtist: Voivod
+Title: Ravenous Medicine
+Album: Killing Technology
+Track: 6
+Date: 1987-04-03
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185055
+song_end
+song_begin: Anthrax - Black Math.mp3
+Time: 183.984000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Black Math
+Album: Leftoverthrax
+Track: 2
+Date: 2017-06-09
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185448
+song_end
+song_begin: Vio-Lence - Let the World Burn.mp3
+Time: 310.224000
+Artist: Vio-Lence
+AlbumArtist: Vio-Lence
+Title: Let the World Burn
+Album: Let the World Burn
+Track: 1
+Date: 2022-02-09
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186095
+song_end
+song_begin: Suicidal Tendencies - Lost Again.mp3
+Time: 315.576000
+Artist: Suicidal Tendencies
+AlbumArtist: Suicidal Tendencies
+Title: Lost Again
+Album: Lights...Camera...Revolution
+Track: 2
+Date: 1990-07-02
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185608
+song_end
+song_begin: Suicidal Tendencies - Send Me Your Money.mp3
+Time: 202.200000
+Artist: Suicidal Tendencies
+AlbumArtist: Suicidal Tendencies
+Title: Send Me Your Money
+Album: Lights...Camera...Revolution
+Track: 7
+Date: 1990-07-02
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185386
+song_end
+song_begin: Suicidal Tendencies - Go'n Breakdown.mp3
+Time: 278.352000
+Artist: Suicidal Tendencies
+AlbumArtist: Suicidal Tendencies
+Title: Go'n Breakdown
+Album: Lights...Camera...Revolution
+Track: 10
+Date: 1990-07-02
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185292
+song_end
+song_begin: Metallica - Lux Æterna.mp3
+Time: 201.792000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Lux Æterna
+Album: Lux Æterna
+Track: 1
+Date: 2022-11-28
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186175
+song_end
+song_begin: Sodom - Among the Weirdcong.mp3
+Time: 308.184000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Among the Weirdcong
+Album: M-16
+Track: 1
+Date: 2001-10-22
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186099
+song_end
+song_begin: Sodom - Napalm in the Morning.mp3
+Time: 357.024000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Napalm in the Morning
+Album: M-16
+Track: 3
+Date: 2001-10-22
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185479
+song_end
+song_begin: Legion Of The Damned - Legion of the Damned.mp3
+Time: 192.312000
+Artist: Legion Of The Damned
+AlbumArtist: Legion Of The Damned
+Title: Legion of the Damned
+Album: Malevolent Rapture
+Track: 1
+Date: 2006
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185492
+song_end
+song_begin: Fueled By Fire - Mangled Truth.mp3
+Time: 243.648000
+Artist: Fueled By Fire
+AlbumArtist: Fueled By Fire
+Title: Mangled Truth
+Album: Mangled Truth
+Track: 1
+Date: 2022-02-02
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186085
+song_end
+song_begin: Sepultura, Devin Townsend - Mask.mp3
+Time: 281.760000
+Artist: Sepultura/Devin Townsend
+AlbumArtist: Sepultura
+Title: Mask
+Album: Mask
+Track: 1
+Date: 2021-06-04
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186036
+song_end
+song_begin: Dust Bolt - Mass Confusion.mp3
+Time: 283.248000
+Artist: Dust Bolt
+AlbumArtist: Dust Bolt
+Title: Mass Confusion
+Album: Mass Confusion
+Track: 2
+Date: 2016-07-08
+Genre: German Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185743
+song_end
+song_begin: Metallica - Battery.mp3
+Time: 312.384000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Battery
+Album: Master Of Puppets (Remastered)
+Track: 1
+Date: 1986-03-03
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184926
+song_end
+song_begin: Metallica - Leper Messiah.mp3
+Time: 339.912000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Leper Messiah
+Album: Master Of Puppets (Remastered)
+Track: 6
+Date: 1986-03-03
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185280
+song_end
+song_begin: Coroner - Semtex Revolution.mp3
+Time: 331.032000
+Artist: Coroner
+AlbumArtist: Coroner
+Title: Semtex Revolution
+Album: Mental Vortex
+Track: 3
+Date: 1991-08-12
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185673
+song_end
+song_begin: Metal Church - Metal Church.mp3
+Time: 302.400000
+Artist: Metal Church
+AlbumArtist: Metal Church
+Title: Metal Church
+Album: Metal Church
+Track: 2
+Date: 1984
+Genre: Glam Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185425
+song_end
+song_begin: Metal Church - Gods of Wrath.mp3
+Time: 401.040000
+Artist: Metal Church
+AlbumArtist: Metal Church
+Title: Gods of Wrath
+Album: Metal Church
+Track: 4
+Date: 1984
+Genre: Glam Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185764
+song_end
+song_begin: Metallica - Sad But True.mp3
+Time: 324.600000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Sad But True
+Album: Metallica
+Track: 2
+Date: 1991-08-12
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185715
+song_end
+song_begin: Exhorder - My Time.mp3
+Time: 233.184000
+Artist: Exhorder
+AlbumArtist: Exhorder
+Title: My Time
+Album: Mourn the Southern Skies
+Track: 1
+Date: 2019-09-20
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185332
+song_end
+song_begin: Megadeth, ICE-T - Night Stalkers.mp3
+Time: 398.280000
+Artist: Megadeth/ICE-T
+AlbumArtist: Megadeth
+Title: Night Stalkers
+Album: Night Stalkers / We’ll Be Back
+Track: 1
+Date: 2022-07-22
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186152
+song_end
+song_begin: Power Trip - Executioner's Tax (Swing of the Axe).mp3
+Time: 225.288000
+Artist: Power Trip
+AlbumArtist: Power Trip
+Title: Executioner's Tax (Swing of the Axe)
+Album: Nightmare Logic
+Track: 2
+Date: 2017-02-24
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184975
+song_end
+song_begin: Lost Society - No Absolution.mp3
+Time: 250.296000
+Artist: Lost Society
+AlbumArtist: Lost Society
+Title: No Absolution
+Album: No Absolution
+Track: 2
+Date: 2020-02-21
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185520
+song_end
+song_begin: Lost Society - Deliver Me.mp3
+Time: 303.528000
+Artist: Lost Society
+AlbumArtist: Lost Society
+Title: Deliver Me
+Album: No Absolution
+Track: 10
+Date: 2020-02-21
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185651
+song_end
+song_begin: Hirax - Bombs of Death.mp3
+Time: 107.808000
+Artist: Hirax
+AlbumArtist: Hirax
+Title: Bombs of Death
+Album: Not Dead Yet
+Track: 4
+Date: 1987
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185696
+song_end
+song_begin: Power Trip - Divine Apprehension.mp3
+Time: 257.736000
+Artist: Power Trip
+AlbumArtist: Power Trip
+Title: Divine Apprehension
+Album: Opening Fire: 2008-2014
+Track: 1
+Date: 2018-04-27
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185947
+song_end
+song_begin: Kreator - Phobia.mp3
+Time: 202.560000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Phobia
+Album: Outcast
+Track: 2
+Date: 1997-06-20
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185965
+song_end
+song_begin: Terror, Corpsegrinder - Can't Help but Hate.mp3
+Time: 86.136000
+Artist: Terror/Corpsegrinder
+AlbumArtist: Terror
+Title: Can't Help but Hate
+Album: Pain into Power
+Track: 7
+Date: 2022-05-06
+Genre: Hardcore
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186113
+song_end
+song_begin: Tankard - Lockdown Forever.mp3
+Time: 246.600000
+Artist: Tankard
+AlbumArtist: Tankard
+Title: Lockdown Forever
+Album: Pavlov's Dawgs
+Track: 9
+Date: 2022-09-30
+Genre: German Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186167
+song_end
+song_begin: Sodom - Nuclear Winter.mp3
+Time: 323.760000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Nuclear Winter
+Album: Persecution Mania
+Track: 1
+Date: 1987
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185504
+song_end
+song_begin: Anthrax - Got The Time.mp3
+Time: 164.376000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Got The Time
+Album: Persistence Of Time (30th Anniversary Remaster)
+Track: 8
+Date: 1990-08-21
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185828
+song_end
+song_begin: Kreator - Phantom Antichrist.mp3
+Time: 270.960000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Phantom Antichrist
+Album: Phantom Antichrist
+Track: 2
+Date: 2012-06-01
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185568
+song_end
+song_begin: Kreator - Pleasure to Kill.mp3
+Time: 248.808000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Pleasure to Kill
+Album: Pleasure to Kill
+Track: 4
+Date: 1986-04-01
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185010
+song_end
+song_begin: Nailbomb - Cockroaches.mp3
+Time: 310.536000
+Artist: Nailbomb
+AlbumArtist: Nailbomb
+Title: Cockroaches
+Album: Point Blank
+Track: 7
+Date: 1994-02-28
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185503
+song_end
+song_begin: Havok - Point Of No Return.mp3
+Time: 277.368000
+Artist: Havok
+AlbumArtist: Havok
+Title: Point Of No Return
+Album: Point Of No Return EP
+Track: 1
+Date: 2012-05-22
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185660
+song_end
+song_begin: Havok - From The Cradle To The Grave.mp3
+Time: 301.776000
+Artist: Havok
+AlbumArtist: Havok
+Title: From The Cradle To The Grave
+Album: Point Of No Return EP
+Track: 2
+Date: 2012-05-22
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185974
+song_end
+song_begin: Testament - Practice What You Preach.mp3
+Time: 297.336000
+Artist: Testament
+AlbumArtist: Testament
+Title: Practice What You Preach
+Album: Practice What You Preach
+Track: 1
+Date: 1989-07-25
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185157
+song_end
+song_begin: Soulfly - Jumpdafuckup.mp3
+Time: 311.256000
+Artist: Soulfly
+AlbumArtist: Soulfly
+Title: Jumpdafuckup
+Album: Primitive (Special Edition)
+Track: 4
+Date: 2000-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185915
+song_end
+song_begin: Soulfly - Prophecy.mp3
+Time: 215.880000
+Artist: Soulfly
+AlbumArtist: Soulfly
+Title: Prophecy
+Album: Prophecy
+Track: 1
+Date: 2004-03-22
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185786
+song_end
+song_begin: Living Death - Horrible Infanticide.mp3
+Time: 223.176000
+Artist: Living Death
+AlbumArtist: Living Death
+Title: Horrible Infanticide
+Album: Protected from Reality
+Track: 1
+Date: 1986
+Genre: German Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185060
+song_end
+song_begin: Coroner - Masked Jackal.mp3
+Time: 287.640000
+Artist: Coroner
+AlbumArtist: Coroner
+Title: Masked Jackal
+Album: Punishment for Decadence
+Track: 3
+Date: 1988-08-01
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185809
+song_end
+song_begin: Evildead - Raising Fresh Hell.mp3
+Time: 208.368000
+Artist: Evildead
+AlbumArtist: Evildead
+Title: Raising Fresh Hell
+Album: Raising Fresh Hell
+Track: 1
+Date: 2024-03-13
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186235
+song_end
+song_begin: Slayer - Angel Of Death.mp3
+Time: 291.816000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Angel Of Death
+Album: Reign In Blood (Expanded)
+Track: 1
+Date: 1986-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184917
+song_end
+song_begin: Slayer - Piece By Piece.mp3
+Time: 122.592000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Piece By Piece
+Album: Reign In Blood (Expanded)
+Track: 2
+Date: 1986-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185807
+song_end
+song_begin: Slayer - Repentless.mp3
+Time: 199.896000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Repentless
+Album: Repentless
+Track: 2
+Date: 2015-09-11
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185116
+song_end
+song_begin: The Haunted - 99.mp3
+Time: 238.848000
+Artist: The Haunted
+AlbumArtist: The Haunted
+Title: 99
+Album: rEVOLVEr (Deluxe Edition)
+Track: 2
+Date: 2004-07-13
+Genre: Classic Garage Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184959
+song_end
+song_begin: Metallica - Ride The Lightning - Remastered.mp3
+Time: 397.032000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Ride The Lightning - Remastered
+Album: Ride The Lightning (Remastered)
+Track: 2
+Date: 1984-07-26
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186023
+song_end
+song_begin: Metallica - For Whom The Bell Tolls - Remastered.mp3
+Time: 310.008000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: For Whom The Bell Tolls - Remastered
+Album: Ride The Lightning (Remastered)
+Track: 3
+Date: 1984-07-26
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185839
+song_end
+song_begin: Metallica - Creeping Death - Remastered.mp3
+Time: 395.736000
+Artist: Metallica
+AlbumArtist: Metallica
+Title: Creeping Death - Remastered
+Album: Ride The Lightning (Remastered)
+Track: 7
+Date: 1984-07-26
+Genre: Hard Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185514
+song_end
+song_begin: Soulfly - Ritual.mp3
+Time: 295.152000
+Artist: Soulfly
+AlbumArtist: Soulfly
+Title: Ritual
+Album: Ritual
+Track: 1
+Date: 2018-10-19
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185692
+song_end
+song_begin: Sepultura - Roots Bloody Roots.mp3
+Time: 212.280000
+Artist: Sepultura
+AlbumArtist: Sepultura
+Title: Roots Bloody Roots
+Album: Roots
+Track: 1
+Date: 1996-02-20
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185553
+song_end
+song_begin: Sepultura - Attitude.mp3
+Time: 255.432000
+Artist: Sepultura
+AlbumArtist: Sepultura
+Title: Attitude
+Album: Roots
+Track: 2
+Date: 1996-02-20
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185237
+song_end
+song_begin: Megadeth - Holy Wars...The Punishment Due - 2004 Remix.mp3
+Time: 392.640000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: Holy Wars...The Punishment Due - 2004 Remix
+Album: Rust In Peace (2004 Remix / Expanded Edition)
+Track: 1
+Date: 1990-10-04
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185362
+song_end
+song_begin: Megadeth - Hangar 18 - 2004 Remix.mp3
+Time: 311.232000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: Hangar 18 - 2004 Remix
+Album: Rust In Peace (2004 Remix / Expanded Edition)
+Track: 2
+Date: 1990-10-04
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185070
+song_end
+song_begin: Megadeth - Tornado Of Souls - 2004 Remix.mp3
+Time: 319.296000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: Tornado Of Souls - 2004 Remix
+Album: Rust In Peace (2004 Remix / Expanded Edition)
+Track: 7
+Date: 1990-10-04
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184934
+song_end
+song_begin: Lowest Creature - Reapers Fool.mp3
+Time: 202.056000
+Artist: Lowest Creature
+AlbumArtist: Lowest Creature
+Title: Reapers Fool
+Album: Sacrilegious Pain
+Track: 3
+Date: 2019-05-10
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185756
+song_end
+song_begin: Suicidal Angels - Mourning of the Cursed.mp3
+Time: 115.416000
+Artist: Suicidal Angels
+AlbumArtist: Suicidal Angels
+Title: Mourning of the Cursed
+Album: Sanctify the Darkness
+Track: 9
+Date: 2009-11-20
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185055
+song_end
+song_begin: Slayer - Dead Skin Mask.mp3
+Time: 320.544000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Dead Skin Mask
+Album: Seasons In The Abyss
+Track: 5
+Date: 1990-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185534
+song_end
+song_begin: Slayer - Skeletons Of Society.mp3
+Time: 280.392000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Skeletons Of Society
+Album: Seasons In The Abyss
+Track: 7
+Date: 1990-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185604
+song_end
+song_begin: Slayer - Seasons In The Abyss.mp3
+Time: 397.872000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Seasons In The Abyss
+Album: Seasons In The Abyss
+Track: 10
+Date: 1990-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185673
+song_end
+song_begin: Xentrix - Seven Words.mp3
+Time: 236.928000
+Artist: Xentrix
+AlbumArtist: Xentrix
+Title: Seven Words
+Album: Seven Words
+Track: 1
+Date: 2022-10-07
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186168
+song_end
+song_begin: Sextrash - Seduced by Evil.mp3
+Time: 197.328000
+Artist: Sextrash
+AlbumArtist: Sextrash
+Title: Seduced by Evil
+Album: Sexual Carnage
+Track: 5
+Date: 1990-03-09
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185777
+song_end
+song_begin: Slayer - Black Magic.mp3
+Time: 243.384000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: Black Magic
+Album: Show No Mercy
+Track: 6
+Date: 1983-12-03
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185549
+song_end
+song_begin: Exhorder - Desecrator.mp3
+Time: 368.880000
+Artist: Exhorder
+AlbumArtist: Exhorder
+Title: Desecrator
+Album: Slaughter In The Vatican
+Track: 3
+Date: 1990-10-23
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185568
+song_end
+song_begin: Municipal Waste - Slime and Punishment.mp3
+Time: 142.776000
+Artist: Municipal Waste
+AlbumArtist: Municipal Waste
+Title: Slime and Punishment
+Album: Slime and Punishment
+Track: 8
+Date: 2017-06-23
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185468
+song_end
+song_begin: Sodom - Sodom & Gomorrah.mp3
+Time: 246.264000
+Artist: Sodom
+AlbumArtist: Sodom
+Title: Sodom & Gomorrah
+Album: Sodom & Gomorrah
+Track: 1
+Date: 2020-09-25
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185752
+song_end
+song_begin: Nuclear Assault - Something Wicked.mp3
+Time: 281.760000
+Artist: Nuclear Assault
+AlbumArtist: Nuclear Assault
+Title: Something Wicked
+Album: Something Wicked
+Track: 1
+Date: 1993-01-01
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185353
+song_end
+song_begin: Soulfly - No Hope = No Fear.mp3
+Time: 275.880000
+Artist: Soulfly
+AlbumArtist: Soulfly
+Title: No Hope = No Fear
+Album: Soulfly
+Track: 2
+Date: 1998-04-13
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185316
+song_end
+song_begin: Slayer - South Of Heaven.mp3
+Time: 298.560000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: South Of Heaven
+Album: South Of Heaven
+Track: 1
+Date: 1988-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185899
+song_end
+song_begin: Morbid Saint - Lock up Your Children.mp3
+Time: 211.080000
+Artist: Morbid Saint
+AlbumArtist: Morbid Saint
+Title: Lock up Your Children
+Album: Spectrum of Death
+Track: 1
+Date: 1989-03-01
+Genre: Deathrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185309
+song_end
+song_begin: Gama Bomb - 666Teen.mp3
+Time: 176.376000
+Artist: Gama Bomb
+AlbumArtist: Gama Bomb
+Title: 666Teen
+Album: Speed Between the Lines
+Track: 3
+Date: 2018-10-12
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185866
+song_end
+song_begin: Anthrax - Madhouse.mp3
+Time: 259.800000
+Artist: Anthrax
+AlbumArtist: Anthrax
+Title: Madhouse
+Album: Spreading The Disease
+Track: 3
+Date: 1985
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185333
+song_end
+song_begin: Lamb of God, Kreator - State Of Unrest.mp3
+Time: 187.920000
+Artist: Lamb of God/Kreator
+AlbumArtist: Lamb of God
+Title: State Of Unrest
+Album: State Of Unrest
+Track: 1
+Date: 2023-02-10
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186192
+song_end
+song_begin: The Haunted - Preachers of Death.mp3
+Time: 295.584000
+Artist: The Haunted
+AlbumArtist: The Haunted
+Title: Preachers of Death
+Album: Strength in Numbers
+Track: 4
+Date: 2017-08-25
+Genre: Classic Garage Rock
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185957
+song_end
+song_begin: Suicidal Tendencies - Institutionalized.mp3
+Time: 229.992000
+Artist: Suicidal Tendencies
+AlbumArtist: Suicidal Tendencies
+Title: Institutionalized
+Album: Suicidal Tendencies
+Track: 6
+Date: 1983
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185071
+song_end
+song_begin: Soulfly - Superstition.mp3
+Time: 193.608000
+Artist: Soulfly
+AlbumArtist: Soulfly
+Title: Superstition
+Album: Superstition
+Track: 1
+Date: 2022-05-05
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186150
+song_end
+song_begin: Death - Symbolic.mp3
+Time: 392.832000
+Artist: Death
+AlbumArtist: Death
+Title: Symbolic
+Album: Symbolic (Remastered Version)
+Track: 1
+Date: 1995-03-19
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185634
+song_end
+song_begin: Hallows Eve - Plunging to Megadeath.mp3
+Time: 294.096000
+Artist: Hallows Eve
+AlbumArtist: Hallows Eve
+Title: Plunging to Megadeath
+Album: Tales of Terror
+Track: 1
+Date: 1985
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185525
+song_end
+song_begin: Exodus - Blacklist.mp3
+Time: 376.944000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: Blacklist
+Album: Tempo Of The Damned
+Track: 3
+Date: 2004-12-28
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184907
+song_end
+song_begin: Lost Society - Attaxic.mp3
+Time: 232.416000
+Artist: Lost Society
+AlbumArtist: Lost Society
+Title: Attaxic
+Album: Terror Hungry
+Track: 3
+Date: 2014-04-04
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185292
+song_end
+song_begin: Sacred Reich - The American Way.mp3
+Time: 221.664000
+Artist: Sacred Reich
+AlbumArtist: Sacred Reich
+Title: The American Way
+Album: The American Way
+Track: 2
+Date: 1990
+Genre: Funk Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184949
+song_end
+song_begin: Destruction - Thrash Till Death.mp3
+Time: 263.568000
+Artist: Destruction
+AlbumArtist: Destruction
+Title: Thrash Till Death
+Album: The Antichrist
+Track: 2
+Date: 2001-08-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185164
+song_end
+song_begin: Municipal Waste - The Art of Partying.mp3
+Time: 124.032000
+Artist: Municipal Waste
+AlbumArtist: Municipal Waste
+Title: The Art of Partying
+Album: The Art of Partying
+Track: 2
+Date: 2007
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185263
+song_end
+song_begin: Municipal Waste - Sadistic Magician.mp3
+Time: 129.432000
+Artist: Municipal Waste
+AlbumArtist: Municipal Waste
+Title: Sadistic Magician
+Album: The Art of Partying
+Track: 10
+Date: 2007
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185170
+song_end
+song_begin: Exodus - Funeral Hymn.mp3
+Time: 517.944000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: Funeral Hymn
+Album: The Atrocity Exhibition - Exhibit A
+Track: 3
+Date: 2007-10-26
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185981
+song_end
+song_begin: Exodus - The Beatings Will Continue (Until Morale Improves).mp3
+Time: 181.224000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: The Beatings Will Continue (Until Morale Improves)
+Album: The Beatings Will Continue (Until Morale Improves)
+Track: 1
+Date: 2021-08-20
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186051
+song_end
+song_begin: Metal Church - Start the Fire.mp3
+Time: 225.840000
+Artist: Metal Church
+AlbumArtist: Metal Church
+Title: Start the Fire
+Album: The Dark
+Track: 2
+Date: 1986-09-30
+Genre: Glam Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185688
+song_end
+song_begin: Death Angel - The Dream Calls for Blood.mp3
+Time: 251.832000
+Artist: Death Angel
+AlbumArtist: Death Angel
+Title: The Dream Calls for Blood
+Album: The Dream Calls for Blood
+Track: 4
+Date: 2013-10-11
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185870
+song_end
+song_begin: Testament - More Than Meets the Eye.mp3
+Time: 273.264000
+Artist: Testament
+AlbumArtist: Testament
+Title: More Than Meets the Eye
+Album: The Formation of Damnation
+Track: 2
+Date: 2008-04-25
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185898
+song_end
+song_begin: Testament - D.N.R. (Do Not Resuscitate).mp3
+Time: 212.520000
+Artist: Testament
+AlbumArtist: Testament
+Title: D.N.R. (Do Not Resuscitate)
+Album: The Gathering
+Track: 1
+Date: 1999-06-08
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185985
+song_end
+song_begin: Testament - Down for Life.mp3
+Time: 203.712000
+Artist: Testament
+AlbumArtist: Testament
+Title: Down for Life
+Album: The Gathering
+Track: 2
+Date: 1999-06-08
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185833
+song_end
+song_begin: Testament - 3 Days in Darkness.mp3
+Time: 280.320000
+Artist: Testament
+AlbumArtist: Testament
+Title: 3 Days in Darkness
+Album: The Gathering
+Track: 5
+Date: 1999-06-08
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185725
+song_end
+song_begin: Overkill - Mean, Green, Killing Machine.mp3
+Time: 449.832000
+Artist: Overkill
+AlbumArtist: Overkill
+Title: Mean, Green, Killing Machine
+Album: The Grinding Wheel
+Track: 1
+Date: 2017-02-10
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184970
+song_end
+song_begin: Vulture - Clashing Iron.mp3
+Time: 206.976000
+Artist: Vulture
+AlbumArtist: Vulture
+Title: Clashing Iron
+Album: The Guillotine
+Track: 2
+Date: 2017-08-25
+Genre: Black Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185087
+song_end
+song_begin: Excel - Tapping into the Emotional Void.mp3
+Time: 260.712000
+Artist: Excel
+AlbumArtist: Excel
+Title: Tapping into the Emotional Void
+Album: The Joke's on You
+Track: 4
+Date: 2016-11-18
+Genre: California Hardcore
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185553
+song_end
+song_begin: Exhorder - The Man That Never Was.mp3
+Time: 203.040000
+Artist: Exhorder
+AlbumArtist: Exhorder
+Title: The Man That Never Was
+Album: The Man That Never Was
+Track: 1
+Date: 2020-02-21
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185928
+song_end
+song_begin: Crisix - Ultra Thrash.mp3
+Time: 309.984000
+Artist: Crisix
+AlbumArtist: Crisix
+Title: Ultra Thrash
+Album: The Menace
+Track: 2
+Date: 2011
+Genre: Metal Catala
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185713
+song_end
+song_begin: Testament - Electric Crown.mp3
+Time: 330.264000
+Artist: Testament
+AlbumArtist: Testament
+Title: Electric Crown
+Album: The Ritual
+Track: 2
+Date: 1992-04-28
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184929
+song_end
+song_begin: Overkill - The Surgeon.mp3
+Time: 333.216000
+Artist: Overkill
+AlbumArtist: Overkill
+Title: The Surgeon
+Album: The Surgeon
+Track: 1
+Date: 2023-01-27
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186194
+song_end
+song_begin: Death Angel - Kill as One.mp3
+Time: 299.832000
+Artist: Death Angel
+AlbumArtist: Death Angel
+Title: Kill as One
+Album: The Ultra-Violence
+Track: 4
+Date: 1987
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185404
+song_end
+song_begin: Evile - The Unknown.mp3
+Time: 285.504000
+Artist: Evile
+AlbumArtist: Evile
+Title: The Unknown
+Album: The Unknown
+Track: 1
+Date: 2023-05-18
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186207
+song_end
+song_begin: Exodus - The Years of Death and Dying.mp3
+Time: 322.704000
+Artist: Exodus
+AlbumArtist: Exodus
+Title: The Years of Death and Dying
+Album: The Years of Death and Dying
+Track: 1
+Date: 2021-10-15
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186056
+song_end
+song_begin: Overkill - Elimination.mp3
+Time: 275.424000
+Artist: Overkill
+AlbumArtist: Overkill
+Title: Elimination
+Album: The Years of Decay
+Track: 2
+Date: 1989-10-10
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185140
+song_end
+song_begin: Zig Zags - Killer Of Killers.mp3
+Time: 228.672000
+Artist: Zig Zags
+AlbumArtist: Zig Zags
+Title: Killer Of Killers
+Album: They'll Never Take Us Alive
+Track: 2
+Date: 2019-05-10
+Genre: New Wave Of Thrash Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185736
+song_end
+song_begin: Destruction - Mad Butcher.mp3
+Time: 225.312000
+Artist: Destruction
+AlbumArtist: Destruction
+Title: Mad Butcher
+Album: Thrash Anthems
+Track: 4
+Date: 2007
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184944
+song_end
+song_begin: Destruction - Curse The Gods.mp3
+Time: 315.096000
+Artist: Destruction
+AlbumArtist: Destruction
+Title: Curse The Gods
+Album: Thrash Anthems
 Track: 15
-Date: 2014-10-15
+Date: 2007
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185028
+song_end
+song_begin: D.R.I. - Beneath The Wheel.mp3
+Time: 336.240000
+Artist: D.R.I.
+AlbumArtist: D.R.I.
+Title: Beneath The Wheel
+Album: Thrash Zone
+Track: 2
+Date: 1989-10-10
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185353
+song_end
+song_begin: Napalm Death - Contagion.mp3
+Time: 245.496000
+Artist: Napalm Death
+AlbumArtist: Napalm Death
+Title: Contagion
+Album: Throes Of Joy In The Jaws Of Defeatism (Bonus Tracks Version)
+Track: 4
+Date: 2020-09-18
+Genre: Birmingham Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185822
+song_end
+song_begin: Vader - Triumph of Death.mp3
+Time: 225.960000
+Artist: Vader
+AlbumArtist: Vader
+Title: Triumph of Death
+Album: Tibi Et Igni
+Track: 4
+Date: 2014-05-30
+Genre: Black Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185491
+song_end
+song_begin: Havok - Prepare For Attack.mp3
+Time: 236.928000
+Artist: Havok
+AlbumArtist: Havok
+Title: Prepare For Attack
+Album: Time Is Up
+Track: 1
+Date: 2011-03-29
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185247
+song_end
+song_begin: Testament - Children of the Next Level.mp3
+Time: 373.968000
+Artist: Testament
+AlbumArtist: Testament
+Title: Children of the Next Level
+Album: Titans of Creation
+Track: 1
+Date: 2020-04-03
 Genre: Alternative Metal
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893894
+mtime: 1721185797
 song_end
-song_begin: Slipknot - The Burden.mp3
-Time: 323.328000
-Artist: Slipknot
-AlbumArtist: Slipknot
-Title: The Burden
-Album: .5: The Gray Chapter (Special Edition)
-Track: 16
-Date: 2014-10-15
+song_begin: Testament - Night of the Witch.mp3
+Time: 392.112000
+Artist: Testament
+AlbumArtist: Testament
+Title: Night of the Witch
+Album: Titans of Creation
+Track: 4
+Date: 2020-04-03
 Genre: Alternative Metal
 Disc: 1
 Format: 48000:24:2
-mtime: 1717893896
+mtime: 1721185651
 song_end
+song_begin: Demolition Hammer - Infectious Hospital Waste.mp3
+Time: 301.632000
+Artist: Demolition Hammer
+AlbumArtist: Demolition Hammer
+Title: Infectious Hospital Waste
+Album: Tortured Existence
+Track: 5
+Date: 1990
+Genre: Deathrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185667
+song_end
+song_begin: Terror - This World Never Wanted Me.mp3
+Time: 130.392000
+Artist: Terror
+AlbumArtist: Terror
+Title: This World Never Wanted Me
+Album: Total Retaliation
+Track: 1
+Date: 2018-09-28
+Genre: Hardcore
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185961
+song_end
+song_begin: Soulfly - Filth Upon Filth.mp3
+Time: 173.280000
+Artist: Soulfly
+AlbumArtist: Soulfly
+Title: Filth Upon Filth
+Album: Totem
+Track: 3
+Date: 2022-08-05
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186161
+song_end
+song_begin: Havok - Give Me Liberty…Or Give Me Death.mp3
+Time: 284.136000
+Artist: Havok
+AlbumArtist: Havok
+Title: Give Me Liberty…Or Give Me Death
+Album: Unnatural Selection
+Track: 2
+Date: 2013-06-25
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185371
+song_end
+song_begin: Gama Bomb - Ninja UntouchablesUntouchable Glory.mp3
+Time: 166.968000
+Artist: Gama Bomb
+AlbumArtist: Gama Bomb
+Title: Ninja Untouchables/Untouchable Glory
+Album: Untouchable Glory
+Track: 1
+Date: 2015-10-30
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185894
+song_end
+song_begin: Onslaught - 66'fucking'6.mp3
+Time: 311.232000
+Artist: Onslaught
+AlbumArtist: Onslaught
+Title: 66'fucking'6
+Album: VI
+Track: 6
+Date: 2013-09-20
+Genre: Old School Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185588
+song_end
+song_begin: Nervosa - Death!.mp3
+Time: 231.480000
+Artist: Nervosa
+AlbumArtist: Nervosa
+Title: Death!
+Album: Victim of Yourself
+Track: 8
+Date: 2014-03-03
+Genre: Brazilian Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185097
+song_end
+song_begin: Atrophy - Violent by Nature.mp3
+Time: 234.672000
+Artist: Atrophy
+AlbumArtist: Atrophy
+Title: Violent by Nature
+Album: Violent By Nature
+Track: 2
+Date: 1990-03-26
+Genre: New Wave Of Thrash Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185028
+song_end
+song_begin: Razor - The Marshall Arts.mp3
+Time: 165.024000
+Artist: Razor
+AlbumArtist: Razor
+Title: The Marshall Arts
+Album: Violent Restitution (Deluxe Reissue)
+Track: 1
+Date: 2015-05-05
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184953
+song_end
+song_begin: Razor - Hypertension.mp3
+Time: 199.968000
+Artist: Razor
+AlbumArtist: Razor
+Title: Hypertension
+Album: Violent Restitution (Deluxe Reissue)
+Track: 2
+Date: 2015-05-05
+Genre: Canadian Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185943
+song_end
+song_begin: Kreator - Violent Revolution.mp3
+Time: 294.840000
+Artist: Kreator
+AlbumArtist: Kreator
+Title: Violent Revolution
+Album: Violent Revolution
+Track: 3
+Date: 2001-09-25
+Genre: Death Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185375
+song_end
+song_begin: Metal Allegiance - Bound by Silence (feat. John Bush).mp3
+Time: 297.528000
+Artist: Metal Allegiance/John Bush
+AlbumArtist: Metal Allegiance
+Title: Bound by Silence (feat. John Bush)
+Album: Volume II: Power Drunk Majesty
+Track: 2
+Date: 2018-09-07
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185485
+song_end
+song_begin: Pantera - Walk.mp3
+Time: 315.144000
+Artist: Pantera
+AlbumArtist: Pantera
+Title: Walk
+Album: Vulgar Display of Power
+Track: 3
+Date: 1992-02-21
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721184948
+song_end
+song_begin: Enforced - Hanged by My Hand.mp3
+Time: 193.488000
+Artist: Enforced
+AlbumArtist: Enforced
+Title: Hanged by My Hand
+Album: War Remains
+Track: 3
+Date: 2023-04-28
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186200
+song_end
+song_begin: Municipal Waste - Wave of Death.mp3
+Time: 113.064000
+Artist: Municipal Waste
+AlbumArtist: Municipal Waste
+Title: Wave of Death
+Album: Wave of Death
+Track: 1
+Date: 2019-08-30
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185706
+song_end
+song_begin: Megadeth - We’ll Be Back.mp3
+Time: 269.496000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: We’ll Be Back
+Album: We’ll Be Back
+Track: 1
+Date: 2022-06-23
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186131
+song_end
+song_begin: Hatebreed - Instinctive (Slaughterlust).mp3
+Time: 172.536000
+Artist: Hatebreed
+AlbumArtist: Hatebreed
+Title: Instinctive (Slaughterlust)
+Album: Weight of the False Self
+Track: 1
+Date: 2020-11-27
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185914
+song_end
+song_begin: Suicidal Angels - When the Lions Die.mp3
+Time: 346.080000
+Artist: Suicidal Angels
+AlbumArtist: Suicidal Angels
+Title: When the Lions Die
+Album: When the Lions Die
+Track: 1
+Date: 2023-11-24
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186221
+song_end
+song_begin: Lowest Creature - Witch Supreme.mp3
+Time: 295.632000
+Artist: Lowest Creature
+AlbumArtist: Lowest Creature
+Title: Witch Supreme
+Album: Witch Supreme
+Track: 5
+Date: 2023-10-27
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186217
+song_end
+song_begin: Warbringer - Remain Violent.mp3
+Time: 204.240000
+Artist: Warbringer
+AlbumArtist: Warbringer
+Title: Remain Violent
+Album: Woe to the Vanquished
+Track: 3
+Date: 2017-03-31
+Genre: Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185305
+song_end
+song_begin: Slayer - World Painted Blood.mp3
+Time: 353.160000
+Artist: Slayer
+AlbumArtist: Slayer
+Title: World Painted Blood
+Album: World Painted Blood
+Track: 1
+Date: 2009-01-01
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185047
+song_end
+song_begin: Sylosis - Worship Decay.mp3
+Time: 257.232000
+Artist: Sylosis
+AlbumArtist: Sylosis
+Title: Worship Decay
+Album: Worship Decay
+Track: 1
+Date: 2020-12-11
+Genre: Groove Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721186002
+song_end
+song_begin: Suicidal Angels - Endless War.mp3
+Time: 249.240000
+Artist: Suicidal Angels
+AlbumArtist: Suicidal Angels
+Title: Endless War
+Album: Years of Aggression
+Track: 1
+Date: 2019-08-09
+Genre: Crossover Thrash
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185641
+song_end
+song_begin: Megadeth - A Tout Le Monde - Remastered 2004.mp3
+Time: 262.176000
+Artist: Megadeth
+AlbumArtist: Megadeth
+Title: A Tout Le Monde - Remastered 2004
+Album: Youthanasia (Expanded Edition - Remastered)
+Track: 4
+Date: 1994-10-28
+Genre: Alternative Metal
+Disc: 1
+Format: 48000:24:2
+mtime: 1721185978
+song_end
+end: thrash

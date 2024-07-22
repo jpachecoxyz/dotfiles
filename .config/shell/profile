@@ -10,8 +10,8 @@ set -o allexport
 
 # Adds `~/.local/bin` to $PATH
 PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
-PATH=$PATH:/usr/local/bin:
-PATH=$PATH:/sbin:
+PATH=$PATH:/home/javier/.local/share/nvim/mason/bin
+PATH=$PATH:/sbin
 
 unsetopt PROMPT_SP
 
@@ -49,6 +49,7 @@ WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 BAT_THEME="gruvbox-dark"
+GI_TYPELIB_PATH="/run/current-system/sw/lib/girepository-1.0";
 
 # Other program settings:
 DICS="/usr/share/stardict/dic/"

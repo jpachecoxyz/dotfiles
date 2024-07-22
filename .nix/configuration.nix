@@ -39,8 +39,8 @@ in
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "gb";
-    xkbVariant = "";
+    xkb.layout = "gb";
+    xkb.variant = "";
   };
 
   # Configure console keymap
@@ -124,9 +124,13 @@ in
 
     # enviroment
     ags
+    dart-sass
+    libgtop
+    gnome.adwaita-icon-theme
+    cava
     gtk3
     gtk4
-    libdbusmenu-gtk3
+    hyprland-autoname-workspaces
     graphite-gtk-theme 
     breeze-icons
     bibata-cursors

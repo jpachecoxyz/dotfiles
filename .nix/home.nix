@@ -27,8 +27,11 @@
     # Development
     # language servers
     pkgs.pyright
+    pkgs.poetry
+    pkgs.rye
     pkgs.lua-language-server
     pkgs.hugo
+    pkgs.go
 
     # Terminal tools
     pkgs.yazi   # File manager
@@ -45,6 +48,7 @@
   };
 
   home.sessionVariables = {
+    GI_TYPELIB_PATH = "/run/current-system/sw/lib/girepository-1.0";
     XCURSOR_THEME = "Bibata-Modern-Classic";
     XCURSOR_SIZE = "22"; # Adjust the size as needed
   };

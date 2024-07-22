@@ -2,7 +2,7 @@
 
 # Created By: Javier Pacheco - javier@jpacheco.xyz
 # Created On: 14/07/24
-# Project: Dynamic gaps for hyprland.
+# Project: Dynamic script to adjust gaps for hyprland.
 
 # Reads the default set of your config file
 # set the path to your configuration file
@@ -12,32 +12,66 @@ gaps_out="$(grep "^\s*gaps_out" $config | awk '{print $3}')"
 gaps_in="$(grep  "^\s*gaps_in"  $config | awk '{print $3}')"
 [ -z "$def_gaps_in" ]  && def_gaps_in=5
 
-number_to_add=2
+number_to_add=5
 
 # Get the actual gap size:
-out_gap=$(hyprctl getoption general:gaps_out | grep custom | awk '{print $3}')
-in_gap=$(hyprctl getoption general:gaps_in | grep custom | awk '{print $5}')
+out_gap=$(hyprctl -j getoption general:gaps_in | awk ' {print $5}')
+in_gap=$(hyprctl -j getoption general:gaps_out | awk ' {print $5}')
 
-pgaps_out=$((out_gap + number_to_add))
-pgaps_in=$((in_gap + number_to_add))
-lgaps_out=$((out_gap - number_to_add))
-lgaps_in=$((in_gap - number_to_add))
+more_gap=$((in_gap + number_to_add))
+less_gap=$((out_gap - number_to_add))
 
 function inc_gaps () {
-  hyprctl --batch "keyword general:gaps_out $pgaps_out ; keyword general:gaps_in $pgaps_in"
+  hyprctl --batch "keyword general:gaps_out $more_gap ; keyword general:gaps_in $more_gap"
 }
 
 function dec_gaps () {
-  hyprctl --batch "keyword general:gaps_out $lgaps_out ; keyword general:gaps_in $lgaps_in"
+  hyprctl --batch "keyword general:gaps_out $less_gap ; keyword general:gaps_in $less_gap"
 }
 
 function restore_gaps () {
   hyprctl --batch "keyword general:gaps_out $gaps_out ; keyword general:gaps_in $gaps_in"
 }
 
+function help () {
+    echo "hyprgaps - A script to adjust gaps between windows for Hyprland"
+    echo ""
+    echo "Usage:"
+    echo "  hyprgaps [option]"
+    echo ""
+    echo "Options:"
+    echo "  -i    Increase the gaps between windows by the specified value."
+    echo "                                   Example: hyprgaps -i"
+    echo ""
+    echo "  -d,   Decrease the gaps between windows by the specified value."
+    echo "                                   Example: hyprgaps -d"
+    echo ""
+    echo "  -r,   Decrease the gaps between windows by the specified value."
+    echo "                                   Example: hyprgaps -d"
+    echo ""
+    echo "  -h,   Display this help message."
+    echo ""
+    echo "Description:"
+    echo "  This script adjusts the gaps between windows in Hyprland window manager."
+    echo "  Use the -i to increase the gaps."
+    echo "  Use the -d to decrease the gaps."
+    echo "  The script helps to dynamically manage your window layout for optimal screen usage."
+    echo ""
+    echo "Examples:"
+    echo "  To increase the gaps:"
+    echo "    hyprgaps -i"
+    echo ""
+    echo "  To decrease the gaps:"
+    echo "    hyprgaps -d"
+    echo ""
+    echo "  To reset the gaps to the default in your configutration file:"
+    echo "    hyprgaps -r"
+    echo ""
+}
+
 case $1 in
   -i) inc_gaps;;
   -d) dec_gaps;;
   -r) restore_gaps;;
-  *)  exit 1 ;;
+  -h|*) help;;
 esac

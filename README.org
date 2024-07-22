@@ -1,4 +1,1 @@
 * My Personal dotfiles.
-
-** TODO 
-    -[ ] add bin files.

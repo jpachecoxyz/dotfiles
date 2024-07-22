@@ -6,17 +6,26 @@
     "spacing": 4,
 		// try to keep it 4px across the config
     "height":30,
-    "modules-left": ["custom/logo", "hyprland/workspaces", "custom/icon"],
+    "modules-left": ["custom/logo", "hyprland/workspaces", "custom/icon", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["mpd",  "pulseaudio", "clock", "battery", "custom/lan", "custom/recorder"],
+    "modules-right": ["mpd",  "pulseaudio", "clock", "battery", "custom/lan", "custom/recorder", "custom/power"],
 
         /*
         MODULES
         */
+        "hyprland/submap": {
+            "format": "-> {}",
+            "max-length": 30,
+            "tooltip": false
+        },
         "custom/icon": {
-        "exec": "~/.config/waybar/state",
+        "return-type": "json",
+        // "exec": "~/.config/waybar/state",
+        "exec": "~/.local/bin/scripts/hyprwindow",
         "interval": "once",
-        "signal": 8
+        // "interval": 1,
+        "format": "{}",
+        "signal": 10
 		},
         "tray": {
             "spacing": 10
@@ -105,6 +114,18 @@
         "format": "{} ",
         "tooltip": true,
         "on-click": "google-chrome-stable"
+    },
+    "custom/power": {
+        "format" : "⏻ ",
+        "tooltip": false,
+        "menu": "on-click",
+        "menu-file": "~/.config/waybar/power_menu.xml",
+        "menu-actions": {
+            "shutdown": "systemctl shutdown",
+            "reboot": "systemctl reboot",
+            "suspend": "systemctl suspend",
+            "hibernate": "systemctl hibernate",
+        },
     },
     "custom/logo": {
       "format": "    ",

@@ -4,11 +4,11 @@
 # Created On: 27/03/24
 # Project: Screen share script to store a quick img to 0x0.st
 
-MENU="fuzzel --dmenu"
+MENU="tofi"
 
 OUTPUT_FILE="/tmp/capture.png"
 
-OPT=$(printf "desktop\nwindow\nselection\nshare\nquit" | fuzzel --dmenu -p "Select a capture option: ")
+OPT=$(printf "desktop\nwindow\nselection\nshare\nquit" | tofi --prompt "Select a capture option: ")
 
 # capture the desktop
 desktop() {
