@@ -23,7 +23,9 @@
         "all-outputs": false,
         "on-click": "activate",
         "persistent-workspaces": {
-            "1": []
+            "1": [],
+            "2": [],
+            "3": [],
         },
         "format-icons": {
           "active": []

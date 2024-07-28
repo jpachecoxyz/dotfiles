@@ -53,7 +53,7 @@ GI_TYPELIB_PATH="/run/current-system/sw/lib/girepository-1.0";
 
 # Other program settings:
 DICS="/usr/share/stardict/dic/"
-SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+# SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 DOAS_ASKPASS="$HOME/.local/bin/scripts/tofi-pass.sh"
 FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 LESS=-R

@@ -41,14 +41,14 @@ lazy = true
 
 # Shorcuts_menu 
 [shortcuts_menu]
-engine = "fuzzel --dmenu"
+engine = "tofi"
 # parameters = "-p '[prompt] 🍰 ' -dmenu -matching fuzzy -i"
-command_start = "💀"
+command_start = "💀 "
 
 [shortcuts_menu.entries]
-"Restart Waybar" = "pkill -9 waybar ; setsid waybar"
-"Telegram" = "xdg-open https:/web.telegram.org/a/#-1421253041"
-"Cinny" = "xdg-open https:/app.cinny.in/"
+"Tombs" = "hypr-scratchpads tomb"
+"Mount Devices" = "hypr-scratchpads fzmount"
+"Open telegram" = "telegram-desktop"
 
 # layout_center.
 [layout_center]

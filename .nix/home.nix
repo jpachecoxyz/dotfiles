@@ -21,9 +21,6 @@
     pkgs.hypridle
     pkgs.hyprlock
 
-    # Browser / web
-    pkgs.nyxt
-
     # Development
     # language servers
     pkgs.pyright
@@ -31,14 +28,103 @@
     pkgs.rye
     pkgs.lua-language-server
     pkgs.hugo
-    pkgs.go
+    pkgs.gcc
+    pkgs.neovim
+    pkgs.emacs-gtk
+    pkgs.python3
+    pkgs.nodejs
+    pkgs.cargo
+    pkgs.nil
+    pkgs.direnv
 
     # Terminal tools
     pkgs.yazi   # File manager
     pkgs.zellij # Terminal multiplexer
+    pkgs.lazygit # git tui frontend
 
     # Generic tools.
     # pkgs-unstable.gparted
+
+    pkgs.cava
+    pkgs.hyprland-autoname-workspaces
+    pkgs.graphite-gtk-theme 
+    pkgs.breeze-icons
+    pkgs.bibata-cursors
+    pkgs.brightnessctl
+    pkgs.nwg-look
+    pkgs.libnotify
+    pkgs.waybar
+    pkgs.wl-clipboard
+    pkgs.pyprland
+    pkgs.grimblast
+    pkgs.mako
+    pkgs.foot
+    pkgs.swaylock-effects
+    pkgs.swww
+    pkgs.cron
+    pkgs.stow
+    pkgs.tree
+    pkgs.fzf
+    pkgs.eza
+    pkgs.fd
+    pkgs.jq
+    pkgs.ripgrep
+    pkgs.bat
+    pkgs.ffmpeg
+    pkgs.fastfetch
+    pkgs.wf-recorder
+    pkgs.tofi
+
+    # Browser / web
+    pkgs.nyxt
+    pkgs.firefox
+    # pkgs.telegram-desktop
+
+    # multimedia
+    pkgs.ncmpcpp
+    pkgs.pulseaudioFull
+    pkgs.mpd
+    pkgs.mpc-cli
+    pkgs.mpv
+    pkgs.ytfzf
+    pkgs.pulsemixer
+    pkgs.spotdl
+    pkgs.yt-dlp
+    pkgs.obs-studio
+    pkgs.telegram-desktop
+    # pkgs.appstream
+    # pkgs.libxmlb
+    # pkgs.ostree
+    # pkgs.sdbus-cpp
+
+    # graphics
+    pkgs.nsxiv
+    pkgs.slurp
+    pkgs.xorg.xrdb
+
+    # tools
+    pkgs.poppler
+    pkgs.zathura
+    pkgs.unzip
+    pkgs.zip
+    pkgs.killall
+    pkgs.htop
+
+    # latex and spell
+    pkgs.hunspell
+    pkgs.hunspellDicts.en_US
+    pkgs.hunspellDicts.es_MX
+    pkgs.tectonic
+
+    # privacy
+    pkgs.tomb
+    pkgs.qrencode
+    pkgs.steghide
+    pkgs.asciicam
+    pkgs.pinentry-curses
+    pkgs.pass
+    pkgs.gnupg
+
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -47,11 +133,10 @@
     
   };
 
-  home.sessionVariables = {
-    GI_TYPELIB_PATH = "/run/current-system/sw/lib/girepository-1.0";
-    XCURSOR_THEME = "Bibata-Modern-Classic";
-    XCURSOR_SIZE = "22"; # Adjust the size as needed
-  };
+  # home.sessionVariables = {
+  #   XCURSOR_THEME = "Bibata-Modern-Classic";
+  #   XCURSOR_SIZE = "22"; # Adjust the size as needed
+  # };
 
   # home.pointVerCursor = {
   #   gtk.enable = true;
@@ -105,48 +190,6 @@
       name  = "gruvbox-dark-icons";
     };
   };
-
- #  gtk = {
- #    enable = true;
- #    font = {
- #      package = (pkgs.nerdfonts.override { fonts = [ "Mononoki" ]; });
- #      name = "Mononoki Nerd Font Regular";
- #      size = 10;
- #    };
-	#
- #    theme = {
- #      name = "Catppuccin-Macchiato-Compact-Pink-Dark";
- #      package = pkgs.catppuccin-gtk.override {
- #        accents = [ "pink" ];
- #        size = "compact";
- #        tweaks = [ "rimless" "black" ];
- #        variant = "macchiato";
- #      };
- #    };
-	#
- #    iconTheme = {
- #      package = (pkgs.catppuccin-papirus-folders.override { flavor = "mocha"; accent = "pink"; });
- #      name  = "Papirus-Dark";
- #    };
-	#
- #    cursorTheme = {
- #      name = "Catppuccin-Mocha-Pink";
- #      package = pkgs.catppuccin-cursors.mochaPink;
- #    };
-	#
- #    gtk3.extraConfig = {
- #      Settings = ''
- #        gtk-application-prefer-dark-theme=1
- #      '';
- #    };
-	#
- #    gtk4.extraConfig = {
- #      Settings = ''
- #        gtk-application-prefer-dark-theme=1
-	# gtk-cursor-theme-name=Catppuccing-Mocha-Pink
- #      '';
- #    };
- #  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

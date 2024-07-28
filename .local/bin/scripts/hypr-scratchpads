@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Created By: Javier Pacheco - javier@jpacheco.xyz
 # Created On: 13/03/24
 # Project: Scratchpads -- hyprland
 
 windows_in(){
-hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:$1\" )"
+    hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:$1\" )"
 }
 
 toggle_scratchpad(){
@@ -21,10 +21,31 @@ toggle_scratchpad(){
     fi
 }
 
+# Here you define the name or class, and in the hyprland  configuration file
+# you'll set the window rules. For my case, I use a single class name (scratchpad)
+# so in this case my terminal foot with the parameter -a sets a class so every 
+# case statement below have that class name.
+# Here's an example of mines, I like the scratchpads in the center of the screen.
+
+# scratchpads rules!
+# $scratchpad = class:^(scratchpad)$
+# windowrulev2 = float,$scratchpad
+# windowrulev2 = center,$scratchpad
+
 case "$1" in
-    terminal) toggle_scratchpad "terminal" "foot -a terminal -w 1250x700" ;;
-    file_manager) toggle_scratchpad "file_manager" "foot -a filemanager -e nnn" ;;
-    music_player) toggle_scratchpad "music_player" "foot -a musicplayer -e ncmpcpp" ;;
-    matrix) toggle_scratchpad "matrix" "foot -a matrix -e gomuks" ;;
-    webcam) toggle_scratchpad "webcam" "foot -a webcam -e webcam" ;;
+    terminal) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 1250x500" ;;
+    file_manager) toggle_scratchpad "file_manager" "foot -a scratchpad -w 1250x500 -e yazi" ;;
+    music_player) toggle_scratchpad "music_player" "foot -a scratchpad -w 1250x500 -e ncmpcpp" ;;
+    webcam) toggle_scratchpad "webcam" "foot -a scratchpad -e webcam" ;;
+    tomb) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 800x500 -e tmount" ;;
+    fzmount) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 800x500 -e fzmount" ;;
 esac
+
+# The next tha you need to do is declare the keybinds in the  hyprland configuration 
+# file. Here are some examples:
+
+# Keybinds tests.
+# bind = CTRL ALT, 1, exec, hypr-scratchpads terminal
+# bind = CTRL ALT, 2, exec, hypr-scratchpads file_manager
+# bind = CTRL ALT, 3, exec, hypr-scratchpads music_player
+# bind = CTRL ALT, 4, exec, hypr-scratchpads webcam

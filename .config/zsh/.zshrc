@@ -107,6 +107,8 @@ bindkey -s '^o' 'nnn -e\n'
 
 bindkey -s '^L' 'lazygit\n'
 
+bindkey -s '^t' 'tmount\n'
+
 bindkey -s '^a' 'bc -lq\n'
 
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'

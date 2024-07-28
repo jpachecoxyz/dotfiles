@@ -76,13 +76,13 @@ in
   nixpkgs.config.allowUnfree = true;
 
   # Doas instead of sudo
-  security.doas.enable = true;
-  security.sudo.enable = false;
-  security.doas.extraRules = [{
-    users = [ "javier" ];
-    keepEnv = true;
-    persist = true;
-  }];
+  # security.doas.enable = true;
+  security.sudo.enable = true;
+  # security.doas.extraRules = [{
+  #   users = [ "javier" ];
+  #   keepEnv = true;
+  #   persist = true;
+  # }];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -105,75 +105,28 @@ in
     noto-fonts-color-emoji
   ];
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      # xdg-desktop-portal-gtk
+    ];
+  };
+
   # Hyprland
-  programs.hyprland.enable = true; 
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   environment.systemPackages = (with pkgs; [
     # development
-    (pkgs.writeScriptBin "sudo" ''exec doas "$@"'')
-    gcc
+    # (pkgs.writeScriptBin "sudo" ''exec doas "$@"'')
     wget
     git
-    neovim
-    emacs-gtk
-    python3
-    nodejs
-    cargo
-    nil
-    direnv
-
-    # enviroment
-    ags
-    dart-sass
-    libgtop
-    gnome.adwaita-icon-theme
-    cava
-    gtk3
-    gtk4
-    hyprland-autoname-workspaces
-    graphite-gtk-theme 
-    breeze-icons
-    bibata-cursors
-    brightnessctl
-    nwg-look
-    libnotify
-    networkmanager
-    waybar
-    wl-clipboard
-    pyprland
-    grimblast
-    mako
-    foot
-    swaylock-effects
-    swww
-    cron
-    stow
-    tree
-    fzf
-    eza
-    fd
-    jq
-    ripgrep
-    bat
-    ffmpeg
-    fastfetch
-    wf-recorder
-    tofi
-
-    # web
-    firefox
+    vim
     google-chrome
-
-    # multimedia
-    ncmpcpp
-    pulseaudioFull
-    mpd
-    mpc-cli
-    mpv
-    ytfzf
-    pulsemixer
-    spotdl
-    yt-dlp
+    qt5ct
 
     # fonts
     jetbrains-mono
@@ -182,31 +135,6 @@ in
     iosevka
     ibm-plex
     noto-fonts-color-emoji
-
-    # graphics
-    nsxiv
-    slurp
-    xorg.xrdb
-
-    # tools
-    nnn
-    poppler
-    zathura
-    unzip
-    zip
-    killall
-    htop
-
-    # latex and spell
-    hunspell
-    hunspellDicts.en_US
-    hunspellDicts.es_MX
-    tectonic
-
-    # privacy
-    pinentry-curses
-    pass
-    gnupg
 
   ])
     
@@ -241,6 +169,7 @@ in
   services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
+  services.emacs.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
