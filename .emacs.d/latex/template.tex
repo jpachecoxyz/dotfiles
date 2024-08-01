@@ -1,0 +1,80 @@
+% Created 2024-02-25 Sun 02:51
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+\usepackage{fontspec}
+\setmainfont{IBM Plex Mono}
+\usepackage{lipsum}
+\usepackage{microtype}
+\finalhyphendemerits=50000000
+\usepackage{hyperref}
+\hypersetup{
+colorlinks,
+citecolor=gray,
+filecolor=orange,
+linkcolor=black,
+urlcolor=cyan
+}
+\usepackage{bookmark}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\bf{\leftmark}}
+\fancyfoot[C]{\thepage{} of \pageref{LastPage}}
+\fancyfoot[R]{ Javier Pacheco }
+\usepackage{minted}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{color}
+\newenvironment{codeblock}[1][]{\VerbatimEnvironment\begin{minted}[#1]{text}}{\end{minted}}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{gbcyan}{rgb}{0.69,1,1}
+\lstdefinestyle{mystyle}{
+backgroundcolor=\color{backcolour},
+commentstyle=\color{codegreen},
+keywordstyle=\color{magenta},
+numberstyle=\tiny\color{codegray},
+stringstyle=\color{codepurple},
+basicstyle=\footnotesize,
+% basicstyle=\ttfamily,
+breakatwhitespace=false,
+breaklines=true,
+captionpos=b,
+keepspaces=true,
+numbers=left,
+numbersep=5pt,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+tabsize=4
+}
+\lstset{style=mystyle}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.2 (Org mode 9.6.15)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\end{document}

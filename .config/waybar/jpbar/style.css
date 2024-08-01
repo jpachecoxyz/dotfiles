@@ -60,7 +60,8 @@ tooltip {
 #workspaces button.urgent {
     color: #11111b;
     background: #a6e3a1;
-    border-radius: 5px;
+    border-radius: 0px;
+    animation: animate 1.5s linear infinite; 
 }
 
 #workspaces button:hover {
@@ -70,6 +71,7 @@ tooltip {
 }
 
 #custom-recorder,
+#hyprland-submap,
 #custom-window_state,
 #window,
 #clock,
@@ -130,9 +132,9 @@ tooltip {
 
 #clock {
     color: #fab387;
-    border-radius: 5px 0px 0px 5px;
-    margin-left: 10px;
-    border-right: 0px;
+    border-radius: 0px 5px 5px 0px;
+    margin-right: 10px;
+    border-right: 10px;
 }
 
 #network {
@@ -154,6 +156,7 @@ tooltip {
     color: #89b4fa;
     border-left: 0px;
     border-right: 0px;
+    border-radius: 0px 5px 5px 0px;
 }
 
 #memory {
@@ -179,7 +182,8 @@ tooltip {
 }
 
 #custom-weather {
-    border-radius: 0px 5px 5px 0px;
+    border-radius: 5px 0px 0px 5px;
+    margin-left: 10px;
 }
 
 #custom-recorder {
@@ -197,4 +201,12 @@ tooltip {
     border-right: 0px;
     border-radius: 0px 5px 5px 0px;
     margin-right: 10px;
+}
+
+#hyprland-submap{
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 5px 5px 5px 5px;
+    margin-right: 10px;
+    animation: animate 1.5s linear infinite; 
 }

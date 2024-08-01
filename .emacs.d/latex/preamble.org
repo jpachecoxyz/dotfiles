@@ -1,0 +1,86 @@
+# Custom LaTeX Template Description.
+# Author: Javier Pacheco
+
+#+LaTeX_HEADER: \usepackage{fontspec}
+#+LaTeX_HEADER: \usepackage{xunicode}
+#+LaTeX_HEADER: \usepackage{xltxtra}
+# % ----- [[ Size of the paper: ]] ------%
+#+LaTeX_HEADER: \usepackage[margin=1.1in]{geometry}
+# % Some usefull packages
+#+LaTeX_HEADER: \usepackage{lipsum}
+#+LaTeX_HEADER: \usepackage{microtype} 
+#+LaTeX_HEADER: \finalhyphendemerits=50000000
+
+# % ----- [[ Font settings: ]] ------% 
+#+LaTeX_HEADER: \setmainfont[
+    #+LaTeX_HEADER: BoldFont={IBM Plex Sans Bold},
+    #+LaTeX_HEADER: ItalicFont={IBM Plex Sans Italic},
+#+LaTeX_HEADER: ]{IBM Plex Sans}
+
+#+LaTeX_HEADER: \setsansfont{Iosevka JP}
+#+LaTeX_HEADER: \setmonofont{Iosevka JP}
+
+# # %------ [[ TOC format ]] ------%
+#+LaTeX_HEADER: \usepackage{hyperref}
+#+LaTeX_HEADER: \hypersetup{
+    #+LaTeX_HEADER: colorlinks,
+    #+LaTeX_HEADER: citecolor=gray,
+    #+LaTeX_HEADER: filecolor=orange,
+    #+LaTeX_HEADER: linkcolor=black,
+    #+LaTeX_HEADER: urlcolor=cyan
+#+LaTeX_HEADER: }
+
+# %------ [[ Header/Footer Format ]] ------%
+#+LaTeX_HEADER: \usepackage{fancyhdr}
+#+LaTeX_HEADER: \usepackage{lastpage} % number of last page
+#+LaTeX_HEADER: \pagestyle{fancy}
+#+LaTeX_HEADER: \usepackage{titlesec} % Required for customizing section formatting
+#+LaTeX_HEADER: \titleformat{\section}{\large\bfseries\sffamily}{\thesection}{2em}{} % Formats section titles
+#+LaTeX_HEADER: \fancyhf{}
+
+#+LaTeX_HEADER: \fancyhead[L]{\large{\leftmark}}
+#+LaTeX_HEADER: \fancyfoot[C]{\thepage{} of \pageref{LastPage}}
+#+LaTeX_HEADER: \fancyfoot[R]{ Javier Pacheco }
+
+# % ----------------- Sections settings ----------------
+# % change style of section headings
+#+LATEX_HEADER: \usepackage{sectsty}
+#+LATEX_HEADER: \allsectionsfont{\sffamily}
+
+# % ----------------- Code blocks ----------------
+# % nice source code formatting
+#+LaTeX_HEADER: \usepackage{minted}
+# #+LaTeX_HEADER: \usepackage[utf8]{inputenc}
+
+#+LaTeX_HEADER: \usepackage{listings}
+#+LaTeX_HEADER: \usepackage{color}
+
+#+LaTeX_HEADER: \definecolor{codegreen}{rgb}{0,0.6,0}
+#+LaTeX_HEADER: \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+#+LaTeX_HEADER: \definecolor{codepurple}{rgb}{0.58,0,0.82}
+#+LaTeX_HEADER: \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+#+LaTeX_HEADER: \definecolor{gbcyan}{rgb}{0.69,1.33,1.36}
+
+#+LATEX_HEADER: \lstdefinestyle{mystyle}{
+#+LATEX_HEADER:     backgroundcolor=\color{backcolour},
+#+LATEX_HEADER:     commentstyle=\color{codegreen},
+#+LATEX_HEADER:     keywordstyle=\color{magenta},
+#+LATEX_HEADER:     numberstyle=\tiny\color{codegray},
+#+LATEX_HEADER:     stringstyle=\color{codepurple},
+# #+LaTeX_HEADER:     basicstyle=\footnotesize,
+#+LATEX_HEADER:     basicstyle=\ttfamily,
+#+LATEX_HEADER:     breakatwhitespace=false,
+#+LATEX_HEADER:     breaklines=true,
+#+LATEX_HEADER:     captionpos=b,
+#+LATEX_HEADER:     keepspaces=true,
+#+LATEX_HEADER:     label;p[']=true,
+#+LATEX_HEADER:     numbers=left,
+#+LATEX_HEADER:     numbersep=5pt,
+#+LATEX_HEADER:     showspaces=false,
+#+LATEX_HEADER:     showstringspaces=false,
+#+LATEX_HEADER:     showtabs=false,
+#+LATEX_HEADER:     tabsize=4
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \lstset{style=mystyle}
+# % ----------------- Code blocks ----------------

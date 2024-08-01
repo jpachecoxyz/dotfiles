@@ -1,0 +1,17 @@
+.cache/
+auto-save-list/
+eln-cache/
+elpa/
+elpaca/
+transient/
+url/
+var/
+straight/
+bookmarks
+config.el
+history
+recentf
+sessions
+tramp
+.last-package-update-day
+fontaine-latest-state.eld

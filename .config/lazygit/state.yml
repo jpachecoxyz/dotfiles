@@ -1,5 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/javier/public/org
+    - /home/javier/webdev/blog
     - /home/javier/.dotfiles
     - /home/javier/.emacs.d
 startuppopupversion: 5

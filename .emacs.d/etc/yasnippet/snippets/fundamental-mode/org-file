@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: org-file
+# key: org_
+# --
+
+-*- mode: org -*-
+$0

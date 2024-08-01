@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 31/07/24
+# Project: Change wallpaper in hyprland using wbg
+
+wbg $(find /home/javier/pics/art/. -type f | shuf -n1) &
+OLD_PID=$!
+while true; do
+    sleep 95
+    wbg $(find /home/javier/pics/art/. -type f | shuf -n1) &
+    NEXT_PID=$!
+    sleep 5
+    kill $OLD_PID
+    OLD_PID=$NEXT_PID
+done

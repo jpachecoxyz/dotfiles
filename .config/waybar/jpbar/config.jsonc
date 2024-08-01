@@ -8,9 +8,13 @@
     "gtk-layer-shell": true,
     "height": 47,
     // "width": 1580,
-    "modules-left": ["clock", "custom/weather", "hyprland/workspaces", "custom/window_state"],
+    // "modules-left": ["clock", "custom/weather", "hyprland/workspaces", "custom/window_state"],
+    // "modules-center": ["hyprland/window"],
+    // "modules-right": ["network", "bluetooth", "memory", "battery", "backlight", "pulseaudio", "pulseaudio#microphone", "custom/recorder"],
+
+    "modules-left": ["hyprland/workspaces", "custom/window_state", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["network", "bluetooth", "memory", "battery", "backlight", "pulseaudio", "pulseaudio#microphone", "custom/recorder"],
+    "modules-right": ["network", "bluetooth", "memory", "battery", "backlight", "pulseaudio", "custom/weather", "clock", "custom/recorder"],
 
     "hyprland/window": {
         "format": "{}",
@@ -30,6 +34,12 @@
         "format-icons": {
           "active": []
         }
+    },
+
+    "hyprland/submap": {
+        "format": "💻 {}",
+        "max-length": 25,
+        "tooltip": false
     },
 
     "tray": {

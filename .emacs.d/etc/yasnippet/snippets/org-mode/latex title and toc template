@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: latex title and toc template
+# key: toc_
+# --
+
+#+TITLE: ${1:Title of the document}
+#+AUTHOR: Javier Pacheco
+#+DESCRIPTION: ${2:Description of the file}
+#+STARTUP: showeverything inlineimages
+#+OPTIONS: toc:nil date:nil
+#+setupfile: ~/.emacs.d/latex/template.org
+@@latex:\clearpage@@
+#+begin_export latex
+\clearpage \tableofcontents \clearpage
+#+end_export
+
+$0

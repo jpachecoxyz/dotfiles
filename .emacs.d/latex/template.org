@@ -1,0 +1,54 @@
+# Template file By Javier Pacheco.
+
+# %------ [[ Sheet format and font ]] ------%
+#+latex_header: \usepackage[a4paper, total={6in, 9in}]{geometry}
+#+latex_header: \usepackage{fontspec}
+#+latex_header: \setlength{\headheight}{15pt} % Adjust the value as needed
+#+latex_header: \usepackage[dvipsnames]{xcolor}
+
+#+Latex_HEADER: \setmainfont[
+#+Latex_HEADER: BoldFont={IBM Plex Sans Bold},
+#+Latex_HEADER: ItalicFont={IBM Plex Sans Italic},
+#+Latex_HEADER: ]{IBM Plex Sans}
+
+#+LaTeX_HEADER: \setmonofont{IBM Plex Mono}
+
+#+latex_header: \usepackage{lipsum}
+#+latex_header: \usepackage{microtype}
+#+latex_header: \finalhyphendemerits=50000000
+
+# # %------ [[ TOC format ]] ------%
+#+Latex_HEADER: \usepackage{hyperref}
+#+Latex_HEADER: \hypersetup{
+    #+Latex_HEADER: colorlinks,
+    #+Latex_HEADER: citecolor=gray,
+    #+Latex_HEADER: filecolor=orange,
+    #+Latex_HEADER: linkcolor=black,
+    #+Latex_HEADER: urlcolor=NavyBlue
+#+Latex_HEADER: }
+#+Latex_HEADER: \usepackage{bookmark}
+
+# %------ [[ Titles Format]] ------%
+#+LaTeX_HEADER: \usepackage{titlesec} % Required for customizing section formatting
+#+latex_header: \titleformat{\section}[frame]
+#+latex_header: {\normalfont}
+#+latex_header: {\filright
+#+latex_header: \footnotesize
+#+latex_header: \enspace Chapter \thesection\enspace}
+#+latex_header: {8pt}
+#+latex_header: {\Large\bfseries\filcenter}
+
+# %------ [[ Header/Footer Format ]] ------%
+#+latex_header: \usepackage{fancyhdr}
+#+latex_header: \usepackage{lastpage}
+#+latex_header: \pagestyle{fancy}
+#+latex_header: \fancyhf{}
+#+latex_header: \fancyhead[R]{\bf{\leftmark}}
+#+latex_header: \fancyfoot[C]{\thepage{} of \pageref{LastPage}}
+#+latex_header: \fancyfoot[R]{ Javier Pacheco }
+
+# %------ [[ Codeblocks Format ]] ------%
+#+latex_header: \usepackage{minted}
+#+latex_header: \usepackage{listings}
+# Defne colors:
+#+latex_header: \definecolor{jpyellow}{HTML}{F0F0E0}

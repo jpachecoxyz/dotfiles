@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: clear page.
+# key: clp
+# --
+
+#+LATEX: \clearpage$0

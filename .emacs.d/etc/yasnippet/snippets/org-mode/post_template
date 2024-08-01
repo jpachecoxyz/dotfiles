@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: post_template
+# key: post
+# --
+
+#+title: ${1:Title of the post}
+#+AUTHOR: Javier Pacheco
+#+DESCRIPTION: ${2:Description of the file}
+
+
+#+BEGIN_PREVIEW
+${3:A basic introduction to the post...}
+#+END_PREVIEW

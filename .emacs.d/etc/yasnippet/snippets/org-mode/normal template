@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: normal template
+# key: setup_
+# --
+
+#+setupfile: ~/.emacs.d/template_tex.org$0

@@ -1,0 +1,1 @@
+("~/.emacs.d/" "~/repos/jpacheco.xyz/" "~/repos/pages/" "~/repos/pages/content/posts/")

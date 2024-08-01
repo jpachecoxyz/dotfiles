@@ -4,6 +4,14 @@
 
 { config, pkgs, pkgs-unstable, hyprland, hyprland-plugins, ... }:
 
+  let
+    # Override ncmpcpp with the desired features
+    myNcmpcpp = pkgs.ncmpcpp.override {
+      visualizerSupport = true;
+      clockSupport = true;
+    };
+  in
+
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -15,11 +23,13 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-
   home.packages = [
     # Environment
     pkgs.hypridle
     pkgs.hyprlock
+    pkgs.pyprland
+    # pkgs.swaybg
+    pkgs.wbg
 
     # Development
     # language servers
@@ -45,8 +55,6 @@
     # Generic tools.
     # pkgs-unstable.gparted
 
-    pkgs.cava
-    pkgs.hyprland-autoname-workspaces
     pkgs.graphite-gtk-theme 
     pkgs.breeze-icons
     pkgs.bibata-cursors
@@ -55,7 +63,6 @@
     pkgs.libnotify
     pkgs.waybar
     pkgs.wl-clipboard
-    pkgs.pyprland
     pkgs.grimblast
     pkgs.mako
     pkgs.foot
@@ -81,7 +88,7 @@
     # pkgs.telegram-desktop
 
     # multimedia
-    pkgs.ncmpcpp
+    myNcmpcpp
     pkgs.pulseaudioFull
     pkgs.mpd
     pkgs.mpc-cli
@@ -92,10 +99,6 @@
     pkgs.yt-dlp
     pkgs.obs-studio
     pkgs.telegram-desktop
-    # pkgs.appstream
-    # pkgs.libxmlb
-    # pkgs.ostree
-    # pkgs.sdbus-cpp
 
     # graphics
     pkgs.nsxiv

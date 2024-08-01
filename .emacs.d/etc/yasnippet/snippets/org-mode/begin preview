@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: begin preview
+# key: <bp
+# --
+
+#+BEGIN_PREVIEW
+$0
+#+END_PREVIEW

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: table of content
+# key: toc
+# -- 
+
+#+OPTIONS: toc:nil date:nil
+#+setupfile: ~/.emacs.d/latex/template.org
+@@latex:\clearpage@@
+#+begin_export latex
+\clearpage \tableofcontents \clearpage
+#+end_export
+
+$0

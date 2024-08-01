@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: latex code-block
+# key: codeb_
+# --
+
+#+LATEX: \begin{lstlisting}[language=${1:Language}, caption=${2:Caption}]
+$0
+#+LATEX: \end{lstlisting}
