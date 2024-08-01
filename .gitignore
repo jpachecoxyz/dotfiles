@@ -1,10 +1,30 @@
+# config
+.config/dconf/
+.config/dconf/user
+.config/google-chrome/
 .config/mpd/log
 .config/mpd/pid
+.config/obs-studio
 
+# local
 .local/share/
 .local/src/
 .local/state/
 
-.config/dconf/
-.config/dconf/user
-.config/google-chrome/
+# emacs
+.emacs.d/.cache
+.emacs.d/auto-save-list/
+.emacs.d/eln-cache/
+.emacs.d/elpa/
+.emacs.d/elpaca/
+.emacs.d/transient/
+.emacs.d/url/
+.emacs.d/var/
+.emacs.d/bookmarks
+.emacs.d/config.el
+.emacs.d/history
+.emacs.d/recentf
+.emacs.d/sessions
+.emacs.d/tramp
+.emacs.d/.last-package-update-day
+.emacs.d/fontaine-latest-state.eld
