@@ -3,7 +3,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; mpv for video/audio (include livestreams)
 
-(defun mpv-player (url &optional (opt "--fs"))
+(defun mpv-player (url &optional (opt ""))
   (uiop:launch-program (list "mpv" opt url)))
 
 (define-command mpv-video-current-page (&optional (buffer (current-buffer)))

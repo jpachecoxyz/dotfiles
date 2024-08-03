@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 01/08/24
+# Project: Open mpv last clipboard url
+
+# Get clipboard content
+CLIPBOARD_CONTENT=$(wl-paste -n)
+
+# Regex to match a URL
+URL_REGEX="^https?://"
+
+# Check if the clipboard is empty or doesn't contain a URL
+if [ -z "$CLIPBOARD_CONTENT" ]; then
+    hyprctl notify 0 5000 "rgb(ff1ea3)" "fontsize:18  Clipboard is empty"
+elif [[ ! $CLIPBOARD_CONTENT =~ $URL_REGEX ]]; then
+    hyprctl notify 4 5000 "rgb(ff1ea3)" "fontsize:18  Clipboard does not contain a valid URL"
+else
+    hyprctl notify 5 5000 "rgb(458588)" "fontsize:18  Open video in MPV"
+    # Switch to workspace 8
+    hyprctl dispatch workspace 8
+    # Open foot terminal and execute mpv with the clipboard content
+    footclient -e bash -c "mpv \"$CLIPBOARD_CONTENT\""
+fi

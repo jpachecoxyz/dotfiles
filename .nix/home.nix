@@ -28,7 +28,6 @@
     pkgs.hypridle
     pkgs.hyprlock
     pkgs.pyprland
-    # pkgs.swaybg
     pkgs.wbg
 
     # Development
@@ -53,7 +52,6 @@
     pkgs.lazygit # git tui frontend
 
     # Generic tools.
-    # pkgs-unstable.gparted
 
     pkgs.graphite-gtk-theme 
     pkgs.breeze-icons
@@ -61,6 +59,7 @@
     pkgs.brightnessctl
     pkgs.nwg-look
     pkgs.libnotify
+    pkgs.yad
     pkgs.waybar
     pkgs.wl-clipboard
     pkgs.grimblast
@@ -85,7 +84,6 @@
     # Browser / web
     pkgs.nyxt
     pkgs.firefox
-    # pkgs.telegram-desktop
 
     # multimedia
     myNcmpcpp
@@ -183,11 +181,11 @@
     cursorTheme.size = 22;
     theme.package = pkgs.gruvbox-dark-gtk;
     theme.name = "gruvbox-dark";
-    gtk3.extraConfig = {
-      Settings = ''
-        gtk-application-prefer-dark-theme=1
-      '';
-    };
+    # gtk3.extraConfig = {
+    #   Settings = ''
+    #     gtk-application-prefer-dark-theme=1
+    #   '';
+    # };
     iconTheme = {
       package = pkgs.gruvbox-dark-icons-gtk;
       name  = "gruvbox-dark-icons";
