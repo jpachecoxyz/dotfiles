@@ -126,6 +126,9 @@
     pkgs.pass
     pkgs.gnupg
 
+    # Custom packages
+    (pkgs.callPackage /home/javier/.dotfiles/jp-nix/whdd/default.nix { })
+
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

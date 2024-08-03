@@ -33,6 +33,14 @@ position = "5% 10%"
 max_size = "1920px 100%"
 margin = 50
 
+[scratchpads.tomb]
+animation = "fromTop"
+command = "foot -a scratchpad -e tmount"
+lazy = true
+size = "75% 60%"
+max_size = "1920px 100%"
+margin = 50
+
 [scratchpads.emacs]
 animation = "fromTop"
 command = "emacs"
@@ -46,9 +54,9 @@ engine = "tofi"
 command_start = "💀 "
 
 [shortcuts_menu.entries]
-"Tombs" = "hypr-scratchpads tomb"
-"Mount Devices" = "hypr-scratchpads fzmount"
-"Open telegram" = "telegram-desktop"
+# "Tombs" = "pypr toggle tomb && hyprctl dispatch bringactivetotop && $updateWaybar"
+# "Mount Devices" = "hypr-scratchpads fzmount"
+# "Open telegram" = "telegram-desktop"
 
 # layout_center.
 [layout_center]
