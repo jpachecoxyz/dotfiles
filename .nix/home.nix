@@ -127,7 +127,7 @@
     pkgs.gnupg
 
     # Custom packages
-    (pkgs.callPackage /home/javier/.dotfiles/jp-nix/whdd/default.nix { })
+    (pkgs.callPackage ../jp-nix/whdd/default.nix { })
 
   ];
 
