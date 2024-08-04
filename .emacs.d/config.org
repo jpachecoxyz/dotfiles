@@ -282,8 +282,7 @@
   :init
   (parrot-mode)
   (parrot-start-animation))
-
-(add-hook 'after-save-hook #'parrot-start-animation)
+(setq parrot-num-rotations nil)
 
 (use-package diminish
   :ensure t)

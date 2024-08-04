@@ -11,5 +11,5 @@ git_push() {
     git push
 }
 
-git_push && stow .
+git_push
 
