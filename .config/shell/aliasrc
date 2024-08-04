@@ -60,6 +60,7 @@ alias \
 
 alias \
 	g="git" \
+	gs="git status" \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \
 	sdn="shutdown -h now" \
