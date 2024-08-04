@@ -28,22 +28,22 @@
   (horizontal-scroll-bar-mode -1))
 
 ;; Initial message
-;; (setq initial-scratch-message
-;; 	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
-;; ;; --
-;; ;; It’s difficult to be rigorous about whether a machine really ’knows’, ’thinks’, etc.,
-;; ;; because we’re hard put to define these things. We understand human mental processes
-;; ;; only slightly better than a fish understands swimming.
-;; ;; --
-;; ;; <Jhon McCarthy>\n\n
-;; ;;; Code:\n")
-
 (setq initial-scratch-message
 	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
 ;; --
-;; There are two ways to construct a software design:
-;; One is to make it so simple that it is obvious that there are no deficiencies,
-;; and the other is to make it so complicated that there are no obvious deficiencies.
+;; It’s difficult to be rigorous about whether a machine really ’knows’, ’thinks’, etc.,
+;; because we’re hard put to define these things. We understand human mental processes
+;; only slightly better than a fish understands swimming.
 ;; --
-;; <C. A. R. Hoare>\n\n
+;; <Jhon McCarthy>\n\n
 ;;; Code:\n")
+
+;; (setq initial-scratch-message
+;; 	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
+;; ;; --
+;; ;; There are two ways to construct a software design:
+;; ;; One is to make it so simple that it is obvious that there are no deficiencies,
+;; ;; and the other is to make it so complicated that there are no obvious deficiencies.
+;; ;; --
+;; ;; <C. A. R. Hoare>\n\n
+;; ;;; Code:\n")

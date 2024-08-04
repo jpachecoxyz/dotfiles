@@ -24,16 +24,26 @@ ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
 [opener]
+edit = [
+	{ run = 'nvim "$@"', block = true },
+]
+play = [
+	{ run = 'mpv "$@"', orphan = true, for = "unix" },
+]
 open = [
-	{ run = 'opener "$@"', block = true, desc = "Open" },
+	{ run = 'xdg-open "$@"', desc = "Open" },
 ]
-
-[open]
-rules = [
-	{ name = "*/", use = [ "edit", "open", "reveal" ] },
-
-	{ mime = "*", use = [ "open" ] },
-]
+# [opener]
+# open = [
+# 	{ run = 'opener "$@"', block = true, desc = "Open" },
+# ]
+#
+# [open]
+# rules = [
+# 	{ name = "*/", use = [ "edit", "open", "reveal" ] },
+#
+# 	{ mime = "*", use = [ "open" ] },
+# ]
 
 [tasks]
 micro_workers    = 10

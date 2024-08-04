@@ -89,6 +89,7 @@ alias \
 alias \
 	tm="cd /tmp" \
 	dots="cd ~/.dotfiles" \
+	dof="yazi ~/.dotfiles" \
 	n="nnn -e" \
 	mu='yt-dlp "$(ytfzf -D -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \
 	ytb='yt-dlp -f b "$(ytfzf -D -I L "$1")" -o - | ffplay - -autoexit -loglevel quiet'

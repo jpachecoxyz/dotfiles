@@ -19,15 +19,15 @@ check_connection() {
 }
 
 share() {
-   notify-send "uploading.." "video is upoading to 0x0.st"
-   curl -F "file=@/tmp/screencast.mp4" https://0x0.st | wl-copy && notify-send "Video stored in 0x0.st"
+    hyprctl notify 5 5000 "rgb(458588)" "fontsize:15  Uploading video to 0x0.st"
+    curl -F "file=@/tmp/screencast.mp4" https://0x0.st | wl-copy && hyprctl notify 5 5000 "rgb(458588)" "fontsize:15  Video stored in 0x0.st"
 }
 
 kill_proc(){
     pkill --signal SIGINT wf-recorder
     if [ $? -eq 0 ];
     then
-        notify-send "Video stored" "Video was stored in /tmp/screencast.mp4"
+		hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video was stored in /tmp/screencast.mp4"
         pkill --signal SIGINT wf-recorder
         exit 0
     fi
@@ -45,13 +45,14 @@ case $OPT in
         sleep 1
         remove_vid
         sleep 1
-        screencast;;
+        screencast
+        share;;
     'area')
         sleep 1
         remove_vid
         sleep 1
         area;;
     'share') 
-        check_connection && share || notify-send "Error" "check your internet connection" ;;
+        check_connection && share || hyprctl notify 3 5000 "rgb(ff5566)" "fontsize:15 Video was stored in /tmp/screencast.mp4";;
     *|quit) exit 0;;
 esac
