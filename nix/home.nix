@@ -66,7 +66,6 @@
     pkgs.mako
     pkgs.foot
     pkgs.swaylock-effects
-    pkgs.swww
     pkgs.cron
     pkgs.stow
     pkgs.tree
