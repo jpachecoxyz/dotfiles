@@ -277,6 +277,14 @@
   :ensure t
   :init (nyan-mode))
 
+(use-package parrot
+  :ensure t
+  :init
+  (parrot-mode)
+  (parrot-start-animation))
+
+(add-hook 'after-save-hook #'parrot-start-animation)
+
 (use-package diminish
   :ensure t)
 #+END_SRC
