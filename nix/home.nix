@@ -2,7 +2,7 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ config, pkgs, pkgs-unstable, hyprland, hyprland-plugins, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
   let
     # Override ncmpcpp with the desired features
@@ -19,6 +19,7 @@
   home.homeDirectory = "/home/javier";
 
   # release notes.
+
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your

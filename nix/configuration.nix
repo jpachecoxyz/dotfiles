@@ -149,9 +149,10 @@ in
     # (pkgs.writeScriptBin "sudo" ''exec doas "$@"'')
     wget
     git
-    vim
-    google-chrome
+    # vim
+    nix-init
     stow
+    google-chrome
 
     # fonts
     jetbrains-mono
