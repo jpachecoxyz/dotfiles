@@ -5,6 +5,8 @@
 .config/mpd/log
 .config/mpd/pid
 .config/obs-studio/
+.config/gtk-3.0/
+.config/gtk-4.0/
 
 # local
 .local/share/
