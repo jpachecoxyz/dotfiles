@@ -1,7 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /home/javier/public/org
     - /home/javier/webdev/blog
 startuppopupversion: 5
 lastversion: 0.42.0
