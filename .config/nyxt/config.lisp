@@ -3,7 +3,7 @@
 ;; Import Files
 (nyxt::load-lisp "~/.config/nyxt/style.lisp")
 (nyxt::load-lisp "~/.config/nyxt/statusline.lisp")
-(nyxt::load-lisp "~/.config/nyxt/invader.lisp")
+;; (nyxt::load-lisp "~/.config/nyxt/invader.lisp")
 (nyxt::load-lisp "~/.config/nyxt/commands.lisp")
 (nyxt::load-lisp "~/.config/nyxt/keybinds.lisp")
 
