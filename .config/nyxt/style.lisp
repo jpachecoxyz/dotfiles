@@ -1,6 +1,6 @@
 (in-package #:nyxt-user)
 
-(setf (uiop:getenv "GTK_THEME") ""Graphite)
+(setf (uiop:getenv "GTK_THEME") "Adwaita:dark")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Theming
@@ -20,65 +20,66 @@
              collect `(defparameter ,name ,hex "Color used for `theme'."))))
 
 (define-palette
-  (*dark-blue*         "#000b1e")
-  (*semi-dark-blue*    "#00005f")
-  (*blue*              "#091833")
-  (*light-blue*        "#133e7c")
-  (*trans-blue*        "#0b2956")
-  (*cyan*              "#0abdc6")
-  (*pink*              "#ea00d9")
-  (*purple*            "#711c91")
-  (*trans-purple*      "#321959")
-  (*red*               "#ff0000")
-  (*orange*            "#f57800")
-  (*white*             "#d7d7d5")
-  (*yellow*            "#ffff00")
-  (*green*             "#00ff00")
-  ;; Exotica theme
-  (*bg*                "#091423")
-  (*fg*                "#E8F0FF")
-  (*seperator*         "#132947")
-  (*cursor*            "#F8F8F0")
-  (*face1*             "#66D9EF")
-  (*face2*             "#A6E22E")
-  (*face3*             "#FF84C9")
-  (*face4*             "#AE81FF")
-  (*face5*             "#4577D7")
-  (*face6*             "#2ee267")
-  (*face7*             "#FF5996")
-  (*face8*             "#60FCEC")
-  (*face9*             "#344256")
-  (*face10*            "#84B5FF")
-  (*bg1*               "#403D3D")
-  (*m1*                "#C1CAFF")
-  (*m2*                "#FD971F")
-  (*m3*                "#EF5939")
-  (*m4*                "#960050")
-  (*m5*                "#BCA3A3")
-  (*m6*                "#272822")
-  (*m7*                "#FF0000")
-  (*m8*                "#FFCACA")
-  (*diff1*             "#232526")
-  (*ml-inactive-face*  "#BCBCBC")
-  (*ml-active-face*    "#050302")
-  (*comment-face*      "#646F84")
-  (*line-number-face*  "#455770")
-  (*warning-bg-face*   "#333333")
-  (*fullWhite*         "#FFFFFF")
-  (*fullBlack*         "#000000")
-  (*highlighter*       "#E7F221")
-  (*hl-line-highlight* "#182538")
+  (*bg*                "#1d2021") ; Very dark gray
+  (*fg*                "#ebdbb2") ; Light beige
+  (*seperator*         "#3c3836") ; Dark gray-brown
+  (*cursor*            "#d65d0e") ; Warm orange
+  (*face1*             "#fb4934") ; Soft red
+  (*face2*             "#b8bb26") ; Olive green
+  (*face3*             "#fe8019") ; Orange
+  (*face4*             "#d3869b") ; Pink
+  (*face5*             "#83a598") ; Soft blue
+  (*face6*             "#8ec07c") ; Light green
+  (*face7*             "#d65d0e") ; Dark orange
+  (*face8*             "#b16286") ; Dark pink
+  (*face9*             "#7c6f64") ; Brown
+  (*face10*            "#83a598") ; Soft blue
+  (*bg1*               "#282828") ; Slightly lighter dark background
+  (*m1*                "#3c3836") ; Dark gray-brown
+  (*m2*                "#d65d0e") ; Warm orange
+  (*m3*                "#fb4934") ; Soft red
+  (*m4*                "#9d0006") ; Dark red
+  (*m5*                "#6c6c6c") ; Medium gray
+  (*m6*                "#282828") ; Very dark gray (alternative bg)
+  (*m7*                "#fb4934") ; Bright red
+  (*m8*                "#3c3836") ; Dark gray-brown
+  (*diff1*             "#1c1c1c") ; Darker gray for diffs
+  (*ml-inactive-face*  "#7c6f64") ; Medium brown for inactive
+  (*ml-active-face*    "#ebdbb2") ; Light beige for active
+  (*comment-face*      "#7c6f64") ; Medium brown for comments
+  (*line-number-face*  "#4e4e4e") ; Dark gray for line numbers
+  (*warning-bg-face*   "#3c3836") ; Dark gray-brown for warnings
+  (*fullWhite*         "#ffffff") ; White
+  (*fullBlack*         "#000000") ; Black
+  (*highlighter*       "#d65d0e") ; Warm orange for highlight
+  (*hl-line-highlight* "#2e2e2e") ; Darker background for line highlight
+
+  ;; Additional variables
+  (*dark-blue*         "#282c34") ; Very dark blue-gray
+  (*semi-dark-blue*    "#32363e") ; Dark blue-gray
+  (*blue*              "#458588") ; Soft blue
+  (*light-blue*        "#83a598") ; Light blue
+  (*trans-blue*        "#7c6f64") ; Medium brown-blue
+  (*cyan*              "#8ec07c") ; Light greenish-blue
+  (*pink*              "#d3869b") ; Light pink
+  (*purple*            "#b16286") ; Dark purple
+  (*trans-purple*      "#6c6c6c") ; Medium gray (for purple tones)
+  (*red*               "#fb4934") ; Soft red
+  (*orange*            "#fe8019") ; Orange
+  (*white*             "#ebdbb2") ; Light beige
+  (*yellow*            "#fabd2f") ; Warm yellow
+  (*green*             "#b8bb26") ; Olive green
   (*font-exotica*      "IBM Plex Mono"))
 
 (define-configuration browser
   ((theme (make-instance 'theme:theme
                          :background-color *bg*
-                         :on-background-color *face1*
+                         :on-background-color *face10*
                          :primary-color *face10*
                          :on-primary-color *fullWhite*
                          :secondary-color *face4*
                          :on-secondary-color *face5*
-                         :accent-color *m4*
+                         :accent-color *m5*
                          :on-accent-color *highlighter*
                          :font-family *font-exotica*
                          :codeblock-color- "#44355a"
