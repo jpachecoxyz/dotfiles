@@ -1,1 +1,2 @@
 * My Personal dotfiles.
+*NOTE: use it by your own risk*
