@@ -89,6 +89,7 @@ alias \
 alias \
 	tm="cd /tmp" \
 	ds="cd ~/.dotfiles" \
+	uds="update_dots && hyprctl notify 5 5000 'rgb(458588)' 'fontsize:15  Dotfiles updated correctly'" \
 	dof="yazi ~/.dotfiles" \
 	n="nnn -e" \
 	mu='yt-dlp "$(ytfzf -D -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \

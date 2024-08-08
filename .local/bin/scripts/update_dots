@@ -13,5 +13,5 @@ git_push() {
     git push
 }
 
-git_push
+cd $HOME/.dotfiles && git_push
 

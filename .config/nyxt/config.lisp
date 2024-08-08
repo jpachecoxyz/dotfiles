@@ -1,9 +1,9 @@
 (in-package #:nyxt-user)
 
 ;; Import Files
+;; (nyxt::load-lisp "~/.config/nyxt/engines.lisp")
 (nyxt::load-lisp "~/.config/nyxt/style.lisp")
 (nyxt::load-lisp "~/.config/nyxt/statusline.lisp")
-;; (nyxt::load-lisp "~/.config/nyxt/invader.lisp")
 (nyxt::load-lisp "~/.config/nyxt/commands.lisp")
 (nyxt::load-lisp "~/.config/nyxt/keybinds.lisp")
 
@@ -33,7 +33,7 @@
    '("py" "https://docs.python.org/3/search.html?q=~a"
      "https://docs.python.org/3")
    '("doi" "https://dx.doi.org/~a" "https://dx.doi.org/")
-   '("yt" "https://www.youtube.com/results?search_query=~a"))
+   '("yt" "https://invidious.incogniweb.net/search?q=~a"))
   "List of search engines.")
 
 (define-configuration context-buffer
