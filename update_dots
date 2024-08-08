@@ -7,7 +7,9 @@
 
 git_push() {
     git add .
-    git commit -m "$(date "+%A %F %I:%M:%S")"
+    echo "Commit message: "
+    read commit
+    git commit -m "$commit"
     git push
 }
 

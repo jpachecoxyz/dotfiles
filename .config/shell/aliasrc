@@ -88,7 +88,7 @@ alias \
 # Directories
 alias \
 	tm="cd /tmp" \
-	dots="cd ~/.dotfiles" \
+	ds="cd ~/.dotfiles" \
 	dof="yazi ~/.dotfiles" \
 	n="nnn -e" \
 	mu='yt-dlp "$(ytfzf -D -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \

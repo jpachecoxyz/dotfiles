@@ -46,7 +46,8 @@ case $OPT in
         ;;
     selection)
 	sleep 1
-        selection
+        selection && hyprctl notify 3 5000 "rgb(458588)" "fontsize:15 Video was stored in /tmp/capture.png"
+	share && hyprctl notify 3 5000 "rgb(458588)" "fontsize:15 0x0.st url in clipboard"
         ;;
     share) 
         check_connection && share || notify-send "Error" "check your internet connection" ;;
