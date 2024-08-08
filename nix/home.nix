@@ -63,6 +63,7 @@
     pkgs.yad
     pkgs.waybar
     pkgs.wl-clipboard
+    pkgs.cliphist
     pkgs.grimblast
     pkgs.mako
     pkgs.foot
