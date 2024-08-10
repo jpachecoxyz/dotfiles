@@ -1,0 +1,139 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 23/03/24
+# Project: A NixOS utility
+
+# Define color variables
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[0;37m'
+BOLD='\033[1m'
+END='\033[0m'
+
+# [[ Variables ]]
+
+# Ports directories:
+nix_dir=$HOME/.dotfiles/nix/
+# fuzzy finder opt
+fz="fzf"
+
+# Define a list of the scratch commands
+actions="generation home full-update purg git"
+
+# [[ Functions ]]
+
+# Greeting
+initial_msg() {
+    printf "${BOLD}:: Welcome to NixOS utility tool\n${END}"
+}
+
+# Simple nixOS rebuild
+s_rebuild() {
+    cd $nix_dir
+    sudo nixos-rebuild switch --flake .
+}
+
+# Home manager rebuild
+h_rebuild() {
+    cd $nix_dir
+    home-manager switch --flake .
+}
+
+# Full_update, both system and home-manager
+f_rebuild() {
+    cd $nix_dir
+    nix flake update && home-manager switch --flake . && sudo nixos-rebuild switch --flake . || printf "${RED}${BOLD}:: Update fails, run scratch sysup...\n${END}"
+}
+
+# Full Garbage collector -d.
+purg() {
+    sudo nix-collect-garbage --delete-old && sudo /run/current-system/bin/switch-to-configuration boot
+}
+
+# Function to check internet connectivity
+check_internet() {
+    wget -q --spider http://google.com
+    if [ $? -gt 0 ]; then
+        printf "${RED}${BOLD}Error: No internet connection. Script will now exit.\n${END}"
+        exit 1
+    fi
+}
+
+# [[ Sequence ]]
+
+clear
+initial_msg
+check_internet
+
+if [ "$#" -gt 0 ]; then
+case "$1" in
+    "-s")
+        s_rebuild
+        notify-send "NixOS" "Your system is up to date" 
+        # clear
+        printf "${CYAN}${BOLD}:: Your system is now up to date\n${END}"
+        ;;
+    "-h")
+        h_rebuild
+        notify-send "NixOS" "Home-Manager is up to date" 
+        # clear
+        printf "${CYAN}${BOLD}:: Home-Manager is now up to date\n${END}"
+        ;;
+    "-f")
+        # clear
+        f_rebuild && notify-send "NixOS" "Your system is fully updated now" 
+        # clear
+        printf "${GREEN}${BOLD}:: Your system is fully updated now\n${END}"
+        ;;
+    "-p")
+        printf "${RED}${BOLD}Removing old generations and clean boot: \n${END}"
+        purg && notify-send "NixOS" "Old generations removed" 
+        printf "${RED}${BOLD}:: Old generations removed and boot cleaned\n${END}"
+        ;;
+    *)
+        clear && exit
+        ;;
+esac
+else
+printf "${CYAN}${BOLD}:: What do you want to do?\n${END}"
+selected_action=$(printf '%s\n' $actions | $fz)
+
+case $selected_action in
+    generation)
+        s_rebuild
+        notify-send "NixOS" "Your system is up to date" 
+        # clear
+        printf "${CYAN}${BOLD}:: Your system is now up to date\n${END}"
+        ;;
+    home)
+        h_rebuild
+        notify-send "NixOS" "Home-Manager is up to date" 
+        # clear
+        printf "${CYAN}${BOLD}:: Home-Manager is now up to date\n${END}"
+        ;;
+    full-update)
+        # clear
+        f_rebuild && notify-send "NixOS" "Your system is fully updated now" 
+        # clear
+        printf "${GREEN}${BOLD}:: Your system is fully updated now\n${END}"
+        ;;
+    purge)
+        printf "${RED}${BOLD}Removing old generations and clean boot: \n${END}"
+        purg && notify-send "NixOS" "Old generations removed" 
+        printf "${RED}${BOLD}:: Old generations removed and boot cleaned\n${END}"
+        ;;
+    git)
+        nix_update
+        printf "${GREEN}${BOLD}:: Your system is now in GitHub\n${END}"
+        ;;
+    *)
+        clear && exit
+        ;;
+esac
+fi
