@@ -418,14 +418,6 @@ clipboard"
          (file (completing-read "Select file: " all-files nil t)))
     (find-file file)))
 
-(defun open-post-org-files ()
-  "List and open Org files in the ~/repos/jpacheco.xyz/posts/ directory."
-  (interactive)
-  (let* ((org-directory "/home/javier/repos/jpacheco.xyz/content/posts/")
-         (org-files (directory-files org-directory nil "\\.org$"))
-         (chosen-file (completing-read "Choose an Org file: " org-files nil t)))
-    (find-file (expand-file-name chosen-file org-directory))))
-
 ;; Follow urls in the buffer
 (defun list-and-open-url-in-buffer ()
   "List all URLs in the current buffer, display them in the minibuffer, and open a selected URL in the browser."

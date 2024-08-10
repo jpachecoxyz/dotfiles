@@ -23,7 +23,8 @@
 
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
-(load-theme 'jp-elea-dark :no-confirm)
+;; (load-theme 'jp-elea-dark :no-confirm)
+(load-theme 'jp-darkvenom :no-confirm)
 
 ;; Disable GUI when foundit
 (when (fboundp 'menu-bar-mode)
@@ -441,7 +442,7 @@
   :config
   (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down) ;; corfu-next
   (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)  ;; corfu-previous
-  ;; (setq corfu-doc-display-within-parent-frame nil)
+  (setq corfu-doc-display-within-parent-frame nil)
   (add-hook 'corfu-mode-hook #'corfu-doc-mode))
 (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle)
 
@@ -1194,9 +1195,9 @@
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
  '(;;Places
- ("home" . ?h)
- ("work" . ?w)
- ("kindergardeen" . ?k)
+ ("@home" . ?h)
+ ("@work" . ?w)
+ ("@kindergardeen" . ?k)
 
  ;; Whom
  ("lia" . ?l)
@@ -1204,11 +1205,12 @@
  ("xiomara" . ?x)
  
  ;; Devices
- ("laptop" . ?L)
- ("phone" . ?p)
+ ("@laptop" . ?L)
+ ("@phone" . ?p)
 
  ;; Activities
  ("programming" . ?P)
+ ("planning" . ?n)
  ("writting" . ?W)
  ("calls" . ?c)
  ("email" . ?e)
@@ -1219,7 +1221,6 @@
         "~/public/org/agenda/bdays.org"
         "~/public/org/agenda/important_dates.org"
         "~/public/org/agenda/contacts.org"
-        "~/public/org/agenda/pm.org"
         "~/public/org/agenda/work.org"
 		))
 (setq org-todo-keywords
@@ -1275,11 +1276,11 @@
 #+BEGIN_SRC emacs-lisp
 (defvar custom-daily-agenda
   `(
-	(tags-todo "TODO=\"TODO\"|DEADLINE>=\"<+1w>\"|SCHEDULED>=\"<+1w>\""
+	(tags-todo "+@home|@work"
                ((org-agenda-span 'week)
                 (org-agenda-start-on-weekday 1) ; Start the week on Monday
                 (org-agenda-block-separator nil)
-                (org-agenda-overriding-header "\nTODOs for the current week\n")))
+                (org-agenda-overriding-header "Main Agenda Overview\n")))
 
 	;; (tags-todo "*"
     ;;            ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
@@ -1297,7 +1298,7 @@
                 ;; utility in multi-day views.
                 (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                 (org-agenda-format-date "%A %-e %B %Y")
-                (org-agenda-overriding-header "\nToday's agenda\n")))
+                (org-agenda-overriding-header "\nToday's agenda\n")))
     (agenda "" ((org-agenda-start-on-weekday nil)
                 (org-agenda-start-day "+1d")
                 (org-agenda-span 5)
@@ -1305,7 +1306,7 @@
                 (org-agenda-block-separator nil)
                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                 ;; (org-agenda-entry-types '(:deadline))
-                (org-agenda-overriding-header "\nNext five days\n")))
+                (org-agenda-overriding-header "\nNext five days\n")))
     ;; (agenda "" ((org-agenda-time-grid nil)
     ;;             (org-agenda-start-on-weekday nil)
     ;;             ;; We don't want to replicate the previous section's
@@ -1324,44 +1325,88 @@
 
 (setq org-agenda-custom-commands
       `(
-		("A" "Daily agenda and top priority tasks"
+		("a" "Daily agenda and top priority tasks"
          ,custom-daily-agenda
          ((org-agenda-fontify-priorities nil)
           (org-agenda-dim-blocked-tasks nil)))
 
-		("p" "Personal Agenda"
-         ,custom-daily-agenda
-         ((org-agenda-files '("~/public/org/agenda/personal.org"
-							  "~/public/org/agenda/training.org"))
-		  (org-agenda-fontify-priorities nil)
-          (org-agenda-dim-blocked-tasks nil)))
+		;; ("p" "Personal Agenda"
+        ;;  ,custom-daily-agenda
+        ;;  ((org-agenda-files '("~/public/org/agenda/personal.org"
+		;; 					  "~/public/org/agenda/training.org"))
+		;;   (org-agenda-fontify-priorities nil)
+        ;;   (org-agenda-dim-blocked-tasks nil)))
 
-		("w" "Work Agenda"
-		 ,custom-daily-agenda
-		 ((org-agenda-files '("~/public/org/agenda/work.org"
-							  "~/public/org/agenda/pm.org"))
- 		  (org-agenda-fontify-priorities nil)
-          (org-agenda-dim-blocked-tasks nil)))
-		
-		("b" "Birthday View"
+        ("d" "Daily Agenda"
+         (
+          (tags-todo "+PRIORITY=\"A\""
+                     ((org-agenda-overriding-header "High Priority Tasks")))
+
+		  (agenda "" ((org-agenda-overriding-header "Daily Agenda")
+					  (org-agenda-span 'day)
+					  (org-deadline-warning-days 7)))))
+
+		("w" "Weekly Review"
 		 ((agenda ""
-                  ((org-agenda-span 'year)
-                   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                   (org-agenda-show-all-dates nil)
-                   (org-agenda-skip-function
-					'(org-agenda-skip-entry-if
-                      'notregexp
-                      (regexp-opt '("birthday"))))))))
+                  ((org-agenda-overriding-header "Completed Tasks")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+                   (org-agenda-span 'week)))
 
+          (agenda ""
+                  ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-span 'week)))))
+
+		("W" "Work Agenda"
+		 ,custom-daily-agenda
+		 ((org-agenda-files '("~/public/org/agenda/work.org")
+ 							(org-agenda-fontify-priorities nil)
+							(org-agenda-dim-blocked-tasks nil))))
+		
+		("p" "Planning"
+         ((tags-todo "+planning+@home|@work"
+                     ((org-agenda-overriding-header "Planning Tasks")))
+
+          (tags-todo "-{.*}"
+                     ((org-agenda-overriding-header "Untagged Tasks")))
+
+          (todo ".*" ((org-agenda-files '("~/public/org/agenda/refill.org"))
+                      (org-agenda-overriding-header "Unprocessed refill.org Items")))))
+		
 		("i" "Important dates"
 		 ((agenda ""
-                  ((org-agenda-span 'year)
-                   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                   (org-agenda-show-all-dates nil)
-                   (org-agenda-skip-function
+				  ((org-agenda-overriding-header "Important dates Agenda Overview\n")
+				   (org-agenda-span 'year)
+				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+				   (org-agenda-show-all-dates nil)
+				   (org-agenda-skip-function
 					'(org-agenda-skip-entry-if
-                      'notregexp
-                      (regexp-opt '("dates"))))))))
+					  'notregexp
+					  (regexp-opt '("i-dates"))))))
+
+		  (agenda ""
+				  ((org-agenda-overriding-header "Upcoming Birthday's\n")
+				   (org-agenda-span 'month)
+				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+				   (org-agenda-start-day "01")
+				   (org-agenda-show-all-dates nil)
+				   (org-agenda-files '("~/public/org/agenda/bdays.org"))
+				   (org-agenda-skip-function
+					'(org-agenda-skip-entry-if
+					  'notregexp
+					  (regexp-opt '("birthday"))))))))
+
+		("b" "Birthday Calendar dates"
+		 ((agenda ""
+				  ((org-agenda-overriding-header "Birthday Calendar dates\n")
+				   (org-agenda-span 'year)
+				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+				   (org-agenda-start-day "01")
+				   (org-agenda-show-all-dates nil)
+				   (org-agenda-skip-function
+					'(org-agenda-skip-entry-if
+					  'notregexp
+					  (regexp-opt '("birthday"))))))))
 
 		))
 
@@ -1378,6 +1423,8 @@
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-window-setup 'current-window)
 (setq org-track-ordered-property-with-tag t)
+(setq org-log-done 'time)
+(setq org-agenda-start-with-log-mode t)
 #+end_src
 ** Org-Calendar.
 #+BEGIN_SRC emacs-lisp
@@ -2187,7 +2234,9 @@ folder, otherwise delete a word"
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
-	"o p" '(open-post-org-files :wk "Open lisp files")
+    "o p" '((lambda () (interactive)
+              (find-file "~/webdev/blog/org/jpacheco.xyz.org")) 
+            :wk "Open web org file.")
 	"o o" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
 	"o t" '(term-toggle-term :wk "Toggle terminal")
 	"o s" '(toggle-scratch-buffer :wk "Toggle scratch buffer")
@@ -2284,7 +2333,7 @@ folder, otherwise delete a word"
 ;; Optionally, bind the function to a key for quick access
 (global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
 #+END_SRC
-* COMMENT Log-keys.
+* Log-keys.
 #+BEGIN_SRC emacs-lisp
 (use-package command-log-mode
   :commands command-log-mode)

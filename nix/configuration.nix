@@ -20,6 +20,7 @@ in
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.tmp.cleanOnBoot = true;
 
   networking.hostName = "nixos"; # Define your hostname.
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -79,23 +80,6 @@ in
   # security.doas.enable = true;
   security.sudo = {
     enable = true;
-    extraRules = [{
-      commands = [
-        {
-          command = "${pkgs.systemd}/bin/systemctl suspend";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/reboot";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "${pkgs.systemd}/bin/poweroff";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-      groups = [ "wheel" ];
-    }];
     extraConfig = with pkgs; ''
       Defaults:picloud secure_path="${lib.makeBinPath [
         systemd
@@ -121,7 +105,6 @@ in
 
   # Fonts
   fonts.packages = with pkgs; [
-
     jetbrains-mono
     iosevka
     nerdfonts
@@ -134,7 +117,6 @@ in
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-hyprland
-      # xdg-desktop-portal-gtk
     ];
   };
 
@@ -149,7 +131,6 @@ in
     # (pkgs.writeScriptBin "sudo" ''exec doas "$@"'')
     wget
     git
-    # vim
     nix-init
     stow
     google-chrome
@@ -188,11 +169,11 @@ in
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    #pinentryPackage = "curses";
+    # pinentryPackage = "curses";
     enableSSHSupport = true;
   };
 
-  services.getty.autologinUser = "javier";
+  # services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
   services.emacs.enable = true;

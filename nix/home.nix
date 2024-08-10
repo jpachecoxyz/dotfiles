@@ -53,7 +53,6 @@
     pkgs.lazygit # git tui frontend
 
     # Generic tools.
-
     pkgs.graphite-gtk-theme 
     pkgs.breeze-icons
     pkgs.bibata-cursors
