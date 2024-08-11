@@ -1337,15 +1337,6 @@
 		;;   (org-agenda-fontify-priorities nil)
         ;;   (org-agenda-dim-blocked-tasks nil)))
 
-        ("d" "Daily Agenda"
-         (
-          (tags-todo "+PRIORITY=\"A\""
-                     ((org-agenda-overriding-header "High Priority Tasks")))
-
-		  (agenda "" ((org-agenda-overriding-header "Daily Agenda")
-					  (org-agenda-span 'day)
-					  (org-deadline-warning-days 7)))))
-
 		("w" "Weekly Review"
 		 ((agenda ""
                   ((org-agenda-overriding-header "Completed Tasks")

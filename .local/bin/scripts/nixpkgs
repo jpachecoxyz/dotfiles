@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Nix Directory
+nix_dir=$HOME/.dotfiles/nix/
+
+# Icons
+CHECKMARK="✔️"
+CROSSMARK="❌"
+ARROW="➡️"
+TRASH="🗑️"
+
+# Help function
+function show_help {
+    echo -e "${BLUE}Usage: nixpkgs [options]${NC}"
+    echo
+    echo "Options:"
+    echo -e "  ${YELLOW}-n, --nixos${NC}          ${GREEN}Run 'sudo nixos-rebuild switch --flake .'${NC}"
+    echo -e "  ${YELLOW}-h, --home${NC}           ${GREEN}Run 'home-manager switch --flake .'${NC}"
+    echo -e "  ${YELLOW}-a, --all${NC}            ${GREEN}Run both of the above commands${NC}"
+    echo -e "  ${YELLOW}-u, --update-flakes${NC}  ${GREEN}Update all flakes with 'nix flake update'${NC}"
+    echo -e "  ${YELLOW}-d, --delete${NC}         ${RED}Delete previous generations using 'sudo nix-collect-garbage -d'${NC}"
+    echo -e "  ${YELLOW}-p, --package${NC}        ${BLUE}Fuzzy find a Nix package and see the information about it.${NC}"
+    echo -e "  ${YELLOW}-z, --fzf${NC}            ${YELLOW}Use fzf to select what to execute${NC}"
+    echo -e "  ${YELLOW}--help${NC}               ${BLUE}Show this help message${NC}"
+    echo
+}
+
+# Function to use fzf
+function fzf_menu {
+    options=("Update NixOS" "Update Home Manager" "Update NixOS and Home Manager" "Update all Flakes" "Delete previous generations" "Run a Nix package in nix-shell")
+    selected=$(printf '%s\n' "${options[@]}" | fzf --prompt="Select an option: ")
+
+    case $selected in
+        "Update NixOS")
+            cd $nix_dir
+            echo -e "${GREEN}${CHECKMARK} Updating NixOS...${NC}"
+            sudo nixos-rebuild switch --flake .
+            ;;
+        "Update Home Manager")
+            cd $nix_dir
+            echo -e "${GREEN}${CHECKMARK} Updating Home Manager...${NC}"
+            home-manager switch --flake .
+            ;;
+        "Update NixOS and Home Manager")
+            cd $nix_dir
+            echo -e "${GREEN}${CHECKMARK} Updating NixOS and Home Manager...${NC}"
+            sudo nixos-rebuild switch --flake .
+            home-manager switch --flake .
+            ;;
+        "Update all Flakes")
+            cd $nix_dir
+            echo -e "${GREEN}${CHECKMARK} Updating all Flakes...${NC}"
+            nix flake update
+            ;;
+        "Delete previous generations")
+            echo -e "${RED}${TRASH} Deleting previous generations...${NC}"
+            sudo nix-collect-garbage -d
+            ;;
+        "Run a Nix package in nix-shell")
+            run_nix_package
+            ;;
+    esac
+}
+
+# Function to run a Nix package in nix-shell
+function run_nix_package {
+    # Set the file path
+    local package_file="$HOME/.local/share/allpackages.txt"
+    
+    # Check if the file exists, if not, create it
+    if [[ ! -f "$package_file" ]]; then
+        echo "Generating package list..."
+        nix-env -qa -P | awk '{print $1}' > "$package_file"
+        # sed -i 's/nixos\.//g' $package_file
+    fi
+    clear
+    # Use fzf to search packages
+    local pkg=$(cat "$package_file" | fzf \
+            --reverse \
+            --prompt="NixOS Packages> " \
+            --preview="echo -e \"{1}\n\"; nix-env -qa --description -A {1}" \
+            --preview-window=wrap )
+    # local cpkg=$(pkg | sed 's/nixos\.//g')
+    pkg=$(echo "$pkg" | sed 's/^nixos\.//')
+    nix-search $pkg
+}
+
+# Flag check
+if [[ $# -eq 0 ]]; then
+    fzf_menu
+    exit 0
+fi
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -n|--nixos)
+            echo -e "${GREEN}${CHECKMARK} Updating NixOS...${NC}"
+            sudo nixos-rebuild switch --flake .
+            shift
+            ;;
+        -H|--home)
+            echo -e "${GREEN}${CHECKMARK} Updating Home Manager...${NC}"
+            home-manager switch --flake .
+            shift
+            ;;
+        -a|--all)
+            echo -e "${GREEN}${CHECKMARK} Updating NixOS and Home Manager...${NC}"
+            sudo nixos-rebuild switch --flake .
+            home-manager switch --flake .
+            shift
+            ;;
+        -u|--update-flakes)
+            echo -e "${GREEN}${CHECKMARK} Updating all Flakes...${NC}"
+            nix flake update
+            shift
+            ;;
+        -d|--delete)
+            echo -e "${RED}${TRASH} Deleting previous generations...${NC}"
+            sudo nix-collect-garbage -d
+            shift
+            ;;
+        -p|--package)
+            run_nix_package
+            shift
+            ;;
+        -z|--fzf)
+            fzf_menu
+            shift
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            echo -e "${RED}${CROSSMARK} Unrecognized option: $1${NC}"
+            show_help
+            exit 1
+            ;;
+    esac
+done

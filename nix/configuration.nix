@@ -132,6 +132,7 @@ in
     wget
     git
     nix-init
+    nix-search-cli
     stow
     google-chrome
 
@@ -173,7 +174,7 @@ in
     enableSSHSupport = true;
   };
 
-  # services.getty.autologinUser = "javier";
+  services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
   services.emacs.enable = true;
