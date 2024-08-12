@@ -4,6 +4,7 @@
 .config/google-chrome/
 .config/mpd/log
 .config/mpd/pid
+.config/VirtualBox/
 .config/obs-studio/
 .config/gtk-3.0/
 .config/gtk-4.0/
