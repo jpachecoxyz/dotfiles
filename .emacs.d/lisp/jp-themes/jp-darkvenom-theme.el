@@ -449,8 +449,8 @@
    `(font-latex-script-char-face ((t (:foreground ,jp-darkvenom-mono-2))))
 
    ;; org-mode
-   `(org-level-1 ((t (:foreground ,jp-darkvenom-mono-3 :height 1.1))))
-   `(org-level-2 ((t (:foreground ,jp-darkvenom-blue :height 1.1))))
+   `(org-level-1 ((t (:foreground ,jp-darkvenom-mono-3 ))))
+   `(org-level-2 ((t (:foreground ,jp-darkvenom-blue ))))
    `(org-date ((t (:foreground ,jp-darkvenom-cyan))))
    `(org-ellipsis ((t (:underline nil))))
    `(org-document-info ((t (:foreground ,jp-darkvenom-mono-2))))

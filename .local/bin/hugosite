@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+# Script to create a new Hugo blog site with the PaperModX theme
+
+# Function to display help menu
+show_help() {
+    echo "Usage: $0 [-n site_name] [-t theme_name] [-h]"
+    echo ""
+    echo "Options:"
+    echo "  -n  Name of the new Hugo site (default: my-hugo-site)"
+    echo "  -t  Theme name to use (default: PaperModX)"
+    echo "  -h  Display this help message"
+    exit 0
+}
+
+# Default values
+SITE_NAME="my-hugo-site"
+THEME_NAME="PaperModX"
+
+# Parse options
+while getopts ":n:t:h" opt; do
+  case ${opt} in
+    n )
+      SITE_NAME=$OPTARG
+      ;;
+    t )
+      THEME_NAME=$OPTARG
+      ;;
+    h )
+      show_help
+      ;;
+    \? )
+      echo "Invalid option: $OPTARG" 1>&2
+      show_help
+      ;;
+    : )
+      echo "Invalid option: $OPTARG requires an argument" 1>&2
+      show_help
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
+# Step 1: Create a new Hugo site
+echo "Creating a new Hugo site: $SITE_NAME"
+hugo new site "$SITE_NAME" || { echo "Failed to create the site"; exit 1; }
+
+# Step 2: Navigate into the site directory
+cd "$SITE_NAME" || { echo "Failed to navigate into the site directory"; exit 1; }
+
+# Step 3: Initialize a new Git repository
+echo "Initializing a new Git repository"
+git init || { echo "Failed to initialize Git repository"; exit 1; }
+
+# Step 4: Add the PaperModX theme as a submodule
+echo "Adding the $THEME_NAME theme as a Git submodule"
+git submodule add https://github.com/reorx/hugo-PaperModX themes/$THEME_NAME || { echo "Failed to add theme submodule"; exit 1; }
+
+# Step 5: Copy the example site configuration
+echo "Copying the example site configuration"
+cp -r themes/$THEME_NAME/exampleSite/* . || { echo "Failed to copy example site configuration"; exit 1; }
+
+# Step 6: Update the configuration file with the theme
+echo "Updating config file with the $THEME_NAME theme"
+sed -i "s/^theme = .*/theme = \"$THEME_NAME\"/" config.yml || { echo "Failed to update config file"; exit 1; }
+
+# Step 7: Build the site to ensure everything works
+echo "Building the site to ensure everything works"
+hugo || { echo "Failed to build the site"; exit 1; }
+
+echo "Hugo site created successfully with the $THEME_NAME theme!"
+
