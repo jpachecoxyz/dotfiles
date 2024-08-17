@@ -193,11 +193,4 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 
-  # Enable virtualbox.
-  virtualisation.virtualbox.host.enable = true;
-
-  # Enable the Oracle Extension Pack.
-  virtualisation.virtualbox.host.enableExtensionPack = true;
-  users.extraGroups.vboxusers.members = [ "javier" ];
-  virtualisation.virtualbox.host.enableKvm = true;
 }
