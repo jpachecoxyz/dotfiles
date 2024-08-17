@@ -98,4 +98,39 @@ alias \
 
 ecf(){ find ~/.dotfiles/.config  -type f,l -printf "%h/%f\n" | fzf --prompt="Edit config file: " | xargs -r nvim }
 esc(){ find ~/.dotfiles/.local/bin  -type f,l -printf "%h/%f\n" | fzf --prompt="Edit script file: " | xargs -r nvim }
-evp(){ find /usr/ports/main  -type f,l -printf "%h/%f\n" | fzf --prompt="Edit venom Port: " | xargs -r nvim }
+
+gap() {
+    # Check if the current directory is a Git repository
+    if [ ! -d ".git" ]; then
+        echo "Not a Git repository."
+        return 1
+    fi
+
+    # Fetch the latest changes from the remote repository
+    git fetch
+
+    # Check if there are any differences between the local and remote branches
+    local LOCAL=$(git rev-parse @)
+    local REMOTE=$(git rev-parse @{u})
+    local BASE=$(git merge-base @ @{u})
+
+    if [ "$LOCAL" = "$REMOTE" ]; then
+        echo "The local repository is up to date."
+    elif [ "$LOCAL" = "$BASE" ]; then
+        echo "Changes detected, pulling updates..."
+        git pull
+    elif [ "$REMOTE" = "$BASE" ]; then
+        echo "You have local changes that need to be pushed."
+    else
+        echo "The local and remote repositories have diverged."
+    fi
+}
+
+y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}

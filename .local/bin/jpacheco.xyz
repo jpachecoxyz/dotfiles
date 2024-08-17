@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 15/08/24
+# Project: Run Hugo server
+
+LOCAL_URL=http://localhost:1313
+HUGO_BASE_DIR=~/webdev/blog/
+
+open_browser () {
+    duration=${1:-3}
+    sleep $duration
+    echo 'after ' $duration
+    $BROWSER $LOCAL_URL
+}
+
+hyprctl dispatch movetoworkspace 2
+cd $HUGO_BASE_DIR
+hyprctl notify 5 5000 "rgb(458588)" "fontsize:15  Runing HUGO web: https:jpacheco.xyz"
+open_browser 1 & hugo server

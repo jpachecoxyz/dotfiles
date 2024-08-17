@@ -1,9 +1,36 @@
 // layout_file.kdl
 
+// layout {
+//     tab name="Emacs" {
+//         pane command="emacsclient" {
+//             args "--nw" "-c" "-a''"
+//         }
+//     }
+//     // pane split_direction="vertical" {
+//     //     pane
+//     //     pane command="jpacheco.xyz"
+//     // }
+//     tab name="hugoserver" {
+//         pane command="jpacheco.xyz"
+//     }
+// }
+
+//  emacs-ls-layout.kdl
 layout {
-    pane command="yazi"
-    pane split_direction="vertical" {
-        pane
-        pane command="htop"
+    cwd "/home/javier/webdev/blog/"
+    tab name="Listing" {
+        pane split_direction="Vertical" {
+            command "jpacheco.xyz"
+        }
+    }
+    tab name="Blog" {
+        pane split_direction="Vertical" {
+            command "yazi"
+        }
+    }
+    tab name="Main" {
+        pane split_direction="Vertical" {
+            command "emacs-term"
+        }
     }
 }

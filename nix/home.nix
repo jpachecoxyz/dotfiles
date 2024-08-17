@@ -51,6 +51,7 @@
     pkgs.yazi   # File manager
     pkgs.zellij # Terminal multiplexer
     pkgs.lazygit # git tui frontend
+    pkgs.fossil
 
     # Generic tools.
     pkgs.graphite-gtk-theme 
@@ -80,6 +81,7 @@
     pkgs.fastfetch
     pkgs.wf-recorder
     pkgs.tofi
+    pkgs.transmission-gtk
 
     # Browser / web
     pkgs.nyxt
