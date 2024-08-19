@@ -177,7 +177,6 @@ in
   services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
-  services.emacs.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -192,5 +191,12 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
+
+  # Enable ZRAM for swap
+  zramSwap = {
+    enable = true;
+    memoryPercent = 100;
+    algorithm = "zstd";
+  };
 
 }

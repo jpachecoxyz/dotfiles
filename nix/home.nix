@@ -2,7 +2,7 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, overlays, ... }:
 
   let
     # Override ncmpcpp with the desired features
@@ -40,7 +40,8 @@
     pkgs.hugo
     pkgs.gcc
     pkgs.neovim
-    pkgs.emacs-gtk
+    # pkgs.emacs-gtk
+    pkgs.emacs-git
     pkgs.python3
     pkgs.nodejs
     pkgs.cargo
@@ -199,4 +200,13 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+# emcas lastest version
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      sha256 = "0c4a1sfrh62ka0y8fvngc3nrf5862h966gz0z4mwrbdgsr8myhi3";
+    }))
+  ];
+  services.emacs.enable = true;
 }

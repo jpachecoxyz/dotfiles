@@ -8,17 +8,19 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     #   # Hyprland and plugins of it.
-      hyprland.url = "github:hyprwm/Hyprland";
-      hyprland-plugins = {
-        url = "github:hyprwm/hyprland-plugins";
-        inputs.hyprland.follows = "hyprland";
-      };
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, ... }: 
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, emacs-overlay, ... }: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
+      overlays = [ emacs-overlay.overlay ];
       pkgs = nixpkgs.legacyPackages.${system};
       pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
     in {
