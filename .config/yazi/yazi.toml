@@ -2,7 +2,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
-[manager]
+# [manager]
 ratio          = [ 1, 2, 3 ]
 sort_by        = "natural"
 sort_sensitive = false
@@ -54,16 +54,15 @@ image_bound      = [ 0, 0 ]
 suppress_preload = false
 
 [plugin]
-
 preloaders = [
 	{ name = "*", cond = "!mime", run = "mime", multi = true, prio = "high" },
 	# Image
-	{ mime = "image/vnd.djvu", run = "noop" },
-	{ mime = "image/*",        run = "image" },
-	# Video
-	{ mime = "video/*", run = "video" },
-	# PDF
-	{ mime = "application/pdf", run = "pdf" },
+	# { mime = "image/vnd.djvu", run = "noop" },
+	# { mime = "image/*",        run = "image" },
+	# # Video
+	# { mime = "video/*", run = "video" },
+	# # PDF
+	# { mime = "application/pdf", run = "pdf" },
 ]
 previewers = [
 	{ name = "*/", run = "folder", sync = true },

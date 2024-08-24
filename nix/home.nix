@@ -3,7 +3,6 @@
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
 { config, pkgs, pkgs-unstable, overlays, ... }:
-
   let
     # Override ncmpcpp with the desired features
     myNcmpcpp = pkgs.ncmpcpp.override {
@@ -37,13 +36,16 @@
     pkgs.poetry
     pkgs.rye
     pkgs.lua-language-server
+    pkgs.arduino-ide
     pkgs.hugo
     pkgs.gcc
     pkgs.neovim
-    # pkgs.emacs-gtk
+    # pkgs-unstable.emacs-gtk
     pkgs.emacs-git
+    pkgs-unstable.tdlib
     pkgs.python3
     pkgs.nodejs
+    pkgs.pagefind
     pkgs.cargo
     pkgs.nil
     pkgs.direnv
@@ -205,7 +207,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "0c4a1sfrh62ka0y8fvngc3nrf5862h966gz0z4mwrbdgsr8myhi3";
+      sha256 = "1z3v3h8cmd9465l9sa2d4hzihdvbx204p2fckanl5s76gg9gddgy";
     }))
   ];
   services.emacs.enable = true;

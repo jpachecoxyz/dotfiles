@@ -449,30 +449,31 @@ clipboard"
 (global-set-key (kbd "C-c e l") 'org-export-to-latex-and-compile-with-tectonic)
 
 ;; Update my web-page
-(defun publish-blog ()
-  "Export Org file to Hugo-compatible Markdown and publish the site."
+(defun publish-my-blog ()
+  "Export all subtrees with Hugo, then run the publish blog script within Emacs and display a success message in the minibuffer."
   (interactive)
-  (let ((org-file "/home/javier/webdev/blog/org/jpacheco.xyz.org")
-        (blog-dir "/home/javier/webdev/blog/")
-        (publish-dir "/home/javier/webdev/jpachecoxyz.github.io/"))
-    ;; Step 1: Export the Org file to Hugo-compatible Markdown
-    (with-current-buffer (find-file-noselect org-file)
-      (org-hugo-export-wim-to-md :all-subtrees))
-    ;; Step 2: Go to the blog directory
-    (cd blog-dir)
-    ;; Step 3: Run Hugo to generate the site
-    (call-process "hugo" nil 0)
-    ;; Step 4: Go to the publication directory
-    (cd publish-dir)
-    ;; Step 5: Stage all changes for git
-    (call-process "git" nil 0 nil "add" ".")
-    ;; Step 6: Prompt for a commit message
-    (let ((commit-message (read-string "Enter your commit message: ")))
-      ;; Step 7: Commit with the provided message
-      (call-process "git" nil 0 nil "commit" "-m" commit-message)
-      ;; Step 8: Push the changes
-      (call-process "git" nil 0 nil "push")
-      (message "Changes pushed to repository."))))
-(global-set-key (kbd "C-c u b") 'publish-blog)
+  (let ((commit-msg (read-string "Enter commit message: ")))
+    ;; Export all subtrees with Hugo
+    (org-hugo-export-wim-to-md :all-subtrees)
+    ;; Run the publish script
+    (let ((process (start-process-shell-command
+                    "publish-blog"                       ; Process name
+                    "*publish-blog-output*"              ; Output buffer
+                    (format "~/webdev/jpachecoxyz.github.io/hugo/publish.sh \"%s\"" commit-msg))))  ; Run the script with the commit message
+      ;; Set up the process sentinel to check the process status
+      (set-process-sentinel
+       process
+       (lambda (process event)
+         (when (string= event "finished\n")
+           (message "jpacheco.xyz was correctly updated!")))))))
+
+(global-set-key (kbd "C-c u b") 'publish-my-blog)
+
+;; Search roam
+(defun jp/search-roam ()
+  "Run consult-ripgrep on the org roam directory"
+  (interactive)
+  (consult-ripgrep org-roam-directory nil))
+(global-set-key (kbd "C-c n s") 'jp/search-roam)
 
 (provide 'utilities)

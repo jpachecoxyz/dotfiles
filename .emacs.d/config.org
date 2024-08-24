@@ -283,7 +283,8 @@
   :init
   (parrot-mode)
   (parrot-start-animation))
-(setq parrot-num-rotations nil)
+(setq parrot-num-rotations 4)
+(add-hook 'after-save-hook 'parrot-start-animation)
 
 (use-package diminish
   :ensure t)
@@ -871,7 +872,7 @@
 	("i" org-roam-node-insert-immediate "Insert Org Roam node (immediate)")
 	("j" org-roam-dailies-capture-today "Capture today's dailies")
 	("l" org-roam-buffer "Show all Org Roam files")
-	("s" org-roam-server-mode "Toggle Org Roam server mode")
+	("s" jp/search-roam "Search Nodes using rgrep")
 	("t" org-roam-tag-add "Add tag to Org Roam node"))
    "Org-roam dailies"
    (("1" org-roam-dailies-capture-today "Daily today")
@@ -2133,7 +2134,7 @@ folder, otherwise delete a word"
               (dired "~/.emacs.d")) 
             :wk "Open user-emacs-directory in dired")
     "f b" '((lambda () (interactive)
-              (find-file "~/webdev/blog/org/jpacheco.xyz.org")) 
+              (find-file "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")
     "f d" '(find-grep-dired :wk "Search for string in files in DIR")
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
@@ -2226,7 +2227,7 @@ folder, otherwise delete a word"
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
     "o p" '((lambda () (interactive)
-              (find-file "~/webdev/blog/org/jpacheco.xyz.org")) 
+              (find-file "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")
 	"o o" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
 	"o t" '(term-toggle-term :wk "Toggle terminal")
@@ -2302,6 +2303,7 @@ folder, otherwise delete a word"
   :defer t
   :custom
   ;; enable markdown for code snippets
+  (telega-server-libs-prefix "/home/javier/.nix-profile/")
   (telega-chat-input-markups '("markdown2" "org" nil))
   ;; use vertico for completion
   (telega-completing-read-function 'completing-read)
