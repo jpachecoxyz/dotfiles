@@ -24,7 +24,7 @@
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
 ;; (load-theme 'jp-elea-dark :no-confirm)
-(load-theme 'jp-darkvenom :no-confirm)
+(load-theme 'jp-owl :no-confirm)
 
 ;; Disable GUI when foundit
 (when (fboundp 'menu-bar-mode)
@@ -277,14 +277,6 @@
 (use-package nyan-mode
   :ensure t
   :init (nyan-mode))
-
-(use-package parrot
-  :ensure t
-  :init
-  (parrot-mode)
-  (parrot-start-animation))
-(setq parrot-num-rotations 4)
-(add-hook 'after-save-hook 'parrot-start-animation)
 
 (use-package diminish
   :ensure t)
@@ -2332,3 +2324,107 @@ folder, otherwise delete a word"
   :commands command-log-mode)
 ;; (global-set-key (kbd "C-x o") 'command-log-mode)
 #+END_SRC
+* org-static-blog.
+#+begin_src elisp
+(use-package org-static-blog
+  :ensure t
+  :init)
+
+(setq org-static-blog-publish-title "el blog de lázaro"
+      org-static-blog-publish-url "https://elblogdelazaro.org/"
+      org-static-blog-publish-directory "~/Documentos/proyectos/elblogdelazaro.org/public/"
+      org-static-blog-posts-directory "~/Documentos/proyectos/elblogdelazaro.org/posts"
+      org-static-blog-drafts-directory "~/Documentos/proyectos/elblogdelazaro.org/drafts"
+      org-static-blog-rss-file "index.xml"
+      org-static-blog-rss-max-entries 10
+      org-static-blog-langcode "es"
+      org-export-with-toc nil
+      org-static-blog-enable-tags t
+      org-export-with-section-numbers nil
+      org-static-blog-preview-ellipsis "(ver más..)"
+      org-static-blog-preview-link-p t
+      org-static-blog-preview-convert-titles nil
+      org-static-blog-use-preview t)
+
+(setq org-static-blog-rss-extra
+      (concat
+       "<generator>"
+       (format "Emacs %d.%d" emacs-major-version emacs-minor-version) " "
+       "Org-mode " (org-version) " "
+       "org-static-blog 1.4.0"
+       "</generator>\n"
+       "<webMaster>" user-full-name " (" user-mail-address ") " "</webMaster>\n"
+       "<image>\n"
+       "<url>" org-static-blog-publish-url "static/favicon.ico" "</url>\n"
+       "<title>" org-static-blog-publish-title "</title>\n"
+       "<link>" org-static-blog-publish-url "</link>\n"
+       "</image>\n"))
+
+(setq org-static-blog-page-header
+      "<meta name=\"author\" content=\"Carlos M.\">
+       <meta name=\"viewport\" content=\"initial-scale=1,width=device-width,minimum-scale=1\">
+       <link href= \"static/style.css\" rel=\"stylesheet\" type=\"text/css\" />
+       <link rel=\"stylesheet\" href=\"static/font-awesome/css/font-awesome.css\">
+       <link rel=\"icon\" href=\"static/favicon.ico\">"
+      )
+
+(setq org-static-blog-page-preamble
+      "<div style=\"text-align:center\">
+              <img src=\"static/logo.png\" alt=\"elblogdelazaro\"><br>
+              <a href=\"https://elblogdelazaro.org\">el blog de lázaro</a>
+       </div>")
+
+(setq org-static-blog-page-postamble
+      "<div id=\"postamble\" class=\"status\">
+        <footer id=\"footer\" class=\"color color-secondary short\">
+            <div class=\"container\">
+                <div class=\"row\">
+                    <div class=\"col-md-12 center\">
+                        <ul class=\"footer-icons mb-md\">
+                            <li>
+                                <a href=\"mailto:ebdl@elblogdelazaro.org\" title=\"Envía un mail a ebdl@elblogdelazaro.org\">
+                                <span class=\"fa-stack fa-lg\">
+                                    <i class=\"fa fa-circle fa-stack-2x\"></i>
+                                    <i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i>
+                                </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href=\"https://gitlab.com/hefistion\" title=\"hefistion en Gitlab\">
+                                <span class=\"fa-stack fa-lg\">
+                                    <i class=\"fa fa-circle fa-stack-2x\"></i>
+                                    <i class=\"fa fa-gitlab fa-stack-1x fa-inverse\"></i>
+                                </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href=\"https://twitter.com/ElBlogDeLazaro\" title=\"elblogdelazaro en twitter\">
+                                <span class=\"fa-stack fa-lg\">
+                                    <i class=\"fa fa-circle fa-stack-2x\"></i>
+                                    <i class=\"fa fa-twitter fa-stack-1x fa-inverse\"></i>
+                                </span>
+                                </a>
+                            </li>
+                             <li>
+                                 <a href=\"https://elblogdelazaro.org/index.xml\" title=\"suscríbete al blog vía rss\">
+                                 <span class=\"fa-stack fa-lg\">
+                                     <i class=\"fa fa-circle fa-stack-2x\"></i>
+                                     <i class=\"fa fa-rss fa-stack-1x fa-inverse\"></i>
+                                 </span>
+                                 </a>
+                             </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+         <div id=\"license-note\">
+             <p><a href=\"https://elblogdelazaro.org\">el blog de lázaro</a>
+             &nbsp;&bull;&nbsp;
+             2017
+             &nbsp;&bull;&nbsp;
+            <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\">licencia cc by-sa 4.0</a><br>
+            generado con <a rel=\"org-static-blog\" href=\"https://github.com/bastibe/org-static-blog/\"> org-static-blog</a>
+            y <a rel=\"Emacs\" href=\"https://www.gnu.org/software/emacs/\">emacs</a></p>
+        </div>
+ </footer>")
+#+end_src

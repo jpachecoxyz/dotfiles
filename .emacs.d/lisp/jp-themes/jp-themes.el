@@ -65,7 +65,7 @@
   '(jp-dream
 	jp-darkvenom
     jp-elea-dark
-	catppuccin
+	jp-owl
 	)
   "List of symbols with the dark Ef themes.")
 

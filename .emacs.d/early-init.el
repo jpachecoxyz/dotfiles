@@ -16,7 +16,7 @@
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
 ;; (load-theme 'jp-elea-dark :no-confirm)
-(load-theme 'jp-darkvenom :no-confirm)
+(load-theme 'jp-owl :no-confirm)
 
 ;; Disable GUI when foundit
 (when (fboundp 'menu-bar-mode)

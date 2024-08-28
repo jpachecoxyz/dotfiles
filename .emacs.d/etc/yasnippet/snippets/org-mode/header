@@ -1,11 +1,11 @@
 # key: hdr
 # name: header
 # --
-* TODO ${1:Header Title}
+** TODO ${1:Header Title}
 :PROPERTIES:
 :EXPORT_FILE_NAME: ${2:Name of the file}
 :EXPORT_DESCRIPTION: ${3:Description}
-:DATE:     ${4:`(format-time-string "%m-%d-%Y")`}
+:DATE:     `(format-time-string "%m-%d-%Y")`
 :EXPORT_HUGO_SECTION: posts
 :END:
 

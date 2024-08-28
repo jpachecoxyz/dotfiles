@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "emacs-mirror";
     repo = "emacs";
     rev = "master";
-    sha256 = "sha256-s5vg4QjR07QLqlucx4ZaT1PDgIp3o5uB0x7TFhV2F1Y="; # Update this hash
+    sha256 = "sha256-J//6XBfA9+Vwd/icLkosh02QOBYygb3xIq8sK4bPfEM="; # Update this hash
   };
 
   nativeBuildInputs = [ autoconf automake pkg-config libtool];
@@ -19,14 +19,12 @@ stdenv.mkDerivation rec {
   ];
 
   # unpackPhase = "true";
-  configureFlags = [
-    "--without-libgccjit" # Disable libgccjit support
-  ];
+  # configureFlags = [
+  #   "--without-libgccjit" # Disable libgccjit support
+  # ];
 
   configurePhase = ''
     # cd $src
-    # export LIBRARY_PATH=$LIBRARY_PATH:${libgccjit}/lib
-    # export CPATH=$CPATH:${libgccjit}/include
     ./autogen.sh
 
     # Debugging output
@@ -38,13 +36,14 @@ stdenv.mkDerivation rec {
 
     ./configure \
       --with-tree-sitter \
+      --with-libgccjit=/home/javier/.nix-profile/lib/ \
       --with-native-compilation \
       --with-pop
     echo "configure CORRECT"
   '';
 
   buildPhase = ''
-    make
+    make -j 12
   '';
 
   installPhase = ''
