@@ -476,4 +476,14 @@ clipboard"
   (consult-ripgrep org-roam-directory nil))
 (global-set-key (kbd "C-c n s") 'jp/search-roam)
 
+;; Refil draft to posts
+
+(defun jp/refile-to-posts ()
+  "Refile the current subtree to the 'Posts' section."
+  (interactive)
+  (let ((org-refile-targets
+         `((,(buffer-file-name) :regexp . "^* Posts"))))  ;; Limit refile targets to 'Posts'
+    (org-refile)))
+(global-set-key (kbd "C-c r p") 'jp/refile-to-posts)
+
 (provide 'utilities)

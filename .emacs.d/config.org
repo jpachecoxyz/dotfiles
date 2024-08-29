@@ -1478,6 +1478,33 @@
 ;; C-c C-w for refile
 (setq org-refile-targets (quote ((org-agenda-files :maxlevel . 1))))
 
+(with-eval-after-load 'org-capture
+  (defun org-hugo-new-subtree-post-capture-template ()
+    "Returns `org-capture' template string for a new Hugo post.
+See `org-capture-templates' for more information."
+    (let* ((title (read-from-minibuffer "Post Title: "))   ; Prompt for the post title
+           (fname (org-hugo-slug title))                   ; Generate a slug for the filename
+           (description (read-from-minibuffer "Description: ")))  ; Prompt for the post description
+      (mapconcat #'identity
+                 `(
+                   ,(concat "** TODO " title)              ; Headline with the TODO and title
+                   ":PROPERTIES:"
+                   ,(concat ":EXPORT_FILE_NAME: " fname)
+                   ,(concat ":EXPORT_DESCRIPTION: " description)
+                   ,(concat ":DATE: " (format-time-string "[%Y-%m-%d %a]"))
+                   ":EXPORT_HUGO_SECTION: posts"
+                   ":END:"
+				   ""
+                   "*** %?\n")                                 ; Place the cursor here finally
+                 "\n")))
+
+  (add-to-list 'org-capture-templates
+               '("b"                ; `org-capture' binding + h
+                 "New post"
+                 entry
+                 ;; File path and headline where the captured post should be stored.
+                 (file+headline "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org" "Ideas:")
+                 (function org-hugo-new-subtree-post-capture-template))))
 #+end_src
 ** Org-roam.
 #+BEGIN_SRC emacs-lisp
