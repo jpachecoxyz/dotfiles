@@ -5,13 +5,11 @@
 
 (require 'jp-themes)
 
-(setq ef-themes-headings
-      '((1 regular 1.3)
-        (2 regular 1.2)
-        (3 1.1)
-        (agenda-date 1)
-        (agenda-structure variable-pitch regular 1)
-        (t variable-pitch)))
+(setq jp-themes-headings
+      '((1 regular 1.2)
+        (2 regular 1.1)
+        (3 1.0)
+        (agenda-date 1)))
 
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:

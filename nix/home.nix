@@ -89,6 +89,7 @@
     # Browser / web
     pkgs.nyxt
     pkgs.firefox
+    pkgs.google-chrome
 
     # multimedia
     myNcmpcpp
@@ -102,6 +103,8 @@
     pkgs.yt-dlp
     pkgs.obs-studio
     pkgs.telegram-desktop
+    pkgs.kdenlive
+    pkgs-unstable.davinci-resolve
 
     # graphics
     pkgs.nsxiv
@@ -211,4 +214,12 @@
     }))
   ];
   services.emacs.enable = true;
+
+  # Nixpkgs configuration
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
 }

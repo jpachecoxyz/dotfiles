@@ -135,10 +135,9 @@ in
     nix-init
     nix-search-cli
     stow
-    google-chrome
-    vivaldi
     gnumake
     cmake
+    log4cxx
 
     # fonts
     jetbrains-mono
