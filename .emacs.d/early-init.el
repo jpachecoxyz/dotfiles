@@ -11,10 +11,26 @@
         (3 1.0)
         (agenda-date 1)))
 
+(defun jp/toggle-theme ()
+  "Toggle between the `jp-eagle` and `jp-autumn` themes."
+  (interactive)
+  (let ((current-theme (car custom-enabled-themes)))
+    (if (eq current-theme 'jp-eagle)
+        (progn
+          (disable-theme 'jp-eagle)
+          (load-theme 'jp-autumn :no-confirm)
+          (message "Autumn theme loaded."))
+      (progn
+        (disable-theme 'jp-autumn)
+        (load-theme 'jp-eagle :no-confirm)
+        (message "Eagle theme loaded.")))))
+
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
 ;; (load-theme 'jp-elea-dark :no-confirm)
-(load-theme 'jp-owl :no-confirm)
+;; (load-theme 'jp-owl :no-confirm)
+(load-theme 'jp-autumn :no-confirm)
+(global-set-key (kbd "<f10>") 'jp/toggle-theme)
 
 ;; Disable GUI when foundit
 (when (fboundp 'menu-bar-mode)

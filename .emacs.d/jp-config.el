@@ -1,168 +1,3 @@
-#+title: Emacs config File
-#+author: Javier Pacheco
-#+email: javier@jpacheco.xyz
-#+description: My Custom Emacs configuration.
-#+startup: content
-
-* early-init.el
-#+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
-;; Load theme first, so our eyes keep safe at startup...
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/theme")
-;; (load-theme 'darkvenom t)
-(add-to-list 'load-path "~/.emacs.d/lisp/jp-themes")
-
-(require 'jp-themes)
-
-(setq jp-themes-headings
-      '((1 regular 1.2)
-        (2 regular 1.1)
-        (3 1.0)
-        (agenda-date 1)))
-
-(defun jp/toggle-theme ()
-  "Toggle between the `jp-eagle` and `jp-autumn` themes."
-  (interactive)
-  (let ((current-theme (car custom-enabled-themes)))
-    (if (eq current-theme 'jp-eagle)
-        (progn
-          (disable-theme 'jp-eagle)
-          (load-theme 'jp-autumn :no-confirm)
-          (message "Autumn theme loaded."))
-      (progn
-        (disable-theme 'jp-autumn)
-        (load-theme 'jp-eagle :no-confirm)
-        (message "Eagle theme loaded.")))))
-
-(mapc #'disable-theme custom-enabled-themes)
-;; Load the theme of choice:
-;; (load-theme 'jp-elea-dark :no-confirm)
-;; (load-theme 'jp-owl :no-confirm)
-(load-theme 'jp-autumn :no-confirm)
-(global-set-key (kbd "<f10>") 'jp/toggle-theme)
-
-;; Disable GUI when foundit
-(when (fboundp 'menu-bar-mode)
-  (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-(when (fboundp 'horizontal-scroll-bar-mode)
-  (horizontal-scroll-bar-mode -1))
-
-;; Initial message
-(setq initial-scratch-message
-	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
-;; --
-;; It’s difficult to be rigorous about whether a machine really ’knows’, ’thinks’, etc.,
-;; because we’re hard put to define these things. We understand human mental processes
-;; only slightly better than a fish understands swimming.
-;; --
-;; <Jhon McCarthy>\n\n
-;;; Code:\n")
-
-;; (setq initial-scratch-message
-;; 	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
-;; ;; --
-;; ;; There are two ways to construct a software design:
-;; ;; One is to make it so simple that it is obvious that there are no deficiencies,
-;; ;; and the other is to make it so complicated that there are no obvious deficiencies.
-;; ;; --
-;; ;; <C. A. R. Hoare>\n\n
-;; ;;; Code:\n")
-#+end_src
-* init.el
-#+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
-(setq byte-compile-warnings '(cl-functions))
-(defun my-generate-tab-stops (&optional width max)
-  "Return a sequence suitable for `tab-stop-list'."
-  (let* ((max-column (or max 200))
-		 (tab-width (or width tab-width))
-		 (count (/ max-column tab-width)))
-	(number-sequence tab-width (* tab-width count) tab-width)))
-
-(setq blink-cursor-mode t)
-(setq ring-bell-function 'ignore)
-(setq tab-stop-list (my-generate-tab-stops))
-(put 'outline-forward-same-level 'disabled t)
-(setq-default indent-tabs-mode t)
-(setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
-(defvaralias 'c-basic-offset 'tab-width)
-
-(setq visible-bell 1)
-(setq-default current-language-environment "English")
-(setq keyboard-coding-system 'utf-8)
-
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-
-(setq-default truncate-lines t)
-(setq-default fill-column 80)
-(setq line-move-visual t) ;; C-p, C-n, etc uses visual lines
-(setq-default display-line-numbers-width 3)
-
-;; Don't generate backups or lockfiles.
-(setq create-lockfiles nil
-      make-backup-files nil
-      ;; But in case the user does enable it, some sensible defaults:
-      version-control t     ; number each backup file
-      backup-by-copying t   ; instead of renaming current file (clobbers links)
-      delete-old-versions t ; clean up after itself
-      kept-old-versions 5
-      kept-new-versions 5)
-
-(setq dired-kill-when-opening-new-dired-buffer t)
-(setq package-install-upgrade-built-in t)
-
-;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
-
-(defun jp/display-startup-time ()
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                    (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook #'jp/display-startup-time)
-(add-hook 'emacs-startup-hook 'blink-cursor-mode)
-
-;; (org-babel-load-file
-;;  (expand-file-name
-;;   "config.org"
-;;   user-emacs-directory))
-
-(setq custom-file "~/.emacs.d/jp-config.el")
-(setq org-config-file "~/.emacs.d/config.org")
-
-(if (file-exists-p custom-file)
-    ;; If the custom file exists, load it directly
-    (load custom-file)
-  ;; If the custom file doesn't exist, tangle it from the Org file and then load it
-  (when (file-exists-p org-config-file)
-    (require 'org)
-    (org-babel-tangle-file org-config-file custom-file)
-    (load custom-file)))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
-#+end_src
-
-
-* Package Manager and some extra files.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
 ;; Initialize package sources
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (require 'buffer-move)   	;; Buffer-move for better window management
@@ -200,9 +35,7 @@
 
 (use-package async
   :config (setq async-bytecomp-package-mode 1))
-#+END_SRC
-* Fontaine.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package fontaine
   :ensure t
   :custom
@@ -252,9 +85,7 @@
 
 (define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 (define-key global-map (kbd "C-c F") #'fontaine-set-face-font)
-#+END_SRC
-* Custom modeline.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 ;; Load modeline
 ;; (require 'custom-modeline)
 ;; (custom-modeline-mode)
@@ -313,9 +144,7 @@
 
 (use-package diminish
   :ensure t)
-#+END_SRC
-* Marginalia
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package marginalia
   :after vertico
   :ensure t
@@ -323,9 +152,7 @@
   (marginalia-annotators '(marginalia-annonators-heavy marginalia-annotators-light nil))
   :init
   (marginalia-mode))
-#+END_SRC
-* Icons/Eyecandy Stuff.
-#+begin_src elisp :tangle jp-config.el
+
 (use-package all-the-icons-completion
   :ensure t
   :config
@@ -345,10 +172,7 @@
   :ensure t
   :hook
   (prog-mode . pretty-mode))
-#+END_SRC
-* Evil-mode.
-** Evil.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
   (setq evil-want-integration t  ;; This is optional since it's already set to t by default.
@@ -358,17 +182,13 @@
   evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
   :config
   (evil-mode))
-#+END_SRC
-** Evil-collection.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package evil-collection
   :after evil
   :config
       (add-to-list 'evil-collection-mode-list 'help) ;; evilify help mode
       (evil-collection-init))
-#+END_SRC
-** Evil-surround.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package evil-surround
   :ensure t
   :after evil
@@ -380,27 +200,21 @@
   (define-key evil-motion-state-map (kbd "SPC") nil)
   (define-key evil-motion-state-map (kbd "RET") nil)
   (define-key evil-motion-state-map (kbd "TAB") nil))
-#+END_SRC
-** Evil-Goggles.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package evil-goggles
   :ensure t
   :after evil
   :config
   (evil-goggles-mode)
   (evil-goggles-use-diff-faces))
-#+END_SRC
-** Evil-owl.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package evil-owl
   :config
   (setq evil-owl-display-method 'posframe
         evil-owl-extra-posframe-args '(:width 50 :height 20)
         evil-owl-max-string-length 50)
   (evil-owl-mode))
-#+END_SRC
-* keychord.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package key-chord
   :ensure t
   :after evil
@@ -415,9 +229,7 @@
   (key-chord-define evil-insert-state-map  "aa" 'move-end-of-line)
   (key-chord-define evil-normal-state-map  "sc" 'evil-avy-goto-char-2)
   (setq key-chord-two-keys-delay 0.5))
-#+END_SRC
-* Corfu.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package corfu
   ;; TAB-and-Go customizations
   :custom
@@ -565,14 +377,10 @@
   :ensure t
   :init
   (setq completion-styles '(orderless basic)))
-#+END_SRC
-* Posframe:
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package posframe
   :ensure t)
-#+END_SRC
-* General settings.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (setq default-directory "~/")
 ;; Setting RETURN key in org-mode to follow links
 (setq org-return-follows-link  t)
@@ -712,14 +520,10 @@
                                      (slot . 6)
 				     	(window-width 1.0)
                                      (dedicated . t)))
-#+END_SRC
-* Alias.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (defalias 'lp 'list-packages)
 (defalias 'pi 'package-install)
-#+END_SRC
-* Latex stuff.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 ;; LaTeX Classes
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -759,12 +563,7 @@
 		("framerule" "2pt")				;; Weight of the leftline.
 		("labelposition" "bottomline")	;; Position of label.
 		("bgcolor" "jpyellow!70")))		;; color and level of transparency.
-#+END_SRC
-** References to latex stuff:
-- [[https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX][Colors in latex.]]
-- [[https://orgmode.org/manual/Tables-in-LaTeX-export.html][Tables formating in org files]]
-* Olivetti
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package olivetti
   :ensure t
   :defer t
@@ -773,32 +572,24 @@
   ;; :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
-#+END_SRC
-* Git.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package git-timemachine
   :defer t
   :hook (evil-normalize-keymaps . git-timemachine-hook)
   :config
   (evil-define-key 'normal git-timemachine-mode-map (kbd "C-j") 'git-timemachine-show-previous-revision)
   (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision))
-#+END_SRC
-** Magit.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package magit
   :defer t)
-#+END_SRC
-** Vundo.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package vundo
   :defer t
   :config
   (setq vundo-glyph-alist vundo-unicode-symbols)
   :bind
   ("C-x u" . vundo))
-#+END_SRC
-** Git-gutter.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package git-gutter
   :init (global-git-gutter-mode 1)
   :defer t
@@ -810,14 +601,10 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
-#+END_SRC
-** Transient
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package transient
   :defer t)
-#+END_SRC
-** vc custom formating.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (setq vc-git-root-log-format
     `("%d %h %ai %an: %s"
         ;; The first shy group matches the characters drawn by --graph.
@@ -831,9 +618,7 @@
         (2 'change-log-list nil lax)
         (3 'change-log-name)
         (4 'change-log-date))))
-#+END_SRC
-* Hydra:
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package hydra
   :ensure t)
 
@@ -966,9 +751,7 @@
 (require 'hydra-posframe)
 (require 'hydra-themes)
 (hydra-posframe-mode)
-#+END_SRC
-* Hl-TODO.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package hl-todo
   :defer t
   :hook ((org-mode . hl-todo-mode)
@@ -994,9 +777,6 @@
 		("NOTE" . 		"#f1f1f1")
 		("DEPRECATED" . "#fc5555")))
 
-#+END_SRC
-* Rainbow modes
-#+begin_src elisp :tangle jp-config.el
 (use-package rainbow-delimiters
   :defer t
   :hook ((prog-mode . rainbow-delimiters-mode)
@@ -1005,9 +785,7 @@
 (use-package rainbow-mode
   :defer t
   :hook ((org-mode prog-mode) . rainbow-mode))
-#+END_SRC
-* Which-key.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package which-key
   :init
   (which-key-mode 1)
@@ -1025,9 +803,7 @@
 	which-key-max-description-length 25
 	which-key-allow-imprecise-window-fit nil
 	which-key-separator " → " ))
-#+END_SRC
-* Dired.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package dired
   :ensure nil
   :after evil-collection
@@ -1072,9 +848,6 @@
   (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 
-#+END_SRC
-* Projectile
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
@@ -1090,9 +863,7 @@
 (use-package counsel-projectile
   :after projectile
   :config (counsel-projectile-mode))
-#+END_SRC
-* Spell-check:
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 ;; Set speller and dicts
 (if lpr-windows-system
 	(setenv "LANG" "en_US, es_MX"))
@@ -1159,9 +930,7 @@
   (ispell-change-dictionary ispell-current-dictionary))
 
 (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
-#+END_SRC
-* Org.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package toc-org
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -1186,9 +955,7 @@
 (require 'cycle-region)
 (cycle-region-mode)
 (add-hook 'cycle-region-post-preview-hook 'evil-normal-state)
-#+END_SRC
-** Org custom configuration:
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode)
   :config
@@ -1297,9 +1064,7 @@
     (org-refile)))
 
 (add-hook 'org-after-todo-state-change-hook 'jp-autorefile-tasks)
-#+END_SRC
-** Org-Contacts.
-#+begin_src emacs-lisp :tangle jp-config.el
+
 (use-package org-contacts
   :ensure t)
 
@@ -1311,9 +1076,7 @@
    :NOTE: %^{NOTA}
    :BIRTHDAY: %^{Cumpleaños}
    :END:" "Plantilla para org-contacts.")
-#+end_src
-** Org-Agenda.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (defvar custom-daily-agenda
   `(
 	(tags-todo "+@home|@work"
@@ -1456,9 +1219,7 @@
 (setq org-track-ordered-property-with-tag t)
 (setq org-log-done 'time)
 (setq org-agenda-start-with-log-mode t)
-#+end_src
-** Org-Calendar.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package calfw
   :ensure t
   :config
@@ -1482,9 +1243,7 @@
 					   (holiday-fixed 11 01 "Todos los Santos")
 					   (holiday-fixed 11 02 "Da de Muertos")
 					   (holiday-fixed 12 25 "Navidad"))))
-#+END_SRC
-** Org Capture.
-#+begin_src elisp :tangle jp-config.el
+
 ;; Capture
 (setq org-default-notes-file '("~/public/org/agenda/refill.org"))
 (global-set-key (kbd "C-c c") 'org-capture)      ;; use C-c c to start capture mode
@@ -1550,9 +1309,6 @@ See `org-capture-templates' for more information."
                    "*** %?\n")                                   ; Place the cursor here finally
 				 "\n"))))
 
-#+end_src
-** Org-roam.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package org-roam
   :ensure t
   :init
@@ -1653,9 +1409,7 @@ See `org-capture-templates' for more information."
 
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-#+END_SRC
-** Org fancy priorities.
-#+begin_src emacs-lisp :tangle jp-config.el
+
 (use-package org-fancy-priorities
   :ensure t
   :hook ((org-agenda-mode . org-fancy-priorities-mode)
@@ -1672,26 +1426,18 @@ See `org-capture-templates' for more information."
                                   (?3 . "⮮")
                                   (?4 . "☕")
                                   (?I . "Important")))
-#+end_src
-** Org-ql
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package org-ql
   :after org
   :ensure t)
-#+END_SRC
-** Org-sidebar.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package org-sidebar
   :ensure t)
-#+END_SRC
-** Ox-hugo.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package ox-hugo
   :ensure t
   :after ox)
-#+END_SRC
-* Pulsar.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package pulsar
   :config
   (setq pulsar-pulse t)
@@ -1700,9 +1446,7 @@ See `org-capture-templates' for more information."
   (setq pulsar-face 'isearch)
   (pulsar-global-mode 1)
   :bind ("<f2>" . pulsar-pulse-line))
-#+END_SRC
-* PDF's
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package pdf-tools
   :defer t
   :commands (pdf-loader-install)
@@ -1721,10 +1465,7 @@ See `org-capture-templates' for more information."
   (doc-view-resolution 300)
   (doc-view-mupdf-use-svg t)
   (large-file-warning-threshold (* 50 (expt 2 20))))
-#+END_SRC
-* LSP and other languages configuration and packages.
-** Tree-sitter.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package tree-sitter
   :ensure t
   :hook
@@ -1742,9 +1483,7 @@ See `org-capture-templates' for more information."
 
 (with-eval-after-load 'treesit
   (setq treesit-font-lock-level 4))
-#+END_SRC
-** LSP
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (defun jp/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -1814,10 +1553,7 @@ See `org-capture-templates' for more information."
     :keymaps 'lsp-mode-map
     :prefix lsp-keymap-prefix
     "d" '(dap-hydra t :wk "debugger")))
-#+END_SRC
 
-** Ligature.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package ligature
   :defer 1
   :config
@@ -1839,14 +1575,10 @@ See `org-capture-templates' for more information."
      "|=" "||=" "#{" "#[" "]#" "#(" "#?" "#_" "#_(" "#:" "#!" "#="
      "&="))
   (global-ligature-mode t))
-#+end_src
-** Auto indent
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package aggressive-indent
   :hook (prog-mode . aggressive-indent-mode))
-#+END_SRC
-** Python-mode
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package python-mode
   :ensure t
   :hook (python-mode . lsp-deferred)
@@ -1870,15 +1602,11 @@ See `org-capture-templates' for more information."
   (setq
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
-#+END_SRC
-** Nix-mode.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package nix-mode
   :hook (nix-mode . lsp-deferred)
   :mode "\\.nix\\'")
-#+END_SRC
-** Yasnippets
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package yasnippet
   :defer 2
   :init (yas-reload-all)
@@ -1890,9 +1618,7 @@ See `org-capture-templates' for more information."
 
 (use-package ivy-yasnippet
   :ensure t)
-#+END_SRC
-** Indent-bars.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package highlight-indent-guides
   :config
     (setq highlight-indent-guides-method 'bitmap)
@@ -1902,18 +1628,14 @@ See `org-capture-templates' for more information."
     (set-face-background 'highlight-indent-guides-even-face "dimgray")
     (set-face-foreground 'highlight-indent-guides-character-face "#458588")
 	:init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
-#+end_src
-** Highlight-thing.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package highlight-thing
   :ensure t
   :hook (prog-mode . highlight-thing-mode))
 
 (setq highlight-thing-delay-seconds 0.2)
 (setq highlight-thing-exclude-thing-under-point nil)
-#+END_SRC
-* Consult
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
@@ -1958,9 +1680,7 @@ See `org-capture-templates' for more information."
 
 (use-package consult-flycheck
   :ensure t)
-#+END_SRC
-* Vertico.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 ;; Enable vertico
 (use-package savehist
   :config
@@ -2001,10 +1721,7 @@ folder, otherwise delete a word"
 
 (use-package vertico-posframe
   :ensure t)
-#+END_SRC
-* Windows and Popups rules
-** Shackle
-#+begin_src emacs-lisp :tangle jp-config.el
+
 (use-package shackle
   :custom
   ((shackle-rules
@@ -2052,24 +1769,18 @@ folder, otherwise delete a word"
    (shackle-default-rule nil ; '(:inhibit-window-quit t)
 						 ))
   :config (shackle-mode))
-#+end_src
-* Page break lines.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package form-feed
   :config (global-form-feed-mode))
 
 (use-package page-break-lines
   :config
   (page-break-lines-mode))
-#+END_SRC
-* Htmlize:
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package htmlize
   :ensure t
   :defer t)
-#+END_SRC
-* Buffer-flip.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package buffer-flip
   :defer t
   :ensure t
@@ -2089,9 +1800,7 @@ folder, otherwise delete a word"
           "^\\*Async-native-compile-log\\*$"
           "/\\'"
 	  )))
-#+END_SRC
-* Key-binds - General.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package general
   :config
   (general-evil-setup)
@@ -2355,14 +2064,10 @@ folder, otherwise delete a word"
   "q r" '(restart-emacs :wk "Restart Emacs")
   "q q" '(kill-emacs :wk "Exit Emacs"))
 )
-#+END_SRC
-* Password-menu.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package password-store
   :ensure t)
-#+END_SRC
-* Telega.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+
 (use-package telega
   :ensure t
   :defer t
@@ -2390,4 +2095,3 @@ folder, otherwise delete a word"
 
 ;; Optionally, bind the function to a key for quick access
 (global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
-#+END_SRC

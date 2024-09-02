@@ -54,10 +54,22 @@
 (add-hook 'emacs-startup-hook #'jp/display-startup-time)
 (add-hook 'emacs-startup-hook 'blink-cursor-mode)
 
-(org-babel-load-file
- (expand-file-name
-  "config.org"
-  user-emacs-directory))
+;; (org-babel-load-file
+;;  (expand-file-name
+;;   "config.org"
+;;   user-emacs-directory))
+
+(setq custom-file "~/.emacs.d/jp-config.el")
+(setq org-config-file "~/.emacs.d/config.org")
+
+(if (file-exists-p custom-file)
+    ;; If the custom file exists, load it directly
+    (load custom-file)
+  ;; If the custom file doesn't exist, tangle it from the Org file and then load it
+  (when (file-exists-p org-config-file)
+    (require 'org)
+    (org-babel-tangle-file org-config-file custom-file)
+    (load custom-file)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -71,9 +83,3 @@
  '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
  '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
  '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))

@@ -58,7 +58,7 @@
 ;;; User options
 
 (defconst jp-themes-light-themes
-  '()
+  '(jp-eagle)
   "List of symbols with the light Ef themes.")
 
 (defconst jp-themes-dark-themes
@@ -66,6 +66,8 @@
 	jp-darkvenom
     jp-elea-dark
 	jp-owl
+	jp-melissa-dark
+	jp-autumn
 	)
   "List of symbols with the dark Ef themes.")
 

@@ -476,4 +476,9 @@ clipboard"
   (consult-ripgrep org-roam-directory nil))
 (global-set-key (kbd "C-c n s") 'jp/search-roam)
 
+(defun jp/yt-shorts-timer ()
+  (interactive)
+  (org-timer-set-timer "55s"))
+(global-set-key (kbd "<f4>") 'jp/yt-shorts-timer)
+
 (provide 'utilities)

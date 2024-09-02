@@ -104,7 +104,6 @@
     pkgs.obs-studio
     pkgs.telegram-desktop
     pkgs.kdenlive
-    pkgs-unstable.davinci-resolve
 
     # graphics
     pkgs.nsxiv
@@ -118,6 +117,7 @@
     pkgs.zip
     pkgs.killall
     pkgs.htop
+    pkgs.showmethekey
 
     # latex and spell
     pkgs.hunspell
@@ -213,7 +213,6 @@
       sha256 = "0fdcsx840lii48d7bk190zhz4raxrii55fwdhagpziaj5j29b583";
     }))
   ];
-  services.emacs.enable = true;
 
   # Nixpkgs configuration
   nixpkgs = {
