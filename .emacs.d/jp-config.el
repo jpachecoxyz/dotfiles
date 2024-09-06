@@ -3,11 +3,13 @@
 (require 'buffer-move)   	;; Buffer-move for better window management
 (require 'utilities)		;; Custom scripts
 (require 'term-toggle)	;; toggle-term
+(require 'nano-splash)	;; Splash screen
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                        ;; ("org" . "https://orgmode.org/elpa/")
+                        ("gnu" . "https://elpa.gnu.org/packages/")
+                        ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
@@ -111,6 +113,10 @@
 ;;                    'face `(:family ,(nerd-icons-mdicon-family) :inherit))
 ;;                    ;; 'display '(raise -0.1))
 ;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
+
+(use-package hide-mode-line
+  :ensure t
+  :defer t)
 
 (setq doom-modeline-icon nil)
 (setq doom-modeline-enable-word-count nil)
@@ -805,7 +811,7 @@
 	which-key-separator " → " ))
 
 (use-package dired
-  :ensure nil
+  :straight nil
   :after evil-collection
   :commands (dired dired-jump)
   :custom ((dired-listing-switches "-agho --group-directories-first"))
@@ -828,18 +834,19 @@
                                 ("mkv" . "mpv")
                                 ("mp4" . "mpv"))))
 
-(use-package dired-preview
-  :ensure t
-  :hook (dired-mode . dired-preview-mode))
-(setq dired-preview-delay 0.1)
+;; (use-package dired-preview
+;;   :ensure t
+;;   :after dired
+;;   :hook (dired-mode . dired-preview-mode))
 
-(defun my-dired-preview-to-the-right ()
-  "My preferred `dired-preview-display-action-alist-function'."
-  '((display-buffer-in-side-window)
-    (side . right)
-    (window-width . 0.4)))
+;; (defun my-dired-preview-to-the-right ()
+;;   "My preferred `dired-preview-display-action-alist-function'."
+;;   '((display-buffer-in-side-window)
+;;     (side . right)
+;;     (window-width . 0.4)))
 
-(setq dired-preview-display-action-alist-function #'my-dired-preview-to-the-right)
+;; (setq dired-preview-display-action-alist-function #'my-dired-preview-to-the-right)
+;; (setq dired-preview-delay 0.1)
 
 (use-package peep-dired
   :after dired
@@ -892,8 +899,8 @@
 
 ;; flyspell spellcheck on the fly...
 (use-package flyspell
-  :defer 1
-  :delight
+  :defer t
+  ;;:delight
   :custom
   (flyspell-abbrev-p t)
   (flyspell-issue-message-flag nil)
@@ -1427,16 +1434,57 @@ See `org-capture-templates' for more information."
                                   (?4 . "☕")
                                   (?I . "Important")))
 
-(use-package org-ql
-  :after org
-  :ensure t)
-
 (use-package org-sidebar
   :ensure t)
 
 (use-package ox-hugo
   :ensure t
   :after ox)
+
+(use-package hide-lines
+  :ensure t
+  :defer t)
+
+(defun terror/slide-setup ()
+  (global-hl-line-mode -1)
+  (org-bullets-mode 1)
+  (setq text-scale-mode-amount 2)
+  (text-scale-mode 1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 50)
+  (org-display-inline-images)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode 1)
+  (hide-lines-matching "#\\+begin_src")
+  (hide-lines-matching "#\\+end_src"))
+
+(defun terror/slide-end ()
+  (global-hl-line-mode 1)
+  (setq text-scale-mode-amount 0)
+  (text-scale-mode -1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 0)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode -1)
+  (org-fold-show-all))
+
+(use-package org-tree-slide
+  :ensure t
+  :after org
+  :hook ((org-tree-slide-play . terror/slide-setup)
+         (org-tree-slide-stop . terror/slide-end))
+  :init
+  (setq org-image-actual-width nil
+		org-tree-slide-header t
+		org-tree-slide-breadcrumbs " > "
+		org-tree-slide-activate-message "Let's begin..."
+		org-tree-slide-deactivate-message "The end."))
+
+(global-set-key (kbd "<f7>") 'org-tree-slide-mode)
+(global-set-key (kbd "S-<f7>") 'org-tree-slide-skip-done-toggle)
+(with-eval-after-load "org-tree-slide"
+  (define-key org-tree-slide-mode-map (kbd "<f1>") 'org-tree-slide-move-previous-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
 
 (use-package pulsar
   :config
