@@ -70,6 +70,14 @@
 ;; ;; --
 ;; ;; <C. A. R. Hoare>\n\n
 ;; ;;; Code:\n")
+
+;; Initialize package sources
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+(require 'nano-splash)	;; Splash screen
+(require 'buffer-move)   	;; Buffer-move for better window management
+(require 'utilities)		;; Custom scripts
+(require 'term-toggle)	;; toggle-term
+
 #+end_src
 * init.el
 #+begin_src emacs-lisp :tangle ~/.emacs.d/init.el
@@ -163,12 +171,12 @@
 
 * Package Manager and some extra files.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
-;; Initialize package sources
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-(require 'buffer-move)   	;; Buffer-move for better window management
-(require 'utilities)		;; Custom scripts
-(require 'term-toggle)	;; toggle-term
-(require 'nano-splash)	;; Splash screen
+;; ;; Initialize package sources
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
+;; (require 'buffer-move)   	;; Buffer-move for better window management
+;; (require 'utilities)		;; Custom scripts
+;; (require 'term-toggle)	;; toggle-term
+;; (require 'nano-splash)	;; Splash screen
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")

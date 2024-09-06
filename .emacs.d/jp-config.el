@@ -1,9 +1,9 @@
-;; Initialize package sources
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-(require 'buffer-move)   	;; Buffer-move for better window management
-(require 'utilities)		;; Custom scripts
-(require 'term-toggle)	;; toggle-term
-(require 'nano-splash)	;; Splash screen
+;; ;; Initialize package sources
+;; (add-to-list 'load-path "~/.emacs.d/lisp/")
+;; (require 'buffer-move)   	;; Buffer-move for better window management
+;; (require 'utilities)		;; Custom scripts
+;; (require 'term-toggle)	;; toggle-term
+;; (require 'nano-splash)	;; Splash screen
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")

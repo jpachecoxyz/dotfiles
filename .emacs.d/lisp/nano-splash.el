@@ -1,6 +1,7 @@
+;;; nano-splash.el --- N Λ N O Splash -*- lexical-binding: t -*-
 ;; ---------------------------------------------------------------------
-;; GNU Emacs / N Λ N O - Emacs made simple
-;; Copyright (C) 2020 - N Λ N O developers 
+;; GNU Emacs / N Λ N O Splash
+;; Copyright (C) 2020-2021 - N Λ N O developers 
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -16,7 +17,7 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;; ---------------------------------------------------------------------
 ;; 
-;; This file defines the splash screen
+;; This file defines a splash screen
 ;;  - No logo, no modeline, no scrollbars
 ;;  - Any key / mouse click kills the splash screen
 ;;  - With emacs-mac (Mituharu), splash screen is faded out after .5 seconds
@@ -24,11 +25,29 @@
 ;; Note: The screen is not shown if there are opened file buffers. For
 ;;       example, if you start emacs with a filename on the command
 ;;       line, the splash screen is not shown.
-;;
-;; Usage:
-;;  (require 'nano-splash)
+
 (require 'subr-x)
 (require 'cl-lib)
+
+
+(defgroup nano nil
+  "N Λ N O")
+
+(defgroup nano-splash nil
+  "Splash screen" :group 'nano)
+
+(defcustom nano-splash-title "GNU Emacs | jpacheco.xyz"
+  "Splash screen title"
+  :type 'string :group 'nano-splash)
+
+(defcustom nano-splash-subtitle "'First, solve the problem. Then, write the code.'"
+  "Splash screen subtitle"
+  :type 'string :group 'nano-splash)
+
+(defcustom nano-splash-duration 10.5
+  "Splash screen duration (in seconds)"
+  :type 'float :group 'nano-splash)
+
 
 (defun nano-splash ()
   "Nano Emacs splash screen"
@@ -67,10 +86,10 @@
 
           ;; Vertical padding to center
           (insert-char ?\n padding-center)
-          (insert (propertize "GNU Emacs" 'face 'org-document-title))
+          (insert (propertize nano-splash-title 'face 'org-document-title))
           (center-line)
           (insert "\n")
-          (insert (propertize "jpacheco.xyz" 'face 'doom-modeline-bar))
+          (insert (propertize nano-splash-subtitle 'face 'org-done))
           (center-line)
 
           (goto-char 0)
@@ -78,9 +97,9 @@
           (local-set-key [t] 'nano-splash-kill)
           (display-buffer-same-window splash-buffer nil)
           (run-with-idle-timer 0.05 nil (lambda() (message nil)))
-          ;; (run-with-idle-timer 0.50 nil 'nano-splash-fade-out-slow)
+          (run-with-idle-timer nano-splash-duration nil 'nano-splash-fade-out)
 		  (if (fboundp 'nano-splash-help-message)
-              (run-with-idle-timer 0.55 nil 'nano-splash-help-message))
+              (run-with-idle-timer (+ nano-splash-duration 0.05) nil 'nano-splash-help-message))
 		  )
       (nano-splash-kill))))
 
@@ -105,11 +124,11 @@
     (mac-animation-toggle-lock)
     (mac-start-animation nil :type 'fade-out :duration duration)
     (run-with-timer duration nil 'mac-animation-toggle-lock)))
-(defun nano-splash-fade-out (duration)
+(defun nano-splash-fade-out ()
   "Fade out current frame for duration and goes to command-or-bufffer"
   (interactive)
   (defalias 'mac-animation-fade-out-local
-    (apply-partially 'mac-animation-fade-out duration))
+    (apply-partially 'mac-animation-fade-out 0.5))
   (if (get-buffer "*splash*")
       (progn (if (and (display-graphic-p) (fboundp 'mac-start-animation))
                  (advice-add 'set-window-buffer
@@ -119,17 +138,13 @@
              (if (and (display-graphic-p) (fboundp 'mac-start-animation))
                  (advice-remove 'set-window-buffer
                                 'mac-animation-fade-out-local)))))
-(defun nano-splash-fade-out-slow ()
-  (interactive) (nano-splash-fade-out 1.00))
-(defun nano-splash-fade-out-fast ()
-  (interactive) (nano-splash-fade-out 0.25))
 
 (defun nano-splash-kill ()
   "Kill the splash screen buffer (immediately)."
   (interactive)
   (if (get-buffer "*splash*")
       (progn (message nil)
-             (cancel-function-timers 'nano-splash-fade-out-slow)
+             (cancel-function-timers 'nano-splash-fade-out)
              (cancel-function-timers 'nano-spash-help-message)
              (kill-buffer "*splash*"))))
 
@@ -147,6 +162,5 @@
       (setq inhibit-startup-screen t 
             inhibit-startup-message t
             inhibit-startup-echo-area-message t)))
-
 
 (provide 'nano-splash)
