@@ -40,7 +40,7 @@
   "Splash screen title"
   :type 'string :group 'nano-splash)
 
-(defcustom nano-splash-subtitle "'First, solve the problem. Then, write the code.'"
+(defcustom nano-splash-subtitle "“First, solve the problem. Then, write the code.”"
   "Splash screen subtitle"
   :type 'string :group 'nano-splash)
 

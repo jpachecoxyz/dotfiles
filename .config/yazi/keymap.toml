@@ -13,6 +13,11 @@ prepend_keymap = [
         shell 'printf "Mode Bits: "; read ans; chmod $ans "$@"' --block --confirm
     """, desc = "chmod" },
 	{on = [ "p" ], run = ["plugin --sync smart-paste"], desc = "Paste into the hovered directory" },
+	{on = [ "g", "w" ], run = ["cd ~/webdev/jpachecoxyz.github.io/"], desc = "Go to my web deployment" },
+	{on = [ "g", "c", ], run = ["cd ~/.config"], desc = "Go to XDG_CONIG." },
+	{on = [ "g", "b", ], run = ["cd ~/.local/bin"], desc = "Go to bin folder." },
+	{on = [ "g", "e", ], run = ["cd ~/.emacs.d"], desc = "Go to emacs folder." },
+	{on = [ "g", "x", ], run = ["cd ~/.dotfiles/nix"], desc = "Go to my nix configuration." },
 ]
 
 [input]

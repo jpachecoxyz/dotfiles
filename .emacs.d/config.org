@@ -1043,7 +1043,7 @@
 * Dired.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package dired
-  :straight nil
+  :ensure nil
   :after evil-collection
   :commands (dired dired-jump)
   :custom ((dired-listing-switches "-agho --group-directories-first"))
@@ -2319,7 +2319,7 @@ folder, otherwise delete a word"
     "h r r" '((lambda () (interactive)
                 (load-file "~/.emacs.d/init.el"))
               :wk "Reload emacs config")
-    "h t" '(consult-theme :wk "Load theme")
+    "h t" '(fz-theme :wk "Load theme")
     "h v" '(describe-variable :wk "Describe variable")
     "h w" '(where-is :wk "Prints keybinding for command if set")
     "h x" '(describe-command :wk "Display full documentation for command"))

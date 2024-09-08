@@ -471,6 +471,7 @@
    `(org-scheduled-previously ((t (:foreground ,jp-darkvenom-red-1))))
    `(org-scheduled ((t (:foreground ,jp-darkvenom-cyan))))
    `(org-scheduled-today ((t (:foreground ,jp-darkvenom-accent))))
+   `(org-hide ((t (:foreground ,jp-darkvenom-bg))))
 
    ;; calendar
    `(diary ((t (:inherit warning))))

@@ -1,44 +1,5 @@
 ;;; jp-themes.el --- Colorful and legible themes -*- lexical-binding:t -*-
 
-;; Copyright (C) 2022-2024  Free Software Foundation, Inc.
-
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://git.sr.ht/~protesilaos/jp-themes
-;; Version: 1.7.0
-;; Package-Requires: ((emacs "27.1"))
-;; Keywords: faces, theme, accessibility
-
-;; This file is NOT part of GNU Emacs.
-
-;; GNU Emacs is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-;;
-;; GNU Emacs is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
-
-;;; Commentary:
-;;
-;; The `jp-themes' are a collection of light and dark themes for GNU
-;; Emacs whose goal is to provide colorful ("pretty") yet legible
-;; options for users who want something with a bit more flair than the
-;; `modus-themes' (also designed by me).
-;;
-;; "Ef" is a Greek word (ευ), commonly used as a prefix to denote
-;; something good, nice, and/or easy.  For example, eftopia (ευτοπία)
-;; is the opposite of dystopia (δυστοπία): a good place as opposed to
-;; a bad place.
-;;
-;; The backronym of the `jp-themes' is: Eclectic Fashion in Themes
-;; Hides Exaggerated Markings, Embellishments, and Sparkles.
-
 ;;; Code:
 
 
@@ -50,33 +11,32 @@
   "Colorful and legible themes."
   :group 'faces
   :link '(info-link "(jp-themes) Top")
-  :link '(url-link :tag "Homepage" "https://protesilaos.com/emacs/jp-themes")
-  :link '(url-link :tag "Sample pictures" "https://protesilaos.com/emacs/jp-themes-pictures")
   :prefix "jp-themes-"
-  :tag "Ef Themes")
+  :tag "jp themes")
 
 ;;; User options
 
 (defconst jp-themes-light-themes
-  '(jp-eagle)
-  "List of symbols with the light Ef themes.")
+  '(jp-gruvbox-light)
+  "List of symbols with the light jp themes.")
 
 (defconst jp-themes-dark-themes
-  '(jp-dream
+  '(
 	jp-darkvenom
-    jp-elea-dark
+	jp-gruvbox
+	jp-elea-dark
 	jp-owl
-	jp-melissa-dark
 	jp-autumn
+	jp-adwaita-dark
 	)
-  "List of symbols with the dark Ef themes.")
+  "List of symbols with the dark jp themes.")
 
 (defvaralias 'jp-themes-items 'jp-themes-collection
   "Alias of `jp-themes-collection'.")
 
 (defconst jp-themes-collection
   (append jp-themes-light-themes jp-themes-dark-themes)
-  "Symbols of all the Ef themes.")
+  "Symbols of all the jp themes.")
 
 (defcustom jp-themes-post-load-hook nil
   "Hook that runs after loading an Ef theme.
@@ -277,7 +237,7 @@ ELPA (by Protesilaos))."
 (make-obsolete-variable 'jp-themes-region nil "1.4.0 (use palette overrides to change region colours)")
 
 (defcustom jp-themes-common-palette-overrides nil
-  "Set palette overrides for all the Ef themes.
+  "Set palette overrides for all the jp themes.
 
 Mirror the elements of a theme's palette, overriding their value.
 The palette variables are named THEME-NAME-palette, while
@@ -418,7 +378,7 @@ symbol, which is safe when used as a face attribute's value."
    custom-enabled-themes))
 
 (defun jp-themes--enable-themes ()
-  "Enable all Ef themes."
+  "Enable all jp themes."
   (mapc (lambda (theme)
           (unless (memq theme custom-known-themes)
             (load-theme theme :no-confirm :no-enable)))
@@ -475,7 +435,7 @@ overrides."
      "Variant"
      '((?d "dark" "Load a random dark theme")
        (?l "light" "Load a random light theme"))
-     "Limit to the dark or light subset of the Ef themes collection."))))
+     "Limit to the dark or light subset of the jp themes collection."))))
 
 (defun jp-themes--annotate-theme (theme)
   "Return completion annotation for THEME."
@@ -494,8 +454,8 @@ overrides."
   "Minibuffer history of `jp-themes--select-prompt'.")
 
 (defun jp-themes--load-subset (subset)
-  "Return the `light' or `dark' SUBSET of the Ef themes.
-If SUBSET is neither `light' nor `dark', return all the known Ef themes."
+  "Return the `light' or `dark' SUBSET of the jp themes.
+If SUBSET is neither `light' nor `dark', return all the known jp themes."
   (jp-themes--completion-table
    'theme
    (pcase subset
@@ -521,7 +481,7 @@ completion candidates accordingly.
 If VARIANT is either `light' or `dark' then use it directly
 instead of prompting the user for a choice.
 
-When VARIANT is nil, all Ef themes are candidates for completion."
+When VARIANT is nil, all jp themes are candidates for completion."
   (let* ((subset (jp-themes--maybe-prompt-subset variant))
          (themes (jp-themes--load-subset subset))
          (completion-extra-properties `(:annotation-function ,#'jp-themes--annotate-theme)))
@@ -540,7 +500,7 @@ When VARIANT is nil, all Ef themes are candidates for completion."
           (jp-themes--list-known-themes))))
 
 (defun jp-themes--load-theme (theme)
-  "Load THEME while disabling other Ef themes.
+  "Load THEME while disabling other jp themes.
 Which themes are disabled is determined by the user option
 `jp-themes-disable-other-themes'.
 
@@ -613,7 +573,7 @@ whether it is light or dark."
 ;;;###autoload
 (defun jp-themes-toggle ()
   "Toggle between the two `jp-themes-to-toggle'.
-If `jp-themes-to-toggle' does not specify two Ef themes, inform
+If `jp-themes-to-toggle' does not specify two jp themes, inform
 the user about it while prompting with completion for a theme
 among our collection (this is practically the same as the
 `jp-themes-select' command).
@@ -632,7 +592,7 @@ Run `jp-themes-post-load-hook' after loading the theme."
               "switching to theme selection for now: ")))))
 
 (defun jp-themes--minus-current (&optional variant)
-  "Return list of Ef themes minus the current one.
+  "Return list of jp themes minus the current one.
 VARIANT is either `light' or `dark', which stand for
 `jp-themes-light-themes' and `jp-themes-dark-themes',
 respectively.  Else check against the return value of
@@ -749,13 +709,11 @@ Optional prefix argument MAPPINGS has the same meaning as for
 ;;; Faces and variables
 
 (defgroup jp-themes-faces ()
-  "Faces defined by the Ef themes."
+  "Faces defined by the jp themes."
   :group 'jp-themes
   :link '(info-link "(jp-themes) Top")
-  :link '(url-link :tag "Homepage" "https://protesilaos.com/emacs/jp-themes")
-  :link '(url-link :tag "Sample pictures" "https://protesilaos.com/emacs/jp-themes-pictures")
   :prefix "jp-themes-"
-  :tag "Ef Themes Faces")
+  :tag "jp themes Faces")
 
 ;; This produces `jp-themes-height-0' and the like.
 (dotimes (n 9)
