@@ -124,7 +124,6 @@
     pkgs.hunspellDicts.en_US
     pkgs.hunspellDicts.es_MX
     pkgs.tectonic
-    pkgs.languagetool
 
     # privacy
     pkgs.tomb

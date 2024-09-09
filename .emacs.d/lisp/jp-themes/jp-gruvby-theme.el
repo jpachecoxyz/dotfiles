@@ -451,6 +451,8 @@
    ;; org-mode
    `(org-level-1 ((t (:foreground ,jp-gruvby-cyan :weight bold))))
    `(org-level-2 ((t (:foreground ,jp-gruvby-orange-1 :weight bold))))
+   `(org-level-3 ((t (:foreground ,jp-gruvby-red-1 :weight bold))))
+   `(org-level-4 ((t (:foreground ,jp-gruvby-blue :weight bold))))
    `(org-date ((t (:foreground ,jp-gruvby-cyan))))
    `(org-ellipsis ((t (:underline nil))))
    `(org-document-info ((t (:foreground ,jp-gruvby-mono-2))))
