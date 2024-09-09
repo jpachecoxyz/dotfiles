@@ -82,4 +82,7 @@
  '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
  '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
  '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed))))
+ '(org-checkbox ((t (:box (:style released-button)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo))))
+ '(org-document-title ((t (:height 1.5)))))

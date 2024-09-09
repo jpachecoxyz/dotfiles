@@ -22,8 +22,8 @@
 
 (defconst jp-themes-dark-themes
   '(
+	jp-gruvby
 	jp-darkvenom
-	jp-gruvbox
 	jp-elea-dark
 	jp-owl
 	jp-autumn

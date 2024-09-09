@@ -1,6 +1,4 @@
 ;; Load theme first, so our eyes keep safe at startup...
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/theme")
-;; (load-theme 'darkvenom t)
 (add-to-list 'load-path "~/.emacs.d/lisp/jp-themes")
 
 (require 'jp-themes)
@@ -26,7 +24,8 @@
 
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
-(load-theme 'jp-darkvenom :no-confirm)
+;; (load-theme 'jp-darkvenom :no-confirm)
+(load-theme 'jp-gruvby :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 ;; (load-theme 'jp-autumn :no-confirm)

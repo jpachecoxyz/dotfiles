@@ -103,16 +103,16 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-;; (with-eval-after-load 'doom-modeline
-;;   (doom-modeline-def-segment lsp
-;;     "Displays LSP server status."
-;;     (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
-;;       (concat
-;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
-;;        (propertize (nerd-icons-mdicon "nf-md-repeat")
-;;                    'face `(:family ,(nerd-icons-mdicon-family) :inherit))
-;;                    ;; 'display '(raise -0.1))
-;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
+(with-eval-after-load 'doom-modeline
+  (doom-modeline-def-segment lsp
+    "Displays LSP server status."
+    (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
+      (concat
+       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
+       (propertize (nerd-icons-mdicon "nf-md-repeat")
+                   'face `(:family ,(nerd-icons-mdicon-family) :inherit))
+                   ;; 'display '(raise -0.1))
+       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
 
 (use-package hide-mode-line
   :ensure t
@@ -578,6 +578,10 @@
   ;; :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
+
+(use-package undohist
+  :ensure t)
+(undohist-initialize)
 
 (use-package git-timemachine
   :defer t

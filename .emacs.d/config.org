@@ -7,8 +7,6 @@
 * early-init.el
 #+begin_src emacs-lisp :tangle ~/.emacs.d/early-init.el
 ;; Load theme first, so our eyes keep safe at startup...
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/lisp/theme")
-;; (load-theme 'darkvenom t)
 (add-to-list 'load-path "~/.emacs.d/lisp/jp-themes")
 
 (require 'jp-themes)
@@ -34,7 +32,8 @@
 
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
-(load-theme 'jp-darkvenom :no-confirm)
+;; (load-theme 'jp-darkvenom :no-confirm)
+(load-theme 'jp-gruvby :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 ;; (load-theme 'jp-autumn :no-confirm)
@@ -165,10 +164,11 @@
  '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
  '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
  '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed))))
+ '(org-checkbox ((t (:box (:style released-button)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo))))
+ '(org-document-title ((t (:height 1.5)))))
 #+end_src
-
-
 * Package Manager and some extra files.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 ;; ;; Initialize package sources
@@ -280,16 +280,16 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-;; (with-eval-after-load 'doom-modeline
-;;   (doom-modeline-def-segment lsp
-;;     "Displays LSP server status."
-;;     (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
-;;       (concat
-;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
-;;        (propertize (nerd-icons-mdicon "nf-md-repeat")
-;;                    'face `(:family ,(nerd-icons-mdicon-family) :inherit))
-;;                    ;; 'display '(raise -0.1))
-;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
+(with-eval-after-load 'doom-modeline
+  (doom-modeline-def-segment lsp
+    "Displays LSP server status."
+    (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
+      (concat
+       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
+       (propertize (nerd-icons-mdicon "nf-md-repeat")
+                   'face `(:family ,(nerd-icons-mdicon-family) :inherit))
+                   ;; 'display '(raise -0.1))
+       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
 
 (use-package hide-mode-line
   :ensure t
@@ -788,6 +788,12 @@
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
 #+END_SRC
+* Undohist.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package undohist
+  :ensure t)
+(undohist-initialize)
+#+end_src
 * Git.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package git-timemachine

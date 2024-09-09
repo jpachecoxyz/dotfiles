@@ -124,6 +124,7 @@
     pkgs.hunspellDicts.en_US
     pkgs.hunspellDicts.es_MX
     pkgs.tectonic
+    pkgs.languagetool
 
     # privacy
     pkgs.tomb
@@ -210,7 +211,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "0fdcsx840lii48d7bk190zhz4raxrii55fwdhagpziaj5j29b583";
+      sha256 = "sha256:0dvc5vffr96rwly5xglrl99vb2jdr7cwyq1yjpyr4gdxqxhbiaj6";
     }))
   ];
 

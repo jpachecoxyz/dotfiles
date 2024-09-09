@@ -524,7 +524,6 @@ The command supports previewing the currently selected theme."
       (if (custom-theme-p theme)
           (enable-theme theme)
         (load-theme theme :no-confirm)))))
-
 #+end_src
 * Custom functions.
 #+BEGIN_SRC emacs-lisp
