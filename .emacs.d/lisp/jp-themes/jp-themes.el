@@ -17,7 +17,7 @@
 ;;; User options
 
 (defconst jp-themes-light-themes
-  '(jp-gruvbox-light)
+  '(jp-eagle)
   "List of symbols with the light jp themes.")
 
 (defconst jp-themes-dark-themes
@@ -26,7 +26,6 @@
 	jp-darkvenom
 	jp-elea-dark
 	jp-owl
-	jp-autumn
 	jp-adwaita-dark
 	)
   "List of symbols with the dark jp themes.")

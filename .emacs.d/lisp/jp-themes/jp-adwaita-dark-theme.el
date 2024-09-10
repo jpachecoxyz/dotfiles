@@ -169,8 +169,8 @@
        ;; Feature availability
        (flat-button-available-p (version<= "28.1" emacs-version))
        (true-color-available-p (or (daemonp)
-                                   (display-graphic-p)
-                                   (>= (tty-display-color-cells) 16777216)))
+                                  (display-graphic-p)
+                                  (>= (tty-display-color-cells) 16777216)))
 
        ;; Background colors
        ;; [True color | 256-compatible]
@@ -461,6 +461,10 @@
    `(message-mml ((,class (:foreground ,base-5 :slant italic))))
    `(message-cited-text ((,class (:foreground ,magenta))))
 
+   ;; org-mode
+   `(org-block ((t (:background ,base-0))))
+
+   
    ;; outline
    `(outline-1 ((,class (:foreground ,(if jp-adwaita-dark-theme-gray-outlines base-6 blue) :weight bold))))
    `(outline-2 ((,class (:foreground ,(if jp-adwaita-dark-theme-gray-outlines base-7 magenta) :weight bold))))

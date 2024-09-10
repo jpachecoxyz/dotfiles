@@ -16,7 +16,7 @@
     (if (eq current-theme 'jp-eagle)
         (progn
           ;; (disable-theme 'jp-eagle)
-          (jp-themes-select 'jp-darkvenom)
+          (jp-themes-select 'jp-gruvby)
           (message "DarkVenom theme loaded."))
       (progn
         (jp-themes-select 'jp-eagle)
@@ -28,7 +28,6 @@
 (load-theme 'jp-gruvby :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
-;; (load-theme 'jp-autumn :no-confirm)
 (global-set-key (kbd "<f10>") 'jp/toggle-theme)
 
 ;; Disable GUI when foundit

@@ -124,6 +124,7 @@
     pkgs.hunspellDicts.en_US
     pkgs.hunspellDicts.es_MX
     pkgs.tectonic
+    pkgs.python312Packages.pygments
 
     # privacy
     pkgs.tomb

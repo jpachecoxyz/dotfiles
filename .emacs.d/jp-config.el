@@ -508,9 +508,12 @@
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
 (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((emacs-lisp . t)
-      (python . t)))
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)
+   (shell . t) 
+   (awk . t)
+   ))
 
 ;; Windows rules:
 (setq org-agenda-window-setup 'switch-to-buffer-other-window)
@@ -1870,7 +1873,7 @@ folder, otherwise delete a word"
    "M-l" 'org-make-olist)
   (general-define-key
    :states '(normal)
-   "SPC SPC" 'execute-extended-command
+   "SPC SPC" 'my/org-edit-toggle
    ;; "SPC SPC" 'hydra-of-hydras/body
    "g V" 'cycle-region-preview
    "C-;" 'devdocs-lookup
@@ -2061,61 +2064,61 @@ folder, otherwise delete a word"
 	"o e" '(toggle-org-buffer :wk "Toggle org buffer")
 	"o F" '(select-frame-by-name :wk "Select frame by name"))
 
-;; projectile-command-map already has a ton of bindings 
-;; set for us, so no need to specify each individually.
-(user/leader-keys
-  "p" '(:ignore t :wk "Projectile")
-  "p a" '(projectile-add-known-project :wk "Add a project directory"))
+  ;; projectile-command-map already has a ton of bindings 
+  ;; set for us, so no need to specify each individually.
+  (user/leader-keys
+	"p" '(:ignore t :wk "Projectile")
+	"p a" '(projectile-add-known-project :wk "Add a project directory"))
 
-(user/leader-keys
-  "r" '(:ignore t :wk "Roam")
-  "r f" '(org-roam-node-find :wk "Org rome node find")
-  "r u" '(org-roam-ui-open :wk "Open org roam map")
-  "r i" '(org-roam-node-insert :wk "Insert Node link")
-  "r I" '(org-roam-node-insert-immediate :wk "Insert new Node link")
+  (user/leader-keys
+	"r" '(:ignore t :wk "Roam")
+	"r f" '(org-roam-node-find :wk "Org rome node find")
+	"r u" '(org-roam-ui-open :wk "Open org roam map")
+	"r i" '(org-roam-node-insert :wk "Insert Node link")
+	"r I" '(org-roam-node-insert-immediate :wk "Insert new Node link")
+	)
+
+  (user/leader-keys
+	"s" '(:ignore t :wk "Search")
+	"s d" '(dictionary-search :wk "Search dictionary")
+	"s m" '(man :wk "Man pages")
+	"s t" '(tldr :wk "Lookup TLDR docs for a command")
+	"s w" '(woman :wk "Similar to man but doesn't require man"))
+
+  (user/leader-keys
+	"t" '(:ignore t :wk "Toggle")
+	"t e" '(jp/org-toggle-emphasis-markers :wk "Toggle org-emphasis")
+	"t f" '(flycheck-mode :wk "Toggle flycheck")
+	"t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+	"t o" '(org-mode :wk "Toggle org mode")
+	"t r" '(rainbow-mode :wk "Toggle rainbow mode")
+	"t t" '(visual-line-mode :wk "Toggle truncated lines"))
+
+  (user/leader-keys
+	"w" '(:ignore t :wk "Windows")
+	;; Window splits
+	"w c" '(evil-window-delete :wk "Close window")
+	"w n" '(evil-window-new :wk "New window")
+	"w s" '(evil-window-split :wk "Horizontal split window")
+	"w v" '(evil-window-vsplit :wk "Vertical split window")
+	;; Window motions
+	"w h" '(evil-window-left :wk "Window left")
+	"w j" '(evil-window-down :wk "Window down")
+	"w k" '(evil-window-up :wk "Window up")
+	"w l" '(evil-window-right :wk "Window right")
+	"w w" '(evil-window-next :wk "Goto next window")
+	;; Move Windows
+	"w H" '(buf-move-left :wk "Buffer move left")
+	"w J" '(buf-move-down :wk "Buffer move down")
+	"w K" '(buf-move-up :wk "Buffer move up")
+	"w L" '(buf-move-right :wk "Buffer move right"))
+
+  (user/leader-keys
+	"q" '(:ignore t :wk "Quit Emacs")
+	;; Quiting Emacs Options
+	"q r" '(restart-emacs :wk "Restart Emacs")
+	"q q" '(kill-emacs :wk "Exit Emacs"))
   )
-
-(user/leader-keys
-  "s" '(:ignore t :wk "Search")
-  "s d" '(dictionary-search :wk "Search dictionary")
-  "s m" '(man :wk "Man pages")
-  "s t" '(tldr :wk "Lookup TLDR docs for a command")
-  "s w" '(woman :wk "Similar to man but doesn't require man"))
-
-(user/leader-keys
-  "t" '(:ignore t :wk "Toggle")
-  "t e" '(jp/org-toggle-emphasis-markers :wk "Toggle org-emphasis")
-  "t f" '(flycheck-mode :wk "Toggle flycheck")
-  "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-  "t o" '(org-mode :wk "Toggle org mode")
-  "t r" '(rainbow-mode :wk "Toggle rainbow mode")
-  "t t" '(visual-line-mode :wk "Toggle truncated lines"))
-
-(user/leader-keys
-  "w" '(:ignore t :wk "Windows")
-  ;; Window splits
-  "w c" '(evil-window-delete :wk "Close window")
-  "w n" '(evil-window-new :wk "New window")
-  "w s" '(evil-window-split :wk "Horizontal split window")
-  "w v" '(evil-window-vsplit :wk "Vertical split window")
-  ;; Window motions
-  "w h" '(evil-window-left :wk "Window left")
-  "w j" '(evil-window-down :wk "Window down")
-  "w k" '(evil-window-up :wk "Window up")
-  "w l" '(evil-window-right :wk "Window right")
-  "w w" '(evil-window-next :wk "Goto next window")
-  ;; Move Windows
-  "w H" '(buf-move-left :wk "Buffer move left")
-  "w J" '(buf-move-down :wk "Buffer move down")
-  "w K" '(buf-move-up :wk "Buffer move up")
-  "w L" '(buf-move-right :wk "Buffer move right"))
-
-(user/leader-keys
-  "q" '(:ignore t :wk "Quit Emacs")
-  ;; Quiting Emacs Options
-  "q r" '(restart-emacs :wk "Restart Emacs")
-  "q q" '(kill-emacs :wk "Exit Emacs"))
-)
 
 (use-package password-store
   :ensure t)

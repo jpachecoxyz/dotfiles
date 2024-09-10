@@ -542,4 +542,14 @@ The command supports previewing the currently selected theme."
   (org-timer-set-timer "55s"))
 (global-set-key (kbd "<f4>") 'jp/yt-shorts-timer)
 
+;; A function to toggle between org-edit-special and org-edit-src-exit
+(defun my/org-edit-toggle ()
+  "Toggle between org-edit-special and org-edit-src-exit."
+  (interactive)
+  (if (org-src-edit-buffer-p)  ; Check if we're in the special edit buffer
+      (org-edit-src-exit)      ; If inside the edit buffer, exit
+    (if (org-in-src-block-p)   ; Check if we're in a source block in org-mode
+        (org-edit-special)     ; If in a source block, edit it
+      (message "Not in a source block.")))) ; If not, do nothing
+
 (provide 'utilities)

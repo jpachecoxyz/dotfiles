@@ -48,7 +48,7 @@
     '(
 ;;; Basic values
 
-      (bg-main      "#181818")
+      (bg-main      "#1d2021")
       (fg-main      "#eaf2ef")
       (bg-dim       "#303332")
       (fg-dim       "#969faf")
@@ -56,7 +56,7 @@
       (fg-alt       "#8fcfbb")
 
       (bg-active    "#5e6160")
-      (bg-inactive  "#1a1a1a")
+      (bg-inactive  "#222222")
 
 ;;; Basic hues for foreground values
 
