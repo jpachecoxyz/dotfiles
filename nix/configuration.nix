@@ -137,7 +137,6 @@ in
     stow
     gnumake
     cmake
-    log4cxx
 
     # fonts
     jetbrains-mono

@@ -174,7 +174,7 @@
    '(diff-hl-insert ((t (:foreground "#A8FF60" :background "#547f30"))))
 
    ;; dired-mode
-   '(dired-directory ((t (:inherit (font-lock-keyword-face)))))
+   '(dired-directory ((t (:foreground "#689d6a"))))
    '(dired-flagged ((t (:inherit (diff-hl-delete)))))
    '(dired-symlink ((t (:foreground "#FD5FF1"))))
 

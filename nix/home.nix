@@ -29,6 +29,7 @@
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.wbg
+    pkgs.emacsPackages.jinx
 
     # Development
     # language servers
@@ -51,7 +52,7 @@
     pkgs.direnv
 
     # Terminal tools
-    pkgs.yazi   # File manager
+    pkgs-unstable.yazi   # File manager
     pkgs.zellij # Terminal multiplexer
     pkgs.lazygit # git tui frontend
     pkgs.fossil

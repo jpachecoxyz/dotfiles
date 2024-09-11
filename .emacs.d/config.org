@@ -1074,21 +1074,32 @@
                                 ("mkv" . "mpv")
                                 ("mp4" . "mpv"))))
 
-;; (use-package dired-preview
-;;   :ensure t
-;;   :after dired
-;;   :hook (dired-mode . dired-preview-mode))
+(use-package dired-rainbow
+  :config
+  (progn
+    (dired-rainbow-define-chmod directory "#83a598" "d.*")               ;; Blue
+    (dired-rainbow-define html "#fabd2f" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml")) ;; Yellow
+    (dired-rainbow-define xml "#b8bb26" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata")) ;; Green
+    (dired-rainbow-define document "#d3869b" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx")) ;; Purple
+    (dired-rainbow-define markdown "#ebdbb2" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt")) ;; Light Background
+    (dired-rainbow-define database "#8ec07c" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc")) ;; Aqua
+    (dired-rainbow-define media "#fe8019" ("mp3" "mp4" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac")) ;; Orange
+    (dired-rainbow-define image "#d3869b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg")) ;; Purple
+    (dired-rainbow-define log "#fb4934" ("log")) ;; Red
+    (dired-rainbow-define shell "#fe8019" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim")) ;; Orange
+    (dired-rainbow-define interpreted "#b8bb26" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js")) ;; Green
+    (dired-rainbow-define compiled "#83a598" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java")) ;; Blue
+    (dired-rainbow-define executable "#8ec07c" ("exe" "msi")) ;; Aqua
+    (dired-rainbow-define compressed "#d3869b" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar")) ;; Purple
+    (dired-rainbow-define packaged "#fabd2f" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp")) ;; Yellow
+    (dired-rainbow-define encrypted "#b8bb26" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem")) ;; Green
+    (dired-rainbow-define fonts "#83a598" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf")) ;; Blue
+    (dired-rainbow-define partition "#fb4934" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak")) ;; Red
+    (dired-rainbow-define vc "#83a598" ("git" "gitignore" "gitattributes" "gitmodules")) ;; Blue
+    (dired-rainbow-define-chmod executable-unix "#b8bb26" "-.*x.*") ;; Green
+    ))
 
-;; (defun my-dired-preview-to-the-right ()
-;;   "My preferred `dired-preview-display-action-alist-function'."
-;;   '((display-buffer-in-side-window)
-;;     (side . right)
-;;     (window-width . 0.4)))
-
-;; (setq dired-preview-display-action-alist-function #'my-dired-preview-to-the-right)
-;; (setq dired-preview-delay 0.1)
-
-(use-package peep-dired
+(Use-package peep-dired
   :after dired
   :hook (evil-normalize-keymaps . peep-dired-hook)
   :config
@@ -1096,6 +1107,132 @@
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 
 #+END_SRC
+* Treemacs.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
+		  treemacs-default-visit-action            'treemacs-visit-node-close-treemacs
+          treemacs-deferred-git-apply-delay        0.5
+          treemacs-directory-name-transformer      #'identity
+          treemacs-display-in-side-window          t
+          treemacs-eldoc-display                   'simple
+          treemacs-file-event-delay                2000
+          treemacs-file-extension-regex            treemacs-last-period-regex-value
+          treemacs-file-follow-delay               0.2
+          treemacs-file-name-transformer           #'identity
+          treemacs-follow-after-init               t
+          treemacs-expand-after-init               t
+          treemacs-find-workspace-method           'find-for-file-or-pick-first
+          treemacs-git-command-pipe                ""
+          treemacs-goto-tag-strategy               'refetch-index
+          treemacs-header-scroll-indicators        '(nil . "^^^^^^")
+          treemacs-hide-dot-git-directory          t
+          treemacs-indentation                     2
+          treemacs-indentation-string              " "
+          treemacs-is-never-other-window           nil
+          treemacs-max-git-entries                 5000
+          treemacs-missing-project-action          'ask
+          treemacs-move-files-by-mouse-dragging    t
+          treemacs-move-forward-on-expand          nil
+          treemacs-no-png-images                   nil
+          treemacs-no-delete-other-windows         t
+          treemacs-project-follow-cleanup          nil
+          treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                        'left
+          treemacs-read-string-input               'from-child-frame
+          treemacs-recenter-distance               0.1
+          treemacs-recenter-after-file-follow      nil
+          treemacs-recenter-after-tag-follow       nil
+          treemacs-recenter-after-project-jump     'always
+          treemacs-recenter-after-project-expand   'on-distance
+          treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
+          treemacs-project-follow-into-home        nil
+          treemacs-show-cursor                     nil
+          treemacs-show-hidden-files               t
+          treemacs-silent-filewatch                nil
+          treemacs-silent-refresh                  nil
+          treemacs-sorting                         'alphabetic-asc
+          treemacs-select-when-already-in-treemacs 'move-back
+          treemacs-space-between-root-nodes        t
+          treemacs-tag-follow-cleanup              t
+          treemacs-tag-follow-delay                1.5
+          treemacs-text-scale                      nil
+          treemacs-user-mode-line-format           nil
+          treemacs-user-header-line-format         nil
+          treemacs-wide-toggle-width               70
+          treemacs-width                           35
+          treemacs-width-increment                 1
+          treemacs-width-is-initially-locked       t
+          treemacs-workspace-switch-cleanup        nil)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    (treemacs-resize-icons 20)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (when treemacs-python-executable
+      (treemacs-git-commit-diff-mode t))
+
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+
+    (treemacs-hide-gitignored-files-mode nil))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t d"   . treemacs-select-directory)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-evil
+  :after (treemacs evil)
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-enable-once)
+  :ensure t)
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
+
+(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
+  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
+
+(use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
+  :after (treemacs)
+  :ensure t
+  :config (treemacs-set-scope-type 'Tabs))
+
+(defun toggle-treemacs ()
+  "Toggle Treemacs."
+  (interactive)
+  (if (get-buffer-window "*Treemacs*")
+      (delete-window (get-buffer-window "*Treemacs*"))
+    (treemacs)))
+#+end_src
 * Projectile
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package projectile
@@ -1116,72 +1253,78 @@
 #+END_SRC
 * Spell-check:
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
-;; Set speller and dicts
+;; ;; Set speller and dicts
 (if lpr-windows-system
 	(setenv "LANG" "en_US, es_MX"))
 (if lpr-windows-system
 	(setenv "DICPATH"
 			(concat (getenv "HOME") ".emacs.d/lang")))
 
-(setq ispell-hunspell-dict-paths-alist
-	  '(("en_US" "~/.emacs.d/lang/en_US.aff")
-		("es_MX" "~/.emacs.d/lang/es_MX.aff")))
+;; (setq ispell-hunspell-dict-paths-alist
+;; 	  '(("en_US" "~/.emacs.d/lang/en_US.aff")
+;; 		("es_MX" "~/.emacs.d/lang/es_MX.aff")))
 
-(if lpr-windows-system
-	;;; Windows
-	(setq ispell-local-dictionary-alist
-		  ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
-		  ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
-		  '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
-			("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
-	;;; Linux
-  (setq ispell-local-dictionary-alist
-		'(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-		  ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
+;; (if lpr-windows-system
+;; 	;;; Windows
+;; 	(setq ispell-local-dictionary-alist
+;; 		  ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
+;; 		  ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
+;; 		  '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+;; 			("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
+;; 	;;; Linux
+;;   (setq ispell-local-dictionary-alist
+;; 		'(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+;; 		  ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
 
-(setq ispell-program-name "hunspell")
-(setq ispell-local-dictionary "en_US")
+;; (setq ispell-program-name "hunspell")
+;; (setq ispell-local-dictionary "en_US")
 
-;; flyspell spellcheck on the fly...
-(use-package flyspell
-  :defer t
-  ;;:delight
-  :custom
-  (flyspell-abbrev-p t)
-  (flyspell-issue-message-flag nil)
-  (flyspell-issue-welcome-flag nil)
-  (flyspell-mode 1))
+;; ;; flyspell spellcheck on the fly...
+;; (use-package flyspell
+;;   :defer t
+;;   ;;:delight
+;;   :custom
+;;   (flyspell-abbrev-p t)
+;;   (flyspell-issue-message-flag nil)
+;;   (flyspell-issue-welcome-flag nil)
+;;   (flyspell-mode 1))
 
-(use-package flyspell-correct-ivy
-  :after flyspell
-  :bind (:map flyspell-mode-map
-      ("M-\\" . flyspell-correct-word-before-point))
-  :custom (flyspell-correct-interface 'flyspell-correct-ivy))
+;; (use-package flyspell-correct-ivy
+;;   :after flyspell
+;;   :bind (:map flyspell-mode-map
+;;       ("M-\\" . flyspell-correct-word-before-point))
+;;   :custom (flyspell-correct-interface 'flyspell-correct-ivy))
 
-(use-package ispell
-  :custom
-  (ispell-silently-savep t))
+;; (use-package ispell
+;;   :custom
+;;   (ispell-silently-savep t))
 
-;; Activate spellcheck in text mode, org, txt files etc...
-(add-hook 'text-mode-hook
-  '(lambda () (flyspell-mode 1)))
+;; ;; Activate spellcheck in text mode, org, txt files etc...
+;; (add-hook 'text-mode-hook
+;;   '(lambda () (flyspell-mode 1)))
 
-;; Change betwen English and Spanish, 
-;; English is he default.
-(defvar ispell-current-dictionary "en_US")
+;; ;; Change betwen English and Spanish, 
+;; ;; English is he default.
+;; (defvar ispell-current-dictionary "en_US")
 
-(defun toggle-ispell-dictionary ()
-  (interactive)
-  (if (string= ispell-current-dictionary "en_US")
-      (progn
-        (setq ispell-current-dictionary "es_MX")
-        (message "Switched to Spanish dictionary"))
-    (progn
-      (setq ispell-current-dictionary "en_US")
-      (message "Switched to English dictionary")))
-  (ispell-change-dictionary ispell-current-dictionary))
+;; (defun toggle-ispell-dictionary ()
+;;   (interactive)
+;;   (if (string= ispell-current-dictionary "en_US")
+;;       (progn
+;;         (setq ispell-current-dictionary "es_MX")
+;;         (message "Switched to Spanish dictionary"))
+;;     (progn
+;;       (setq ispell-current-dictionary "en_US")
+;;       (message "Switched to English dictionary")))
+;;   (ispell-change-dictionary ispell-current-dictionary))
 
-(global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
+;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
+
+(use-package jinx
+  :hook (text-mode . jinx-mode)
+  :bind (("M-;" . jinx-correct)
+         ("<f8>" . jinx-languages)))
+
 #+END_SRC
 * Org.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2066,6 +2209,10 @@ folder, otherwise delete a word"
 
 (use-package vertico-posframe
   :ensure t)
+
+(add-to-list 'vertico-multiform-categories
+             '(jinx grid (vertico-grid-annotate . 20)))
+(vertico-multiform-mode 1)
 #+END_SRC
 * Windows and Popups rules
 ** Shackle
@@ -2079,6 +2226,7 @@ folder, otherwise delete a word"
 	      (roam "\\*Capture\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "magit-diff:*")
+		  (dired "\\*dired\\*")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
                           :align above
@@ -2111,6 +2259,9 @@ folder, otherwise delete a word"
         (,scratch :regexp t 
 				  :same t
 				  :select t)
+		(dired :select t
+					:size 0.6
+					:align below)
 		(,roam :regexp t 
 			   :same t
 			   :select t))))
@@ -2351,7 +2502,8 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	"o -" '(dired-jump :wk "Dired jump to current")
+	;; "o -" '(dired-jump :wk "Dired jump to current")
+	"o -" '(treemacs-select-window :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
@@ -2456,3 +2608,4 @@ folder, otherwise delete a word"
 ;; Optionally, bind the function to a key for quick access
 (global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
 #+END_SRC
+
