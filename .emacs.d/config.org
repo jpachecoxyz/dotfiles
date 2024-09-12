@@ -687,6 +687,7 @@
                 gnus-summary-mode-hook
                 org-agenda-mode-hook
                 treemacs-mode-hook
+				neotree-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
@@ -1081,9 +1082,9 @@
     (dired-rainbow-define html "#fabd2f" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml")) ;; Yellow
     (dired-rainbow-define xml "#b8bb26" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata")) ;; Green
     (dired-rainbow-define document "#d3869b" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx")) ;; Purple
-    (dired-rainbow-define markdown "#ebdbb2" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt")) ;; Light Background
+    (dired-rainbow-define markdown "#ebdbb2" ("org" "txt" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt")) ;; Light Background
     (dired-rainbow-define database "#8ec07c" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc")) ;; Aqua
-    (dired-rainbow-define media "#fe8019" ("mp3" "mp4" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac")) ;; Orange
+    (dired-rainbow-define media "#fe8019" ("mp3" "mp4" "MP3" "MP4" "mkv" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac")) ;; Orange
     (dired-rainbow-define image "#d3869b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg")) ;; Purple
     (dired-rainbow-define log "#fb4934" ("log")) ;; Red
     (dired-rainbow-define shell "#fe8019" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim")) ;; Orange
@@ -1099,7 +1100,7 @@
     (dired-rainbow-define-chmod executable-unix "#b8bb26" "-.*x.*") ;; Green
     ))
 
-(Use-package peep-dired
+(use-package peep-dired
   :after dired
   :hook (evil-normalize-keymaps . peep-dired-hook)
   :config
@@ -1107,131 +1108,22 @@
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 
 #+END_SRC
-* Treemacs.
+* NeoTree.
 #+begin_src emacs-lisp :tangle jp-config.el
-(use-package treemacs
+(use-package neotree
   :ensure t
   :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :config
-  (progn
-    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
-		  treemacs-default-visit-action            'treemacs-visit-node-close-treemacs
-          treemacs-deferred-git-apply-delay        0.5
-          treemacs-directory-name-transformer      #'identity
-          treemacs-display-in-side-window          t
-          treemacs-eldoc-display                   'simple
-          treemacs-file-event-delay                2000
-          treemacs-file-extension-regex            treemacs-last-period-regex-value
-          treemacs-file-follow-delay               0.2
-          treemacs-file-name-transformer           #'identity
-          treemacs-follow-after-init               t
-          treemacs-expand-after-init               t
-          treemacs-find-workspace-method           'find-for-file-or-pick-first
-          treemacs-git-command-pipe                ""
-          treemacs-goto-tag-strategy               'refetch-index
-          treemacs-header-scroll-indicators        '(nil . "^^^^^^")
-          treemacs-hide-dot-git-directory          t
-          treemacs-indentation                     2
-          treemacs-indentation-string              " "
-          treemacs-is-never-other-window           nil
-          treemacs-max-git-entries                 5000
-          treemacs-missing-project-action          'ask
-          treemacs-move-files-by-mouse-dragging    t
-          treemacs-move-forward-on-expand          nil
-          treemacs-no-png-images                   nil
-          treemacs-no-delete-other-windows         t
-          treemacs-project-follow-cleanup          nil
-          treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                        'left
-          treemacs-read-string-input               'from-child-frame
-          treemacs-recenter-distance               0.1
-          treemacs-recenter-after-file-follow      nil
-          treemacs-recenter-after-tag-follow       nil
-          treemacs-recenter-after-project-jump     'always
-          treemacs-recenter-after-project-expand   'on-distance
-          treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
-          treemacs-project-follow-into-home        nil
-          treemacs-show-cursor                     nil
-          treemacs-show-hidden-files               t
-          treemacs-silent-filewatch                nil
-          treemacs-silent-refresh                  nil
-          treemacs-sorting                         'alphabetic-asc
-          treemacs-select-when-already-in-treemacs 'move-back
-          treemacs-space-between-root-nodes        t
-          treemacs-tag-follow-cleanup              t
-          treemacs-tag-follow-delay                1.5
-          treemacs-text-scale                      nil
-          treemacs-user-mode-line-format           nil
-          treemacs-user-header-line-format         nil
-          treemacs-wide-toggle-width               70
-          treemacs-width                           35
-          treemacs-width-increment                 1
-          treemacs-width-is-initially-locked       t
-          treemacs-workspace-switch-cleanup        nil)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    (treemacs-resize-icons 20)
-
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode 'always)
-    (when treemacs-python-executable
-      (treemacs-git-commit-diff-mode t))
-
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
-
-    (treemacs-hide-gitignored-files-mode nil))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t)
-
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
-
-(use-package treemacs-icons-dired
-  :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
-
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t)
-
-(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
-
-(use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
-  :after (treemacs)
-  :ensure t
-  :config (treemacs-set-scope-type 'Tabs))
-
-(defun toggle-treemacs ()
-  "Toggle Treemacs."
-  (interactive)
-  (if (get-buffer-window "*Treemacs*")
-      (delete-window (get-buffer-window "*Treemacs*"))
-    (treemacs)))
+  :config (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
+				neo-window-fixed-size nil))
+(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 #+end_src
 * Projectile
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2215,7 +2107,7 @@ folder, otherwise delete a word"
 (vertico-multiform-mode 1)
 #+END_SRC
 * Windows and Popups rules
-** Shackle
+** COMMENT Shackle.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package shackle
   :custom
@@ -2226,7 +2118,7 @@ folder, otherwise delete a word"
 	      (roam "\\*Capture\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "magit-diff:*")
-		  (dired "\\*dired\\*")
+		  (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
                           :align above
@@ -2252,14 +2144,14 @@ folder, otherwise delete a word"
         (help-mode :select t
 				   :align below
 				   :size 0.5)
-        (,vcs :regexp t
+		(,vcs :regexp t
               :align above
               :size 0.15
               :select t)
-        (,scratch :regexp t 
+		(,scratch :regexp t 
 				  :same t
 				  :select t)
-		(dired :select t
+		(peep-dired-mode :select t
 					:size 0.6
 					:align below)
 		(,roam :regexp t 
@@ -2268,6 +2160,25 @@ folder, otherwise delete a word"
    (shackle-default-rule nil ; '(:inhibit-window-quit t)
 						 ))
   :config (shackle-mode))
+#+end_src
+** Popper.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package popper
+  :bind (("C-`"   . popper-toggle-latest)
+         ("M-`"   . popper-cycle)
+         ("C-M-`" . popper-toggle-type)) ;; Optional keybindings
+  :custom
+  (popper-reference-buffers
+   '("\\*Async Shell Command\\*"
+     dired-mode          ;; Treat Dired buffers as popups
+     help-mode
+     compilation-mode
+     "\\*Warnings\\*"
+     "\\*Messages\\*"))
+  (popper-display-control t) ;; Let Popper handle popups entirely
+  :config
+  (popper-mode +1)
+  (popper-echo-mode +1)) ;; For echo messages when popups are toggled
 #+end_src
 * Page break lines.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2503,7 +2414,7 @@ folder, otherwise delete a word"
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
 	;; "o -" '(dired-jump :wk "Dired jump to current")
-	"o -" '(treemacs-select-window :wk "Dired jump to current")
+	"o -" '(neotree-toggle :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
