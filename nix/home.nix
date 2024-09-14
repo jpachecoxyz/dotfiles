@@ -9,6 +9,7 @@
       visualizerSupport = true;
       clockSupport = true;
     };
+    whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
   in
 
 {
@@ -55,7 +56,6 @@
     pkgs-unstable.yazi   # File manager
     pkgs.zellij # Terminal multiplexer
     pkgs.lazygit # git tui frontend
-    pkgs.fossil
 
     # Generic tools.
     pkgs.graphite-gtk-theme 
@@ -82,6 +82,7 @@
     pkgs.ripgrep
     pkgs.bat
     pkgs.ffmpeg
+    pkgs.imagemagick
     pkgs.fastfetch
     pkgs.wf-recorder
     pkgs.tofi
@@ -116,11 +117,13 @@
 
     # tools
     pkgs.poppler
+    pkgs.mupdf
     pkgs.zathura
-    pkgs.foliate
     pkgs.zathuraPkgs.zathura_pdf_mupdf
+    pkgs.zathuraPkgs.zathura_pdf_poppler
     pkgs.unzip
     pkgs.zip
+    pkgs.p7zip
     pkgs.killall
     pkgs.htop
     pkgs.showmethekey
@@ -142,7 +145,8 @@
     pkgs.gnupg
 
     # Custom packages
-    (pkgs.callPackage ../jp-nix/whdd/default.nix { })
+    # (pkgs.callPackage ../jp-nix/whdd/default.nix { })
+    whdd
 
   ];
 
@@ -217,7 +221,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "sha256:0dvc5vffr96rwly5xglrl99vb2jdr7cwyq1yjpyr4gdxqxhbiaj6";
+      sha256 = "sha256:1w7h13bwmki905ckylqaqmh8y8phcdj8na7z21px9gcmxwqm13fa";
     }))
   ];
 

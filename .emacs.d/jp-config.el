@@ -277,8 +277,8 @@
 							  corfu-quit-no-match t
 							  corfu-auto nil) (corfu-mode)) nil t)
 
-  :hook (
-         (prog-mode . corfu-mode)))
+  :hook ((prog-mode . corfu-mode)
+		 (text-mode . corfu-mode)))
 
 
 ;; (use-package corfu-doc
@@ -873,21 +873,6 @@
   :config
   (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
-
-(use-package neotree
-  :ensure t
-  :defer t
-  :config (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
-				neo-window-fixed-size nil))
-(evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
-(evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-(evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-(evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-(evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
-(evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
-(evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-(evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 
 (use-package projectile
   :diminish projectile-mode
@@ -2031,8 +2016,7 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	;; "o -" '(dired-jump :wk "Dired jump to current")
-	"o -" '(neotree-toggle :wk "Dired jump to current")
+	"o -" '(dired-jump :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")

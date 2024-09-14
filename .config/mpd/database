@@ -880,7 +880,7 @@ Format: 48000:24:2
 mtime: 1721186161
 song_end
 song_begin: Anthrax - Aftershock.mp3
-Time: 261.936000
+Time: 261.935000
 Artist: Anthrax
 AlbumArtist: Anthrax
 Title: Aftershock
@@ -3334,7 +3334,7 @@ Format: 48000:24:2
 mtime: 1721185263
 song_end
 song_begin: Municipal Waste - Sadistic Magician.mp3
-Time: 129.432000
+Time: 129.431000
 Artist: Municipal Waste
 AlbumArtist: Municipal Waste
 Title: Sadistic Magician
@@ -3347,7 +3347,7 @@ Format: 48000:24:2
 mtime: 1721185170
 song_end
 song_begin: Exodus - Funeral Hymn.mp3
-Time: 517.944000
+Time: 517.943000
 Artist: Exodus
 AlbumArtist: Exodus
 Title: Funeral Hymn
@@ -4023,3 +4023,6 @@ Format: 48000:24:2
 mtime: 1721185978
 song_end
 end: thrash
+playlist_begin: metal.m3u
+mtime: 1726329931
+playlist_end

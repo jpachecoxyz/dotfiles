@@ -103,11 +103,17 @@
    `(font-lock-warning-face ((t (:foreground ,jp-gruvby-mono-3 :bold t))))
    `(font-lock-negation-char-face ((t (:foreground ,jp-gruvby-cyan :bold t))))
 
+
    ;; mode-line
    `(mode-line ((t (:background ,jp-gruvby-black :foreground ,jp-gruvby-silver :box (:color ,jp-gruvby-border :line-width 2)))))
    `(mode-line-buffer-id ((t (:weight bold))))
    `(mode-line-emphasis ((t (:weight bold))))
    `(mode-line-inactive ((t (:background ,jp-gruvby-border :foreground ,jp-gruvby-gray :box (:color ,jp-gruvby-border :line-width 1)))))
+   ;; evil-mode
+   `(doom-modeline-evil-insert-state ((t (:foreground ,jp-gruvby-cyan :weight bold))))
+   `(doom-modeline-evil-normal-state ((t (:foreground ,jp-gruvby-orange-1 :weight bold))))
+   `(doom-modeline-evil-visual-state ((t (:foreground ,jp-gruvby-purple :weight bold))))
+   
 
    ;; window-divider
    `(window-divider ((t (:foreground ,jp-gruvby-border))))
