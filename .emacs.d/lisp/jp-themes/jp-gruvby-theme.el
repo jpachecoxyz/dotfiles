@@ -103,7 +103,6 @@
    `(font-lock-warning-face ((t (:foreground ,jp-gruvby-mono-3 :bold t))))
    `(font-lock-negation-char-face ((t (:foreground ,jp-gruvby-cyan :bold t))))
 
-
    ;; mode-line
    `(mode-line ((t (:background ,jp-gruvby-black :foreground ,jp-gruvby-silver :box (:color ,jp-gruvby-border :line-width 2)))))
    `(mode-line-buffer-id ((t (:weight bold))))
@@ -510,6 +509,10 @@
    `(ruler-mode-goal-column ((t (:foreground ,jp-gruvby-cyan :inherit ruler-mode-default))))
    `(ruler-mode-margins ((t (:inherit ruler-mode-default))))
    `(ruler-mode-tab-stop ((t (:foreground ,jp-gruvby-mono-3 :inherit ruler-mode-default))))
+
+   ;; Treesit
+   `(tree-sitter-hl-face ((t (:background nil))))
+   
 
    ))
 
