@@ -70,7 +70,7 @@
 	  :bold-family "IBM Plex" ; use whatever the underlying face has
 	  :bold-weight bold
 	  :italic-family nil;
-	  :italic-weight italic;
+	  :italic-weight nil;
 	  :italic-family "JetBrains Mono"
 	  :italic-slant italic
 	  :line-spacing nil)))
@@ -1266,30 +1266,6 @@
 (setq org-log-done 'time)
 (setq org-agenda-start-with-log-mode t)
 
-(use-package calfw
-  :ensure t
-  :config
-  (setq cfw:org-overwrite-default-keybinding t)
-  (setq cfw:fchar-junction ?╋
-		cfw:fchar-vertical-line ?┃
-		cfw:fchar-horizontal-line ?━
-		cfw:fchar-left-junction ?┣
-		cfw:fchar-right-junction ?┫
-		cfw:fchar-top-junction ?┯
-		cfw:fchar-top-left-corner ?┏
-		cfw:fchar-top-right-corner ?┓))
-
-(use-package calfw-org
-  :ensure t
-  ;; :bind ([f5] . cfw:open-org-calendar)
-  :config
-  (calendar-holidays '((holiday-fixed 1 1 "Año Nuevo")
-					   (holiday-fixed 1 6 "Reyes Magos")
-					   (holiday-fixed 5 1 "Dia del Trabajo")
-					   (holiday-fixed 11 01 "Todos los Santos")
-					   (holiday-fixed 11 02 "Da de Muertos")
-					   (holiday-fixed 12 25 "Navidad"))))
-
 ;; Capture
 (setq org-default-notes-file '("~/public/org/agenda/refill.org"))
 (global-set-key (kbd "C-c c") 'org-capture)      ;; use C-c c to start capture mode
@@ -1696,7 +1672,7 @@ See `org-capture-templates' for more information."
 
 (use-package yasnippet
   :defer 2
-  :init (yas-reload-all)
+  ;; :init (yas-reload-all)
   :custom (yas-keymap-disable-hook (lambda () (frame-visible-p corfu--frame)))
   :hook ((prog-mode . yas-minor-mode)
 	 	 (org-mode . yas-minor-mode)))

@@ -28,7 +28,7 @@
     pkgs.hypridle
     pkgs.hyprlock
     pkgs.pyprland
-    pkgs.wbg
+    pkgs.swww
     pkgs.emacsPackages.jinx
 
     # Development
@@ -109,11 +109,16 @@
     # graphics
     pkgs.nsxiv
     pkgs.slurp
+    pkgs.swappy
+    pkgs.hyprshot
+    pkgs.grim
     pkgs.xorg.xrdb
 
     # tools
     pkgs.poppler
     pkgs.zathura
+    pkgs.foliate
+    pkgs.zathuraPkgs.zathura_pdf_mupdf
     pkgs.unzip
     pkgs.zip
     pkgs.killall

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 12/09/24
+# Project: Screen shoot utility
+
+
+# Define your options 
+options=$(printf "Region\nWindow\nScreen\nQuit")
+
+# Show the menu using tofi
+OPT=$(echo "$options" | tofi --prompt "Select Screenshot: ")
+
+# Handle the selected option
+case $OPT in
+    'Region')
+        hyprshot -m region --clipboard && wl-paste | swappy -f -
+        ;;
+    'Window')
+        hyprshot -m window --clipboard && wl-paste | swappy -f -
+        ;;
+    'Screen')
+        # Use grim for fullscreen screenshot because hyprshot takes too long
+        # grim - | swappy -f - | wl-copy
+        sleep 0.3 && hyprshot -m output  -c --clipboard && wl-paste | swappy -f -
+        ;;
+    *|'Quit') 
+        exit 0
+        ;;
+esac
