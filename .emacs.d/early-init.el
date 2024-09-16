@@ -16,7 +16,7 @@
     (if (eq current-theme 'jp-eagle)
         (progn
           ;; (disable-theme 'jp-eagle)
-          (jp-themes-select 'jp-elea-dark)
+          (jp-themes-select 'jp-gruvby)
           (message "Dark theme loaded."))
       (progn
         (jp-themes-select 'jp-eagle)
@@ -25,8 +25,8 @@
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
 ;; (load-theme 'jp-darkvenom :no-confirm)
-;; (load-theme 'jp-gruvby :no-confirm)
-(load-theme 'jp-elea-dark :no-confirm)
+(load-theme 'jp-gruvby :no-confirm)
+;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 (global-set-key (kbd "<f10>") 'jp/toggle-theme)
 

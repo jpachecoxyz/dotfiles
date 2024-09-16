@@ -56,6 +56,7 @@ alias \
 	smcu="sudo make clean uninstall" \
 	smu="sudo make uninstall" \
 	mi="make install" \
+	m="mupdf" \
 	hserver="cd ~/webdev/jpachecoxyz.github.io/hugo/ && hugo server --forceSyncStatic --buildDrafts" \
 	cx="chmod +x"
 
@@ -92,7 +93,6 @@ alias \
 	ds="cd ~/.dotfiles" \
 	uds="update_dots && hyprctl notify 5 5000 'rgb(458588)' 'fontsize:15  Dotfiles updated correctly'" \
 	dof="yazi ~/.dotfiles" \
-	n="nnn -e" \
 	mu='yt-dlp "$(ytfzf -D -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \
 	ytb='yt-dlp -f b "$(ytfzf -D -I L "$1")" -o - | ffplay - -autoexit -loglevel quiet'
 

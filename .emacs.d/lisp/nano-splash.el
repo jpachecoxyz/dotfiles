@@ -44,7 +44,7 @@
   "Splash screen subtitle"
   :type 'string :group 'nano-splash)
 
-(defcustom nano-splash-duration 3600
+(defcustom nano-splash-duration 5
   "Splash screen duration (in seconds)"
   :type 'float :group 'nano-splash)
 

@@ -121,6 +121,7 @@
     pkgs.zathura
     pkgs.zathuraPkgs.zathura_pdf_mupdf
     pkgs.zathuraPkgs.zathura_pdf_poppler
+    pkgs.foliate
     pkgs.unzip
     pkgs.zip
     pkgs.p7zip
@@ -129,6 +130,7 @@
     pkgs.showmethekey
 
     # latex and spell
+    pkgs.texlivePackages.xelatex-dev
     pkgs.hunspell
     pkgs.hunspellDicts.en_US
     pkgs.hunspellDicts.es_MX
@@ -209,8 +211,10 @@
     #   '';
     # };
     iconTheme = {
-      package = pkgs.gruvbox-dark-icons-gtk;
-      name  = "gruvbox-dark-icons";
+      # package = pkgs.gruvbox-dark-icons-gtk;
+      # name  = "gruvbox-dark-icons";
+      package = pkgs.papirus-icon-theme;  # Use Papirus icon theme package
+      name  = "Papirus";                  # Set the theme name to Papirus
     };
   };
 

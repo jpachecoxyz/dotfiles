@@ -1,0 +1,82 @@
+#+TITLE: Maintenance Supervisor - Key Activities
+#+AUTHOR: Javier Pacheco
+#+DATE: 2024-09-12
+#+LATEX_CLASS: manuals
+
+
+* Understanding the Existing Maintenance System
+  - *Review Maintenance Plans and Schedules*: 
+    Familiarize yourself with the preventive and corrective maintenance plans. Understand the current schedules, pending tasks, and any backlog.
+  - *Inspect Equipment and Facilities*: 
+    Conduct a tour of the facilities to understand the equipment condition, layout, and potential issues.
+  - *Analyze Maintenance Data*: 
+    Review historical data on equipment failures, repairs, and downtime to identify critical areas for improvement.
+  - *Get to Know Your Team*: 
+    Meet with your maintenance team to understand their strengths, weaknesses, and concerns. Build rapport to ensure strong collaboration.
+
+* Ensuring Safety and Compliance
+  - *Assess Safety Procedures*: 
+    Review safety policies and procedures, ensuring they align with industry standards and regulatory requirements.
+  - *Conduct Safety Audits*: 
+    Regularly audit the workspace for hazards and ensure corrective actions are implemented.
+
+* Establishing Clear Communication
+  - *Hold Team Meetings*: 
+    Schedule regular meetings with your team to discuss tasks, challenges, and upcoming projects.
+  - *Coordinate with Other Departments*: 
+    Collaborate with production, quality, and engineering teams to ensure maintenance aligns with production goals.
+
+* Setting Clear Expectations and Goals
+  - *Define KPIs*: 
+    Establish Key Performance Indicators (KPIs) to track performance (e.g., equipment uptime, response times, cost reduction).
+  - *Assign Roles and Responsibilities*: 
+    Ensure every team member has a clear understanding of their role, responsibilities, and equipment they manage.
+** Dieacst Maintenance Team:
+*** 1st Shift
+1. 
+2. 
+3. 
+*** 2nd Shift
+1. 
+2. 
+3. 
+*** 3rd Shift
+1. 
+2. 
+3. 
+
+* Implementing or Improving Maintenance Systems
+  - *CMMS (Computerized Maintenance Management System)*: 
+    Ensure it is used effectively. If absent, consider implementing one to track work orders and equipment history.
+  - *Inventory Management*: 
+    Ensure necessary spare parts and tools are readily available and establish a system to track inventory levels.
+
+* Focusing on Preventive Maintenance
+  - *Review Preventive Maintenance Plans*: 
+    Ensure all critical equipment has a preventive maintenance plan to avoid unexpected breakdowns.
+  - *Schedule Regular Inspections*: 
+    Implement a routine for equipment inspections to identify potential failures before they occur.
+
+* Identifying and Implementing Improvement Projects
+  - *Energy and Cost Efficiency*: 
+    Look for opportunities to improve energy efficiency and reduce costs through equipment upgrades or process improvements.
+  - *Root Cause Analysis (RCA)*: 
+    After any major breakdown, conduct an RCA to prevent future failures and improve reliability.
+
+* Training and Developing Your Team
+  - *Training Plans*: 
+    Identify skills gaps and implement training programs to improve technical skills and knowledge.
+  - *Encourage Continuous Improvement*: 
+    Foster a culture of improvement by encouraging your team to suggest ways to improve processes and increase efficiency.
+
+* Monitoring Performance and Adjusting
+  - *Track Maintenance Performance*: 
+    Regularly review performance data to ensure tasks are completed on time and within budget.
+  - *Adjust Workflows*: 
+    Be flexible in adjusting workflows based on insights into operations and potential improvements.
+
+* Building Relationships
+  - *Collaborate with Upper Management*: 
+    Keep management informed of progress and issues that require attention.
+  - *Build a Vendor Network*: 
+    Establish relationships with vendors for equipment servicing, parts, and repairs.

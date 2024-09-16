@@ -1,0 +1,5 @@
+# key: clm
+# name: class_latex
+# --
+#+LATEX_CLASS: manuals
+$0

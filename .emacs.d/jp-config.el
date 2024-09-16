@@ -478,6 +478,7 @@
                 org-mode-hook
                 telega-chat-mode-hook
                 telega-root-mode-hook
+				doc-view-mode-hook
                 eww-mode-hook
                 pdf-view-mode-hook
                 newsticker-treeview-mode-hook
@@ -528,7 +529,7 @@
                                      (display-buffer-in-side-window)
                                      (side . bottom)
                                      (slot . 6)
-				     	(window-width 1.0)
+				     		       (window-width 1.0)
                                      (dedicated . t)))
 
 (defalias 'lp 'list-packages)
@@ -543,8 +544,34 @@
 				 ("\\subsection{%s}" . "\\subsection*{%s}")
 				 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 				 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-				 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+				 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+  ;; Add custom class for: Manuals
+  (add-to-list 'org-latex-classes
+               '("manuals"
+				 "\\documentclass[a4paper,12pt]{article}
+                \\usepackage[a4paper, left=1in, right=1in, top=1in, bottom=1in]{geometry}
+                \\setlength{\\textheight}{9.5in}
+                \\setlength{\\textwidth}{6.5in}
+                \\setcounter{tocdepth}{2}
+
+                \\usepackage{minted}
+                \\usepackage[dvipsnames]{xcolor}
+                \\usepackage{listings}
+                \\usepackage{fancyhdr}
+                \\usepackage{lastpage}
+                \\pagestyle{fancy}
+                \\fancyhf{}
+                \\fancyhead[R]{\\bf{\\leftmark}}
+                \\fancyfoot[C]{\\thepage{} of \\pageref{LastPage}}
+                \\fancyfoot[R]{ Javier Pacheco }
+
+                \\AddToHook{cmd/section/before}{\\clearpage}"
+				 ("\\section{%s}" . "\\section*{%s}")
+				 ("\\subsection{%s}" . "\\subsection*{%s}")
+				 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+				 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+				 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (setq org-latex-listings 't)
 (setq TeX-engine 'xetex)
@@ -566,13 +593,16 @@
 
 (setq org-latex-listings 'minted) 		;; Use minted for code blocks
 (setq org-latex-minted-options 			;; Here you add the options 
-      '(("linenos" "true")				;; Enable line numbers.
+      '(
+		("linenos" "true")				;; Enable line numbers.
 		("numbersep" "2pt")				;; separation of numbers.
 		("breaklines" "true")				;; enable breaklines.
 		("frame" "leftline")				;; Add a leftline to the frame.
 		("framerule" "2pt")				;; Weight of the leftline.
 		("labelposition" "bottomline")	;; Position of label.
-		("bgcolor" "jpyellow!70")))		;; color and level of transparency.
+		("bgcolor" "GreenYellow!40")
+
+		))		;; color and level of transparency.
 
 (use-package olivetti
   :ensure t
@@ -1500,19 +1530,36 @@ See `org-capture-templates' for more information."
   :commands (pdf-loader-install)
   :mode "\\.pdf\\'"
   :bind (:map pdf-view-mode-map
-              ("j" . pdf-view-next-page)
-              ("k" . pdf-view-previous-page))
+              ("j" . pdf-view-next-page-command)
+              ("k" . pdf-view-previous-page-command))
   :init (pdf-loader-install)
   :config (add-to-list 'revert-without-query ".pdf"))
 
-(add-hook 'pdf-view-mode-hook #'(lambda () (interactive) (display-line-numbers-mode -1)))
 (add-hook 'pdf-view-mode-hook (blink-cursor-mode -1))
+
+(defun my-evil-pdf-view-keybindings ()
+  (evil-define-key 'normal doc-view-mode-map
+    "j" 'pdf-view-next-page-command
+    "k" 'pdf-view-previous-page-command))
+
+(add-hook 'pdf-view-mode-hook 'my-evil-pdf-view-keybindings)
 
 (use-package doc-view
   :custom
-  (doc-view-resolution 300)
+  (doc-view-resolution 200)
   (doc-view-mupdf-use-svg t)
-  (large-file-warning-threshold (* 50 (expt 2 20))))
+  (large-file-warning-threshold (* 50 (expt 2 20)))
+  :bind
+  (:map doc-view-mode-map
+        ("j" . doc-view-next-page)
+        ("k" . doc-view-previous-page)))
+
+(defun my-evil-doc-view-keybindings ()
+  (evil-define-key 'normal doc-view-mode-map
+    "j" 'doc-view-next-page
+    "k" 'doc-view-previous-page))
+
+(add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)
 
 (use-package tree-sitter
   :ensure t
@@ -1773,6 +1820,54 @@ folder, otherwise delete a word"
 (add-to-list 'vertico-multiform-categories
              '(jinx grid (vertico-grid-annotate . 20)))
 (vertico-multiform-mode 1)
+
+(use-package shackle
+  :custom
+  ((shackle-rules
+    (let ((repls "\\*\\(cider-repl\\|sly-mrepl\\|ielm\\)")
+          (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
+	      (docs "\\*devdocs\\*")
+	      (roam "\\*Capture\\*")
+	      (warnings "\\*Warnings\\*")
+	      (magit "magit-diff:*")
+		  (dired "Dired by name")
+          (scratch    "\\*scratch\\*"))
+      `((compilation-mode :noselect t
+                          :align above
+                          :size 0.2)
+        ("*Async Shell Command*" :ignore t)
+        (,repls :regexp t
+                :align below
+                :size 0.3)
+        (occur-mode :select t
+					:align right
+					:size 0.3)
+        (diff-mode :select t)
+        (,docs :regexp t
+               :size 0.4
+               :align right
+               :select t)
+        (,warnings :regexp t
+                   :ignore t)
+        (help-mode :select t
+				   :align below
+				   :size 0.5)
+		(,vcs :regexp t
+              :align above
+              :size 0.15
+              :select t)
+		(,scratch :regexp t 
+				  :same t
+				  :select t)
+		(peep-dired-mode :select t
+						 :size 0.6
+						 :align below)
+		(,roam :regexp t 
+			   :same t
+			   :select t))))
+   (shackle-default-rule nil ; '(:inhibit-window-quit t)
+						 ))
+  :config (shackle-mode))
 
 (use-package popper
   :bind (("C-`"   . popper-toggle-latest)
