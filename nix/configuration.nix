@@ -110,6 +110,8 @@ in
     font-awesome
     ibm-plex
     noto-fonts-color-emoji
+    gentium
+    google-fonts
   ];
 
   xdg.portal = {
@@ -123,6 +125,10 @@ in
   programs.hyprland = {
     enable = true;
   };
+
+  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   environment.systemPackages = (with pkgs; [
     # development
@@ -143,6 +149,8 @@ in
     iosevka
     ibm-plex
     noto-fonts-color-emoji
+    gentium
+    google-fonts
 
   ])
     
@@ -174,7 +182,7 @@ in
     enableSSHSupport = true;
   };
 
-  services.getty.autologinUser = "javier";
+  # services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
 

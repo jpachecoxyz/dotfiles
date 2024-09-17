@@ -537,27 +537,34 @@
 
 ;; LaTeX Classes
 (with-eval-after-load 'ox-latex
-  (add-to-list 'org-latex-classes
-               '("org-plain-latex"
-				 "\\documentclass{article} [NO-DEFAULT-PACKAGES] [PACKAGES] [EXTRA]"
-				 ("\\section{%s}" . "\\section*{%s}")
-				 ("\\subsection{%s}" . "\\subsection*{%s}")
-				 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-				 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-				 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
   ;; Add custom class for: Manuals
   (add-to-list 'org-latex-classes
                '("manuals"
-				 "\\documentclass[a4paper,12pt]{article}
+				 "\\documentclass[a4paper,12pt]{article}  [NO-DEFAULT-PACKAGES] [PACKAGES] [EXTRA]
+
+                \\usepackage{fontspec}
+                \\usepackage[scaled=1]{gentium} \\renewcommand\\familydefault{\\rmdefault} 
+                \\usepackage[scaled=.90]{cascadia-code} \\renewcommand*\\familydefault{\\ttdefault}
+                \\usepackage[scaled=.85,tabular,lining]{montserrat} \\renewcommand*\\familydefault{\\sfdefault}
+
                 \\usepackage[a4paper, left=1in, right=1in, top=1in, bottom=1in]{geometry}
                 \\setlength{\\textheight}{9.5in}
                 \\setlength{\\textwidth}{6.5in}
-                \\setcounter{tocdepth}{2}
+
+                \\usepackage{hyperref}
+                \\hypersetup{
+                    colorlinks,
+                    citecolor=gray,
+                    filecolor=orange,
+                    linkcolor=black,
+                    urlcolor=NavyBlue
+                }
+                \\usepackage{bookmark}
 
                 \\usepackage{minted}
                 \\usepackage[dvipsnames]{xcolor}
                 \\usepackage{listings}
+
                 \\usepackage{fancyhdr}
                 \\usepackage{lastpage}
                 \\pagestyle{fancy}
@@ -597,10 +604,10 @@
 		("linenos" "true")				;; Enable line numbers.
 		("numbersep" "2pt")				;; separation of numbers.
 		("breaklines" "true")				;; enable breaklines.
-		("frame" "leftline")				;; Add a leftline to the frame.
-		("framerule" "2pt")				;; Weight of the leftline.
-		("labelposition" "bottomline")	;; Position of label.
-		("bgcolor" "GreenYellow!40")
+		;; ("frame" "leftline")				;; Add a leftline to the frame.
+		;; ("framerule" "2pt")				;; Weight of the leftline.
+		;; ("labelposition" "bottomline")	;; Position of label.
+		("bgcolor" "GreenYellow!20")
 
 		))		;; color and level of transparency.
 
@@ -1703,13 +1710,19 @@ See `org-capture-templates' for more information."
   :mode "\\.nix\\'")
 
 (use-package yasnippet
-  :defer 2
+  ;; :defer 2
   ;; :init (yas-reload-all)
   :custom (yas-keymap-disable-hook (lambda () (frame-visible-p corfu--frame)))
   :hook ((prog-mode . yas-minor-mode)
 	 	 (org-mode . yas-minor-mode)))
 
-(use-package yasnippet-snippets)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq-local yas/trigger-key [tab])
+            (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+
+(use-package yasnippet-snippets
+  :ensure t)
 
 (use-package ivy-yasnippet
   :ensure t)
@@ -2211,3 +2224,24 @@ folder, otherwise delete a word"
 
 ;; Optionally, bind the function to a key for quick access
 (global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed))))
+ '(org-checkbox ((t (:box (:style released-button)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo))))
+ '(org-document-title ((t (:height 1.5)))))

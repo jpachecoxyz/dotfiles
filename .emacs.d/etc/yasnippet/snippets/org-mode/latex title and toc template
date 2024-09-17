@@ -8,10 +8,6 @@
 #+DESCRIPTION: ${2:Description of the file}
 #+STARTUP: showeverything inlineimages
 #+OPTIONS: toc:nil date:nil
-#+setupfile: ~/.emacs.d/latex/template.org
-@@latex:\clearpage@@
-#+begin_export latex
-\clearpage \tableofcontents \clearpage
-#+end_export
+#+setupfile: ~/.emacs.d/latex/${3:manual|book}.org
 
 $0

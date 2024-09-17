@@ -26,16 +26,6 @@
 #+Latex_HEADER: }
 #+Latex_HEADER: \usepackage{bookmark}
 
-# %------ [[ Titles Format]] ------%
-# #+LaTeX_HEADER: \usepackage{titlesec} % Required for customizing section formatting
-# #+latex_header: \titleformat{\section}[frame]
-# #+latex_header: {\normalfont}
-# #+latex_header: {\filright
-# #+latex_header: \footnotesize
-# #+latex_header: \enspace Chapter \thesection\enspace}
-# #+latex_header: {8pt}
-# #+latex_header: {\Large\bfseries\filcenter}
-
 # %------ [[ Header/Footer Format ]] ------%
 #+latex_header: \usepackage{fancyhdr}
 #+latex_header: \usepackage{lastpage}
@@ -48,7 +38,5 @@
 # %------ [[ Codeblocks Format ]] ------%
 #+latex_header: \usepackage{minted}
 #+latex_header: \usepackage{listings}
-# Defne colors:
-#+latex_header: \definecolor{jpyellow}{HTML}{F0F0E0}
 
 #+latex_header: \AddToHook{cmd/section/before}{\clearpage}
