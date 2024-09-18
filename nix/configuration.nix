@@ -126,10 +126,6 @@ in
     enable = true;
   };
 
-  services.displayManager.sddm.wayland.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-
   environment.systemPackages = (with pkgs; [
     # development
     # (pkgs.writeScriptBin "sudo" ''exec doas "$@"'')
@@ -184,7 +180,7 @@ in
     enableSSHSupport = true;
   };
 
-  services.getty.autologinUser = "javier";
+  # services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
 

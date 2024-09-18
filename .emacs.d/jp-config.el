@@ -142,7 +142,7 @@
 (setq evil-replace-state-message nil)
 (setq evil-motion-state-message nil)
 (setq hl-line-sticky-flag t)
-(global-hl-line-mode 1)
+;; (global-hl-line-mode 1)
 
 (use-package nyan-mode
   :ensure t

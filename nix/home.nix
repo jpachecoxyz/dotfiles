@@ -230,6 +230,11 @@
     }))
   ];
 
+ # Enable the Emacs daemon service
+  services.emacs = {
+    enable = true;
+  };
+
   # Nixpkgs configuration
   nixpkgs = {
     config = {

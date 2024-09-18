@@ -72,7 +72,7 @@
    `(default ((t (:foreground ,jp-gruvby-fg :background ,jp-gruvby-bg))))
    `(success ((t (:foreground ,jp-gruvby-green))))
    `(warning ((t (:foreground ,jp-gruvby-orange-2))))
-   `(error ((t (:foreground ,jp-gruvby-red-1 :weight bold))))
+   `(error ((t (:foreground ,jp-gruvby-red-1 :underline t))))
    `(link ((t (:foreground ,jp-gruvby-purple :underline t ))))
    `(link-visited ((t (:foreground ,jp-gruvby-blue :underline t :weight normal))))
    `(cursor ((t (:background ,jp-gruvby-accent))))
@@ -300,6 +300,9 @@
    `(ediff-odd-diff-A                        ((t (:background "#181a1f"))))
    `(ediff-odd-diff-B                        ((t (:background "#181a1f"))))
    `(ediff-odd-diff-C                        ((t (:background "#181a1f"))))
+
+   ;; jinx
+   `(jinx-misspelled ((t (:inherit error))))
 
    ;; magit
    `(magit-section-highlight ((t (:background ,jp-gruvby-bg-hl))))
