@@ -34,7 +34,7 @@ function show_help {
 
 # Function to use fzf
 function fzf_menu {
-    options=("Update NixOS" "Update Home Manager" "Update NixOS and Home Manager" "Update all Flakes" "Delete previous generations" "Run a Nix package in nix-shell")
+    options=("Update NixOS" "Update Home Manager" "Update NixOS and Home Manager" "Update all Flakes" "Delete previous generations" "Information about a package")
     selected=$(printf '%s\n' "${options[@]}" | fzf --prompt="Select an option: ")
 
     case $selected in
@@ -63,7 +63,7 @@ function fzf_menu {
             echo -e "${RED}${TRASH} Deleting previous generations...${NC}"
             sudo nix-collect-garbage -d
             ;;
-        "Run a Nix package in nix-shell")
+        "Information about a package")
             run_nix_package
             ;;
     esac
@@ -74,21 +74,43 @@ function run_nix_package {
     # Set the file path
     local package_file="$HOME/.local/share/allpackages.txt"
     
-    # Check if the file exists, if not, create it
+    # Get today's date in a specific format (e.g., YYYY-MM-DD)
+    local today=$(date +%F)
+    
+    # Check if the file exists
     if [[ ! -f "$package_file" ]]; then
         echo "Generating package list..."
         nix-env -qa -P | awk '{print $1}' > "$package_file"
-        # sed -i 's/nixos\.//g' $package_file
+    else
+        # Get the modification date of the file
+        local file_date=$(date -r "$package_file" +%F)
+        
+        # Compare the file's modification date with today's date
+        if [[ "$file_date" != "$today" ]]; then
+            echo "File is outdated, regenerating package list..."
+            nix-env -qa -P | awk '{print $1}' > "$package_file"
+        fi
     fi
+
     clear
+    
     # Use fzf to search packages
     local pkg=$(cat "$package_file" | fzf \
-            --reverse \
-            --prompt="NixOS Packages> " \
-            --preview="echo -e \"{1}\n\"; nix-env -qa --description -A {1}" \
-            --preview-window=wrap )
-    # local cpkg=$(pkg | sed 's/nixos\.//g')
+										  --reverse \
+										  --prompt="NixOS Packages> " \
+										  --preview="echo -e \"{1}\n\"; nix-env -qa --description -A {1}" \
+										  --preview-window=wrap )
+    
+    # Check if a package was selected (if $pkg is empty)
+    if [[ -z "$pkg" ]]; then
+        echo "No package selected. Exiting."
+        return
+    fi
+	
+    # Remove the 'nixos.' prefix if present
     pkg=$(echo "$pkg" | sed 's/^nixos\.//')
+    
+    # Run nix-search for the selected package
     nix-search $pkg
 }
 

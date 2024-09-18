@@ -552,4 +552,19 @@ The command supports previewing the currently selected theme."
         (org-edit-special)     ; If in a source block, edit it
       (message "Not in a source block.")))) ; If not, do nothing
 
+;; open dired in to especific directories
+(defun open-specific-dired ()
+  "Ask whether to open config, scripts, or nix config in Dired."
+  (interactive)
+  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "nix"))))
+    (cond
+     ((string= choice "config")
+      (dired "~/.config/"))
+     ((string= choice "scripts")
+      (dired "~/.local/bin/"))
+     ((string= choice "nix")
+      (dired "~/.dotfiles/nix/"))
+     (t
+      (message "Invalid choice")))))
+
 (provide 'utilities)

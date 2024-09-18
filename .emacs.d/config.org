@@ -412,6 +412,16 @@
         evil-owl-max-string-length 50)
   (evil-owl-mode))
 #+END_SRC
+** Evil-terminal-changer
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package evil-terminal-cursor-changer
+  :ensure t)
+(setq evil-motion-state-cursor 'box)  ; █
+(setq evil-visual-state-cursor 'box)  ; █
+(setq evil-normal-state-cursor 'box)  ; █
+(setq evil-insert-state-cursor 'hbar)  ; ⎸
+(setq evil-emacs-state-cursor  'hbar) ; _
+#+end_src
 * keychord.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package key-chord
@@ -2327,6 +2337,7 @@ folder, otherwise delete a word"
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e d" '(eval-defun :wk "Evaluate defun containing or after point")
     "e e" '(eval-expression :wk "Evaluate and elisp expression")
+	"e f" '(open-specific-dired :wk "Edit Configuration Files")
     "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
     "e r" '(eval-region :wk "Evaluate elisp in region")
     "e R" '(eww-reload :which-key "Reload current page in EWW")
