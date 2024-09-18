@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 2024-07-17
+# Project: A nix system tool script.
 
 # Colors
 RED='\033[0;31m'
@@ -22,13 +26,12 @@ function show_help {
     echo
     echo "Options:"
     echo -e "  ${YELLOW}-n, --nixos${NC}          ${GREEN}Run 'sudo nixos-rebuild switch --flake .'${NC}"
-    echo -e "  ${YELLOW}-h, --home${NC}           ${GREEN}Run 'home-manager switch --flake .'${NC}"
+    echo -e "  ${YELLOW}-m, --home${NC}           ${GREEN}Run 'home-manager switch --flake .'${NC}"
     echo -e "  ${YELLOW}-a, --all${NC}            ${GREEN}Run both of the above commands${NC}"
     echo -e "  ${YELLOW}-u, --update-flakes${NC}  ${GREEN}Update all flakes with 'nix flake update'${NC}"
     echo -e "  ${YELLOW}-d, --delete${NC}         ${RED}Delete previous generations using 'sudo nix-collect-garbage -d'${NC}"
     echo -e "  ${YELLOW}-p, --package${NC}        ${BLUE}Fuzzy find a Nix package and see the information about it.${NC}"
-    echo -e "  ${YELLOW}-z, --fzf${NC}            ${YELLOW}Use fzf to select what to execute${NC}"
-    echo -e "  ${YELLOW}--help${NC}               ${BLUE}Show this help message${NC}"
+    echo -e "  ${YELLOW}-h, --help${NC}           ${BLUE}Show this help message${NC}"
     echo
 }
 
@@ -100,13 +103,13 @@ function run_nix_package {
 										  --prompt="NixOS Packages> " \
 										  --preview="echo -e \"{1}\n\"; nix-env -qa --description -A {1}" \
 										  --preview-window=wrap )
-    
+
     # Check if a package was selected (if $pkg is empty)
     if [[ -z "$pkg" ]]; then
         echo "No package selected. Exiting."
         return
     fi
-	
+    
     # Remove the 'nixos.' prefix if present
     pkg=$(echo "$pkg" | sed 's/^nixos\.//')
     
@@ -124,23 +127,35 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -n|--nixos)
             echo -e "${GREEN}${CHECKMARK} Updating NixOS...${NC}"
+			cd $nix_dir
             sudo nixos-rebuild switch --flake .
             shift
             ;;
-        -H|--home)
+        -m|--home)
             echo -e "${GREEN}${CHECKMARK} Updating Home Manager...${NC}"
+			cd $nix_dir
             home-manager switch --flake .
             shift
             ;;
         -a|--all)
             echo -e "${GREEN}${CHECKMARK} Updating NixOS and Home Manager...${NC}"
+			cd $nix_dir
             sudo nixos-rebuild switch --flake .
             home-manager switch --flake .
             shift
             ;;
         -u|--update-flakes)
             echo -e "${GREEN}${CHECKMARK} Updating all Flakes...${NC}"
+			cd $nix_dir
             nix flake update
+            shift
+            ;;
+        -ua|--update-all|-au)
+            echo -e "${GREEN}${CHECKMARK} Updating all Flakes first, then updating NixOS and Home Manager...${NC}"
+			cd $nix_dir
+            nix flake update
+            sudo nixos-rebuild switch --flake .
+            home-manager switch --flake .
             shift
             ;;
         -d|--delete)
@@ -150,10 +165,6 @@ while [[ $# -gt 0 ]]; do
             ;;
         -p|--package)
             run_nix_package
-            shift
-            ;;
-        -z|--fzf)
-            fzf_menu
             shift
             ;;
         -h|--help)
