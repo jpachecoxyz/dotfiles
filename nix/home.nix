@@ -127,7 +127,8 @@
     pkgs.p7zip
     pkgs.killall
     pkgs.htop
-    pkgs.showmethekey
+    pkgs-unstable.showmethekey
+    pkgs-unstable.screenkey
 
     # latex and spell
     pkgs.texlivePackages.xelatex-dev
@@ -225,7 +226,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "sha256:1w7h13bwmki905ckylqaqmh8y8phcdj8na7z21px9gcmxwqm13fa";
+      sha256 = "sha256:0sd2jlismvl07i9c9ks97d77370s3lnjglxsg96g3p7gz2l1nm7x";
     }))
   ];
 

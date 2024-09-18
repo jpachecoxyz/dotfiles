@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+wev | while read -r key_event; do
+    key=$(echo "$key_event" | grep -oP '(?<=event ).*(?= down)')
+    if [[ -n "$key" ]]; then
+        # Send a notification showing the key press
+        notify-send "Key Pressed" "$key"
+    fi
+done

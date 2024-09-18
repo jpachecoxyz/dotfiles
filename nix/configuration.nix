@@ -151,6 +151,7 @@ in
     noto-fonts-color-emoji
     gentium
     google-fonts
+    pinentry-qt
 
   ])
     
@@ -179,10 +180,11 @@ in
   programs.gnupg.agent = {
     enable = true;
     # pinentryPackage = "curses";
+    pinentryPackage = pkgs.pinentry-qt;
     enableSSHSupport = true;
   };
 
-  # services.getty.autologinUser = "javier";
+  services.getty.autologinUser = "javier";
 
   services.locate.enable = true;
 
