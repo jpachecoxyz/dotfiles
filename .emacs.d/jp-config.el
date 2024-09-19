@@ -67,11 +67,11 @@
 	  :variable-pitch-family nil
 	  :variable-pitch-weight nil
 	  :variable-pitch-height 1.0
-	  :bold-family "IBM Plex" ; use whatever the underlying face has
+	  :bold-family "IBM Plex Mono" ; use whatever the underlying face has
 	  :bold-weight bold
-	  :italic-family nil;
-	  :italic-weight nil;
-	  :italic-family "JetBrains Mono"
+	  ;; :bold-slant bold
+	  :italic-family "IBM Plex Mono"
+	  :italic-weight regular
 	  :italic-slant italic
 	  :line-spacing nil)))
 

@@ -1,4 +1,4 @@
-#files: 2021	version: 5.9
+#files: 2011	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -319,7 +319,6 @@ _comps=(
 'dnf-2' '_dnf'
 'dnf-3' '_dnf'
 'doas' '_doas'
-'dolphin' '_dolphin'
 'domainname' '_yp'
 'dos2unix' '_dos2unix'
 'dosdel' '_floppy'
@@ -743,10 +742,7 @@ _comps=(
 'jot' '_jot'
 'journalctl' '_journalctl'
 'jq' '_jq'
-'kcmshell5' '_systemsettings'
-'kcmshell6' '_systemsettings'
 'kdeconnect-cli' '_kdeconnect'
-'kde-inhibit' '_kde-inhibit'
 'kdump' '_kdump'
 'keystone' '_openstack'
 'keytool' '_java'
@@ -754,18 +750,13 @@ _comps=(
 'kill' '_kill'
 'killall' '_killall'
 'killall5' '_killall'
-'kinfocenter' '_systemsettings'
 'kioclient' '_kfmclient'
 'kldload' '_kld'
 'kldunload' '_kld'
 'knock' '_knock'
 'konqueror' '_webbrowser'
-'konsole' '_konsole'
-'konsoleprofile' '_konsole'
 'kpartx' '_kpartx'
 'kpdf' '_pdf'
-'krunner' '_krunner'
-'kscreen-doctor' '_kscreen-doctor'
 'ksh' '_sh'
 'ksh88' '_sh'
 'ksh93' '_sh'
@@ -1125,7 +1116,6 @@ _comps=(
 'pkgrm' '_pkgrm'
 'pkgtool' '_pkgtool'
 'pkill' '_pgrep'
-'plasmashell' '_plasmashell'
 'pldd' '_pids'
 'plutil' '_plutil'
 'pmake' '_make'
@@ -1158,7 +1148,6 @@ _comps=(
 'postqueue' '_postfix'
 'postsuper' '_postfix'
 'powerd' '_powerd'
-'powerprofilesctl' '_powerprofilesctl'
 'pr' '_pr'
 'prev' '_mh'
 'print' '_print'
@@ -1465,7 +1454,6 @@ _comps=(
 'systemd-tmpfiles' '_systemd-tmpfiles'
 'systemd-tty-ask-password-agent' '_systemd'
 'system_profiler' '_system_profiler'
-'systemsettings' '_systemsettings'
 'sysupgrade' '_sysupgrade'
 'tac' '_tac'
 'tacker' '_openstack'
@@ -1542,7 +1530,6 @@ _comps=(
 'type' '_which'
 'typeset' '_typeset'
 'udevadm' '_udevadm'
-'udisksctl' '_udisks2'
 'ulimit' '_ulimit'
 'uml_mconsole' '_uml'
 'uml_moo' '_uml'
@@ -1945,19 +1932,17 @@ autoload -Uz _bat _cargo _eza _fd _foot \
             _mpv _pass _poetry _pulseaudio _rg \
             _rye _swaylock _swww _wl-copy _wl-paste \
             _yazi _yt-dlp _zathura _zellij _bluetoothctl \
-            _bootctl _busctl _coredumpctl _dolphin _hostnamectl \
-            _hyprctl _hyprpm _journalctl _kde-inhibit _konsole \
-            _krunner _kscreen-doctor _localectl _loginctl _machinectl \
+            _bootctl _busctl _coredumpctl _hostnamectl _hyprctl \
+            _hyprpm _journalctl _localectl _loginctl _machinectl \
             _networkctl _nix _nix-build _nix-channel _nix-collect-garbage \
             _nix-common-options _nix-copy-closure _nix-env _nix-hash _nix-init \
             _nix-install-package _nix-instantiate _nixops _nixos-build-vms _nixos-container \
             _nixos-generate-config _nixos-install _nixos-option _nixos-rebuild _nixos-version \
             _nix-prefetch-url _nix-push _nix-shell _nix-store _oomctl \
-            _plasmashell _powerprofilesctl _pulseaudio _resolvectl _sd_hosts_or_user_at_host \
-            _sd_machines _sd_outputmodes _sd_unit_files _systemctl _systemd \
-            _systemd-analyze _systemd-delta _systemd-inhibit _systemd-nspawn _systemd-path \
-            _systemd-run _systemd-tmpfiles _systemsettings _timedatectl _udevadm \
-            _udisks2 _wpctl _a2ps _a2utils _aap \
+            _resolvectl _sd_hosts_or_user_at_host _sd_machines _sd_outputmodes _sd_unit_files \
+            _systemctl _systemd _systemd-analyze _systemd-delta _systemd-inhibit \
+            _systemd-nspawn _systemd-path _systemd-run _systemd-tmpfiles _timedatectl \
+            _udevadm _wpctl _a2ps _a2utils _aap \
             _abcde _absolute_command_paths _ack _acpi _acpitool \
             _acroread _adb _add-zle-hook-widget _add-zsh-hook _alias \
             _aliases _all_labels _all_matches _alsa-utils _alternative \
