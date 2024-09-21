@@ -151,14 +151,6 @@
 (use-package diminish
   :ensure t)
 
-(use-package marginalia
-  :after vertico
-  :ensure t
-  :custom
-  (marginalia-annotators '(marginalia-annonators-heavy marginalia-annotators-light nil))
-  :init
-  (marginalia-mode))
-
 (use-package all-the-icons-completion
   :ensure t
   :config
@@ -255,7 +247,7 @@
   (corfu-preview-current 'valid) ; insert previewed candidate
   (corfu-preselect 'prompt)
   (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
-  (corfu-min-width 80)
+  (corfu-min-width 40)
   (corfu-max-width corfu-min-width)     ; Always have the same width
   (corfu-count 14)
   (corfu-scroll-margin 4)
@@ -452,6 +444,7 @@
 (global-set-key (kbd "<f12>") 'jp-themes-load-random)
 (setq org-display-inline-images t)
 (setq org-image-actual-width (list 550))
+(setq org-confirm-babel-evaluate nil)
 (setq visible-bell nil)
 ;;;; Set the fill column to 80
 (setq-default fill-column 80)
@@ -1842,6 +1835,14 @@ folder, otherwise delete a word"
              '(jinx grid (vertico-grid-annotate . 20)))
 (vertico-multiform-mode 1)
 
+(use-package marginalia
+  :after vertico
+  :ensure t
+  :custom
+  (marginalia-annotators '(marginalia-annonators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode))
+
 (use-package shackle
   :custom
   ((shackle-rules
@@ -1850,7 +1851,7 @@ folder, otherwise delete a word"
 	      (docs "\\*devdocs\\*")
 	      (roam "\\*Capture\\*")
 	      (warnings "\\*Warnings\\*")
-	      (magit "magit-diff:*")
+	      (magit "Magit")
 		  (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
@@ -1878,6 +1879,9 @@ folder, otherwise delete a word"
               :size 0.15
               :select t)
 		(,scratch :regexp t 
+				  :same t
+				  :select t)
+		(,magit :regexp t 
 				  :same t
 				  :select t)
 		(peep-dired-mode :select t

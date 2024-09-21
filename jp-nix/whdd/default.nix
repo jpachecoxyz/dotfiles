@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
     owner = "whdd";
     repo = "whdd";
     rev = "master";
-    sha256 = "sha256-jhNLQVls7mfNuMw0/Rc2bPtQjpV0qiOlvyF9P+pnOMg=";
+    sha256 = "sha256-l13QGahjGxOxHNwXIFcwgzT/jek7QsqANID7x0ZtLf8=";
   };
 
   nativeBuildInputs = [ libpcap ncurses dialog];

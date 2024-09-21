@@ -302,7 +302,7 @@
    `(ediff-odd-diff-C                        ((t (:background "#181a1f"))))
 
    ;; jinx
-   `(jinx-misspelled ((t (:inherit error))))
+   `(jinx-misspelled ((t (:underline (:color ,jp-gruvby-red-1 :style wave)))))
 
    ;; magit
    `(magit-section-highlight ((t (:background ,jp-gruvby-bg-hl))))
@@ -515,7 +515,8 @@
 
    ;; Treesit
    `(tree-sitter-hl-face ((t (:background nil))))
-   
+   `(tree-sitter-hl-face:variable ((t (:background nil :foreground ,jp-gruvby-fg))))
+   `(tree-sitter-hl-face:embedded ((t (:background nil :foreground ,jp-gruvby-fg))))
 
    ))
 

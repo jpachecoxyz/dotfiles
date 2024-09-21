@@ -13,14 +13,14 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    # emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, emacs-overlay, ... }: 
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, ... }: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
-      overlays = [ emacs-overlay.overlay ];
+      # overlays = [ emacs-overlay.overlay ];
       pkgs = nixpkgs.legacyPackages.${system};
       pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
     in {

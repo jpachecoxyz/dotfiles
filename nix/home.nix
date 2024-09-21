@@ -42,8 +42,8 @@
     pkgs.hugo
     pkgs.gcc
     pkgs.neovim
-    # pkgs-unstable.emacs-gtk
-    pkgs.emacs-git
+    pkgs-unstable.emacs30
+    # pkgs.emacs-git
     pkgs-unstable.tdlib
     pkgs.python3
     pkgs.nodejs
@@ -223,17 +223,27 @@
   programs.home-manager.enable = true;
 
 # emcas lastest version
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "sha256:0sd2jlismvl07i9c9ks97d77370s3lnjglxsg96g3p7gz2l1nm7x";
-    }))
-  ];
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+  #     sha256 = "sha256:0sd2jlismvl07i9c9ks97d77370s3lnjglxsg96g3p7gz2l1nm7x";
+  #   }))
+  # ];
+
+# Example of how to pin a version of a packagein the overlays, you must have the commit in the url:
+# url = "https://github.com/nix-community/emacs-overlay/archive/<commit-or-tag>.tar.gz";
+# Example:
+# nixpkgs.overlays = [
+#   (import (builtins.fetchTarball {
+#     url = "https://github.com/nix-community/emacs-overlay/archive/d2f8eae4.tar.gz";  # Pinned commit
+#     sha256 = "sha256:1wm92zn2z8y7kdcn0b91z7h63ydw3vxy6vbd9wzl1kpxx5m68dd8";
+#   }))
+# ];
 
  # Enable the Emacs daemon service
-  services.emacs = {
-    enable = true;
-  };
+  # services.emacs = {
+  #   enable = true;
+  # };
 
   # Nixpkgs configuration
   nixpkgs = {
