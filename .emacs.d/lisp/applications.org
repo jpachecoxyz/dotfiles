@@ -1,6 +1,7 @@
 #+TITLE: Applications Desktop Entry
 #+AUTHOR: Javier Pacheco
 #+DESCRIPTION: Some terminal utilities that needs to be in .desktop format.
+#+startup: showall
 
 
 * Fzmount - An utility to mount USB drives.

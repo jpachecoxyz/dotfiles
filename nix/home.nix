@@ -11,7 +11,6 @@ let
     clockSupport = true;
   };
     whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
-    tangle = import /home/javier/.dotfiles/jp-nix/utilities/applications/default.nix { inherit lib pkgs; };
 in
 
 {
@@ -257,5 +256,4 @@ in
       allowUnfree = true;
     };
   };
-  home.activation = tangle.home.activation;
 }
