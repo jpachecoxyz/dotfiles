@@ -29,5 +29,6 @@
 .emacs.d/recentf
 .emacs.d/sessions
 .emacs.d/tramp
+.emacs.d/ellama-sessions/
 .emacs.d/.last-package-update-day
 .emacs.d/fontaine-latest-state.eld
