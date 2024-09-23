@@ -2,17 +2,20 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ config, pkgs, pkgs-unstable, overlays, ... }:
-  let
-    # Override ncmpcpp with the desired features
-    myNcmpcpp = pkgs.ncmpcpp.override {
-      visualizerSupport = true;
-      clockSupport = true;
-    };
+{ config, pkgs, pkgs-unstable, overlays, lib, ... }:
+
+let
+  # Override ncmpcpp with the desired features
+  myNcmpcpp = pkgs.ncmpcpp.override {
+    visualizerSupport = true;
+    clockSupport = true;
+  };
     whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
-  in
+    tangle = import /home/javier/.dotfiles/jp-nix/utilities/applications/default.nix { inherit lib pkgs; };
+in
 
 {
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "javier";
@@ -52,6 +55,9 @@
     pkgs.nil
     pkgs.direnv
 
+    # AI Models
+    pkgs.ollama
+
     # Terminal tools
     pkgs-unstable.yazi   # File manager
     pkgs.zellij # Terminal multiplexer
@@ -87,6 +93,7 @@
     pkgs.wf-recorder
     pkgs.tofi
     pkgs.transmission-gtk
+    pkgs.wlsunset
 
     # Browser / web
     pkgs.nyxt
@@ -148,7 +155,6 @@
     pkgs.gnupg
 
     # Custom packages
-    # (pkgs.callPackage ../jp-nix/whdd/default.nix { })
     whdd
 
   ];
@@ -222,7 +228,7 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-# emcas lastest version
+  # emcas lastest version
   # nixpkgs.overlays = [
   #   (import (builtins.fetchTarball {
   #     url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
@@ -230,20 +236,20 @@
   #   }))
   # ];
 
-# Example of how to pin a version of a packagein the overlays, you must have the commit in the url:
-# url = "https://github.com/nix-community/emacs-overlay/archive/<commit-or-tag>.tar.gz";
-# Example:
-# nixpkgs.overlays = [
-#   (import (builtins.fetchTarball {
-#     url = "https://github.com/nix-community/emacs-overlay/archive/d2f8eae4.tar.gz";  # Pinned commit
-#     sha256 = "sha256:1wm92zn2z8y7kdcn0b91z7h63ydw3vxy6vbd9wzl1kpxx5m68dd8";
-#   }))
-# ];
+  # Example of how to pin a version of a packagein the overlays, you must have the commit in the url:
+  # url = "https://github.com/nix-community/emacs-overlay/archive/<commit-or-tag>.tar.gz";
+  # Example:
+  # nixpkgs.overlays = [
+  #   (import (builtins.fetchTarball {
+  #     url = "https://github.com/nix-community/emacs-overlay/archive/d2f8eae4.tar.gz";  # Pinned commit
+  #     sha256 = "sha256:1wm92zn2z8y7kdcn0b91z7h63ydw3vxy6vbd9wzl1kpxx5m68dd8";
+  #   }))
+  # ];
 
- # Enable the Emacs daemon service
-  # services.emacs = {
-  #   enable = true;
-  # };
+  # Enable the Emacs daemon service
+  services.emacs = {
+    enable = true;
+  };
 
   # Nixpkgs configuration
   nixpkgs = {
@@ -251,5 +257,5 @@
       allowUnfree = true;
     };
   };
-
+  home.activation = tangle.home.activation;
 }

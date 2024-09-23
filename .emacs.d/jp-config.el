@@ -1819,8 +1819,8 @@ folder, otherwise delete a word"
   :custom-face
   (vertico-current ((t (:background "#5C6370"))))
   :init
-  (vertico-mode))
- ;; (vertico-posframe-mode))
+  (vertico-mode)
+  (vertico-posframe-mode))
 
 (use-package orderless
   :init
@@ -1852,6 +1852,7 @@ folder, otherwise delete a word"
 	      (roam "\\*Capture\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "Magit")
+		  (ellama "\\(.*(zephyr)\\.org\\)")
 		  (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
@@ -1869,6 +1870,9 @@ folder, otherwise delete a word"
                :size 0.4
                :align right
                :select t)
+        (,ellama :regexp t
+				 :same t
+				 :ignore t)
         (,warnings :regexp t
                    :ignore t)
         (help-mode :select t
@@ -1882,8 +1886,8 @@ folder, otherwise delete a word"
 				  :same t
 				  :select t)
 		(,magit :regexp t 
-				  :same t
-				  :select t)
+				:same t
+				:select t)
 		(peep-dired-mode :select t
 						 :size 0.6
 						 :align below)
@@ -1904,6 +1908,7 @@ folder, otherwise delete a word"
      dired-mode          ;; Treat Dired buffers as popups
      help-mode
      compilation-mode
+	 "\\(.*(zephyr)\\.org\\)"
      "\\*Warnings\\*"
      "\\*Messages\\*"))
   (popper-display-control t) ;; Let Popper handle popups entirely
@@ -2178,6 +2183,7 @@ folder, otherwise delete a word"
 	"t f" '(flycheck-mode :wk "Toggle flycheck")
 	"t l" '(display-line-numbers-mode :wk "Toggle line numbers")
 	"t o" '(org-mode :wk "Toggle org mode")
+	"t p" 'org-export-to-latex-and-compile-with-tectonic :wk "Export this buffer to pdf using Tectonic"
 	"t r" '(rainbow-mode :wk "Toggle rainbow mode")
 	"t t" '(visual-line-mode :wk "Toggle truncated lines"))
 
@@ -2237,3 +2243,56 @@ folder, otherwise delete a word"
 
 ;; Optionally, bind the function to a key for quick access
 (global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
+
+(use-package ellama
+  :init
+  (setopt ellama-language "English")
+  (setopt ellama-user-nick "jpachecoxyz")
+  (setopt ellama-keymap-prefix "C-c e")
+  (require 'llm-ollama)
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "zephyr"
+           :embedding-model "zephyr")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(aggressive-indent all-the-icons-completion all-the-icons-dired auctex
+					   auto-package-update buffer-flip cape consult-dir
+					   consult-flycheck corfu counsel-projectile dap-mode
+					   diminish dired-open dired-rainbow doom-modeline ellama
+					   evil-collection evil-goggles evil-owl evil-surround
+					   evil-terminal-cursor-changer fontaine form-feed general
+					   git-gutter-fringe git-timemachine hide-lines
+					   hide-mode-line highlight-indent-guides highlight-thing
+					   hl-todo htmlize ivy-yasnippet jinx key-chord kind-icon
+					   ligature lorem-ipsum lsp-pyright lsp-ui magit
+					   major-mode-hydra marginalia mini-frame
+					   nerd-icons-completion nix-mode no-littering nyan-mode
+					   olivetti orderless org-auto-tangle org-bullets
+					   org-contacts org-download org-fancy-priorities org-mime
+					   org-roam-ui org-sidebar org-tree-slide ox-hugo
+					   page-break-lines password-store pdf-tools peep-dired
+					   pipenv popper pretty-mode pulsar python-mode
+					   rainbow-delimiters rainbow-mode shackle telega toc-org
+					   tree-sitter-langs treesit-ispell undohist
+					   vertico-posframe vundo which-key yasnippet-capf
+					   yasnippet-snippets)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed))))
+ '(org-checkbox ((t (:box (:style released-button)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo))))
+ '(org-document-title ((t (:height 1.5)))))

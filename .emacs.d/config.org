@@ -2108,8 +2108,8 @@ folder, otherwise delete a word"
   :custom-face
   (vertico-current ((t (:background "#5C6370"))))
   :init
-  (vertico-mode))
- ;; (vertico-posframe-mode))
+  (vertico-mode)
+  (vertico-posframe-mode))
 
 (use-package orderless
   :init
@@ -2146,6 +2146,7 @@ folder, otherwise delete a word"
 	      (roam "\\*Capture\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "Magit")
+		  (ellama "\\(.*(zephyr)\\.org\\)")
 		  (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
@@ -2163,6 +2164,9 @@ folder, otherwise delete a word"
                :size 0.4
                :align right
                :select t)
+        (,ellama :regexp t
+				 :same t
+				 :ignore t)
         (,warnings :regexp t
                    :ignore t)
         (help-mode :select t
@@ -2176,8 +2180,8 @@ folder, otherwise delete a word"
 				  :same t
 				  :select t)
 		(,magit :regexp t 
-				  :same t
-				  :select t)
+				:same t
+				:select t)
 		(peep-dired-mode :select t
 						 :size 0.6
 						 :align below)
@@ -2200,6 +2204,7 @@ folder, otherwise delete a word"
      dired-mode          ;; Treat Dired buffers as popups
      help-mode
      compilation-mode
+	 "\\(.*(zephyr)\\.org\\)"
      "\\*Warnings\\*"
      "\\*Messages\\*"))
   (popper-display-control t) ;; Let Popper handle popups entirely
@@ -2482,6 +2487,7 @@ folder, otherwise delete a word"
 	"t f" '(flycheck-mode :wk "Toggle flycheck")
 	"t l" '(display-line-numbers-mode :wk "Toggle line numbers")
 	"t o" '(org-mode :wk "Toggle org mode")
+	"t p" 'org-export-to-latex-and-compile-with-tectonic :wk "Export this buffer to pdf using Tectonic"
 	"t r" '(rainbow-mode :wk "Toggle rainbow mode")
 	"t t" '(visual-line-mode :wk "Toggle truncated lines"))
 
@@ -2545,4 +2551,17 @@ folder, otherwise delete a word"
 
 ;; Optionally, bind the function to a key for quick access
 (global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
+#+END_SRC
+* Ellama.
+#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+(use-package ellama
+  :init
+  (setopt ellama-language "English")
+  (setopt ellama-user-nick "jpachecoxyz")
+  (setopt ellama-keymap-prefix "C-c e")
+  (require 'llm-ollama)
+  (setopt ellama-provider
+          (make-llm-ollama
+           :chat-model "zephyr"
+           :embedding-model "zephyr")))
 #+END_SRC

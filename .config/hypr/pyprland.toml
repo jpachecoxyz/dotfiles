@@ -34,7 +34,7 @@ max_size = "1920px 100%"
 margin = 50
 
 [scratchpads.tomb]
-animation = "fromTop"
+animation = "fromBottom"
 command = "foot -a scratchpad -e tmount"
 lazy = true
 size = "75% 60%"

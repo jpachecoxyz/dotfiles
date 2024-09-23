@@ -555,19 +555,33 @@ The command supports previewing the currently selected theme."
 
 ;; Export org files to pdf using tectonic
 (defun org-export-to-latex-and-compile-with-tectonic ()
-  "Export the current Org file to LaTeX, then compile with tectonic using shell-escape."
+  "Export the current Org file to LaTeX, compile with tectonic using shell-escape,
+   delete the .tex file, and move the generated PDF to the pdf/ directory."
   (interactive)
   (let* ((org-file (buffer-file-name))
          (tex-file (concat (file-name-sans-extension org-file) ".tex"))
-         (tectonic-command (concat "tectonic -Z shell-escape " tex-file)))
+         (pdf-file (concat (file-name-sans-extension org-file) ".pdf"))
+         (tectonic-command (concat "tectonic -Z shell-escape " tex-file))
+         (pdf-dir "pdf/"))
     ;; Export Org file to LaTeX
     (org-latex-export-to-latex)
     ;; Run tectonic command in a temporary buffer to avoid displaying the output
     (with-temp-buffer
       (shell-command tectonic-command (current-buffer)))
-    (message "Compiled %s to PDF with Tectonic." tex-file)))
+    ;; Check if the PDF was successfully generated
+    (if (file-exists-p pdf-file)
+        (progn
+          ;; Delete the .tex file
+          (delete-file tex-file)
+          ;; Create pdf/ directory if it doesn't exist
+          (unless (file-directory-p pdf-dir)
+            (make-directory pdf-dir))
+          ;; Move the PDF to the pdf/ directory
+          (rename-file pdf-file (concat pdf-dir (file-name-nondirectory pdf-file)) t)
+          (message "Compiled %s to PDF and moved to pdf folder." tex-file))
+      (message "PDF generation failed."))))
 
-(global-set-key (kbd "C-c e l") 'org-export-to-latex-and-compile-with-tectonic)
+;; (global-set-key (kbd "C-c e l") 'org-export-to-latex-and-compile-with-tectonic)
 
 ;; Update my web-page
 (defun publish-my-blog ()
@@ -626,6 +640,25 @@ The command supports previewing the currently selected theme."
       (dired "~/.dotfiles/nix/"))
      (t
       (message "Invalid choice")))))
+
+;; Insert block code:
+(defun org-mode-insert-code (language results export)
+  "Insert a code block in Org mode with specified LANGUAGE, RESULTS, and EXPORT options.
+   Place the cursor inside and switch to insert mode (for evil-mode users)."
+  (interactive 
+   (list
+    (read-string "Language: ")        ;; Prompt for language
+    (read-string "Results: " "output") ;; Prompt for results (default 'output')
+    (read-string "Export: " "both")))  ;; Prompt for export (default 'both')
+  ;; Insert the code block with language, results, and exports options
+  (insert (format "#+BEGIN_SRC %s :results %s :exports %s\n\n#+END_SRC\n"
+                  language results export))
+  ;; Move the cursor to the middle line (inside the code block)
+  (forward-line -2)
+  ;; Switch to insert mode if evil-mode is enabled
+  (when (bound-and-true-p evil-mode)
+    (evil-insert-state)))
+(global-set-key (kbd "C-c i c") #'org-mode-insert-code)
 #+END_SRC
 * External popups frames.
 #+begin_src emacs-lisp

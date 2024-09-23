@@ -3,6 +3,6 @@
 # Check if there is an Emacs client running in workspace 3
 if ! hyprctl clients | grep -q 'class:.*Emacs'; then
   # If not, run emacsclient to create a new frame
-  # emacs
-  emacsclient -c -a ''
+	# emacs
+	emacsclient -c -a ''
 fi

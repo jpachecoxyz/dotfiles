@@ -1,0 +1,26 @@
+#+TITLE: Applications Desktop Entry
+#+AUTHOR: Javier Pacheco
+#+DESCRIPTION: Some terminal utilities that needs to be in .desktop format.
+
+
+* Fzmount - An utility to mount USB drives.
+#+BEGIN_SRC text :tangle "/home/javier/.local/share/applications/fzmount.desktop" :mkdirp yes
+[Desktop Entry]
+Name=Fzmount
+Exec=foot -a scratchpad -e /home/javier/.local/bin/scripts/fzmount.sh
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=Utility;
+#+END_SRC
+
+* Fztomb - A utility to open/close my tombs.
+#+BEGIN_SRC text :tangle "/home/javier/.local/share/applications/tomb.desktop"
+[Desktop Entry]
+Name=Tomb
+Exec=foot -a scratchpad -e /home/javier/.local/bin/scripts/tmount.sh
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=Utility;
+#+END_SRC
