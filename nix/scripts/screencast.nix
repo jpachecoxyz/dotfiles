@@ -4,7 +4,7 @@ pkgs.writeShellScriptBin "screencast" ''
     # Created By: Javier Pacheco - javier@jpacheco.xyz
     # Created On: 29/03/24
     # Project: Screen recorder in Wayland
-    # Dependencies: wf-recorder, wl-clipboard, and a launcher like dmenu, fuzzel, etc.
+    # Dependencies: wf-recorder, wl-clipboard, slurp, and a launcher like dmenu, fuzzel, etc.
 
     SOUND_CARD=$(pactl list sources | awk '/Name/ && /.monitor/ {print $2}')
 
@@ -13,7 +13,7 @@ pkgs.writeShellScriptBin "screencast" ''
     }
 
     area() {
-        ${pkgs.wf-recorder}/bin/wf-recorder --audio=$SOUND_CARD -g "$(slurp)" -f /tmp/screencast.mp4
+        ${pkgs.wf-recorder}/bin/wf-recorder --audio=$SOUND_CARD -g "$(${pkgs.slurp}/bin/slurp)" -f /tmp/screencast.mp4
     }
 
     check_connection() {

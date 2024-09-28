@@ -11,6 +11,8 @@ let
     clockSupport = true;
   };
   whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+
+  # Custom Scripts
   screencast = import ./scripts/screencast.nix { inherit pkgs; };
 in
 
@@ -30,7 +32,6 @@ in
   home.packages = [
     # Environment
     pkgs.hypridle
-    screencast 
 
     pkgs.hyprlock
     pkgs.pyprland
@@ -158,6 +159,9 @@ in
 
     # Custom packages
     whdd
+
+    # Custom Scripts.
+    screencast 
 
   ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
