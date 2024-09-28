@@ -18,7 +18,7 @@
     screencast.url = "./scripts/flakes/screencast/";  # Path to the screencast flake
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, ... }: 
+  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, screencast, ... }: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
