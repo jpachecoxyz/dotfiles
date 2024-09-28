@@ -5,6 +5,10 @@
 { config, pkgs, pkgs-unstable, overlays, lib, ... }:
 
 let
+  scriptDir = "${config.home.homeDirectory}/.dotfiles/.local/scripts";
+
+  screencastBinary = pkgs.writeShellScriptBin "screencast" (builtins.readFile "${scriptDir}/screencast.sh");
+  
   # Override ncmpcpp with the desired features
   myNcmpcpp = pkgs.ncmpcpp.override {
     visualizerSupport = true;
@@ -155,6 +159,7 @@ in
 
     # Custom packages
     whdd
+    screencastBinary
 
   ];
 
@@ -261,7 +266,7 @@ in
   # Custom scripts:
 
   # This script auto-tangle a org file for some shell-scripts that requires a .desktop file.
-  # Step 1: Create the actual sscript
+  # Step 1: Create the actual script
   home.file.".local/bin/tangle-org.sh" = {
     text = ''
       #!/bin/sh
