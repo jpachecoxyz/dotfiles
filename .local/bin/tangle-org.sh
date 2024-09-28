@@ -1,1 +1,0 @@
-/nix/store/nj4fls85xld7n2kkmap5ya125z7xrkrk-home-manager-files/.local/bin/tangle-org.sh

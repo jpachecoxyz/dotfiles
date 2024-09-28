@@ -2,12 +2,12 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ config, pkgs, pkgs-unstable, overlays, lib, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 let
-  scriptDir = "${config.home.homeDirectory}/.dotfiles/.local/scripts";
-
-  screencastBinary = pkgs.writeShellScriptBin "screencast" (builtins.readFile "${scriptDir}/screencast.sh");
+  # Custom scripts.
+  scriptDir = "${config.home.homeDirectory}/.dotfiles/.local/bin/scripts";
+  screencastBinary = pkgs.writeShellScriptBin "screencast" (builtins.readFile "${scriptDir}/screencast");
   
   # Override ncmpcpp with the desired features
   myNcmpcpp = pkgs.ncmpcpp.override {
@@ -15,10 +15,16 @@ let
     clockSupport = true;
   };
     whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+  tangleConfig = import ./tangle.nix { inherit pkgs; };
 in
 
 {
+  # Import the tangle configuration
+  imports = [ 
+    ./tangle.nix
+  ];
 
+  
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "javier";
@@ -60,6 +66,7 @@ in
 
     # AI Models
     pkgs.ollama
+    tangleConfig
 
     # Terminal tools
     pkgs-unstable.yazi   # File manager
@@ -162,7 +169,6 @@ in
     screencastBinary
 
   ];
-
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -267,19 +273,19 @@ in
 
   # This script auto-tangle a org file for some shell-scripts that requires a .desktop file.
   # Step 1: Create the actual script
-  home.file.".local/bin/tangle-org.sh" = {
-    text = ''
-      #!/bin/sh
-      ${pkgs-unstable.emacs30}/bin/emacs --batch \
-            --eval "(require 'org)" \
-            --eval "(progn (find-file \"~/.dotfiles/.emacs.d/lisp/applications.org\") (org-babel-tangle))"
-    '';
-    executable = true;
-  };
-
-  # Step 2: Run the script during home-manager activation
-  home.activation.tangleOrgFile = ''
-    # Run the tangle script
-    ~/.local/bin/tangle-org.sh
-  '';
+  # home.file.".local/bin/tangle-org.sh" = {
+  #   text = ''
+  #     #!/bin/sh
+  #     ${pkgs-unstable.emacs30}/bin/emacs --batch \
+  #           --eval "(require 'org)" \
+  #           --eval "(progn (find-file \"~/.dotfiles/.emacs.d/lisp/applications.org\") (org-babel-tangle))"
+  #   '';
+  #   executable = true;
+  # };
+  #
+  # # Step 2: Run the script during home-manager activation
+  # home.activation.tangleOrgFile = ''
+  #   # Run the tangle script
+  #   ~/.local/bin/tangle-org.sh
+  # '';
 }
