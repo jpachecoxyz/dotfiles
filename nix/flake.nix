@@ -14,6 +14,8 @@
       inputs.hyprland.follows = "hyprland";
     };
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
+    # Custom scripts.
+    screencast.url = "./scripts/flakes/screencast/";  # Path to the screencast flake
   };
 
   outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, ... }: 
@@ -43,6 +45,9 @@
             inherit pkgs-unstable;
           };
         };
+        home.packages = [
+          inputs.screencast.packages."x86_64-linux".shell-screencast
+        ];
       };
     };
 }

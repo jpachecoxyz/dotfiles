@@ -71,6 +71,49 @@
     (org-babel-tangle-file org-config-file custom-file)
     (load custom-file)))
 
+;; Fonts settings.
+
+(set-face-attribute 'default nil
+                    :family "JetBrains Mono"
+                    :height 120
+                    :weight 'regular)
+
+;; Set italic font
+(set-face-attribute 'italic nil
+                    :family "JetBrains Mono"
+                    :slant 'italic)
+
+;; Set bold font
+(set-face-attribute 'bold nil
+                    :family "JetBrains Mono"
+                    :weight 'bold)
+
+;; Set bold-italic font
+(set-face-attribute 'bold-italic nil
+                    :family "IBM Plex Mono"
+                    :slant 'italic
+                    :weight 'bold)
+
+;; Set font for comments to be italic
+(set-face-attribute 'font-lock-comment-face nil
+                    :slant 'italic
+                    :family "IBM Plex Mono")
+
+;; Optionally, also set italic for doc comments
+(set-face-attribute 'font-lock-doc-face nil
+                    :slant 'italic
+                    :family "IBM Plex Mono")
+
+;; Set monospaced font for code and programming modes
+(set-face-attribute 'org-block nil
+                    :family "IBM Plex Mono"
+                    :height 120)
+
+;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
+(set-face-attribute 'org-verbatim nil
+                    :family "IBM Plex Mono"
+                    :height 130)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

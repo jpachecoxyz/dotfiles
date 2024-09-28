@@ -38,56 +38,6 @@
 (use-package async
   :config (setq async-bytecomp-package-mode 1))
 
-(use-package fontaine
-  :ensure t
-  :custom
-  (fontaine-latest-state-file
-   (locate-user-emacs-file "fontaine-latest-state.eld"))
-
-  (fontaine-presets
-   '(
-	 (laptop
-	  :default-height 122)
-	 (work
-	  :default-height 122)
-	 (pre-work
-	  :default-height 200)
-	 (pre-lap
-	  :default-height 230)
-	 (t
-	  :default-family "JetBrains Mono"
-	  :default-weight regular
-	  :default-height 100
-	  :fixed-pitch-family nil ; falls back to :default-family
-	  :fixed-pitch-weight nil ; falls back to :default-weight
-	  :fixed-pitch-height 1.0
-	  :fixed-pitch-serif-family nil ; falls back to :default-family
-	  :fixed-pitch-serif-weight nil ; falls back to :default-weight
-	  :fixed-pitch-serif-height 1.0
-	  :variable-pitch-family nil
-	  :variable-pitch-weight nil
-	  :variable-pitch-height 1.0
-	  :bold-family "IBM Plex Mono" ; use whatever the underlying face has
-	  :bold-weight bold
-	  ;; :bold-slant bold
-	  :italic-family "IBM Plex Mono"
-	  :italic-weight regular
-	  :italic-slant italic
-	  :line-spacing nil)))
-
-  :config
-  ;; Recover last preset or fall back to desired style from
-  (if lpr-windows-system
-	  (fontaine-set-preset 'work)
-	(or (fontaine-set-preset 'laptop)))
-
-  ;; The other side of `fontaine-restore-latest-preset'.
-  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
-  (add-hook 'after-load-theme-hook #'fontaine-restore-latest-preset))
-
-(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
-(define-key global-map (kbd "C-c F") #'fontaine-set-face-font)
-
 ;; Load modeline
 ;; (require 'custom-modeline)
 ;; (custom-modeline-mode)
@@ -2254,45 +2204,3 @@ folder, otherwise delete a word"
           (make-llm-ollama
            :chat-model "zephyr"
            :embedding-model "zephyr")))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(aggressive-indent all-the-icons-completion all-the-icons-dired auctex
-					   auto-package-update buffer-flip cape consult-dir
-					   consult-flycheck corfu counsel-projectile dap-mode
-					   diminish dired-open dired-rainbow doom-modeline ellama
-					   evil-collection evil-goggles evil-owl evil-surround
-					   evil-terminal-cursor-changer fontaine form-feed general
-					   git-gutter-fringe git-timemachine hide-lines
-					   hide-mode-line highlight-indent-guides highlight-thing
-					   hl-todo htmlize ivy-yasnippet jinx key-chord kind-icon
-					   ligature lorem-ipsum lsp-pyright lsp-ui magit
-					   major-mode-hydra marginalia mini-frame
-					   nerd-icons-completion nix-mode no-littering nyan-mode
-					   olivetti orderless org-auto-tangle org-bullets
-					   org-contacts org-download org-fancy-priorities org-mime
-					   org-roam-ui org-sidebar org-tree-slide ox-hugo
-					   page-break-lines password-store pdf-tools peep-dired
-					   pipenv popper pretty-mode pulsar python-mode
-					   rainbow-delimiters rainbow-mode shackle telega toc-org
-					   tree-sitter-langs treesit-ispell undohist
-					   vertico-posframe vundo which-key yasnippet-capf
-					   yasnippet-snippets)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed))))
- '(org-checkbox ((t (:box (:style released-button)))))
- '(org-checkbox-statistics-done ((t (:inherit org-todo))))
- '(org-document-title ((t (:height 1.5)))))

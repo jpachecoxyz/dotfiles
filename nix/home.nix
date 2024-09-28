@@ -155,6 +155,7 @@ in
 
     # Custom packages
     whdd
+    screencast
 
   ];
 
@@ -256,4 +257,25 @@ in
       allowUnfree = true;
     };
   };
+
+
+  # Custom scripts:
+
+  # This script auto-tangle a org file for some shell-scripts that requires a .desktop file.
+  # Step 1: Create the actual sscript
+  home.file.".local/bin/tangle-org.sh" = {
+    text = ''
+      #!/bin/sh
+      ${pkgs-unstable.emacs30}/bin/emacs --batch \
+            --eval "(require 'org)" \
+            --eval "(progn (find-file \"~/.dotfiles/.emacs.d/lisp/applications.org\") (org-babel-tangle))"
+    '';
+    executable = true;
+  };
+
+  # Step 2: Run the script during home-manager activation
+  home.activation.tangleOrgFile = ''
+    # Run the tangle script
+    ~/.local/bin/tangle-org.sh
+  '';
 }

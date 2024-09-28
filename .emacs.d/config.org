@@ -152,6 +152,49 @@
     (org-babel-tangle-file org-config-file custom-file)
     (load custom-file)))
 
+;; Fonts settings.
+
+(set-face-attribute 'default nil
+                    :family "JetBrains Mono"
+                    :height 120
+                    :weight 'regular)
+
+;; Set italic font
+(set-face-attribute 'italic nil
+                    :family "JetBrains Mono"
+                    :slant 'italic)
+
+;; Set bold font
+(set-face-attribute 'bold nil
+                    :family "JetBrains Mono"
+                    :weight 'bold)
+
+;; Set bold-italic font
+(set-face-attribute 'bold-italic nil
+                    :family "IBM Plex Mono"
+                    :slant 'italic
+                    :weight 'bold)
+
+;; Set font for comments to be italic
+(set-face-attribute 'font-lock-comment-face nil
+                    :slant 'italic
+                    :family "IBM Plex Mono")
+
+;; Optionally, also set italic for doc comments
+(set-face-attribute 'font-lock-doc-face nil
+                    :slant 'italic
+                    :family "IBM Plex Mono")
+
+;; Set monospaced font for code and programming modes
+(set-face-attribute 'org-block nil
+                    :family "IBM Plex Mono"
+                    :height 120)
+
+;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
+(set-face-attribute 'org-verbatim nil
+                    :family "IBM Plex Mono"
+                    :height 130)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -209,58 +252,6 @@
 
 (use-package async
   :config (setq async-bytecomp-package-mode 1))
-#+END_SRC
-* Fontaine.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
-(use-package fontaine
-  :ensure t
-  :custom
-  (fontaine-latest-state-file
-   (locate-user-emacs-file "fontaine-latest-state.eld"))
-
-  (fontaine-presets
-   '(
-	 (laptop
-	  :default-height 122)
-	 (work
-	  :default-height 122)
-	 (pre-work
-	  :default-height 200)
-	 (pre-lap
-	  :default-height 230)
-	 (t
-	  :default-family "JetBrains Mono"
-	  :default-weight regular
-	  :default-height 100
-	  :fixed-pitch-family nil ; falls back to :default-family
-	  :fixed-pitch-weight nil ; falls back to :default-weight
-	  :fixed-pitch-height 1.0
-	  :fixed-pitch-serif-family nil ; falls back to :default-family
-	  :fixed-pitch-serif-weight nil ; falls back to :default-weight
-	  :fixed-pitch-serif-height 1.0
-	  :variable-pitch-family nil
-	  :variable-pitch-weight nil
-	  :variable-pitch-height 1.0
-	  :bold-family "IBM Plex Mono" ; use whatever the underlying face has
-	  :bold-weight bold
-	  ;; :bold-slant bold
-	  :italic-family "IBM Plex Mono"
-	  :italic-weight regular
-	  :italic-slant italic
-	  :line-spacing nil)))
-
-  :config
-  ;; Recover last preset or fall back to desired style from
-  (if lpr-windows-system
-	  (fontaine-set-preset 'work)
-	(or (fontaine-set-preset 'laptop)))
-
-  ;; The other side of `fontaine-restore-latest-preset'.
-  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
-  (add-hook 'after-load-theme-hook #'fontaine-restore-latest-preset))
-
-(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
-(define-key global-map (kbd "C-c F") #'fontaine-set-face-font)
 #+END_SRC
 * Custom modeline.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
