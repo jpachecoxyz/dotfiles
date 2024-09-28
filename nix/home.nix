@@ -2,28 +2,18 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 let
-  # Custom scripts.
-  scriptDir = "${config.home.homeDirectory}/.dotfiles/.local/bin/scripts";
-  screencastBinary = pkgs.writeShellScriptBin "screencast" (builtins.readFile "${scriptDir}/screencast");
-  
   # Override ncmpcpp with the desired features
   myNcmpcpp = pkgs.ncmpcpp.override {
     visualizerSupport = true;
     clockSupport = true;
   };
     whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
-  tangleConfig = import ./tangle.nix { inherit pkgs; };
 in
 
 {
-  # Import the tangle configuration
-  imports = [ 
-    ./tangle.nix
-  ];
-
   
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -39,6 +29,7 @@ in
   home.packages = [
     # Environment
     pkgs.hypridle
+    
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
@@ -66,7 +57,6 @@ in
 
     # AI Models
     pkgs.ollama
-    tangleConfig
 
     # Terminal tools
     pkgs-unstable.yazi   # File manager
@@ -166,7 +156,6 @@ in
 
     # Custom packages
     whdd
-    screencastBinary
 
   ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
