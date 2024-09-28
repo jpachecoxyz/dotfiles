@@ -10,7 +10,8 @@ let
     visualizerSupport = true;
     clockSupport = true;
   };
-    whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+  whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+  screencast = import ./scripts/screencast.nix { inherit pkgs; };
 in
 
 {
@@ -29,7 +30,8 @@ in
   home.packages = [
     # Environment
     pkgs.hypridle
-    
+    screencast 
+
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
