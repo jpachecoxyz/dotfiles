@@ -1,4 +1,3 @@
 #!/bin/sh
 
-ffplay -window_title Webcam -fast -video_size 580x420 /dev/video0 & herbe "Opening WebCam"
-
+ffplay -window_title Webcam -fast -video_size 580x420 /dev/video0 & notify-send "Opening WebCam"

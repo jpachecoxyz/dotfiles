@@ -8,11 +8,11 @@ HYPRANIM=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
 if [ "$HYPRANIM" = 0 ] ; then
     hyprctl --batch "\
         keyword animations:enabled 1"
-    notify-send "Animations are now enabled"
+    hyprctl notify 5 2000 "rgb(458588)" "fontsize:15  Animations enabled"
     else
     hyprctl --batch "\
         keyword animations:enabled 0"
-    notify-send "Animations are now disabled"
+    hyprctl notify 5 2000 "rgb(458588)" "fontsize:15  Animations disabled"
     exit
 fi
 hyprctl reload

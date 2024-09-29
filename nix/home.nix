@@ -14,6 +14,7 @@ let
 
   # Custom Scripts
   screencast = import ./scripts/screencast.nix { inherit pkgs; };
+  dmenu-exit = import ./scripts/dmenu-exit.nix { inherit pkgs; };
 in
 
 {
@@ -30,9 +31,12 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    # Custom Scripts.
+    screencast 
+    dmenu-exit
+
     # Environment
     pkgs.hypridle
-
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
@@ -159,9 +163,6 @@ in
 
     # Custom packages
     whdd
-
-    # Custom Scripts.
-    screencast 
 
   ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

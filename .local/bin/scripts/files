@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MENU=$(echo "documentos\nimágenes\nmúsica\nvídeos" | dmenu -i -l 8)
+MENU=$(printf "documentos\nimágenes\nmúsica\nvídeos" | tofi)
 case $MENU in
     documentos)
         filter=".pdf"
@@ -17,6 +17,6 @@ case $MENU in
 esac
 
 if [ -n "$filter" ]; then
-    nuke $(find $HOME -type f | grep -E "$filter" | dmenu -i -l 10)
+    nuke $(find $HOME -type f | grep -E "$filter" | tofi)
 
 fi

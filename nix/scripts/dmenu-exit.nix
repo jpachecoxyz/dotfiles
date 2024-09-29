@@ -1,10 +1,11 @@
+{ pkgs }:
+
+pkgs.writeShellScriptBin "dmenu-exit" ''
 #!/bin/sh
 
 # Created By: Javier Pacheco - jpacheco@cock.li
 # Created On: 23/10/2023
 # Project: dmenu-exit script
-
-dm="tofi"
 
 # Options
 shutdown="Shutdown"
@@ -13,7 +14,7 @@ hrestart="Restart Hyprland"
 hibernate="Sleep"
 lock="Lock"
 
-chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$hibernate\n$lock" | $dm --prompt "Hyprland - Session: ")
+chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$hibernate\n$lock" | ${pkgs.tofi}/bin/tofi --prompt "Hyprland - Session: ")
 case $chosen in
 
     $shutdown)
@@ -32,8 +33,8 @@ case $chosen in
       pkill Hyprland
         ;;
     $lock)
-      hyprlock
+      ${pkgs.hyprlock}/bin/hyprlock
       ;;
     *) notify-send "Ninguna opcion fue seleccionada..."
 esac
-
+''
