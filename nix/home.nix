@@ -15,6 +15,9 @@ let
   # Custom Scripts
   screencast = import ./scripts/screencast.nix { inherit pkgs; };
   dmenu-exit = import ./scripts/dmenu-exit.nix { inherit pkgs; };
+  dmenumount = import ./scripts/dmenumount.nix { inherit pkgs; };
+  dmenuumount = import ./scripts/dmenuumount.nix { inherit pkgs; };
+  fzmount = import ./scripts/fzmount.nix { inherit pkgs; };
 in
 
 {
@@ -34,6 +37,9 @@ in
     # Custom Scripts.
     screencast 
     dmenu-exit
+    dmenumount
+    dmenuumount
+    fzmount
 
     # Environment
     pkgs.hypridle

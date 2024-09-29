@@ -1,3 +1,6 @@
+{ pkgs }:
+
+pkgs.writeShellScriptBin "dmenumount" ''
 #!/bin/sh
 
 # Gives a fuzzel --dmenu prompt to mount unmounted drives and Android phones. If
@@ -8,16 +11,16 @@
 getmount() { \
 	[ -z "$chosen" ] && exit 1
         # shellcheck disable=SC2086
-	mp="$(find $1 2>/dev/null | tofi --prompt "Type in mount point. ")" || exit 1
+	mp="$(find $1 2>/dev/null | ${pkgs.tofi}/bin/tofi --prompt "Type in mount point. ")" || exit 1
 	test -z "$mp" && exit 1
 	if [ ! -d "$mp" ]; then
-		mkdiryn=$(printf "No\\nYes" | tofi --prompt "$mp does not exist. Create it? ") || exit 1
+		mkdiryn=$(printf "No\\nYes" | ${pkgs.tofi}/bin/tofi --prompt "$mp does not exist. Create it? ") || exit 1
 		[ "$mkdiryn" = "Yes" ] && (mkdir -p "$mp" || doas mkdir -p "$mp")
 	fi
-	}
+	         }
 
 mountusb() { \
-	chosen="$(echo "$usbdrives" | tofi --prompt "Mount which drive? ")" || exit 1
+	chosen="$(echo "$usbdrives" | ${pkgs.tofi}/bin/tofi --prompt "Mount which drive? ")" || exit 1
 	chosen="$(echo "$chosen" | awk '{print $1}')"
 	doas mount "$chosen" 2>/dev/null && notify-send "USB mounting" "$chosen mounted." && exit 0
 	alreadymounted=$(lsblk -nrpo "name,type,mountpoint" | awk '$3!~/\/boot|\/home$|SWAP/&&length($3)>1{printf "-not ( -path *%s -prune ) ",$3}')
@@ -32,17 +35,17 @@ mountusb() { \
 	}
 
 mountandroid() { \
-	chosen="$(echo "$anddrives" | tofi --prompt "Which Android device? ")" || exit 1
+	chosen="$(echo "$anddrives" | ${pkgs.tofi}/bin/tofi --prompt "Which Android device? ")" || exit 1
 	chosen="$(echo "$chosen" | cut -d : -f 1)"
 	getmount "$HOME -maxdepth 3 -type d"
         simple-mtpfs --device "$chosen" "$mp"
-	echo "OK" | tofi --prompt "Tap Allow on your phone if it asks for permission and then press enter " || exit 1
+	echo "OK" | ${pkgs.tofi}/bin/tofi --prompt "Tap Allow on your phone if it asks for permission and then press enter " || exit 1
 	simple-mtpfs --device "$chosen" "$mp"
 	notify-send "🤖 Android Mounting" "Android device mounted to $mp."
-	}
+	             }
 
 asktype() { \
-	choice="$(printf "USB\\nAndroid" | tofi --prompt "Mount a USB drive or Android device? ")" || exit 1
+	choice="$(printf "USB\\nAndroid" | ${pkgs.tofi}/bin/tofi --prompt "Mount a USB drive or Android device? ")" || exit 1
 	case $choice in
 		USB) mountusb ;;
 		Android) mountandroid ;;
@@ -65,3 +68,5 @@ else
 		asktype
 	fi
 fi
+
+''

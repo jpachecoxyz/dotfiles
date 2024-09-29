@@ -1,3 +1,6 @@
+{ pkgs }:
+
+pkgs.writeShellScriptBin "dmenuumount" ''
 #!/bin/sh
 
 # A fuzzel --dmenu prompt to unmount drives.
@@ -6,20 +9,20 @@
 
 unmountusb() {
 	[ -z "$drives" ] && exit
-	chosen="$(echo "$drives" | tofi --prompt "Unmount which drive? ")" || exit 1
+	chosen="$(echo "$drives" | ${pkgs.tofi}/bin/tofi --prompt "Unmount which drive? ")" || exit 1
 	chosen="$(echo "$chosen" | awk '{print $1}')"
 	[ -z "$chosen" ] && exit
 	doas umount "$chosen" && notify-send "USB unmounting" "$chosen unmounted."
 	}
 
 unmountandroid() { \
-	chosen="$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | tofi --prompt "Unmount which device? ")" || exit 1
+	chosen="$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | ${pkgs.tofi}/bin/tofi --prompt "Unmount which device? ")" || exit 1
 	[ -z "$chosen" ] && exit
 	doas umount -l "$chosen" && notify-send "🤖 Android unmounting" "$chosen unmounted."
 	}
 
 asktype() { \
-	choice="$(printf "USB\\nAndroid" | tofi --prompt "Unmount a USB drive or Android device? ")" || exit 1
+	choice="$(printf "USB\\nAndroid" | ${pkgs.tofi}/bin/tofi --prompt "Unmount a USB drive or Android device? ")" || exit 1
 	case "$choice" in
 		USB) unmountusb ;;
 		Android) unmountandroid ;;
@@ -42,3 +45,5 @@ else
 		asktype
 	fi
 fi
+
+''
