@@ -6,5 +6,6 @@
 { pkgs }:
 
 pkgs.writeShellScriptBin "${1:Name of the script}" ''
+    dmenumount
 $0
 ''

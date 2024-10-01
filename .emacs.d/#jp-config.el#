@@ -38,25 +38,6 @@
 (use-package async
   :config (setq async-bytecomp-package-mode 1))
 
-(use-package keycast
-  :hook (after-init . keycast-mode)
-  :config
-  (setopt keycast-mode-line-format
-          "%k%r")
-  (setopt keycast-substitute-alist
-          '((keycast-log-erase-buffer nil nil)
-            (transient-update         nil nil)
-            (self-insert-command      nil nil)
-            (mwheel-scroll nil nil)))
-  (define-minor-mode keycast-mode
-	"Show current command and its key binding in the mode line (fix for use with doom-modeline)."
-	:global t
-	(if keycast-mode
-		(add-hook 'pre-command-hook 'keycast--update t)
-      (remove-hook 'pre-command-hook 'keycast--update)))
-
-  (add-to-list 'global-mode-string '("" keycast-mode-line)))
-
 ;; Load modeline
 ;; (require 'custom-modeline)
 ;; (custom-modeline-mode)
@@ -771,7 +752,6 @@
 
 (require 'hydra-posframe)
 (require 'hydra-themes)
-(require 'enote)
 (hydra-posframe-mode)
 
 (use-package hl-todo
@@ -1108,10 +1088,10 @@
   :ensure t)
 
 (defvar my/org-contacts-template "* %(org-contacts-template-name)
-   :PROPERTIES:
+  /home/javier/.dotfiles/.emacs.d/ :PROPERTIES:
    :EMAIL: %(org-contacts-template-email)
    :PHONE: %^{Telefono}
-   :IGNORE:
+  /home/javier/.dotfiles/.emacs.d/ :IGNORE:
    :NOTE: %^{NOTA}
    :BIRTHDAY: %^{Cumpleaños}
    :END:" "Plantilla para org-contacts.")
@@ -1789,8 +1769,8 @@ folder, otherwise delete a word"
   :custom-face
   (vertico-current ((t (:background "#5C6370"))))
   :init
-  (vertico-mode))
-  ;; (vertico-posframe-mode))
+  (vertico-mode)
+  (vertico-posframe-mode))
 
 (use-package orderless
   :init
@@ -1840,8 +1820,13 @@ folder, otherwise delete a word"
                :size 0.4
                :align right
                :select t)
+        (,dired :regexp t
+				:size 0.4
+				:align below
+				:select t)
         (,ellama :regexp t
-				 :same t)
+				 :same t
+				 :ignore t)
         (,warnings :regexp t
                    :ignore t)
         (help-mode :select t
@@ -1946,8 +1931,7 @@ folder, otherwise delete a word"
   (general-define-key
    :states '(normal visual)
    "<" "<gv"
-   ">" ">gv"
-   )
+   ">" ">gv")
 
   (define-key evil-visual-state-map (kbd "<") (lambda ()
 												(interactive)
@@ -2028,7 +2012,6 @@ folder, otherwise delete a word"
               (find-file "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")
     "f d" '(find-grep-dired :wk "Search for string in files in DIR")
-    "f f" '(my/transient-goto-file-buffer :wk "Go to buffer or file.")
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
     "f p" '((lambda () (interactive)
               (find-file "~/.emacs.d/config.org")) 
@@ -2187,6 +2170,34 @@ folder, otherwise delete a word"
 (use-package password-store
   :ensure t)
 
+(use-package telega
+  :ensure t
+  :defer t
+  :custom
+  ;; enable markdown for code snippets
+  (telega-server-libs-prefix "/home/javier/.nix-profile/")
+  (telega-chat-input-markups '("markdown2" "org" nil))
+  ;; use vertico for completion
+  (telega-completing-read-function 'completing-read)
+  :config
+  ;; use shift enter to make multi line messages and enter to send it
+  (define-key telega-chat-mode-map (kbd "S-<return>") #'newline)
+  ;; avoid showing blank spaces highlighted
+  (add-hook 'telega-chat-mode-hook #'(lambda ()
+                                       (setq-local show-trailing-whitespace nil))))
+(defun my-open-telega-and-chat-with ()
+  "Open Telega and then run the command `telega-chat-with`."
+  (interactive)
+  ;; Ensure Telega is running
+  (telega)
+  ;; Wait a bit to ensure Telega is fully started
+  (sleep-for 0.5)
+  ;; Run telega-chat-with command
+  (call-interactively 'telega-chat-with))
+
+;; Optionally, bind the function to a key for quick access
+(global-set-key (kbd "C-c t") 'my-open-telega-and-chat-with)
+
 (use-package ellama
   :init
   (setopt ellama-language "English")
@@ -2197,3 +2208,7 @@ folder, otherwise delete a word"
           (make-llm-ollama
            :chat-model "zephyr"
            :embedding-model "zephyr")))
+
+(use-package restart-emacs
+  :ensure t)
+(setq restart-emacs-restore-frames t)

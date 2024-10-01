@@ -430,6 +430,10 @@
    `(line-number ((t (:foreground ,jp-gruvby-mono-2 :background ,jp-gruvby-bg))))
    `(line-number-current-line ((t (:foreground ,jp-gruvby-fg :background ,jp-gruvby-bg))))
 
+   ;; Keycast
+   `(keycast-command ((t :inherit bold)))
+   `(keycast-key ((t :inherit bold :background ,jp-gruvby-bg-hl :foreground ,jp-gruvby-fg )))
+   
    ;; regexp-builder
    `(reb-match-0 ((t (:background ,jp-gruvby-gray))))
    `(reb-match-1 ((t (:background ,jp-gruvby-black :foreground ,jp-gruvby-purple :weight semi-bold))))

@@ -31,7 +31,7 @@
 ;; Don't generate backups or lockfiles.
 (setq create-lockfiles nil
       make-backup-files nil
-      ;; But in case the user does enable it, some sensible defaults:
+  /home/javier/.dotfiles/.emacs.d/    ;; But in case the user does enable it, some sensible defaults:
       version-control t     ; number each backup file
       backup-by-copying t   ; instead of renaming current file (clobbers links)
       delete-old-versions t ; clean up after itself
@@ -107,13 +107,12 @@
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
                     :family "IBM Plex Mono"
-					:slant bold
+					:slant 'bold
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
                     :family "IBM Plex Mono"
-					:slant bold
                     :height 130)
 
 (custom-set-faces

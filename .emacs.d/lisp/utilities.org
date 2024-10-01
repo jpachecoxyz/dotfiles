@@ -630,7 +630,7 @@ The command supports previewing the currently selected theme."
 (defun open-specific-dired ()
   "Ask whether to open config, scripts, or nix config in Dired."
   (interactive)
-  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "nix"))))
+  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "nix" "docs"))))
     (cond
      ((string= choice "config")
       (dired "~/.config/"))
@@ -638,6 +638,8 @@ The command supports previewing the currently selected theme."
       (dired "~/.local/bin/"))
      ((string= choice "nix")
       (dired "~/.dotfiles/nix/"))
+     ((string= choice "docs")
+      (dired "~/docs/org/"))
      (t
       (message "Invalid choice")))))
 
@@ -659,48 +661,32 @@ The command supports previewing the currently selected theme."
   (when (bound-and-true-p evil-mode)
     (evil-insert-state)))
 (global-set-key (kbd "C-c i c") #'org-mode-insert-code)
+
+(prog1 'my/transient-goto-file-buffer
+  ;; List
+  (setq my/goto-file-buffer-alist
+        '(("s" "*scratch*"    (switch-to-buffer "*scratch*"))
+          ("h" "home.nix"       (find-file "~/.dotfiles/nix/home.nix"))
+          ("c" "configuration.nix"       (find-file "~/.dotfiles/nix/configuration.nix"))
+          ("u" "utilities.org"       (find-file "~/.emacs.d/lisp/utilities.org"))
+          ("j" "Journal"      (find-file (expand-file-name "agenda/journal.org" org-directory)))
+          ("n" "Notes"        (find-file (expand-file-name "agenda/notes.org" org-directory)))))
+  ;; Command
+  (defun my/goto-file-buffer ()
+    "Jump to a file or buffer based on the key used to invoke this command."
+    (interactive)
+    (let* ((key (this-command-keys))
+           (choice (assoc key my/goto-file-buffer-alist))
+           (form (caddr choice)))
+      (eval form)))
+  ;; Transient
+  (eval
+   `(transient-define-prefix my/transient-goto-file-buffer ()
+      [,(apply 'vector
+               "Goto Files & Buffers"
+               (mapcar (lambda (x) (list (car x) (cadr x) 'my/goto-file-buffer))
+                       my/goto-file-buffer-alist))])))
 #+END_SRC
-* External popups frames.
-#+begin_src emacs-lisp
-;;;; Run commands in a popup frame
-
-(defun prot-window-delete-popup-frame (&rest _)
-  "Kill selected selected frame if it has parameter `prot-window-popup-frame'.
-Use this function via a hook."
-  (when (frame-parameter nil 'prot-window-popup-frame)
-    (delete-frame)))
-
-(defmacro prot-window-define-with-popup-frame (command)
-  "Define interactive function which calls COMMAND in a new frame.
-Make the new frame have the `prot-window-popup-frame' parameter."
-  `(defun ,(intern (format "prot-window-popup-%s" command)) ()
-     ,(format "Run `%s' in a popup frame with `prot-window-popup-frame' parameter.
-Also see `prot-window-delete-popup-frame'." command)
-     (interactive)
-     (let ((frame (make-frame '((prot-window-popup-frame . t)))))
-       (select-frame frame)
-       (switch-to-buffer " prot-window-hidden-buffer-for-popup-frame")
-       (condition-case nil
-           (call-interactively ',command)
-         ((quit error user-error)
-          (delete-frame frame))))))
-
-(declare-function org-capture "org-capture" (&optional goto keys))
-(defvar org-capture-after-finalize-hook)
-
-;;;###autoload (autoload 'prot-window-popup-org-capture "prot-window")
-(prot-window-define-with-popup-frame org-capture)
-
-(add-hook 'org-capture-after-finalize-hook #'prot-window-delete-popup-frame)
-
-(declare-function tmr "tmr" (time &optional description acknowledgep))
-(defvar tmr-timer-created-functions)
-
-;;;###autoload (autoload 'prot-window-popup-tmr "prot-window")
-(prot-window-define-with-popup-frame tmr)
-
-(add-hook 'tmr-timer-created-functions #'prot-window-delete-popup-frame)
-#+end_src
 * Provide this code:
 #+begin_src emacs-lisp
 (provide 'utilities)

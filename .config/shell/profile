@@ -18,7 +18,8 @@ unsetopt PROMPT_SP
 # Default programs:
 EDITOR="nvim"
 TERMINAL="footclient"
-BROWSER="firefox"
+# BROWSER="firefox"
+BROWSER="qutebrowser"
 
 # ~/ Clean-up:
 XDG_CONFIG_HOME="$HOME/.config"

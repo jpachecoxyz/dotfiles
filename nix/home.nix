@@ -11,13 +11,6 @@ let
     clockSupport = true;
   };
   whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
-
-  # Custom Scripts
-  screencast = import ./scripts/screencast.nix { inherit pkgs; };
-  dmenu-exit = import ./scripts/dmenu-exit.nix { inherit pkgs; };
-  dmenumount = import ./scripts/dmenumount.nix { inherit pkgs; };
-  dmenuumount = import ./scripts/dmenuumount.nix { inherit pkgs; };
-  fzmount = import ./scripts/fzmount.nix { inherit pkgs; };
 in
 
 {
@@ -34,13 +27,6 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # Custom Scripts.
-    screencast 
-    dmenu-exit
-    dmenumount
-    dmenuumount
-    fzmount
-
     # Environment
     pkgs.hypridle
     pkgs.hyprlock
@@ -81,18 +67,14 @@ in
     pkgs.breeze-icons
     pkgs.bibata-cursors
     pkgs.brightnessctl
-    pkgs.nwg-look
     pkgs.libnotify
-    pkgs.yad
     pkgs.waybar
     pkgs.wl-clipboard
     pkgs.cliphist
     pkgs.grimblast
     pkgs.mako
     pkgs.foot
-    pkgs.swaylock-effects
     pkgs.cron
-    pkgs.stow
     pkgs.tree
     pkgs.fzf
     pkgs.eza
@@ -109,7 +91,7 @@ in
     pkgs.wlsunset
 
     # Browser / web
-    pkgs.nyxt
+    pkgs.qutebrowser
     pkgs.firefox
     pkgs.google-chrome
 
@@ -141,14 +123,11 @@ in
     pkgs.zathura
     pkgs.zathuraPkgs.zathura_pdf_mupdf
     pkgs.zathuraPkgs.zathura_pdf_poppler
-    pkgs.foliate
     pkgs.unzip
     pkgs.zip
     pkgs.p7zip
     pkgs.killall
     pkgs.htop
-    pkgs-unstable.showmethekey
-    pkgs-unstable.screenkey
 
     # latex and spell
     pkgs.texlivePackages.xelatex-dev

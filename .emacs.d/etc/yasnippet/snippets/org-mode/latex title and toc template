@@ -3,11 +3,12 @@
 # key: toc_
 # --
 
+#+MODE: -*- mode: org -*-
 #+TITLE: ${1:Title of the document}
 #+AUTHOR: Javier Pacheco
 #+DESCRIPTION: ${2:Description of the file}
 #+STARTUP: showeverything inlineimages
-#+OPTIONS: toc:nil date:nil
-#+setupfile: ~/.emacs.d/latex/${3:manual|book}.org
+#+OPTIONS: toc:t date:t
+#+SETUPFILE: ~/.emacs.d/latex/${3:manual|book}.org
 
 $0
