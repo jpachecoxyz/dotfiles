@@ -2322,8 +2322,20 @@ folder, otherwise delete a word"
     "u" '(universal-argument :wk "Universal argument"))
 
   (user/leader-keys
-    "a" '(:ignore t :wk "Agenda buffers")
-    "a" '(org-agenda :wk "Open the agenda"))
+	"a" '(:ignore t :wk "Ellama A.I.")
+	"a a" '(ellama-ask-about :wk "Ask ellama about region")
+	"a e" '(:ignore t :wk "Ellama enhance")
+	"a e g" '(ellama-improve-grammar :wk "Ellama enhance wording")
+	"a e w" '(ellama-improve-wording :wk "Ellama enhance grammar")
+	"a c a" '(ellama-code-add :wk "Ellama  add")
+	"a c i" '(ellama-code-improve :wk "Ellama  improve")
+	"a i" '(ellama-chat :wk "Ask ellama")
+	"a p" '(ellama-provider-select :wk "Ellama provider select")
+	"a s" '(ellama-summarize :wk "Ellama summarize region")
+	"a t" '(ellama-translate :wk "Ellama translate region"))
+
+  ;; "a" '(:ignore t :wk "Agenda buffers")
+  ;; "a" '(org-agenda :wk "Open the agenda")
 
   (user/leader-keys
     "j" '(:ignore t :wk "Agenda buffers")

@@ -662,6 +662,25 @@ The command supports previewing the currently selected theme."
     (evil-insert-state)))
 (global-set-key (kbd "C-c i c") #'org-mode-insert-code)
 
+;; Yank the content of a src org block.
+(defun yank-org-src-block-content ()
+  "Yank the content of the source block at point."
+  (interactive)
+  (when (org-in-src-block-p)
+    (let* ((element (org-element-at-point))
+           (begin (org-element-property :begin element))
+           (end (org-element-property :end element)))
+      ;; Move point to the content of the block and copy it to the kill-ring
+      (save-excursion
+        (goto-char begin)
+        (re-search-forward "^[ \t]*#\\+begin_src[^\n]*\n" end t)
+        (let ((content-start (point)))
+          (re-search-forward "^[ \t]*#\\+end_src" end t)
+          (kill-ring-save content-start (match-beginning 0))))
+      (message "Yanked source block content!"))))
+(global-set-key (kbd "C-c i y") #'yank-org-src-block-content)
+ 
+
 (prog1 'my/transient-goto-file-buffer
   ;; List
   (setq my/goto-file-buffer-alist
