@@ -2227,15 +2227,17 @@ folder, otherwise delete a word"
   
   )
 
-;; (defun fzf-find-file (&optional directory)
-;;   "Find a file using fzf. Optionally start from DIRECTORY."
-;;   (interactive)
-;;   (let ((d (or directory default-directory)))
-;;     ;; Start fzf in the directory or default-directory
-;;     (fzf d)
-;;     ;; Bind ESC to quit the fzf buffer and close the window
-;;     (with-current-buffer "*fzf*"
-;;       (local-set-key (kbd "<escape>") 'fzf-quit))))
+(defun fzf-find-file (&optional directory)
+  "Find a file using fzf. Optionally start from DIRECTORY."
+  (interactive "DDirectory: ")  ;; Prompt for directory if not passed
+  (let ((d (or directory default-directory)))
+    ;; Change the current directory to the specified one
+    (let ((default-directory (expand-file-name d)))
+      ;; Start fzf in the specified directory
+      (fzf default-directory))
+    ;; Bind ESC to quit the fzf buffer and close the window
+    (with-current-buffer "*fzf*"
+      (local-set-key (kbd "<escape>") 'fzf-quit))))
 
 (defun fzf-quit ()
   "Quit the fzf process, clean up the buffer, and close the window."
