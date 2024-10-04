@@ -573,13 +573,13 @@ The command supports previewing the currently selected theme."
   (let ((choice (completing-read "Choose an option: " '("config" "scripts" "nix" "docs"))))
     (cond
      ((string= choice "config")
-      (dired "~/.config/"))
+      (fzf-find-file "~/.config/"))
      ((string= choice "scripts")
-      (dired "~/.local/bin/"))
+      (fzf-find-file "~/.local/bin/"))
      ((string= choice "nix")
-      (dired "~/.dotfiles/nix/"))
+      (fzf-find-file "~/.dotfiles/nix/"))
      ((string= choice "docs")
-      (dired "~/docs/org/"))
+      (fzf-find-file "~/docs/org/"))
      (t
       (message "Invalid choice")))))
 

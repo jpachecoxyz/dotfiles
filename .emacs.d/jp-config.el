@@ -1690,7 +1690,7 @@ See `org-capture-templates' for more information."
 (add-hook 'org-mode-hook
           (lambda ()
             (setq-local yas/trigger-key [tab])
-            (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+            (define-key yas/keymap [tab] 'yas-next-field-or-maybe-expand)))
 
 (use-package yasnippet-snippets
   :ensure t)
@@ -2209,3 +2209,44 @@ folder, otherwise delete a word"
           (make-llm-ollama
            :chat-model "zephyr"
            :embedding-model "zephyr")))
+
+(use-package fzf
+  :bind
+  ;; Don't forget to set keybinds!
+  :config
+  (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+        fzf/executable "fzf"
+        fzf/git-grep-args "-i --line-number %s"
+        ;; command used for `fzf-grep-*` functions
+        ;; example usage for ripgrep:
+        ;; fzf/grep-command "rg --no-heading -nH"
+        fzf/grep-command "grep -nrH"
+        ;; If nil, the fzf buffer will appear at the top of the window
+        fzf/position-bottom t
+        fzf/window-height 15)
+  
+  )
+
+;; (defun fzf-find-file (&optional directory)
+;;   "Find a file using fzf. Optionally start from DIRECTORY."
+;;   (interactive)
+;;   (let ((d (or directory default-directory)))
+;;     ;; Start fzf in the directory or default-directory
+;;     (fzf d)
+;;     ;; Bind ESC to quit the fzf buffer and close the window
+;;     (with-current-buffer "*fzf*"
+;;       (local-set-key (kbd "<escape>") 'fzf-quit))))
+
+(defun fzf-quit ()
+  "Quit the fzf process, clean up the buffer, and close the window."
+  (interactive)
+  (let ((buffer (get-buffer "*fzf*"))
+        (window (get-buffer-window "*fzf*")))
+    (when buffer
+      ;; Kill the buffer
+      (kill-buffer buffer))
+    (when window
+      ;; Delete the window where fzf was opened
+      (delete-window window))
+    ;; Optionally clear the minibuffer in case fzf was invoked there
+    (message "fzf canceled")))

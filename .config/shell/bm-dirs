@@ -9,7 +9,7 @@ h   $HOME
 mn  /mnt
 tm  /tmp
 pp  ${XDG_PICTURES_DIR:-$HOME/pics
-sc  $HOME/.local/bin
+sc  $HOME/.local/bin/scripts/
 PP  $HOME/public/
 src $HOME/.local/src
 vv  ${XDG_VIDEOS_DIR:-$HOME/vids}

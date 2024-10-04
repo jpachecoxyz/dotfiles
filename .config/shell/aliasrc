@@ -97,8 +97,8 @@ alias \
 	ytb='yt-dlp -f b "$(ytfzf -D -I L "$1")" -o - | ffplay - -autoexit -loglevel quiet'
 
 
-ecf(){ find ~/.dotfiles/.config  -type f,l -printf "%h/%f\n" | fzf --prompt="Edit config file: " | xargs -r nvim }
-esc(){ find ~/.dotfiles/.local/bin  -type f,l -printf "%h/%f\n" | fzf --prompt="Edit script file: " | xargs -r nvim }
+ecf(){ find ~/.dotfiles/.config  -type f,l -printf "%h/%f\n" | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' --prompt="Edit config file: " | xargs -r nvim }
+esc(){ find ~/.dotfiles/.local/bin  -type f,l -printf "%h/%f\n" | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' --prompt="Edit script file: " | xargs -r nvim }
 
 gap() {
     # Check if the current directory is a Git repository
