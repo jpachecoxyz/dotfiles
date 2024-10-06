@@ -117,6 +117,19 @@
   :ensure t
   :init (nyan-mode))
 
+(defun my/toggle-nyan-mode ()
+  "Enable or disable `nyan-mode` depending on whether the buffer needs scrolling."
+  (if (>= (line-number-at-pos (point-max)) (window-body-height))
+      (nyan-mode 1)  ;; Enable nyan-mode if the buffer has more lines than the window height
+    (nyan-mode -1))) ;; Disable nyan-mode otherwise
+
+(defun my/setup-nyan-mode-toggle ()
+  "Set up automatic toggling of `nyan-mode`."
+  (add-hook 'window-size-change-functions #'my/toggle-nyan-mode)
+  (add-hook 'post-command-hook #'my/toggle-nyan-mode))
+
+(my/setup-nyan-mode-toggle)
+
 (use-package diminish
   :ensure t)
 
@@ -2214,18 +2227,25 @@ folder, otherwise delete a word"
   :bind
   ;; Don't forget to set keybinds!
   :config
-  (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll --preview 'bat --style=numbers --color=always --line-range :500 {}'"
-        fzf/executable "fzf"
-        fzf/git-grep-args "-i --line-number %s"
-        ;; command used for `fzf-grep-*` functions
-        ;; example usage for ripgrep:
-        ;; fzf/grep-command "rg --no-heading -nH"
-        fzf/grep-command "grep -nrH"
-        ;; If nil, the fzf buffer will appear at the top of the window
-        fzf/position-bottom t
-        fzf/window-height 15)
-  
-  )
+  (setq
+   fzf/args
+   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='❯' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 50%"
+
+   fzf/executable "fzf"
+   fzf/git-grep-args "-i --line-number %s"
+   ;; command used for `fzf-grep-*` functions
+   ;; example usage for ripgrep:
+   ;; fzf/grep-command "rg --no-heading -nH"
+   fzf/grep-command "grep -nrH"
+   ;; If nil, the fzf buffer will appear at the top of the window
+   fzf/position-bottom t
+   fzf/window-height 30))
+
+;; Skip the prompt for delete the buffer.
+(defun my/always-kill-buffer-with-process ()
+  "Override to always kill buffer with a running process without prompt." t)
+
+(advice-add 'process-kill-buffer-query-function :override #'my/always-kill-buffer-with-process)
 
 (defun fzf-find-file (&optional directory)
   "Find a file using fzf. Optionally start from DIRECTORY."
@@ -2249,6 +2269,22 @@ folder, otherwise delete a word"
       (kill-buffer buffer))
     (when window
       ;; Delete the window where fzf was opened
-      (delete-window window))
-    ;; Optionally clear the minibuffer in case fzf was invoked there
-    (message "fzf canceled")))
+      (delete-window window))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values '((eval add-hook 'before-save-hook 'time-stamp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed)))))

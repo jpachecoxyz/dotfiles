@@ -17,13 +17,14 @@ unsetopt PROMPT_SP
 
 # Default programs:
 EDITOR="nvim"
-TERMINAL="footclient"
+TERMINAL="kitty -1"
 # BROWSER="firefox"
 BROWSER="qutebrowser"
 
 # ~/ Clean-up:
 XDG_CONFIG_HOME="$HOME/.config"
 XDG_DATA_HOME="$HOME/.local/share"
+XDG_BIN_HOME=$HOME/.local/bin/scripts
 XDG_CACHE_HOME="$HOME/.cache"
 XDG_RUNTIME_DIR=$(mktemp -d /tmp/$(id -u)-runtime-dir.XXX)
 XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
@@ -56,7 +57,15 @@ GI_TYPELIB_PATH="/run/current-system/sw/lib/girepository-1.0";
 DICS="/usr/share/stardict/dic/"
 # SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 DOAS_ASKPASS="$HOME/.local/bin/scripts/tofi-pass.sh"
-FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+# FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828
+  --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
+  --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf
+  --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9
+  --border="bold" --border-label="" --preview-window="border-bold" --prompt="❯❯ "
+  --marker="*" --pointer="❯" --separator="─" --scrollbar="│"
+  --layout="reverse-list" --info="right" --height 40%'
 LESS=-R
 LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
 LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
@@ -70,20 +79,6 @@ QT_QPA_PLATFORMTHEME="gtk2"	# Have QT use gtk2 theme.
 MOZ_USE_XINPUT2="1"		# Mozilla smooth scrolling/touchpads.
 AWT_TOOLKIT="MToolkit wmname LG3D"	#May have to install wmname
 _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
-
-# [[ NNN ]]
-BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
-NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
-
-NNN_BMS='r:~/code/rust/;p:~/.local/src/;s:~/.local/bin/;m:/mnt;M:/media'
-NNN_USE_EDITOR=1
-NNN_FIFO=/tmp/nnn.fifo
-NNN_PLUG_DEFAULT='1:ipinfo;p:preview-tabbed;o:fzz;b:nbak'
-NNN_OPENER="/home/javier/.local/bin/scripts/nuke"
-IMAGEVIEWER="nsxiv"
-NNN_PLUG='p:nuke;o:nuke;t:preview-tabbed;x:!chmod +x "$nnn";g:!lazygit;m:!dmenumount;u:!dmenuumount'
-NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
-
 
 [ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ] && shortcuts >/dev/null 2>&1 &
 

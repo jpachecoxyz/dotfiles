@@ -40,7 +40,6 @@ in
     pkgs.poetry
     pkgs.rye
     pkgs.lua-language-server
-    pkgs.arduino-ide
     pkgs.hugo
     pkgs.gcc
     pkgs.neovim
@@ -58,9 +57,10 @@ in
     pkgs.ollama
 
     # Terminal tools
-    pkgs-unstable.yazi   # File manager
-    pkgs.zellij # Terminal multiplexer
-    pkgs.lazygit # git tui frontend
+    pkgs-unstable.yazi    # File manager
+    pkgs.zellij           # Terminal multiplexer
+    pkgs.lazygit          # git tui frontend
+    pkgs.gtk3-x11         # gtk-launcher
 
     # Generic tools.
     pkgs.graphite-gtk-theme 
@@ -74,9 +74,11 @@ in
     pkgs.grimblast
     pkgs.mako
     pkgs.foot
+    pkgs.kitty
     pkgs.cron
     pkgs.tree
     pkgs.fzf
+    pkgs.sysz
     pkgs.eza
     pkgs.fd
     pkgs.jq

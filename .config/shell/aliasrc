@@ -96,9 +96,20 @@ alias \
 	mu='yt-dlp "$(ytfzf -D -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \
 	ytb='yt-dlp -f b "$(ytfzf -D -I L "$1")" -o - | ffplay - -autoexit -loglevel quiet'
 
+## Fnctions.
 
-ecf(){ find ~/.dotfiles/.config  -type f,l -printf "%h/%f\n" | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' --prompt="Edit config file: " | xargs -r nvim }
-esc(){ find ~/.dotfiles/.local/bin  -type f,l -printf "%h/%f\n" | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' --prompt="Edit script file: " | xargs -r nvim }
+
+ecf(){ cd $XDG_CONFIG_HOME && find . -type f,l -printf "%h/%f\n" | \
+	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \
+	--prompt="Edit config file: "  \
+	--bind 'ctrl-v:execute(bat {1} >/dev/tty)'  \
+        --preview-label 'Ctrl-v: Preview' \
+	| xargs -r nvim }
+esc(){ cd $XDG_BIN_HOME && find . -type f,l -printf "%h/%f\n" | \
+	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \
+	--prompt="Edit script file: " \
+        --preview-label 'Ctrl-v: Preview' \
+	--bind 'ctrl-v:execute(bat {1} >/dev/tty)'  | xargs -r nvim }
 
 gap() {
     # Check if the current directory is a Git repository

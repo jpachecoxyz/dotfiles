@@ -110,8 +110,8 @@ in
     font-awesome
     ibm-plex
     noto-fonts-color-emoji
-    gentium
-    google-fonts
+    # gentium
+    # google-fonts
   ];
 
   xdg.portal = {
@@ -145,8 +145,6 @@ in
     iosevka
     ibm-plex
     noto-fonts-color-emoji
-    gentium
-    google-fonts
 
   ])
     
