@@ -64,8 +64,10 @@ FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf
   --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9
   --border="bold" --border-label="" --preview-window="border-bold" --prompt="❯❯ "
-  --marker="*" --pointer="❯" --separator="─" --scrollbar="│"
-  --layout="reverse-list" --info="right" --height 40%'
+  --marker="*" --pointer="->" --separator="─" --scrollbar="│"
+  --layout="reverse-list" --info="right"
+  --height=10
+  '
 LESS=-R
 LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
 LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
