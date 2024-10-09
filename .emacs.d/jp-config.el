@@ -415,7 +415,6 @@
 (setq org-src-window-setup 'current-window)
 (electric-indent-mode 0)
 (electric-layout-mode 0)
-(setq org-edit-src-content-indentation 0)
 (setq enable-recursive-minibuffers t)
 (setq display-time-day-and-date t)
 (display-time-mode 1)
@@ -424,6 +423,10 @@
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 (global-set-key (kbd "<f12>") 'jp-themes-load-random)
+(global-set-key (kbd "M-q") 'kill-current-buffer)
+(with-eval-after-load 'evil
+  (define-key evil-normal-state-map (kbd "M-,") 'previous-buffer)
+  (define-key evil-normal-state-map (kbd "M-.") 'next-buffer))
 (setq org-display-inline-images t)
 (setq org-image-actual-width (list 550))
 (setq org-confirm-babel-evaluate nil)
@@ -995,7 +998,8 @@
   (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
 
 (use-package org-download
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (require 'org-tempo)
 (require 'org-id)
@@ -1045,6 +1049,7 @@
 (setq org-agenda-skip-scheduled-if-done t)
 
 (setq org-startup-folded 'overview)
+(setq org-adapt-indentation nil)
 (setq org-support-shift-select t)
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
@@ -1080,6 +1085,8 @@
         "~/public/org/agenda/important_dates.org"
         "~/public/org/agenda/contacts.org"
         "~/public/org/agenda/work.org"
+
+
 		))
 (setq org-todo-keywords
     (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
@@ -1093,12 +1100,6 @@
 	("HOLD" . (:foreground "#d79921" :weight italic))
 	("DONE" . (:foreground "#689d6a" :weight italic))
 	("CANCELLED" . (:foreground "#9d0006" :weight italic))))
-
-(setq org-refile-targets
-	  '((nil :maxlevel . 1)
-		("~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org" :maxlevel . 1)	
-		("personal.org" :maxlevel . 1)
-		("work.org" :maxlevel . 1)))
 
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
 (add-hook 'org-mode-hook 'visual-line-mode)
@@ -2229,7 +2230,7 @@ folder, otherwise delete a word"
   :config
   (setq
    fzf/args
-   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 50%"
+   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30"
 
    fzf/executable "fzf"
    fzf/git-grep-args "-i --line-number %s"
@@ -2275,7 +2276,11 @@ folder, otherwise delete a word"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values '((eval add-hook 'before-save-hook 'time-stamp))))
+ '(safe-local-variable-values
+   '((eval setq-local jinx-languages "es_MX") (jinx-languages . es_MX)
+	 (eval setqlocal jinx-languages "es_MX")
+	 (eval setq-local org-refile-targets '((nil :maxlevel . 1)))
+	 (org-refile-targets (nil :maxlevel . 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

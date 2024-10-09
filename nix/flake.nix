@@ -14,10 +14,12 @@
       inputs.hyprland.follows = "hyprland";
     };
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
-    # Custom scripts.
+
+    # Ags
+    ags.url = "github:Aylur/ags";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-unstable, home-manager, ... }: 
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs: 
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -31,6 +33,7 @@
           modules = [ ./configuration.nix ];
           specialArgs = {
             inherit pkgs-unstable;
+            inherit inputs;
           };
         };
       };

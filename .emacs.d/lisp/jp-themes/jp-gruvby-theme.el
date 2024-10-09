@@ -486,6 +486,7 @@
    `(org-scheduled ((t (:foreground ,jp-gruvby-cyan))))
    `(org-scheduled-today ((t (:foreground ,jp-gruvby-accent))))
    `(org-hide ((t (:foreground ,jp-gruvby-bg))))
+   `(org-column ((t (:background ,jp-gruvby-bg))))
 
    ;; calendar
    `(diary ((t (:inherit warning))))

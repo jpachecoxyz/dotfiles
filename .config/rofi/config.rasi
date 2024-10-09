@@ -1,0 +1,11 @@
+configuration {
+    font:				    "Jetbrains Mono 14";
+    show-icons:				true;
+    icon-theme:				"Papirus-Dark";
+    display-drun:			"Apps";
+    drun-display-format:	"{name}";
+    scroll-method:			1;
+    disable-history:		false;
+}
+
+@theme "/home/javier/.config/rofi/themes/windows11-grid-dark.rasi"

@@ -2,7 +2,7 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ inputs, config, pkgs, pkgs-unstable, lib, ... }:
 
 let
   # Override ncmpcpp with the desired features
@@ -15,6 +15,19 @@ in
 
 {
   
+  imports = [ inputs.ags.homeManagerModules.default ];
+
+  programs.ags = {
+    enable = true;
+
+    # additional packages to add to gjs's runtime
+    extraPackages = with pkgs; [
+      gtksourceview
+      webkitgtk
+      accountsservice
+    ];
+  };
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "javier";
@@ -32,7 +45,8 @@ in
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
-    pkgs.emacsPackages.jinx
+    # pkgs.ags
+    # pkgs.sass
 
     # Development
     # language servers
@@ -89,6 +103,7 @@ in
     pkgs.fastfetch
     pkgs.wf-recorder
     pkgs.tofi
+    pkgs.rofi-wayland
     pkgs.transmission-gtk
     pkgs.wlsunset
 
@@ -132,6 +147,7 @@ in
     pkgs.htop
 
     # latex and spell
+    pkgs.emacsPackages.jinx
     pkgs.texlivePackages.xelatex-dev
     pkgs.hunspell
     pkgs.hunspellDicts.en_US
@@ -271,4 +287,6 @@ in
   #   # Run the tangle script
   #   ~/.local/bin/tangle-org.sh
   # '';
+  #
+
 }

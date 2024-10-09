@@ -58,7 +58,8 @@ alias \
 	mi="make install" \
 	m="mupdf" \
 	hserver="cd ~/webdev/jpachecoxyz.github.io/hugo/ && hugo server --forceSyncStatic --buildDrafts" \
-	cx="chmod +x"
+	cx="chmod +x" \
+	icat="kitten icat --align left"
 
 alias \
 	g="git" \
@@ -104,6 +105,7 @@ ecf(){ cd $XDG_CONFIG_HOME && find . -type f,l -printf "%h/%f\n" | \
 	--bind 'ctrl-v:execute(bat {1} >/dev/tty)'  \
 	--bind 'del:execute(rm -ri {})' \
         --preview-label 'Ctrl-v: Preview' \
+	--multi \
 	| xargs -r nvim 
 	cd - > /dev/null 2>&1 < /dev/null
 }
@@ -113,7 +115,9 @@ esc(){ cd $XDG_BIN_HOME && find . -type f,l -printf "%h/%f\n" | \
 	--prompt="Edit script file: " \
         --preview-label 'Ctrl-v: Preview' \
 	--bind 'del:execute(rm -ri {})' \
-	--bind 'ctrl-v:execute(bat {1} >/dev/tty)'  | xargs -r nvim 
+	--bind 'ctrl-v:execute(bat {1} >/dev/tty)' \
+	--multi \
+	| xargs -r nvim 
 	cd - > /dev/null 2>&1 < /dev/null
 }
 
