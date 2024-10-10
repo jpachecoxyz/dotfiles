@@ -51,7 +51,7 @@ WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
 ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 BAT_THEME="gruvbox-dark"
-GI_TYPELIB_PATH="/run/current-system/sw/lib/girepository-1.0";
+GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
 
 # Other program settings:
 DICS="/usr/share/stardict/dic/"

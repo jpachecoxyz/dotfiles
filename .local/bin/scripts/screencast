@@ -7,10 +7,12 @@
 SOUND_CARD=$(pactl list sources | awk '/Name/ && /.monitor/ {print $2}')
 
 screencast() {
+   notify-send "Screen recording"
    wf-recorder --audio=$SOUND_CARD -f /tmp/screencast.mp4
 }
 
 area() {
+   notify-send "Screen area recording"
    wf-recorder --audio=$SOUND_CARD -g "$(slurp)" -f /tmp/screencast.mp4
 }
 

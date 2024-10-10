@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 09/10/24
+# Project: exec ags
+
+ags &

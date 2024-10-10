@@ -17,6 +17,10 @@
 
     # Ags
     ags.url = "github:Aylur/ags";
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... }@inputs: 
@@ -33,7 +37,6 @@
           modules = [ ./configuration.nix ];
           specialArgs = {
             inherit pkgs-unstable;
-            inherit inputs;
           };
         };
       };
@@ -45,6 +48,7 @@
           ];
           extraSpecialArgs = {
             inherit pkgs-unstable;
+            inherit inputs;
           };
         };
       };

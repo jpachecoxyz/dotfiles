@@ -1,0 +1,49 @@
+.ws-container {
+	background-color: $surface;
+	padding: 3px;
+
+	.ws-button {
+		transition: all 200ms;
+
+		&.occupied {
+			background-color: $surface_container_low;
+			// border-top: 1px solid $primary;
+			// border-bottom: 1px solid $primary;
+
+			&.occupied-left {
+				border-bottom-left-radius: 0.8rem;
+				border-top-left-radius: 0.8rem;
+				// border-left: 1px solid $primary;
+			}
+
+			&.occupied-right {
+				border-bottom-right-radius: 0.8rem;
+				border-top-right-radius: 0.8rem;
+				// border-right: 1px solid $primary;
+			}
+		}
+
+
+		&.active {
+			.ws-button-label {
+				background-color: $primary;
+				color: $inverse_surface;
+			}
+			&.active-left .ws-button-label {
+				border-bottom-left-radius: 0.8rem;
+				border-top-left-radius: 0.8rem;
+			}
+
+			&.active-right .ws-button-label {
+				border-bottom-right-radius: 0.8rem;
+				border-top-right-radius: 0.8rem;
+			}
+
+		}
+
+		.ws-button-label {
+			min-width: 2rem;
+		}
+
+	}
+}

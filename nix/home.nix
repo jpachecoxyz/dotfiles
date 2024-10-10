@@ -11,19 +11,22 @@ let
     clockSupport = true;
   };
   whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+  libastal = inputs.astal.packages.${pkgs.system};
 in
 
 {
   
-  imports = [ inputs.ags.homeManagerModules.default ];
+  imports = [ inputs.ags.homeManagerModules.default
+            ];
 
   programs.ags = {
     enable = true;
 
     # additional packages to add to gjs's runtime
-    extraPackages = with pkgs; [
+    extraPackages = with pkgs-unstable; [
       gtksourceview
-      webkitgtk
+      # webkitgtk
+      webkitgtk_4_1
       accountsservice
     ];
   };
@@ -45,8 +48,16 @@ in
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
-    # pkgs.ags
-    # pkgs.sass
+    pkgs.dart-sass
+    pkgs.gnome.gvfs
+    pkgs.libgtop
+    pkgs.gobject-introspection
+    pkgs.cava
+    libastal.astal
+    libastal.battery
+    libastal.auth
+    libastal.apps
+    libastal.tray
 
     # Development
     # language servers
@@ -103,7 +114,6 @@ in
     pkgs.fastfetch
     pkgs.wf-recorder
     pkgs.tofi
-    pkgs.rofi-wayland
     pkgs.transmission-gtk
     pkgs.wlsunset
 
@@ -288,5 +298,4 @@ in
   #   ~/.local/bin/tangle-org.sh
   # '';
   #
-
 }

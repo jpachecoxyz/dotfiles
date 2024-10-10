@@ -124,7 +124,7 @@ output = ""
 
 # Supported values: top-left, top, top-right, right, bottom-right,
 # bottom, bottom-left, left, center.
-anchor = center
+anchor = bottom
 
 # Set the size of the exclusive zone.
 #
@@ -139,7 +139,7 @@ exclusive-zone = -1
 # Window offset from edge of screen. Only has an effect when anchored
 # to the relevant edge. Can be pixels or a percentage.
 margin-top = 0
-margin-bottom = 0
+margin-bottom = 10
 margin-left = 0
 margin-right = 0
 
