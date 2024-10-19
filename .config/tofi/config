@@ -60,7 +60,7 @@ text-cursor-corner-radius = 0
 text-cursor-thickness = 2
 
 # Prompt to display.
-prompt-text = ""
+prompt-text = "Launch: "
 
 # Extra horizontal padding between prompt and input.
 prompt-padding = 0
@@ -83,7 +83,7 @@ min-input-width = 0
 
 # Width and height of the window. Can be pixels or a percentage.
 width = 30%
-height = 35%
+height = 20%
 
 # Window background color
 #background-color = #000000
@@ -102,7 +102,7 @@ border-width = 0
 border-color = #00000000
 
 # Radius of window corners in pixels.
-corner-radius = 0
+corner-radius = 10
 
 # Padding between borders and text. Can be pixels or a percentage.
 padding-top = 8

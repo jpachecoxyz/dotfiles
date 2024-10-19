@@ -1,9 +1,6 @@
-keys.js
-style.css
-highlight.css
-lockstyle.css
 node_modules
 types
-.idea
-.editorconfig
-*.css.map
+package-lock.json
+bun.lockb
+flake.lock
+.weather

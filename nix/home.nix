@@ -25,8 +25,6 @@ in
     # additional packages to add to gjs's runtime
     extraPackages = with pkgs-unstable; [
       gtksourceview
-      # webkitgtk
-      webkitgtk_4_1
       accountsservice
     ];
   };
@@ -48,11 +46,17 @@ in
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
+
+    # AGS
     pkgs.dart-sass
     pkgs.gnome.gvfs
     pkgs.libgtop
     pkgs.gobject-introspection
     pkgs.cava
+    pkgs.bun
+    pkgs.fd
+    pkgs.hyprpicker
+    pkgs.wayshot
     libastal.astal
     libastal.battery
     libastal.auth
@@ -66,6 +70,7 @@ in
     pkgs.rye
     pkgs.lua-language-server
     pkgs.hugo
+    pkgs.javascript-typescript-langserver
     pkgs.gcc
     pkgs.neovim
     pkgs-unstable.emacs30

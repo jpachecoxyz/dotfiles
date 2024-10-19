@@ -21,14 +21,16 @@ check_connection() {
 }
 
 share() {
-    hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Uploading video to 0x0.st"
-    curl -F "file=@/tmp/screencast.mp4" https://0x0.st | wl-copy && hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video uploaded to 0x0.st"
+    # hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Uploading video to 0x0.st"
+    notify-send "Uploading..." "Uploading video to 0x0.st"
+    curl -F "file=@/tmp/screencast.mp4" https://0x0.st | wl-copy && notify-send "Upload successfully..." "Video Uploaded to 0x0.st" ## hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video uploaded to 0x0.st"
 }
 
 kill_proc(){
     pkill --signal SIGINT wf-recorder
     if [ $? -eq 0 ]; then
-        hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video saved to /tmp/screencast.mp4"
+        # hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video saved to /tmp/screencast.mp4"
+        # notify-send "Video Recorded" "Video saved to /tmp/screencast.mp4"
         exit 0
     fi
 }
@@ -44,7 +46,8 @@ ask_upload() {
         'yes')
             check_connection && share || hyprctl notify 3 5000 "rgb(ff5566)" "fontsize:15 Upload failed. Video saved in /tmp/screencast.mp4";;
         'no'|*) 
-            hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video saved to /tmp/screencast.mp4";;
+            # hyprctl notify 5 5000 "rgb(458588)" "fontsize:15 Video saved to /tmp/screencast.mp4";;
+            notify-send "Video Recorded" "Video saved to /tmp/screencast.mp4"
     esac
 }
 

@@ -1,98 +1,46 @@
-#!/nix/store/qkpz373sbggphzgmhs72l1fy3ypahrrm-home-manager-path/bin/ags -c
-import GLib from "gi://GLib";
-import "./modules/widgets/widgets.js";
-import {exec, idle, monitorFile} from "resource:///com/github/Aylur/ags/utils.js";
-import "./utils.js";
-import Bar from "./modules/bar/index.js";
-import {
-  CornerTopleft,
-  CornerTopright,
-  CornerBottomright,
-  CornerBottomleft
-} from "./modules/roundedCorner/index.js";
-import {IndicatorWidget} from "./modules/indicator/index.js";
-import Quicksettings from "./modules/quicksettings/index.js";
-import Launcher from "./modules/applauncher/index.js";
-import PowerMenu from "./modules/powermenu/index.js";
-import {PopupNotifications} from "./modules/notifications/index.js";
-import App from "resource:///com/github/Aylur/ags/app.js";
-import Gio from "gi://Gio";
-import Gdk from "gi://Gdk";
-import Notifications from "resource:///com/github/Aylur/ags/service/notifications.js";
-import ConfigService from "./modules/config/index.js";
+import GLib from "gi://GLib"
 
-/**
- * @param {import('types/@girs/gtk-3.0/gtk-3.0').Gtk.Window[]} windows
-  */
-function addWindows(windows) {
-  windows.forEach(win => App.addWindow(win));
+const main = "/tmp/asztal/main.js"
+const entry = `${App.configDir}/main.ts`
+const bundler = GLib.getenv("AGS_BUNDLER") || "bun"
+
+const v = {
+    ags: pkg.version?.split(".").map(Number) || [],
+    expect: [1, 8, 1],
 }
 
-globalThis.monitorCounter = 0;
+try {
+    switch (bundler) {
+        case "bun": await Utils.execAsync([
+            "bun", "build", entry,
+            "--outfile", main,
+            "--external", "resource://*",
+            "--external", "gi://*",
+            "--external", "file://*",
+        ]); break
 
-globalThis.toggleBars = () => {
-  App.windows.forEach(win => {
-    if(win.name?.startsWith("bar")) {
-      App.toggleWindow(win.name);
+        case "esbuild": await Utils.execAsync([
+            "esbuild", "--bundle", entry,
+            "--format=esm",
+            `--outfile=${main}`,
+            "--external:resource://*",
+            "--external:gi://*",
+            "--external:file://*",
+        ]); break
+
+        default:
+            throw `"${bundler}" is not a valid bundler`
     }
-  });
-};
 
-function addMonitorWindows(monitor) {
-  addWindows([
-    Bar(monitor),
-    CornerTopleft(monitor),
-    CornerTopright(monitor),
-    CornerBottomleft(monitor),
-    CornerBottomright(monitor),
-  ]);
-  monitorCounter++;
+    if (v.ags[1] < v.expect[1] || v.ags[2] < v.expect[2]) {
+        print(`my config needs at least v${v.expect.join(".")}, yours is v${v.ags.join(".")}`)
+        App.quit()
+    }
+
+    await import(`file://${main}`)
+} catch (error) {
+    console.error(error)
+    App.quit()
 }
 
-idle(async () => {
-  addWindows([
-    IndicatorWidget(),
-    Quicksettings(),
-    await Launcher(),
-    PowerMenu(),
-    PopupNotifications(),
-  ]);
-
-  const display = Gdk.Display.get_default();
-  for (let m = 0;  m < display?.get_n_monitors();  m++) {
-    const monitor = display?.get_monitor(m);
-    addMonitorWindows(monitor);
-  }
-
-  display?.connect("monitor-added", (disp, monitor) => {
-    addMonitorWindows(monitor);
-  });
-
-  display?.connect("monitor-removed", (disp, monitor) => {
-    App.windows.forEach(win => {
-      if(win.gdkmonitor === monitor) App.removeWindow(win);
-    });
-  });
-
-
-});
-
-
-//config
-Notifications.popupTimeout = 5000;
-Notifications.forceTimeout = true;
-
-
-App.config({
-  style: "./style.css",
-  icons: "./modules/icons",
-  closeWindowDelay: {
-    sideright: 350,
-    quicksettings: 500,
-    launcher: 500,
-    session: 350,
-    indicator: 200,
-    popupNotifications: 200,
-  },
-});
-
+export { }

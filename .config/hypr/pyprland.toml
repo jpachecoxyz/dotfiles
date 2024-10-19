@@ -15,7 +15,7 @@ plugins = [
 # margin = 50
 
 [scratchpads.term]
-animation = "fromTop"
+animation = "fromBottom"
 command = "kitty --class scratchpad"
 lazy = true
 size = "75% 60%"

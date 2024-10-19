@@ -423,10 +423,11 @@
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 (global-set-key (kbd "<f12>") 'jp-themes-load-random)
-(global-set-key (kbd "M-q") 'kill-current-buffer)
+;; (global-set-key (kbd "M-q") 'kill-current-buffer)
 (with-eval-after-load 'evil
   (define-key evil-normal-state-map (kbd "M-,") 'previous-buffer)
-  (define-key evil-normal-state-map (kbd "M-.") 'next-buffer))
+  (define-key evil-normal-state-map (kbd "M-.") 'next-buffer)
+  (define-key evil-normal-state-map (kbd "M-q") 'kill-current-buffer))
 (setq org-display-inline-images t)
 (setq org-image-actual-width (list 550))
 (setq org-confirm-babel-evaluate nil)
@@ -2277,9 +2278,7 @@ folder, otherwise delete a word"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values
-   '((eval setq-local jinx-languages "es_MX") (jinx-languages . es_MX)
-	 (eval setqlocal jinx-languages "es_MX")
-	 (eval setq-local org-refile-targets '((nil :maxlevel . 1)))
+   '((eval setq-local org-refile-targets '((nil :maxlevel . 1)))
 	 (org-refile-targets (nil :maxlevel . 1)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
