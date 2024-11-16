@@ -921,25 +921,24 @@
 (if lpr-windows-system
 	(setenv "DICPATH"
 			(concat (getenv "HOME") ".emacs.d/lang")))
+(setq ispell-hunspell-dict-paths-alist
+	  '(("en_US" "~/.emacs.d/lang/en_US.aff")
+		("es_MX" "~/.emacs.d/lang/es_MX.aff")))
 
-;; (setq ispell-hunspell-dict-paths-alist
-;; 	  '(("en_US" "~/.emacs.d/lang/en_US.aff")
-;; 		("es_MX" "~/.emacs.d/lang/es_MX.aff")))
+(if lpr-windows-system
+	;;; Windows
+	(setq ispell-local-dictionary-alist
+		  ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
+		  ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
+		  '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+			("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
+	;;; Linux
+  (setq ispell-local-dictionary-alist
+		'(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+		  ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
 
-;; (if lpr-windows-system
-;; 	;;; Windows
-;; 	(setq ispell-local-dictionary-alist
-;; 		  ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
-;; 		  ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
-;; 		  '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
-;; 			("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
-;; 	;;; Linux
-;;   (setq ispell-local-dictionary-alist
-;; 		'(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-;; 		  ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
-
-;; (setq ispell-program-name "hunspell")
-;; (setq ispell-local-dictionary "en_US")
+(setq ispell-program-name "hunspell")
+(setq ispell-local-dictionary "en_US")
 
 ;; ;; flyspell spellcheck on the fly...
 ;; (use-package flyspell
@@ -967,18 +966,18 @@
 
 ;; ;; Change betwen English and Spanish, 
 ;; ;; English is he default.
-;; (defvar ispell-current-dictionary "en_US")
+(defvar ispell-current-dictionary "en_US")
 
-;; (defun toggle-ispell-dictionary ()
-;;   (interactive)
-;;   (if (string= ispell-current-dictionary "en_US")
-;;       (progn
-;;         (setq ispell-current-dictionary "es_MX")
-;;         (message "Switched to Spanish dictionary"))
-;;     (progn
-;;       (setq ispell-current-dictionary "en_US")
-;;       (message "Switched to English dictionary")))
-;;   (ispell-change-dictionary ispell-current-dictionary))
+(defun toggle-ispell-dictionary ()
+  (interactive)
+  (if (string= ispell-current-dictionary "en_US")
+      (progn
+        (setq ispell-current-dictionary "es_MX")
+        (message "Switched to Spanish dictionary"))
+    (progn
+      (setq ispell-current-dictionary "en_US")
+      (message "Switched to English dictionary")))
+  (ispell-change-dictionary ispell-current-dictionary))
 
 ;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
 
@@ -1207,7 +1206,7 @@
 
 		("W" "Work Agenda"
 		 ,custom-daily-agenda
-		 ((org-agenda-files '("~/public/org/agenda/work.org")
+		 ((org-agenda-files '("~/docs/org/castlight/PMM.org")
  							(org-agenda-fontify-priorities nil)
 							(org-agenda-dim-blocked-tasks nil))))
 		
@@ -1508,6 +1507,16 @@ See `org-capture-templates' for more information."
 (with-eval-after-load "org-tree-slide"
   (define-key org-tree-slide-mode-map (kbd "<f1>") 'org-tree-slide-move-previous-tree)
   (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
+
+(use-package org-rainbow-tags
+  :ensure t
+  :custom
+  (org-rainbow-tags-hash-start-index 10)
+  (org-rainbow-tags-extra-face-attributes
+   ;; Default is '(:weight 'bold)
+   '(:inverse-video t :box t :weight 'bold))
+  :hook
+  (org-mode . org-rainbow-tags-mode))
 
 (use-package pulsar
   :config
@@ -2272,23 +2281,15 @@ folder, otherwise delete a word"
     (when window
       ;; Delete the window where fzf was opened
       (delete-window window))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   '((eval setq-local org-refile-targets '((nil :maxlevel . 1)))
-	 (org-refile-targets (nil :maxlevel . 1)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
+
+(use-package eee
+  :load-path "~/.local/src/eee.el/"
+  :config
+  
+  ;; Should have wezterm or alacritty installed, more terminal application is supporting...
+;; Issues and pull requests are welcome
+  (setq ee-terminal-command "kitty --class scratchpad")
+
+  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi
+)
+  )

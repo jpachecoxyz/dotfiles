@@ -46,6 +46,8 @@ in
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
+    pkgs.nwg-dock-hyprland
+    pkgs.nwg-drawer
 
     # AGS
     pkgs.dart-sass
@@ -57,11 +59,11 @@ in
     pkgs.fd
     pkgs.hyprpicker
     pkgs.wayshot
-    libastal.astal
-    libastal.battery
-    libastal.auth
-    libastal.apps
-    libastal.tray
+    # libastal.astal
+    # libastal.battery
+    # libastal.auth
+    # libastal.apps
+    # libastal.tray
 
     # Development
     # language servers
@@ -126,6 +128,7 @@ in
     pkgs.qutebrowser
     pkgs.firefox
     pkgs.google-chrome
+    pkgs.nyxt
 
     # multimedia
     myNcmpcpp
