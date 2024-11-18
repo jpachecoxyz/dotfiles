@@ -1,7 +1,7 @@
 #+title: Emacs configuration File
 #+author: Javier Pacheco
 #+email: javier@jpacheco.xyz
-#+description: My Custom Emacs configuration.
+#+description: My custom emacs configuration.
 #+startup: content
 
 * early-init.el
@@ -24,7 +24,7 @@
     (if (eq current-theme 'jp-eagle)
         (progn
           ;; (disable-theme 'jp-eagle)
-          (jp-themes-select 'jp-gruvby)
+          (jp-themes-select 'miasma)
           (message "Dark theme loaded."))
       (progn
         (jp-themes-select 'jp-eagle)
@@ -33,7 +33,8 @@
 (mapc #'disable-theme custom-enabled-themes)
 ;; Load the theme of choice:
 ;; (load-theme 'jp-darkvenom :no-confirm)
-(load-theme 'jp-gruvby :no-confirm)
+;; (load-theme 'jp-gruvby :no-confirm)
+(load-theme 'miasma :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 (global-set-key (kbd "<f10>") 'jp/toggle-theme)
@@ -855,8 +856,8 @@
   :ensure t
   :defer t
   :custom
-  (olivetti-body-width 0.7))
-  ;; :hook (org-mode . olivetti-mode))
+  (olivetti-body-width 0.7)
+  :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
 #+END_SRC
@@ -1786,7 +1787,7 @@ See `org-capture-templates' for more information."
   (hide-lines-matching "#\\+end_src"))
 
 (defun terror/slide-end ()
-  (global-hl-line-mode 1)
+  (global-hl-line-mode -1)
   (setq text-scale-mode-amount 0)
   (text-scale-mode -1)
   (set-frame-parameter (selected-frame)
@@ -1818,10 +1819,9 @@ See `org-capture-templates' for more information."
 (use-package org-rainbow-tags
   :ensure t
   :custom
-  (org-rainbow-tags-hash-start-index 10)
+  (org-rainbow-tags-hash-start-index 20)
   (org-rainbow-tags-extra-face-attributes
-   ;; Default is '(:weight 'bold)
-   '(:inverse-video t :box t :weight 'bold))
+   '(:inverse-video nil :box nil :weight 'bold))
   :hook
   (org-mode . org-rainbow-tags-mode))
 #+END_SRC
@@ -2508,7 +2508,7 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	"o -" '(dired-jump :wk "Dired jump to current")
+	"o -" '(ee-yazi :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
@@ -2671,14 +2671,8 @@ folder, otherwise delete a word"
 * eee.el
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package eee
-  :load-path "~/.local/src/eee.el/"
+  :load-path "~/.emacs.d/lisp/eee.el"
   :config
-  
-  ;; Should have wezterm or alacritty installed, more terminal application is supporting...
-;; Issues and pull requests are welcome
-  (setq ee-terminal-command "kitty --class scratchpad")
-
-  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi
-)
-  )
+  (setq ee-terminal-command "kitty")
+  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi))
 #+end_src

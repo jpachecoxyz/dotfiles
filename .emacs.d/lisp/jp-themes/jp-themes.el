@@ -27,6 +27,7 @@
 	jp-elea-dark
 	jp-owl
 	jp-adwaita-dark
+	miasma
 	)
   "List of symbols with the dark jp themes.")
 

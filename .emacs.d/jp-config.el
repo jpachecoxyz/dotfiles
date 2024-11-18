@@ -602,8 +602,8 @@
   :ensure t
   :defer t
   :custom
-  (olivetti-body-width 0.7))
-  ;; :hook (org-mode . olivetti-mode))
+  (olivetti-body-width 0.7)
+  :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
 
@@ -1481,7 +1481,7 @@ See `org-capture-templates' for more information."
   (hide-lines-matching "#\\+end_src"))
 
 (defun terror/slide-end ()
-  (global-hl-line-mode 1)
+  (global-hl-line-mode -1)
   (setq text-scale-mode-amount 0)
   (text-scale-mode -1)
   (set-frame-parameter (selected-frame)
@@ -1511,10 +1511,9 @@ See `org-capture-templates' for more information."
 (use-package org-rainbow-tags
   :ensure t
   :custom
-  (org-rainbow-tags-hash-start-index 10)
+  (org-rainbow-tags-hash-start-index 20)
   (org-rainbow-tags-extra-face-attributes
-   ;; Default is '(:weight 'bold)
-   '(:inverse-video t :box t :weight 'bold))
+   '(:inverse-video nil :box nil :weight 'bold))
   :hook
   (org-mode . org-rainbow-tags-mode))
 
@@ -2149,7 +2148,7 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	"o -" '(dired-jump :wk "Dired jump to current")
+	"o -" '(ee-yazi :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
@@ -2283,13 +2282,27 @@ folder, otherwise delete a word"
       (delete-window window))))
 
 (use-package eee
-  :load-path "~/.local/src/eee.el/"
+  :load-path "~/.emacs.d/lisp/eee.el"
   :config
-  
-  ;; Should have wezterm or alacritty installed, more terminal application is supporting...
-;; Issues and pull requests are welcome
-  (setq ee-terminal-command "kitty --class scratchpad")
-
-  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi
-)
-  )
+  (setq ee-terminal-command "kitty")
+  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1))
+	 (eval setq-local org-refile-targets '((nil :maxlevel . 1))))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed)))))

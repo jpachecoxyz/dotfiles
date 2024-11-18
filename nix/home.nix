@@ -12,11 +12,13 @@ let
   };
   whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
   libastal = inputs.astal.packages.${pkgs.system};
+
 in
 
 {
   
   imports = [ inputs.ags.homeManagerModules.default
+              inputs.textfox.homeManagerModules.default 
             ];
 
   programs.ags = {
@@ -27,6 +29,31 @@ in
       gtksourceview
       accountsservice
     ];
+  };
+
+  textfox = {
+      enable = true;
+      profile = "javier";
+      config = {
+        background = {
+          color = "#1e1e1e";
+        };
+        border = {
+          color = "#458588";
+          width = "2px";
+          transition = "1.0s ease";
+          radius = "3px";
+        };
+        displayHorizontalTabs = true;
+        font = { 
+          family = "Iosevka";
+          size = "15px";
+          accent = "#458588";
+        };
+        sidebery = {
+          margin = "1.0rem";
+        };
+      };
   };
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -46,8 +73,6 @@ in
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
-    pkgs.nwg-dock-hyprland
-    pkgs.nwg-drawer
 
     # AGS
     pkgs.dart-sass
@@ -59,6 +84,7 @@ in
     pkgs.fd
     pkgs.hyprpicker
     pkgs.wayshot
+    pkgs.gjs
     # libastal.astal
     # libastal.battery
     # libastal.auth
@@ -143,6 +169,7 @@ in
     pkgs.obs-studio
     pkgs.telegram-desktop
     pkgs.kdenlive
+    pkgs-unstable.gowall
 
     # graphics
     pkgs.nsxiv
@@ -163,6 +190,7 @@ in
     pkgs.p7zip
     pkgs.killall
     pkgs.htop
+    pkgs.btop
 
     # latex and spell
     pkgs.emacsPackages.jinx
