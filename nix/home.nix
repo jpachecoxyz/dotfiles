@@ -17,19 +17,20 @@ in
 
 {
   
-  imports = [ inputs.ags.homeManagerModules.default
+  imports = [ 
+  # inputs.ags.homeManagerModules.default
               inputs.textfox.homeManagerModules.default 
             ];
 
-  programs.ags = {
-    enable = true;
-
-    # additional packages to add to gjs's runtime
-    extraPackages = with pkgs-unstable; [
-      gtksourceview
-      accountsservice
-    ];
-  };
+  # programs.ags = {
+  #   enable = true;
+  #
+  #   # additional packages to add to gjs's runtime
+  #   extraPackages = with pkgs-unstable; [
+  #     gtksourceview
+  #     accountsservice
+  #   ];
+  # };
 
   textfox = {
       enable = true;
@@ -73,6 +74,10 @@ in
     pkgs.hyprlock
     pkgs.pyprland
     pkgs.swww
+    pkgs.ags
+    pkgs-unstable.gtksourceview
+    pkgs-unstable.accountsservice
+    pkgs.libdbusmenu-gtk3
 
     # AGS
     pkgs.dart-sass
@@ -94,7 +99,7 @@ in
     # Development
     # language servers
     pkgs.pyright
-    pkgs.poetry
+    pkgs.ruff
     pkgs.rye
     pkgs.lua-language-server
     pkgs.hugo
@@ -154,7 +159,7 @@ in
     pkgs.qutebrowser
     pkgs.firefox
     pkgs.google-chrome
-    pkgs.nyxt
+    # pkgs.nyxt
 
     # multimedia
     myNcmpcpp

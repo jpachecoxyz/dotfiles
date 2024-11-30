@@ -1,4 +1,4 @@
-#+title: Emacs configuration File
+#+title: jpacheco.xyz Emacs configuration
 #+author: Javier Pacheco
 #+email: javier@jpacheco.xyz
 #+description: My custom emacs configuration.
@@ -734,10 +734,47 @@
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
 
-(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                       ("#+END_SRC" . "†")
-                                       ("#+begin_src" . "†")
-                                       ("#+end_src" . "†")))
+;; ("#+END_SRC" . "†")
+;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "{")
+;;                                        ("#+END_SRC" . "}")
+;;                                        ("#+begin_src" . "{")
+;;                                        ("#+end_src" . "}")))
+
+(setq-default prettify-symbols-alist '(("TODO" . "")
+	                           ("WAIT" . "")        
+							   ("DONE" . "")
+							   ;; ("[ ]" . "")
+							   ;; ("[X]" . "")
+							   ;; ("[-]" . "")
+							   ("#+BEGIN_SRC" . "")
+							   ("#+begin_src" . "")
+							   ("#+END_SRC" . "")
+							   ("#+end_src" . "")
+							   (":PROPERTIES:" . "")
+							   (":END:" . "―")
+							   ("#+STARTUP:" . "")
+							   ("#+startup:" . "")
+							   ("#+TITLE: " . "")
+							   ("#+title: " . "")
+							   ("#+RESULTS:" . "")
+							   ("#+results:" . "")
+							   ("#+NAME:" . "")
+							   ("#+name:" . "")
+							   ("#+EMAIL:" . "󰇮")
+							   ("#+email:" . "󰇮")
+							   ("#+DESCRIPTION:" . "")
+							   ("#+description:" . "")
+							   ("#+OPTIONS:" . "󰒕")
+							   ("#+options:" . "󰒕")
+							   ("#+setup:" . "")
+							   ("#+SETUP:" . "")
+							   ("#+FILETAGS:" . "")
+							   ("#+filetags:" . "")
+							   ("#+AUTHOR:" . "")
+							   ("#+author:" . "")
+							   (":Effort:" . "")
+							   ("SCHEDULED:" . "")
+							   ("DEADLINE:" . "")))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
@@ -1282,7 +1319,8 @@
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
-  (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
+  ;; (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
+  (org-bullets-bullet-list '("" "" "" "" "" "" "")))
 
 (use-package org-download
   :ensure t
@@ -1343,7 +1381,7 @@
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " †")
+(setq org-ellipsis " ")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
  '(;;Places
@@ -2674,5 +2712,6 @@ folder, otherwise delete a word"
   :load-path "~/.emacs.d/lisp/eee.el"
   :config
   (setq ee-terminal-command "kitty")
-  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi))
+  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
+  (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
 #+end_src

@@ -489,10 +489,47 @@
       scroll-conservatively 10000
       scroll-preserve-screen-position 1)
 
-(setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "†")
-                                       ("#+END_SRC" . "†")
-                                       ("#+begin_src" . "†")
-                                       ("#+end_src" . "†")))
+;; ("#+END_SRC" . "†")
+;; (setq-default prettify-symbols-alist '(("#+BEGIN_SRC" . "{")
+;;                                        ("#+END_SRC" . "}")
+;;                                        ("#+begin_src" . "{")
+;;                                        ("#+end_src" . "}")))
+
+(setq-default prettify-symbols-alist '(("TODO" . "")
+	                           ("WAIT" . "")        
+							   ("DONE" . "")
+							   ;; ("[ ]" . "")
+							   ;; ("[X]" . "")
+							   ;; ("[-]" . "")
+							   ("#+BEGIN_SRC" . "")
+							   ("#+begin_src" . "")
+							   ("#+END_SRC" . "")
+							   ("#+end_src" . "")
+							   (":PROPERTIES:" . "")
+							   (":END:" . "―")
+							   ("#+STARTUP:" . "")
+							   ("#+startup:" . "")
+							   ("#+TITLE: " . "")
+							   ("#+title: " . "")
+							   ("#+RESULTS:" . "")
+							   ("#+results:" . "")
+							   ("#+NAME:" . "")
+							   ("#+name:" . "")
+							   ("#+EMAIL:" . "󰇮")
+							   ("#+email:" . "󰇮")
+							   ("#+DESCRIPTION:" . "")
+							   ("#+description:" . "")
+							   ("#+OPTIONS:" . "󰒕")
+							   ("#+options:" . "󰒕")
+							   ("#+setup:" . "")
+							   ("#+SETUP:" . "")
+							   ("#+FILETAGS:" . "")
+							   ("#+filetags:" . "")
+							   ("#+AUTHOR:" . "")
+							   ("#+author:" . "")
+							   (":Effort:" . "")
+							   ("SCHEDULED:" . "")
+							   ("DEADLINE:" . "")))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
@@ -995,7 +1032,8 @@
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
-  (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
+  ;; (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
+  (org-bullets-bullet-list '("" "" "" "" "" "" "")))
 
 (use-package org-download
   :ensure t
@@ -1054,7 +1092,7 @@
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " †")
+(setq org-ellipsis " ")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
  '(;;Places
@@ -2285,15 +2323,38 @@ folder, otherwise delete a word"
   :load-path "~/.emacs.d/lisp/eee.el"
   :config
   (setq ee-terminal-command "kitty")
-  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi))
+  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
+  (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   '((eval when (fboundp 'rainbow-mode) (rainbow-mode 1))
-	 (eval setq-local org-refile-targets '((nil :maxlevel . 1))))))
+ '(package-selected-packages
+   '(aggressive-indent all-the-icons-completion all-the-icons-dired auctex
+					   auto-package-update buffer-flip cape consult-dir
+					   consult-flycheck corfu counsel-projectile dap-mode
+					   diminish dired-open dired-rainbow dired-ranger
+					   dired-sidebar doom-modeline ellama evil-collection
+					   evil-goggles evil-owl evil-surround
+					   evil-terminal-cursor-changer fontaine form-feed fzf
+					   general git-gutter-fringe git-timemachine hide-lines
+					   hide-mode-line highlight-indent-guides highlight-thing
+					   hl-todo htmlize ivy-yasnippet jinx js2-mode key-chord
+					   keycast kind-icon ligature lorem-ipsum lsp-pyright lsp-ui
+					   magit magit-delta major-mode-hydra marginalia
+					   miasma-theme mini-frame nerd-icons-completion nix-mode
+					   no-littering nyan-mode olivetti omtose-phellack-themes
+					   orderless org-auto-tangle org-bullets org-contacts
+					   org-download org-fancy-priorities org-mime
+					   org-rainbow-tags org-roam-ui org-sidebar org-tree-slide
+					   ox-hugo page-break-lines password-store pdf-tools
+					   peep-dired pipenv popper pretty-mode pulsar python-mode
+					   rainbow-delimiters rainbow-identifiers rainbow-mode
+					   restart-emacs shackle spaceink-theme telega toc-org
+					   tree-sitter-langs treesit-ispell typescript-mode undohist
+					   vertico-posframe vundo which-key yasnippet-capf
+					   yasnippet-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

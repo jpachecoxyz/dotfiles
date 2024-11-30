@@ -40,14 +40,41 @@
   "Splash screen title"
   :type 'string :group 'nano-splash)
 
-(defcustom nano-splash-subtitle "“First, solve the problem. Then, write the code.”"
-  "Splash screen subtitle"
-  :type 'string :group 'nano-splash)
+(defcustom nano-splash-quotes
+  '("Automation is good, so long as you know exactly where to put the machine. – Eliyahu Goldratt"
+    "Anything that can be automated will be automated. – Shoshana Zuboff"
+    "Automation applied to an efficient operation will magnify the efficiency. – Bill Gates"
+    "The first rule of any technology used in a business is that automation applied to an efficient operation will magnify the efficiency. – Bill Gates"
+    "Automation doesn’t mean replacing humans. It means freeing them to work smarter. – Unknown"
+    "Focus on automating tasks, not roles. – Unknown"
+    "You can’t automate creativity, but you can free up time for it through automation. – Unknown"
+    "By automating processes, you create more time for innovation. – Unknown"
+    "The real power of automation lies in its ability to eliminate redundancy and error. – Unknown"
+    "Automation is the way to simplify your work, not your thinking. – Unknown"
+    "Programs must be written for people to read, and only incidentally for machines to execute. – Harold Abelson and Gerald Jay Sussman"
+    "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. – Martin Fowler"
+    "Programming isn’t about what you know; it’s about what you can figure out. – Chris Pine"
+    "The best error message is the one that never shows up. – Thomas Fuchs"
+    "Give a man a program, frustrate him for a day. Teach a man to program, frustrate him for a lifetime. – Muhammad Waseem"
+    "First, solve the problem. Then, write the code. – John Johnson"
+    "Code is like humor. When you have to explain it, it’s bad. – Cory House"
+    "The only way to learn a new programming language is by writing programs in it. – Dennis Ritchie"
+    "Deleted code is debugged code. – Jeff Sickel"
+    "Programming is the art of algorithm design and the craft of debugging errant code. – Ellen Ullman")
+  "List of quotes for the splash screen subtitle."
+  :type '(repeat string)
+  :group 'nano-splash)
 
-(defcustom nano-splash-duration 5
+(defun nano-splash-randomize-subtitle ()
+  "Randomly set `nano-splash-subtitle` from `nano-splash-quotes`."
+  (setq nano-splash-subtitle (nth (random (length nano-splash-quotes)) nano-splash-quotes)))
+
+;; Call the function during initialization
+(nano-splash-randomize-subtitle)
+
+(defcustom nano-splash-duration 10
   "Splash screen duration (in seconds)"
   :type 'float :group 'nano-splash)
-
 
 (defun nano-splash ()
   "Nano Emacs splash screen"

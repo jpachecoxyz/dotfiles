@@ -199,10 +199,10 @@ in
   system.stateVersion = "24.05"; # Did you read the comment?
 
   # Enable ZRAM for swap
-  zramSwap = {
-    enable = true;
-    memoryPercent = 100;
-    algorithm = "zstd";
-  };
+  # zramSwap = {
+  #   enable = true;
+  #   memoryPercent = 100;
+  #   algorithm = "zstd";
+  # };
 
 }

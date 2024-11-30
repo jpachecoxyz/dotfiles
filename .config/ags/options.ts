@@ -157,7 +157,7 @@ const options = mkOptions(OPTIONS, {
             max: opt(6),
             favorites: opt([
                 [
-                    "Kitty",
+                    "terminal",
                     "Emacs",
                     "firefox",
                 ],

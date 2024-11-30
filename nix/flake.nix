@@ -16,7 +16,7 @@
     # emacs-overlay.url = "github:nix-community/emacs-overlay";
 
     # Ags
-    ags.url = "github:Aylur/ags";
+    # ags.url = "github:Aylur/ags";
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";

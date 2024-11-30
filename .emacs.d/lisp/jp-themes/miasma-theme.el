@@ -112,10 +112,10 @@
    `(mode-line-inactive ((,class (:foreground ,miasma-light-gray :background ,miasma-graphite))))
 
    ;;;;; org
-   `(org-level-1 ((t (:weight bold))))
-   `(org-level-2 ((t (:weight bold))))
-   `(org-level-3 ((t (:weight bold))))
-   `(org-level-4 ((t (:weight bold))))
+   `(org-level-1 ((t (:weight bold :foreground ,miasma-copper ))))
+   `(org-level-2 ((t (:weight bold :foreground ,miasma-reseda ))))
+   `(org-level-3 ((t (:weight bold :foreground ,miasma-copper ))))
+   `(org-level-4 ((t (:weight bold :foreground ,miasma-reseda ))))
    `(org-done ((,class (:foreground ,miasma-olive :weight bold))))
    `(org-headline-done ((,class (:foreground ,miasma-dark-gray :weight bold))))
    `(org-headline-todo ((,class (:foreground ,miasma-eucalyptus :weight bold))))
@@ -127,11 +127,11 @@
 								   :box (:line-width 2 :color ,miasma-graphite
 													 :style released-button)))))
    `(org-ellipsis ((t (:underline nil))))
-   `(org-block ((t (:background ,miasma-charcoal))))
+   `(org-block ((t (:background ,miasma-onyx))))
 
    ;;;;; line numbers
    `(line-number ((,class (:inherit default :foreground ,miasma-dark-gray))))
-   `(line-number-current-line ((,class (:background ,miasma-obsidian :inherit default))))
+   `(line-number-current-line ((,class (:background ,miasma-charcoal :inherit default))))
 
    ;;;; Third-party packages
 
