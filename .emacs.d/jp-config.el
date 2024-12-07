@@ -495,9 +495,7 @@
 ;;                                        ("#+begin_src" . "{")
 ;;                                        ("#+end_src" . "}")))
 
-(setq-default prettify-symbols-alist '(("TODO" . "")
-	                           ("WAIT" . "")        
-							   ("DONE" . "")
+(setq-default prettify-symbols-alist '(
 							   ;; ("[ ]" . "")
 							   ;; ("[X]" . "")
 							   ;; ("[-]" . "")
@@ -505,31 +503,8 @@
 							   ("#+begin_src" . "")
 							   ("#+END_SRC" . "")
 							   ("#+end_src" . "")
-							   (":PROPERTIES:" . "")
-							   (":END:" . "―")
-							   ("#+STARTUP:" . "")
-							   ("#+startup:" . "")
 							   ("#+TITLE: " . "")
-							   ("#+title: " . "")
-							   ("#+RESULTS:" . "")
-							   ("#+results:" . "")
-							   ("#+NAME:" . "")
-							   ("#+name:" . "")
-							   ("#+EMAIL:" . "󰇮")
-							   ("#+email:" . "󰇮")
-							   ("#+DESCRIPTION:" . "")
-							   ("#+description:" . "")
-							   ("#+OPTIONS:" . "󰒕")
-							   ("#+options:" . "󰒕")
-							   ("#+setup:" . "")
-							   ("#+SETUP:" . "")
-							   ("#+FILETAGS:" . "")
-							   ("#+filetags:" . "")
-							   ("#+AUTHOR:" . "")
-							   ("#+author:" . "")
-							   (":Effort:" . "")
-							   ("SCHEDULED:" . "")
-							   ("DEADLINE:" . "")))
+							   ("#+title: " . "")))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
@@ -2277,7 +2252,12 @@ folder, otherwise delete a word"
   :config
   (setq
    fzf/args
-   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30"
+   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,
+    info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,
+    header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9
+    --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ '
+    --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list'
+    --info='right' --height 30"
 
    fzf/executable "fzf"
    fzf/git-grep-args "-i --line-number %s"
@@ -2325,45 +2305,3 @@ folder, otherwise delete a word"
   (setq ee-terminal-command "kitty")
   (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(aggressive-indent all-the-icons-completion all-the-icons-dired auctex
-					   auto-package-update buffer-flip cape consult-dir
-					   consult-flycheck corfu counsel-projectile dap-mode
-					   diminish dired-open dired-rainbow dired-ranger
-					   dired-sidebar doom-modeline ellama evil-collection
-					   evil-goggles evil-owl evil-surround
-					   evil-terminal-cursor-changer fontaine form-feed fzf
-					   general git-gutter-fringe git-timemachine hide-lines
-					   hide-mode-line highlight-indent-guides highlight-thing
-					   hl-todo htmlize ivy-yasnippet jinx js2-mode key-chord
-					   keycast kind-icon ligature lorem-ipsum lsp-pyright lsp-ui
-					   magit magit-delta major-mode-hydra marginalia
-					   miasma-theme mini-frame nerd-icons-completion nix-mode
-					   no-littering nyan-mode olivetti omtose-phellack-themes
-					   orderless org-auto-tangle org-bullets org-contacts
-					   org-download org-fancy-priorities org-mime
-					   org-rainbow-tags org-roam-ui org-sidebar org-tree-slide
-					   ox-hugo page-break-lines password-store pdf-tools
-					   peep-dired pipenv popper pretty-mode pulsar python-mode
-					   rainbow-delimiters rainbow-identifiers rainbow-mode
-					   restart-emacs shackle spaceink-theme telega toc-org
-					   tree-sitter-langs treesit-ispell typescript-mode undohist
-					   vertico-posframe vundo which-key yasnippet-capf
-					   yasnippet-snippets)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed)))))

@@ -215,6 +215,9 @@ in
     pkgs.pass
     pkgs.gnupg
 
+    # Design
+    pkgs-unstable.freecad-wayland
+
     # Custom packages
     whdd
 

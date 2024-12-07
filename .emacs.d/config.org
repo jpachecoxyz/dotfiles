@@ -740,9 +740,7 @@
 ;;                                        ("#+begin_src" . "{")
 ;;                                        ("#+end_src" . "}")))
 
-(setq-default prettify-symbols-alist '(("TODO" . "")
-	                           ("WAIT" . "")        
-							   ("DONE" . "")
+(setq-default prettify-symbols-alist '(
 							   ;; ("[ ]" . "")
 							   ;; ("[X]" . "")
 							   ;; ("[-]" . "")
@@ -750,31 +748,8 @@
 							   ("#+begin_src" . "")
 							   ("#+END_SRC" . "")
 							   ("#+end_src" . "")
-							   (":PROPERTIES:" . "")
-							   (":END:" . "―")
-							   ("#+STARTUP:" . "")
-							   ("#+startup:" . "")
 							   ("#+TITLE: " . "")
-							   ("#+title: " . "")
-							   ("#+RESULTS:" . "")
-							   ("#+results:" . "")
-							   ("#+NAME:" . "")
-							   ("#+name:" . "")
-							   ("#+EMAIL:" . "󰇮")
-							   ("#+email:" . "󰇮")
-							   ("#+DESCRIPTION:" . "")
-							   ("#+description:" . "")
-							   ("#+OPTIONS:" . "󰒕")
-							   ("#+options:" . "󰒕")
-							   ("#+setup:" . "")
-							   ("#+SETUP:" . "")
-							   ("#+FILETAGS:" . "")
-							   ("#+filetags:" . "")
-							   ("#+AUTHOR:" . "")
-							   ("#+author:" . "")
-							   (":Effort:" . "")
-							   ("SCHEDULED:" . "")
-							   ("DEADLINE:" . "")))
+							   ("#+title: " . "")))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
@@ -2643,7 +2618,12 @@ folder, otherwise delete a word"
   :config
   (setq
    fzf/args
-   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30"
+   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,
+    info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,
+    header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9
+    --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ '
+    --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list'
+    --info='right' --height 30"
 
    fzf/executable "fzf"
    fzf/git-grep-args "-i --line-number %s"

@@ -1,9 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /tmp/pymetrics
-    - /home/javier/pics/art
     - /home/javier/webdev/jpachecoxyz.github.io
+    - /home/javier/pics/art
     - /home/javier/.local/src/hugo-theme-cactus
     - /home/javier/.dotfiles/.local/src/hugo-theme-cactus
     - /home/javier/webdev/blog
