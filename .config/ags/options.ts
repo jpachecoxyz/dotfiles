@@ -4,7 +4,7 @@ import { icon } from "lib/utils"
 import icons from "lib/icons"
 
 const options = mkOptions(OPTIONS, {
-    autotheme: opt(false),
+    autotheme: opt(true),
 
     wallpaper: {
         resolution: opt<import("service/wallpaper").Resolution>(1920),
@@ -51,8 +51,8 @@ const options = mkOptions(OPTIONS, {
 
         shadows: opt(true),
         padding: opt(7),
-        spacing: opt(12),
-        radius: opt(11),
+        spacing: opt(5),
+        radius: opt(5),
     },
 
     transition: opt(200),
@@ -63,9 +63,9 @@ const options = mkOptions(OPTIONS, {
     },
 
     bar: {
-        flatButtons: opt(true),
+        flatButtons: opt(false),
         position: opt<"top" | "bottom">("top"),
-        corners: opt(50),
+        corners: opt(0),
         transparent: opt(false),
         layout: {
             start: opt<Array<import("widget/bar/Bar").BarWidget>>([
@@ -113,7 +113,7 @@ const options = mkOptions(OPTIONS, {
             low: opt(30),
         },
         workspaces: {
-            workspaces: opt(7),
+            workspaces: opt(10),
         },
         taskbar: {
             iconSize: opt(0),
@@ -157,7 +157,7 @@ const options = mkOptions(OPTIONS, {
             max: opt(6),
             favorites: opt([
                 [
-                    "terminal",
+                    "kitty",
                     "Emacs",
                     "firefox",
                 ],
@@ -167,7 +167,7 @@ const options = mkOptions(OPTIONS, {
 
     overview: {
         scale: opt(9),
-        workspaces: opt(7),
+        workspaces: opt(10),
         monochromeIcon: opt(true),
     },
 
@@ -182,7 +182,7 @@ const options = mkOptions(OPTIONS, {
 
     quicksettings: {
         avatar: {
-            image: opt(`/home/javier/jp8.jpg`),
+            image: opt(`/home/javier/.config/hypr/me.jpg`),
             size: opt(70),
         },
         width: opt(380),
@@ -233,7 +233,7 @@ const options = mkOptions(OPTIONS, {
     hyprland: {
         gaps: opt(2.4),
         inactiveBorder: opt("#282828"),
-        gapsWhenOnly: opt(false),
+        gapsWhenOnly: opt(true),
     },
 })
 

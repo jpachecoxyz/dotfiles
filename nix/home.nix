@@ -136,7 +136,7 @@ in
     pkgs.cliphist
     pkgs.grimblast
     pkgs.mako
-    pkgs.foot
+    # pkgs.foot
     pkgs.kitty
     pkgs.cron
     pkgs.tree
@@ -154,6 +154,7 @@ in
     pkgs.tofi
     pkgs.transmission-gtk
     pkgs.wlsunset
+    pkgs-unstable.matugen
 
     # Browser / web
     pkgs.qutebrowser
@@ -196,6 +197,8 @@ in
     pkgs.killall
     pkgs.htop
     pkgs.btop
+    pkgs.ntfs3g
+    pkgs.fuse
 
     # latex and spell
     pkgs.emacsPackages.jinx

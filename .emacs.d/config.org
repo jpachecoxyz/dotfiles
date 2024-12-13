@@ -673,6 +673,7 @@
   (define-key evil-normal-state-map (kbd "M-,") 'previous-buffer)
   (define-key evil-normal-state-map (kbd "M-.") 'next-buffer)
   (define-key evil-normal-state-map (kbd "M-q") 'kill-current-buffer))
+(define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
 (setq org-display-inline-images t)
 (setq org-image-actual-width (list 550))
 (setq org-confirm-babel-evaluate nil)

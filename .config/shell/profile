@@ -11,7 +11,7 @@ set -o allexport
 # Adds `~/.local/bin` to $PATH
 PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
 PATH=$PATH:/home/javier/.local/share/nvim/mason/bin
-PATH=$PATH:/sbin
+PATH=$PATH:~/.local/bin/scripts
 
 unsetopt PROMPT_SP
 

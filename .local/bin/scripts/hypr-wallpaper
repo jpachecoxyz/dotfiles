@@ -5,12 +5,13 @@
 # Project: Change wallpaper in hyprland using wbg
 
 # wbg $(find /home/javier/pics/art/. -type f | shuf -n1) &
-swww img $(shuf -en1 ~/pics/art/*) --transition-type random --transition-step 15 --transition-fps 150 &
+# swww img $(shuf -en1 ~/pics/art/*) --transition-type random --transition-step 15 --transition-fps 150 &
+# matugen image $(shuf -en1 ~/pics/art/*) &
 OLD_PID=$!
 while true; do
     sleep 95
-    # wbg $(find /home/javier/pics/art/. -type f | shuf -n1) &
-    swww img $(shuf -en1 ~/pics/art/*) --transition-type random --transition-step 15 --transition-fps 150 &
+    # swww img $(shuf -en1 ~/pics/art/*) --transition-type random --transition-step 15 --transition-fps 150 &
+    matugen image $(shuf -en1 ~/pics/art/*) &
     NEXT_PID=$!
     sleep 5
     kill $OLD_PID
