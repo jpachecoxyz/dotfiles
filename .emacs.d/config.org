@@ -1677,7 +1677,7 @@ See `org-capture-templates' for more information."
 		("n" "Notes")
 		("np" "Personal")
 		;; Personal
-		("npp" "Personal note" plain (file "~/public/roam/templates/notes.org")
+		("npp" "Personal note" plain (file "~/public/org/roam/templates/notes.org")
 		 :if-new (file+head "1.1_${slug}.org" "#+title: ${title}\n")
          :no-save t
          :immediate-finish nil
@@ -1685,7 +1685,7 @@ See `org-capture-templates' for more information."
 		 :posframe t 
 		 :unnarrowed t)
 		;; Tecnologia
-		("npt" "Technology" plain (file "~/public/roam/templates/notes.org")
+		("npt" "Technology" plain (file "~/public/org/roam/templates/notes.org")
 		 :if-new (file+head "1.2_${slug}.org" "#+title: ${title}\n")
          :no-save t
          :immediate-finish nil
@@ -1695,28 +1695,28 @@ See `org-capture-templates' for more information."
 		;; Trabajo
 		("nw" "Work")
 		;; Autoliv
-		("nwc" "Cell" plain (file "~/public/roam/templates/work.org")
+		("nwc" "Cell" plain (file "~/public/org/roam/templates/work.org")
 		 :if-new (file+head "2.1_${slug}.org" "#+title: ${title}\n")
          :no-save t
          :immediate-finish nil
          :kill-buffer t
 		 :unnarrowed t)
 		;; equipo
-		("nwe" "Equipment" plain (file "~/public/roam/templates/equipo.org")
+		("nwe" "Equipment" plain (file "~/public/org/roam/templates/equipo.org")
 		 :if-new (file+head "2.1.1_${slug}.org" "#+title: ${title}\n")
          :no-save t
          :immediate-finish nil
          :kill-buffer t
 		 :unnarrowed t)
 		;; documentacion
-		("nwd" "Documentation" plain (file "~/public/roam/templates/documentation.org")
+		("nwd" "Documentation" plain (file "~/public/org/roam/templates/documentation.org")
 		 :if-new (file+head "2.1.2_${slug}.org" "#+title: ${title}\n")
          :no-save t
          :immediate-finish nil
          :kill-buffer t
 		 :unnarrowed t)
 		;; SyMA
-		("nws" "Syma" plain (file "~/public/roam/templates/syma.org")
+		("nws" "Syma" plain (file "~/public/org/roam/templates/syma.org")
 		 :if-new (file+head "2.2_${slug}.org" "#+title: ${title}\n")
          :no-save t
          :immediate-finish nil
