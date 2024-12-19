@@ -14,14 +14,14 @@ const options = mkOptions(OPTIONS, {
     theme: {
         dark: {
             primary: {
-                bg: opt("#51a4e7"),
-                fg: opt("#141414"),
+                bg: opt("#e3e1e9"),
+                fg: opt("#282828"),
             },
             error: {
                 bg: opt("#e55f86"),
                 fg: opt("#141414"),
             },
-            bg: opt("#171717"),
+            bg: opt("#282828"),
             fg: opt("#eeeeee"),
             widget: opt("#eeeeee"),
             border: opt("#eeeeee"),
@@ -36,9 +36,9 @@ const options = mkOptions(OPTIONS, {
                 fg: opt("#eeeeee"),
             },
             bg: opt("#fffffa"),
-            fg: opt("#080808"),
-            widget: opt("#080808"),
-            border: opt("#080808"),
+            fg: opt("#121318"),
+            widget: opt("#121318"),
+            border: opt("#e3e1e9"),
         },
 
         blur: opt(0),
@@ -101,12 +101,12 @@ const options = mkOptions(OPTIONS, {
             action: opt(() => App.toggleWindow("launcher")),
         },
         date: {
-            format: opt("%H:%M - %A %e."),
+            format: opt("%r - %A %e"),
             action: opt(() => App.toggleWindow("datemenu")),
         },
         battery: {
             bar: opt<"hidden" | "regular" | "whole">("regular"),
-            charging: opt("#00D787"),
+            charging: opt("#b7d085"),
             percentage: opt(true),
             blocks: opt(7),
             width: opt(50),

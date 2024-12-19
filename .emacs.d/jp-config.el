@@ -222,7 +222,7 @@
   ;; TAB-and-Go customizations
   :custom
   (corfu-cycle t)                 ; Allows cycling through candidates
-  (corfu-auto t)                  ; Enable auto completion
+  (corfu-auto nil)                  ; Enable auto completion
   (corfu-auto-prefix 1)
   (corfu-auto-delay 0.2)
   (corfu-popupinfo-delay '(0.5 . 0.5))
@@ -2301,3 +2301,22 @@ folder, otherwise delete a word"
   (setq ee-terminal-command "kitty")
   (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   '((eval setq-local org-refile-targets '((nil :maxlevel . 1))))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
