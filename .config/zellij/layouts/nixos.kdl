@@ -1,0 +1,16 @@
+layout {
+    cwd "/home/javier/.dotfiles/nix"
+    tab name="Nix Configs" {
+        pane split_direction="Vertical" {
+            pane {
+                command "nvim"
+                args "home.nix"
+            }
+            pane {
+                name "unix"
+                command "nvim"
+                args "configuration.nix"
+            }
+        }
+    }
+}
