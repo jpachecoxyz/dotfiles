@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 22/12/24
+# Project: My custom NixOS System.
+
+# Change directory to the nix directory inside the dotfiles repo
+cd ~/.dotfiles/nix
+
+# Run the NixOS and Home Manager rebuild commands
+echo "Running NixOS and Home Manager switch..."
+sudo nixos-rebuild switch --flake . && home-manager switch --flake .
+
+# Provide some feedback when done
+echo "Dotfiles setup complete."
+
+mkdir -p ~/pics/
+git clone https://codeberg.org/toru/art ~/pics/ --depth 1
