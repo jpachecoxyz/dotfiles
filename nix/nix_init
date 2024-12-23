@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Created By: Javier Pacheco - javier@jpacheco.xyz
 # Created On: 22/12/24
