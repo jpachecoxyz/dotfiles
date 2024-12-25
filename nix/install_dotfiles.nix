@@ -6,7 +6,7 @@ pkgs.mkShell {
   buildInputs = [ pkgs.stow pkgs.git];  # Include git and stow to set the dotfiles symlinks
 
   shellHook = ''
-
+    cp /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix
     # Run the NixOS and Home Manager rebuild commands
     echo "Running NixOS and Home Manager switch..."
     sudo nixos-rebuild switch --flake . && home-manager switch --flake .
@@ -20,7 +20,10 @@ pkgs.mkShell {
     stow . && echo "Symlinks created..." || echo "Symlinks was not created..."
 
     cd ~
-    mkdir ~/pics
+    mkdir -p ~/pics
     git clone https://codeberg.org/toru/art pics/art --depth 1
+
+    mkdir -p ~/.cache/zsh
+    touch ~/.cache/zsh/history
   '';
 }
