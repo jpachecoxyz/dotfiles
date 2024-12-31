@@ -6,12 +6,24 @@
 # to clean up.
 
 # Export all vars
+
+eval "$(guix package --search-paths \
+-p $HOME/.config/guix/current \
+-p $HOME/.guix-home/profile \
+-p $HOME/.guix-profile \
+-p /run/current-system/profile)"
+
+# Prepend setuid programs.
+export PATH=/run/setuid-programs:$PATH
+
 set -o allexport
 
 # Adds `~/.local/bin` to $PATH
 PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
 PATH=$PATH:/home/javier/.local/share/nvim/mason/bin
 PATH=$PATH:~/.local/bin/scripts
+
+# Prepend setuid programs.
 
 unsetopt PROMPT_SP
 
@@ -53,6 +65,13 @@ ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 BAT_THEME="gruvbox-dark"
 GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
 
+#Guix
+GUIX_PROFILE="/home/javier/.guix-profile"
+. "$GUIX_PROFILE/etc/profile"
+
+XDG_SESSION_TYPE="wayland"
+WAYLAND_DISPLAY="wayland-1"
+
 # Other program settings:
 DICS="/usr/share/stardict/dic/"
 # SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
@@ -86,5 +105,5 @@ _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 
 # Start wayland server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
-xrdb ~/.config/.Xdefaults
+#xrdb ~/.config/.Xdefaults
 # [ "$(tty)" = "/dev/tty1" ] && exec sway

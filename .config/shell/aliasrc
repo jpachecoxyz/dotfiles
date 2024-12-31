@@ -13,7 +13,7 @@ done; unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-	rb="systemctl reboot" \
+	rb="reboot" \
 	cp="cp -iv" \
 	de="sudo nvim" \
 	mv="mv -iv" \
@@ -59,7 +59,9 @@ alias \
 	m="mupdf" \
 	hserver="cd ~/webdev/jpachecoxyz.github.io/hugo/ && hugo server --forceSyncStatic --buildDrafts" \
 	cx="chmod +x" \
-	icat="kitten icat --align left"
+	icat="kitten icat --align left" \
+	reconf="sudo -E guix system reconfigure ~/.config/guix/system.scm"
+	
 
 alias \
 	g="git" \

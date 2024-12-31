@@ -1,15 +1,18 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /home/javier/.local/src/guix-installer
     - /home/javier/pics/art
+    - /home/javier/.dotfiles/.local/src/lazygit
+    - /home/javier/.local/src/lazygit
+    - /home/javier/.local/src/guix-installer
 startuppopupversion: 5
-lastversion: 0.42.0
+lastversion: unversioned
 customcommandshistory:
     - q
 hidecommandlog: false
 ignorewhitespaceindiffview: false
 diffcontextsize: 3
+renamesimilaritythreshold: 50
 localbranchsortorder: recency
 remotebranchsortorder: alphabetical
 gitlogorder: topo-order

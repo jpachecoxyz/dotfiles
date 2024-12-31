@@ -995,6 +995,7 @@
 ;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
 
 (use-package jinx
+  :ensure nil
   :hook (text-mode . jinx-mode)
   :bind (("M-;" . jinx-correct)
          ("<f8>" . jinx-languages)))
@@ -2162,7 +2163,8 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	"o -" '(ee-yazi :wk "Dired jump to current")
+	;; "o -" '(ee-yazi :wk "Dired jump to current")
+	"o -" '(dired-jump :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
@@ -2301,23 +2303,3 @@ folder, otherwise delete a word"
   (setq ee-terminal-command "kitty")
   (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
- '(safe-local-variable-values
-   '((eval setq-local org-refile-targets '((nil :maxlevel . 1))))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
