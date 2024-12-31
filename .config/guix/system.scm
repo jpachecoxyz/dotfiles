@@ -157,7 +157,15 @@
   (bootloader (bootloader-configuration
                 (bootloader grub-efi-bootloader)
                 (targets (list "/boot/efi"))
-                (keyboard-layout keyboard-layout)))
+                (keyboard-layout keyboard-layout)
+                (menu-entries
+                   (list
+                    (menu-entry
+                     (label "Windows 11")
+                     (device (uuid "65A0-06CA" 'fat32))
+                     (chain-loader "/EFI/Microsoft/Boot/bootmgfw.efi"))))
+
+                ))
 
   ;; The list of file systems that get "mounted".  The unique
   ;; file system identifiers there ("UUIDs") can be obtained
