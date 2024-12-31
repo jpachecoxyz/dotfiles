@@ -2303,3 +2303,22 @@ folder, otherwise delete a word"
   (setq ee-terminal-command "kitty")
   (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(geiser-mit yasnippet-snippets yasnippet-capf which-key vundo vertico-posframe undohist treesit-ispell tree-sitter-langs toc-org shackle rainbow-mode rainbow-delimiters python-mode pulsar pretty-mode popper pipenv peep-dired pdf-tools password-store page-break-lines ox-hugo org-tree-slide org-sidebar org-roam-ui org-rainbow-tags org-mime org-fancy-priorities org-download org-contacts org-bullets org-auto-tangle orderless olivetti nyan-mode no-littering nix-mode nerd-icons-completion marginalia major-mode-hydra magit lsp-ui lsp-pyright ligature kind-icon keycast key-chord jinx ivy-yasnippet htmlize hl-todo highlight-thing highlight-indent-guides hide-mode-line hide-lines guix git-timemachine git-gutter-fringe general fzf form-feed evil-terminal-cursor-changer evil-surround evil-owl evil-goggles evil-collection ellama doom-modeline dired-rainbow dired-open diminish dap-mode counsel-projectile corfu consult-flycheck consult-dir cape buffer-flip auto-package-update auctex all-the-icons-dired all-the-icons-completion aggressive-indent)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed)))))
