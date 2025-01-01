@@ -60,6 +60,7 @@
 
                           ;; Environment
                           "hyprland"
+                          "hyprlock"
                           "kitty"
                           "waybar"
                           "swww"
