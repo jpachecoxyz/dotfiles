@@ -1,16 +1,14 @@
-;; This is an operating system configuration generated
-;; by the graphical installer.
-;;
-;; Once installation is complete, you can learn and modify
-;; this file to tweak the system configuration, and pass it
-;; to the 'guix system reconfigure' command to effect your
-;; changes.
-
-
 ;; Indicate which modules to import to access the variables
 ;; used in this configuration.
-(use-modules (gnu) (nongnu packages linux) (gnu packages shells))
-(use-service-modules desktop networking ssh )
+(use-modules (gnu) 
+             (nongnu packages linux)
+             (gnu packages shells)
+             (gnu services linux)
+             (gnu system))
+
+(use-service-modules desktop 
+                     networking 
+                     ssh)
 
 (operating-system
  (kernel linux)
@@ -26,102 +24,36 @@
                 (comment "Javier Pacheco")
                 (group "users")
                 (home-directory "/home/javier")
-				(shell (file-append zsh "/bin/zsh"))
+		(shell (file-append zsh "/bin/zsh"))
                 (supplementary-groups '("wheel" "netdev" "audio" "video" "seat")))
                %base-user-accounts))
 
  ;; System packages
  (packages (append (map specification->package
-						'(;; Utils
+			'(;; Utils
                           "git"
+                          "vim"
                           "stow"
-                          "gcc"
+                          "gcc-bootstrap"
                           "brightnessctl"
                           "ncurses"
                           "pinentry"
+                          "curl"
+                          "file"
                           "gnupg"
                           "dbus"
                           "bluez"
 
-                          ;; fonts
-                          "fontconfig"
-                          "font-jetbrains-mono"
-                          "font-ibm-plex"
-                          "font-iosevka"
-                          "font-nerd-fira-code"
-
-                          ;; Text editors
-                          "neovim"
-                          "emacs"
-                          "emacs-jinx"
-                          "enchant"
-                          "hunspell"
-                          "hunspell-dict-en-us"
-
-                          ;; Environment
+                          ;; WM
                           "hyprland"
-                          "hyprlock"
                           "kitty"
-                          "waybar"
-                          "swww"
                           "tofi"
-                          "mako"
-                          "grimblast"
-                          "slurp"
-                          "swappy"
-                          ;; "hyprshot" ;; Not found in guix
-                          "grim"
-                          "libnotify"
-                          "materia-theme"
 
                           ;; Audio
                           "wireplumber"
                           "pipewire"
-                          "pulseaudio"
-
-                          ;; Tools
-                          "fastfetch" ;; Useless things
-                          "fzf"
-                          "direnv"
-                          "eza"
-                          "wl-clipboard"
-                          ;; "yazi" ;; Not found in guix
-                          "nnn"
-                          "bat"
-                          "ripgrep"
-                          "jq"
-                          "wf-recorder"
-                          "htop"
-                          "xrdb"
-                          "nsxiv"
-
-                          ;; multimedia
-                          "mpd"
-                          "ncmpcpp"
-                          ;; "mpd-cli" :; Not found in guix
-                          "mpv"
-                          "pulsemixer"
-                          ;; "spotdl" ;; Not found in guix
-                          "yt-dlp"
-                          "telegram-desktop"
-
-                          ;; TODO PDF-latex tools
-
-                          ;; Privacy
-                          "tomb"
-                          "qrencode"
-                          "steghide"
-                          "gnupg"
-
-                          ;; Languages:
-                          "python"
-                          ;; "python-pip"
-                          "node"
-
-                          ;; Browsers
-                          "zen-browser-bin-generic"
-						  ))
-				   %base-packages))
+                          "pulseaudio"))
+                               %base-packages))
 
 
  ;; Below is the list of system services.  To search for available
@@ -134,7 +66,6 @@
            (service openssh-service-type)
            (service network-manager-service-type)
            (service wpa-supplicant-service-type)
-           ;; (service elogind-service-type)
            (service seatd-service-type)
            (service ntp-service-type)
 

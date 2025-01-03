@@ -2,8 +2,6 @@ lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
     - /home/javier/pics/art
-    - /home/javier/.dotfiles/.local/src/lazygit
-    - /home/javier/.local/src/lazygit
     - /home/javier/.local/src/guix-installer
 startuppopupversion: 5
 lastversion: unversioned

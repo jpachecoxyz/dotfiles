@@ -30,8 +30,7 @@ unsetopt PROMPT_SP
 # Default programs:
 EDITOR="nvim"
 TERMINAL="kitty -1"
-BROWSER="firefox"
-# BROWSER="qutebrowser"
+BROWSER="librewolf"
 
 # ~/ Clean-up:
 XDG_CONFIG_HOME="$HOME/.config"
@@ -72,6 +71,18 @@ GUIX_PROFILE="/home/javier/.guix-profile"
 XDG_SESSION_TYPE="wayland"
 WAYLAND_DISPLAY="wayland-1"
 
+# NNN
+BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
+NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
+NNN_BMS='w:~/pics/walls/;d:~/.dotfiles/home/;p:~/.local/src/;'
+NNN_USE_EDITOR=1
+NNN_FIFO=/tmp/nnn.fifo
+
+NNN_OPENER="/home/javier/.local/bin/scripts/nuke"
+IMAGEVIEWER="sxiv"
+NNN_PLUG='p:imgview;o:fzopen;d:diffs'
+NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip)$"
+
 # Other program settings:
 DICS="/usr/share/stardict/dic/"
 # SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
@@ -105,5 +116,5 @@ _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 
 # Start wayland server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
-#xrdb ~/.config/.Xdefaults
+xrdb ~/.config/.Xdefaults
 # [ "$(tty)" = "/dev/tty1" ] && exec sway

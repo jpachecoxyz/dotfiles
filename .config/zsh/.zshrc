@@ -12,11 +12,13 @@ newline=$'\n'
 set_prompt() {
     if [[ $UID -eq 0 ]]; then
         # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{red}❯❯ %f'
-        PROMPT='%F{red}❯❯ %f'
+        # PROMPT='%F{red}❯❯ %f'
+        PROMPT='%F{red} λ %f'
         RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
     else
         # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{blue}❯❯ %f'
-        PROMPT='%F{cyan}❯❯ %f'
+        # PROMPT='%F{cyan}❯❯ %f'
+        PROMPT='%F{cyan} λ %f'
         RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
     fi
 }

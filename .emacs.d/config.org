@@ -2523,8 +2523,8 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	;; "o -" '(ee-yazi :wk "Dired jump to current")
-	"o -" '(dired-jump :wk "Dired jump to current")
+	"o -" '(ee-nnn :wk "Dired jump to current")
+	;; "o -" '(dired-jump :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
@@ -2690,6 +2690,6 @@ folder, otherwise delete a word"
   :load-path "~/.emacs.d/lisp/eee.el"
   :config
   (setq ee-terminal-command "kitty")
-  (general-evil-define-key 'normal 'global "M-f" 'ee-yazi)
+  (general-evil-define-key 'normal 'global "M-f" 'ee-nnn)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
 #+end_src

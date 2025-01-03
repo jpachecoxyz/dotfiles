@@ -1,8 +1,8 @@
 #! /bin/sh
 
-FALLBACK_OPENER=xdg-open
+# FALLBACK_OPENER=xdg-open
 entry="$1"
-mime="$(file -ibL "$entry" )"
+mime="$(file --mime-type --mime-encoding "$entry" )"
 FNAME=$(basename "$entry")
 ext="${FNAME##*.}"
 if [ -n "$ext" ]; then
@@ -18,7 +18,7 @@ fi
 
         ## PDF
         pdf)
-		devour zathura "$entry"
+		zathura "$entry"
             	exit 1;;
 
         ## Audio
@@ -28,12 +28,12 @@ fi
 
         ## Video
         avi|mkv|mp4|gif)
-            devour mpv "$entry"
+            mpv "$entry"
             	exit 1;;
         
 	## Image
-        png|jpg|jpeg|PNG|JPG|JPEG|svg)
-            	devour nsxiv "$entry"
+        png|jpg|jpeg|PNG|JPG|JPEG|svg|webp)
+            	nsxiv "$entry"
             	exit 1;;
 
         ## Log files
@@ -76,4 +76,4 @@ case "$mime" in
 		exit 0 ;;
 esac
 
-$FALLBACK_OPENER "$entry"
+# $FALLBACK_OPENER "$entry"

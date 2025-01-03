@@ -225,6 +225,7 @@ CALLBACK is an optional callback to be called after the script runs."
 		   ee-jump-from)
 
 (ee-define "ee-lf" default-directory (ee-script-path "eee-lf.sh") nil ee-jump-from)
+(ee-define "ee-nnn" default-directory (ee-script-path "eee-nnn.sh") nil ee-jump-from)
 
 (ee-define "ee-lf-project" (ee-get-project-dir-or-current-dir) (ee-script-path "eee-lf.sh") nil ee-jump-from)
 

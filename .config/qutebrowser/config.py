@@ -192,8 +192,8 @@ c.tabs.show_switching_delay =15000
 
 # Setting default page for when opening new tabs or new windows with
 # commands like :open -t and :open -w .
-c.url.default_page = '~/.local/src/startpage/index.html'
-c.url.start_pages = '~/.local/src/startpage/index.html'
+c.url.default_page = '~/.config/startpage/index.html'
+c.url.start_pages = '~/.config/startpage/index.html'
 
 # Search engines which can be used via the address bar.  Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`
@@ -530,7 +530,7 @@ c.colors.webpage.bg = base00
 # font setting, it's replaced with the fonts listed here. If set to an
 # empty value, a system-specific monospace default is used.
 # Type: List of Font, or Font
-c.fonts.default_family = '"JetBrains Mono"'
+c.fonts.default_family = '"Jet Brains Mono"'
 
 # Default font size to use. Whenever "default_size" is used in a font
 # setting, it's replaced with the size listed here. Valid values are
@@ -541,19 +541,19 @@ c.fonts.default_size = '12pt'
 
 # Font used in the completion widget.
 # Type: Font
-c.fonts.completion.entry = '12pt "JetBrains Mono"'
+c.fonts.completion.entry = '12pt "Jet Brains Mono"'
 
 # Font used for the debugging console.
 # Type: Font
-c.fonts.debug_console = '12pt "JetBrains Mono"'
+c.fonts.debug_console = '12pt "Jet Brains Mono"'
 
 # Font used for prompts.
 # Type: Font
-c.fonts.prompts = 'JetBrains Mono'
+c.fonts.prompts = 'Je tBrains Mono'
 
 # Font used in the statusbar.
 # Type: Font
-c.fonts.statusbar = '11pt "JetBrains Mono"'
+c.fonts.statusbar = '11pt "Jet Brains Mono"'
 
 # Bindings to use dmenu rather than qutebrowser's builtin search.
 #config.bind('o', 'spawn --userscript dmenu-open')

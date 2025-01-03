@@ -60,6 +60,7 @@ alias \
 	hserver="cd ~/webdev/jpachecoxyz.github.io/hugo/ && hugo server --forceSyncStatic --buildDrafts" \
 	cx="chmod +x" \
 	icat="kitten icat --align left" \
+	gh="guix home reconfigure ~/.config/guix/home.scm" \
 	reconf="sudo -E guix system reconfigure ~/.config/guix/system.scm"
 	
 
@@ -157,4 +158,22 @@ y() {
 		builtin cd -- "$cwd"
 	fi
 	rm -f -- "$tmp" > /dev/null 2>&1
+}
+
+n ()
+{
+    # Block nesting of nnn in subshells
+    [ "${NNNLVL:-0}" -eq 0 ] || {
+        echo "nnn is already running"
+        return
+    }
+
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    command nnn -cdH "$@"
+
+    [ ! -f "$NNN_TMPFILE" ] || {
+        . "$NNN_TMPFILE"
+        rm -f -- "$NNN_TMPFILE" > /dev/null
+    }
 }
