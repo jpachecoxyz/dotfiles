@@ -6,8 +6,8 @@
 .config/mpd/pid
 .config/VirtualBox/
 .config/obs-studio/
-.config/gtk-3.0/
-.config/gtk-4.0/
+# .config/gtk-3.0/
+# .config/gtk-4.0/
 
 # local
 .local/share/
