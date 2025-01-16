@@ -1,0 +1,10 @@
+# window rules
+for_window [app_id="scratch"] move scratchpad, scratchpad show
+for_window [app_id="scratch"] floating enable
+for_window [app_id="scratch"] resize set width 1250 height 510 
+for_window [app_id="scratch"] move position 350 200
+
+for_window [app_id="nnn"] move scratchpad, scratchpad show
+for_window [app_id="nnn"] floating enable
+for_window [app_id="nnn"] resize set width 800 height 600
+for_window [app_id="nnn"] move position 10 150

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: New Post
+# key: post_
+# --
+#+title: $1
+#+author: Javier Pacheco
+#+date: `(format-time-string "[%Y-%m-%d %a %H:%M]")`
+#+filetags: :$2:
+
+
+#+BEGIN_PREVIEW
+$0
+#+END_PREVIEW

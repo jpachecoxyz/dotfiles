@@ -13,6 +13,7 @@ done; unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
+	sudo="sudo" \
 	rb="reboot" \
 	cp="cp -iv" \
 	de="sudo nvim" \
@@ -45,7 +46,6 @@ alias \
 # These common commands are just too long! Abbreviate them.
 alias \
 	ka="killall -9" \
-	fp="devour mpv" \
 	x="nsxiv -t -g 1500x700 ." \
 	zj="zellij" \
 	za="zellij a" \
@@ -57,11 +57,13 @@ alias \
 	smu="sudo make uninstall" \
 	mi="make install" \
 	m="mupdf" \
-	hserver="cd ~/webdev/jpachecoxyz.github.io/hugo/ && hugo server --forceSyncStatic --buildDrafts" \
 	cx="chmod +x" \
 	icat="kitten icat --align left" \
+	ni="nix-env -iA" \
+	nr="nix-env -e" \
 	gh="guix home reconfigure ~/.config/guix/home.scm" \
-	reconf="sudo -E guix system reconfigure ~/.config/guix/system.scm"
+	gp="guix pull" \
+	reconf="\sudo -E guix system reconfigure ~/.config/guix/system.scm"
 	
 
 alias \
@@ -72,13 +74,8 @@ alias \
 	sdn="shutdown -h now" \
 	qb="qutebrowser" \
 	v="$EDITOR" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
 	z="zathura" \
-	pipes="pipes.sh" \
-	arcom="arduino-cli compile --fqbn arduino:avr:uno" \
-	tex="tectonic -Z shell-escape"
-	arup="arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:uno"
+	tex="tectonic -Z shell-escape" 
 
 # scratch
 alias \

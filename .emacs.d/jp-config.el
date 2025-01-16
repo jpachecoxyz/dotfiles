@@ -998,7 +998,7 @@
   :ensure nil
   :hook (text-mode . jinx-mode)
   :bind (("M-;" . jinx-correct)
-         ("<f8>" . jinx-languages)))
+		 ("<f8>" . jinx-languages)))
 
 (use-package toc-org
   :commands toc-org-enable
@@ -1305,11 +1305,11 @@
 		("pa" "Add a Post"
          entry
          ;; File path and headline where the captured post should be stored.
-         (file+headline "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org" "Posts:")
+         (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Posts:")
          (function org-hugo-new-subtree-post-capture-template) :empty-lines-before 2)
 
 		("pi" "Idea for a Post"
-		 entry (file+headline "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org" "Ideas:")
+		 entry (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Ideas:")
 		 "* TODO %^{Name of the post: }%?" :empty-lines-before 2)
 
         ("s" "Scheduled Task" entry (file+headline "~/public/org/agenda/refill.org" "Priority")
@@ -2170,7 +2170,7 @@ folder, otherwise delete a word"
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
     "o p" '((lambda () (interactive)
-              (find-file "~/webdev/jpachecoxyz.github.io/hugo/org/jpacheco.xyz.org")) 
+              (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")
 	"o o" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
 	"o t" '(term-toggle-term :wk "Toggle terminal")

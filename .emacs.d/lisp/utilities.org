@@ -594,7 +594,7 @@ The command supports previewing the currently selected theme."
     (let ((process (start-process-shell-command
                     "publish-blog"                       ; Process name
                     "*publish-blog-output*"              ; Output buffer
-                    (format "~/webdev/jpachecoxyz.github.io/hugo/publish.sh \"%s\"" commit-msg))))  ; Run the script with the commit message
+                    (format "~/webdev/jpachecoxyz/publish.sh \"%s\"" commit-msg))))  ; Run the script with the commit message
       ;; Set up the process sentinel to check the process status
       (set-process-sentinel
        process

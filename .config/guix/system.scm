@@ -7,7 +7,9 @@
              (gnu system))
 
 (use-service-modules desktop 
+                     nix
                      networking 
+                     admin
                      ssh)
 
 (operating-system
@@ -25,7 +27,7 @@
                 (group "users")
                 (home-directory "/home/javier")
 		(shell (file-append zsh "/bin/zsh"))
-                (supplementary-groups '("wheel" "netdev" "audio" "video" "seat")))
+                (supplementary-groups '("wheel" "netdev" "audio" "video" )))
                %base-user-accounts))
 
  ;; System packages
@@ -34,10 +36,10 @@
                           "git"
                           "vim"
                           "stow"
-                          "gcc-bootstrap"
+                          "gcc"
                           "brightnessctl"
                           "ncurses"
-                          "pinentry"
+                          "pinentry-tty"
                           "curl"
                           "file"
                           "gnupg"
@@ -45,8 +47,10 @@
                           "bluez"
 
                           ;; WM
+                          "sway"
                           "hyprland"
-                          "kitty"
+                          "dwl"
+                          "foot"
                           "tofi"
 
                           ;; Audio
@@ -66,14 +70,14 @@
            (service openssh-service-type)
            (service network-manager-service-type)
            (service wpa-supplicant-service-type)
-           (service seatd-service-type)
+           ;; (service seatd-service-type)
+           (service elogind-service-type)
            (service ntp-service-type)
 
-           ;; (service zram-device-service-type
-           ;;      (zram-device-configuration
-           ;;       (size (* 16 (expt 2 30)))
-           ;;       (compression-algorithm 'zstd)
-           ;;       (priority 100)))
+          polkit-wheel-service
+
+           ;; Enable the build service for Nix package manager
+           (service nix-service-type)
 
            (service bluetooth-service-type
                     (bluetooth-configuration

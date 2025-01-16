@@ -7,10 +7,14 @@
 
 # Export all vars
 
+unset  C_INCLUDE_PATH
+unset LIBRARY_PATH
+
 eval "$(guix package --search-paths \
 -p $HOME/.config/guix/current \
 -p $HOME/.guix-home/profile \
 -p $HOME/.guix-profile \
+-p $HOME/.nix-profile/ \
 -p /run/current-system/profile)"
 
 # Prepend setuid programs.
@@ -30,7 +34,7 @@ unsetopt PROMPT_SP
 # Default programs:
 EDITOR="nvim"
 TERMINAL="kitty -1"
-BROWSER="librewolf"
+BROWSER="google-chrome-stable"
 
 # ~/ Clean-up:
 XDG_CONFIG_HOME="$HOME/.config"
@@ -64,12 +68,29 @@ ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 BAT_THEME="gruvbox-dark"
 GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
 
-#Guix
+# Guix
 GUIX_PROFILE="/home/javier/.guix-profile"
 . "$GUIX_PROFILE/etc/profile"
+GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+# LANG=en_US.UTF-8
+# LC_ALL=en_US.UTF-8
+
+# Nix
+GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+NODE_PATH="/home/javier/.guix-profile/lib/node_modules${NODE_PATH:+:}$NODE_PATH"
+NIX_REMOTE=daemon
+C_INCLUDE_PATH="/home/javier/.guix-profile/include${C_INCLUDE_PATH:+:}$C_INCLUDE_PATH"
+CPLUS_INCLUDE_PATH="/home/javier/.guix-profile/include${CPLUS_INCLUDE_PATH:+:}$CPLUS_INCLUDE_PATH"
+LIBRARY_PATH="/home/javier/.guix-profile/lib${LIBRARY_PATH:+:}$LIBRARY_PATH"
+NIX_PROFILES="/nix/var/nix/profiles/default $HOME/.nix-profile"
+for i in $NIX_PROFILES; do
+    export PATH="${PATH}:${i}/bin"
+done
+NIXPKGS_ALLOW_UNFREE=1
 
 XDG_SESSION_TYPE="wayland"
 WAYLAND_DISPLAY="wayland-1"
+# WAYLAND_DISPLAY="wayland-0"
 
 # NNN
 BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
@@ -85,8 +106,8 @@ NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma
 
 # Other program settings:
 DICS="/usr/share/stardict/dic/"
-# SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-DOAS_ASKPASS="$HOME/.local/bin/scripts/tofi-pass.sh"
+# SUDO_ASKPASS="$HOME/.local/bin/scripts/tofipass"
+# DOAS_ASKPASS="$HOME/.local/bin/scripts/tofi-pass.sh"
 # FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828

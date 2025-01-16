@@ -5,7 +5,7 @@
 # Project: tombs scripts
 
 TOMB_DIR="$HOME/.personal/"
-KEY_FILE="$TOMB_DIR/personal.key"
+KEY_FILE="$TOMB_DIR\/personal.key"
 
 ACTION=$(echo -e "🕯️ Raise the dead (open)\n🪦 Rest in peace (close)\n🔮 Tomb Slam All" | fzf --prompt="Choose your action: ")
 

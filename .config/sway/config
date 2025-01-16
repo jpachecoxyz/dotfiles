@@ -1,0 +1,199 @@
+# Modifier key
+set $mod Mod4
+
+# Vim motions
+set $left h
+set $down j
+set $up k
+set $right l
+
+### Idle configuration
+ # exec swayidle -w \
+ #          timeout 1500 'swaylock -f -c 000000' \
+ #          timeout 1400 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+ #          before-sleep 'swaylock -f -c 000000'
+
+# Input/keyboard
+input "type:keyboard" {
+    xkb_layout gb
+    xkb_variant ,nodeadkeys
+    xkb_options grp:alt_shift_toggle
+    xkb_numlock enable
+    xkb_capslock disable
+}
+
+input "type:touchpad" {
+    left_handed disabled
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    accel_profile "flat" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
+    pointer_accel 0.5 # set mouse sensitivity (between -1 and 1)
+}
+
+# Default wallpaper
+output * bg ~/.config/hypr/wall.jpg fill
+focus_follows_mouse no
+
+# Gaps
+gaps inner 10
+
+# Focused client
+client.focused #d79921 #d79921 #d79921
+
+# Disable window title bars and thickness of the windows
+default_border pixel 2
+
+exec xrdb -load ~/.config/.Xdefaults
+exec dbus-update-activation-environment --all
+exec swww-daemon & sleep 5 && swww img ~/.config/hypr/wall.jpg
+# exec swww img ~/pics/art/686.webp 
+exec pypr
+exec stacki3 45
+exec mako
+exec emacs --daemon &
+# exec hypr-wallpaper
+# exec wlsunset -l 25.87 -L -97.50
+# exec wlsunset -l 48.5 -L -2.2
+# exec ~/.local/bin/cron -f ~/.config/cron/cron.conf
+exec waybar -c ~/.config/waybar/jpbar/config.jsonc -s ~/.config/waybar/jpbar/style.css
+#exec ags
+# exec ~/.local/bin/scripts/hyprwindow
+exec mpd --no-daemon "$HOME"/.config/mpd/mpd.conf
+exec pipewire
+exec pipewire-pulse
+exec wireplumber
+# exec wireplumber & pipewire & pipewire-pulse
+# exec foot --server
+exec hypridle
+exec wl-paste --watch cliphist store
+exec ollama serve
+
+
+# Terminal
+bindsym $mod+Return exec kitty -1
+
+# Program/run launcher
+set $run tofi-drun | xargs swaymsg exec --
+bindsym $mod+d exec $run
+
+# Editor
+# bindsym $mod+e exec emacsclient -c -a 'emacs'
+bindsym $mod+e exec emacsclient -c -a 'emacs'
+
+# Volume control
+bindsym $mod+s exec footclient -e pulsemixer
+
+# keybinds
+
+bindsym $mod+Shift+b exec ~/.config/waybar/relaunch.sh
+bindsym $mod+w exec librewolf
+bindsym $mod+r exec screencast
+bindsym $mod+Shift+s exec slurp | grim -g - - | wl-copy
+bindsym Print exec grimblast -n copy screen
+#bindsym $mod+w exec grim -g "$(slurp)"
+bindsym $mod+Shift+Return exec swaymsg [app_id="scratch"] scratchpad show || exec kitty --class scratch
+bindsym $mod+n exec swaymsg [app_id="nnn"] scratchpad show || exec kitty --class nnn -e nnn
+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+# Sway control
+
+    # Kill focused window
+    bindsym $mod+q kill
+
+    # Lock screen
+    bindsym $mod+Shift+c exec swaylock
+
+    # Power
+    bindsym $mod+Shift+q exec dmenu-exit
+
+    # Reload the configuration file
+    bindsym $mod+Shift+r reload
+    
+    # Toffle fullscreen
+    bindsym $mod+f fullscreen
+
+# Go to last workspace
+    workspace back_and_forth yes
+    bindsym $mod+tab workspace back_and_forth
+
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+    # With arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+# Workspaces:
+
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+
+    # Move focused client to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+
+# Resizing:
+
+  mode "resize" {
+       # left will shrink the clients width
+       # right will grow the clients width
+       # up will shrink the clients height
+       # down will grow the clients height
+       bindsym $left resize shrink width 10px
+       bindsym $down resize grow height 10px
+       bindsym $up resize shrink height 10px
+       bindsym $right resize grow width 10px
+       
+       # Ditto, with arrow keys
+       bindsym Left resize shrink width 10px
+       bindsym Down resize grow height 10px
+       bindsym Up resize shrink height 10px
+       bindsym Right resize grow width 10px
+       
+       # Return to default mode
+       bindsym Return mode "default"
+       bindsym Escape mode "default"
+       }
+
+       bindsym $mod+Shift+o mode "resize"
+
+include @sysconfdir@/sway/config.d/*
+include rules
+include colors

@@ -35,7 +35,7 @@ margin = 50
 [scratchpads.file_manager]
 animation = "fromLeft"
 # command = "foot -a scratchpad -e yazi"
-command = "kitty --class scratchpad -e yazi"
+command = "kitty --class scratchpad -e nnn -cH"
 class = "scratchpad"
 lazy = true
 size = "75% 60%"

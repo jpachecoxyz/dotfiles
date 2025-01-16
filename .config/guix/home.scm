@@ -13,72 +13,11 @@
                   "font-iosevka"
                   "font-nerd-fira-code"
 
-                  ;; Text editors
-                  "neovim"
-                  "emacs"
-
                   ;; Spelling
-                  "emacs-jinx"
-                  "enchant"
-                  "hunspell"
-                  "hunspell-dict-en-us"
-
-                  ;; Environment
-                  "hyprlock"
-                  "waybar"
-                  "swww"
-                  "mako"
-                  "grimblast"
-                  "slurp"
-                  "swappy"
-                  "grim"
-                  "libnotify"
-                  "materia-theme"
-
-                  ;; Tools
-                  "fastfetch" ;; Useless things
-                  "fzf"
-                  "direnv"
-                  "eza"
-                  "wl-clipboard"
-                  "nnn"
-                  "bat"
-                  "ripgrep"
-                  "jq"
-                  "wf-recorder"
-                  "htop"
-                  "xrdb"
-                  "nsxiv"
-                  "unzip"
-                  "p7zip"
-
-                  ;; multimedia
-                  "mpd"
-                  "ncmpcpp"
-                  ;; "mpd-cli" :; Not found in guix
-                  "mpv"
-                  "pulsemixer"
-                  ;; "spotdl" ;; Not found in guix
-                  "yt-dlp"
-                  "telegram-desktop"
-
-                  ;; TODO PDF-latex tools
-
-                  ;; Privacy
-                  "tomb"
-                  "qrencode"
-                  "steghide"
-                  "gnupg"
-
-                  ;; Languages:
-                  "python"
-                  "node"
-
-                  ;; Browsers
-                  "qutebrowser"
-                  "librewolf"
-
-
+                  ;; "emacs-jinx"
+                  ;; "enchant"
+                  ;; "hunspell"
+                  ;; "hunspell-dict-en-us"
 
                   )))
 

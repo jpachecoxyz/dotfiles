@@ -18,12 +18,13 @@
 
     "hyprland/window": {
         "format": "{}",
-        "icon": false,
+        "icon": true,
         "icon-size": 20,
     },
 
     "hyprland/workspaces": {
         "disable-scroll": true,
+        "show-special": true,
         "all-outputs": false,
         "on-click": "activate",
         "persistent-workspaces": {

@@ -1,0 +1,108 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 11/01/25
+# Project: Check for installed Nix packages
+
+export NIXPKGS_ALLOW_UNFREE=1
+
+# List of packages to check
+packages=(
+    # Environment
+    nixpkgs.swww
+    nixpkgs.hugo
+    nixpkgs.yazi
+    nixpkgs.zellij
+    nixpkgs.ags
+    nixpkgs.gtksourceview
+    nixpkgs.accountsservice
+    nixpkgs.libdbusmenu-gtk3
+    nixpkgs.dart-sass
+    nixpkgs.gobject-introspection
+    nixpkgs.bun
+    nixpkgs.fd
+    nixpkgs.gjs
+    nixpkgs.spotdl
+    nixpkgs.yt-dlp
+
+    # Fonts
+    nixos.nerd-fonts.jetbrains-mono
+    # fontconfig
+
+    # Browsers
+    nixpkgs.google-chrome
+    nixpkgs.firefox
+
+    # Text editors
+    nixpkgs.neovim
+    nixpkgs.emacs30
+    nixpkgs.emacsPackages.jinx
+    nixpkgs.enchant
+    nixpkgs.hunspell
+    nixpkgs.hunspellDicts.es_MX
+    nixpkgs.hunspellDicts.en_US
+
+    # Environment
+    nixpkgs.hyprlock
+    nixpkgs.waybar
+    nixpkgs.mako
+    nixpkgs.grimblast
+    nixpkgs.slurp
+    nixpkgs.swappy
+    nixpkgs.grim
+    nixpkgs.libnotify
+    nixpkgs.materia-theme
+
+    # Tools
+    nixpkgs.fastfetch
+    nixpkgs.fzf
+    nixpkgs.direnv
+    nixpkgs.eza
+    nixpkgs.wl-clipboard
+    nixpkgs.nnn
+    nixpkgs.bat
+    nixpkgs.ripgrep
+    nixpkgs.jq
+    nixpkgs.wf-recorder
+    nixpkgs.htop
+    nixpkgs.xorg.xrdb
+    nixpkgs.nsxiv
+    nixpkgs.unzip
+    nixpkgs.p7zip
+    nixpkgs.lazygit
+
+    # multimedia
+    nixpkgs.mpv
+    nixpkgs.pulsemixer
+    nixpkgs.telegram-desktop
+
+    # TODO PDF-latex tools
+    nixpkgs.tectonic
+
+    # Privacy
+    nixpkgs.tomb
+    nixpkgs.qrencode
+    nixpkgs.steghide
+    nixpkgs.gnupg
+)
+#
+# List to store packages that need to be installed
+packages_to_install=()
+
+echo "Checking for installed Nix packages..."
+
+for pkg in "${packages[@]}"; do
+    if nix-env -qA "$pkg" > /dev/null 2>&1; then
+        echo "✔ $pkg is already installed"
+    else
+        echo "✘ $pkg is not installed"
+        packages_to_install+=("$pkg")
+    fi
+done
+# Install missing packages if there are any
+if [ ${#packages_to_install[@]} -gt 0 ]; then
+    echo "Installing missing packages: ${packages_to_install[@]}"
+    nix-env -iA "${packages_to_install[@]}"
+else
+    echo "All packages are already installed."
+fi

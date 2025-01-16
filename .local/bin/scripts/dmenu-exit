@@ -9,7 +9,7 @@ dm="tofi"
 # Options
 shutdown="Shutdown"
 reboot="Reboot"
-hrestart="Restart Hyprland"
+hrestart="Log Out"
 lock="Lock"
 
 chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$hibernate\n$lock" | $dm --prompt "Hyprland - Session: ")
@@ -22,10 +22,10 @@ case $chosen in
       sleep 5 
       notify-send  "El sistema se apagara en...." "$( echo "5 segundos" )" &
       sleep 4
-      systemctl poweroff 
+      sudo -A halt
         ;;
     $reboot)
-      systemctl reboot
+      sudo reboot
         ;;
     $hrestart)
       pkill Hyprland

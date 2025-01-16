@@ -18,7 +18,7 @@ set_prompt() {
     else
         # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{blue}❯❯ %f'
         # PROMPT='%F{cyan}❯❯ %f'
-        PROMPT='%F{cyan} λ %f'
+        PROMPT='%F{magenta}%B(λ jpachecoxyz) -> %b%f '
         RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
     fi
 }
@@ -129,6 +129,10 @@ bindkey -M visual '^[[P' vi-delete
 # source ~/.config/zsh/syntax.zsh 2>/dev/null
 source ~/.config/zsh/autosuggestions.zsh 
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
 
 # Developement
 eval "$(direnv hook zsh)"

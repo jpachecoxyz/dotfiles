@@ -127,7 +127,7 @@
 								   :box (:line-width 2 :color ,miasma-graphite
 													 :style released-button)))))
    `(org-ellipsis ((t (:underline nil))))
-   `(org-block ((t (:background ,miasma-onyx))))
+   `(org-block ((t (:background ,miasma-light-charcoal))))
 
    ;;;;; line numbers
    `(line-number ((,class (:inherit default :foreground ,miasma-dark-gray))))

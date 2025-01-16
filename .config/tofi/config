@@ -90,10 +90,10 @@ height = 20%
 background-color = #181818
 
 # Width of the border outlines in pixels.
-outline-width = 4
+outline-width = 1
 
 # Border outline color
-outline-color = #181818
+outline-color = #458588
 
 # Width of the border in pixels.
 border-width = 0
@@ -102,11 +102,11 @@ border-width = 0
 border-color = #00000000
 
 # Radius of window corners in pixels.
-corner-radius = 10
+corner-radius = 0
 
 # Padding between borders and text. Can be pixels or a percentage.
 padding-top = 8
-padding-bottom = 8
+padding-bottom = 10
 padding-left = 8
 padding-right = 8
 
