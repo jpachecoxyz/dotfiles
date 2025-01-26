@@ -36,22 +36,25 @@
                           "git"
                           "vim"
                           "stow"
-                          "gcc"
                           "brightnessctl"
-                          "ncurses"
+                          ;; "ncurses"
                           "pinentry-tty"
                           "curl"
                           "file"
-                          "gnupg"
+                          ;; "gnupg"
                           "dbus"
                           "bluez"
+                          "fzf"
 
                           ;; WM
-                          "sway"
                           "hyprland"
-                          "dwl"
+                          "hyprlock"
                           "foot"
                           "tofi"
+                          ;; "waybar"
+                          "materia-theme"
+                          "papirus-icon-theme"
+                          "bibata-cursor-theme"
 
                           ;; Audio
                           "wireplumber"
@@ -100,8 +103,7 @@
                 (menu-entry
                  (label "Windows 11")
                  (device (uuid "65A0-06CA" 'fat32))
-                 (chain-loader "/EFI/Microsoft/Boot/bootmgfw.efi"))))
-			  ))
+                 (chain-loader "/EFI/Microsoft/Boot/bootmgfw.efi"))))))
 
  ;; The list of file systems that get "mounted".  The unique
  ;; file system identifiers there ("UUIDs") can be obtained

@@ -2,5 +2,6 @@
 .gitignore
 ^/.*\.org
 update_dots
+guix
 nix
 jp-nix

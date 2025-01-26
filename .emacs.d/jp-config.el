@@ -994,11 +994,12 @@
 
 ;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
 
-(use-package jinx
-  :ensure nil
-  :hook (text-mode . jinx-mode)
-  :bind (("M-;" . jinx-correct)
-		 ("<f8>" . jinx-languages)))
+(when (eq system-type 'gnu/linux)
+  (use-package jinx
+    :ensure nil
+    :hook (text-mode . jinx-mode)
+    :bind (("M-;" . jinx-correct)
+           ("<f8>" . jinx-languages))))
 
 (use-package toc-org
   :commands toc-org-enable
@@ -1072,27 +1073,29 @@
 (setq org-ellipsis " ")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
- '(;;Places
- ("@home" . ?h)
- ("@work" . ?w)
- ("@kindergardeen" . ?k)
+	  '(;;Places
+		("@home" . ?h)
+		("@work" . ?w)
+		("@kindergardeen" . ?k)
 
- ;; Whom
- ("lia" . ?l)
- ("jr" . ?j)
- ("xiomara" . ?x)
- 
- ;; Devices
- ("@laptop" . ?L)
- ("@phone" . ?p)
+		;; Whom
+		("lia" . ?l)
+		("jr" . ?j)
+		("xiomara" . ?x)
+		
+		;; Devices
+		("@laptop" . ?L)
+		("@phone" . ?p)
 
- ;; Activities
- ("programming" . ?P)
- ("planning" . ?n)
- ("writting" . ?W)
- ("calls" . ?c)
- ("email" . ?e)
- ("errands" . ?r)))
+		;; Activities
+		("programming" . ?P)
+		("planning" . ?n)
+		("writting" . ?W)
+		("calls" . ?c)
+		("email" . ?e)
+		("errands" . ?r)
+		("crypt" . ?C)
+		))
 (setq org-agenda-files
       '("~/public/org/agenda/personal.org"
         "~/public/org/agenda/training.org"
@@ -1100,8 +1103,6 @@
         "~/public/org/agenda/important_dates.org"
         "~/public/org/agenda/contacts.org"
         "~/public/org/agenda/work.org"
-
-
 		))
 (setq org-todo-keywords
     (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
@@ -1221,7 +1222,7 @@
 
 		("W" "Work Agenda"
 		 ,custom-daily-agenda
-		 ((org-agenda-files '("~/docs/org/castlight/PMM.org")
+		 ((org-agenda-files '("~/public/org/agenda/work.org")
  							(org-agenda-fontify-priorities nil)
 							(org-agenda-dim-blocked-tasks nil))))
 		
@@ -2163,8 +2164,8 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	"o -" '(ee-nnn :wk "Dired jump to current")
-	;; "o -" '(dired-jump :wk "Dired jump to current")
+	;; "o -" '(ee-nnn :wk "Dired jump to current")
+	"o -" '(dired-jump :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")

@@ -1,108 +1,86 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# Created By: Javier Pacheco - javier@jpacheco.xyz
-# Created On: 11/01/25
-# Project: Check for installed Nix packages
+# Colors for output
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+CYAN="\033[0;36m"
+RESET="\033[0m"
 
-export NIXPKGS_ALLOW_UNFREE=1
-
-# List of packages to check
-packages=(
-    # Environment
-    nixpkgs.swww
-    nixpkgs.hugo
-    nixpkgs.yazi
-    nixpkgs.zellij
-    nixpkgs.ags
-    nixpkgs.gtksourceview
-    nixpkgs.accountsservice
-    nixpkgs.libdbusmenu-gtk3
-    nixpkgs.dart-sass
-    nixpkgs.gobject-introspection
-    nixpkgs.bun
-    nixpkgs.fd
-    nixpkgs.gjs
-    nixpkgs.spotdl
-    nixpkgs.yt-dlp
-
-    # Fonts
-    nixos.nerd-fonts.jetbrains-mono
-    # fontconfig
-
-    # Browsers
-    nixpkgs.google-chrome
-    nixpkgs.firefox
-
-    # Text editors
-    nixpkgs.neovim
-    nixpkgs.emacs30
-    nixpkgs.emacsPackages.jinx
-    nixpkgs.enchant
-    nixpkgs.hunspell
-    nixpkgs.hunspellDicts.es_MX
-    nixpkgs.hunspellDicts.en_US
-
-    # Environment
-    nixpkgs.hyprlock
-    nixpkgs.waybar
-    nixpkgs.mako
-    nixpkgs.grimblast
-    nixpkgs.slurp
-    nixpkgs.swappy
-    nixpkgs.grim
-    nixpkgs.libnotify
-    nixpkgs.materia-theme
-
-    # Tools
-    nixpkgs.fastfetch
-    nixpkgs.fzf
-    nixpkgs.direnv
-    nixpkgs.eza
-    nixpkgs.wl-clipboard
-    nixpkgs.nnn
-    nixpkgs.bat
-    nixpkgs.ripgrep
-    nixpkgs.jq
-    nixpkgs.wf-recorder
-    nixpkgs.htop
-    nixpkgs.xorg.xrdb
-    nixpkgs.nsxiv
-    nixpkgs.unzip
-    nixpkgs.p7zip
-    nixpkgs.lazygit
-
-    # multimedia
-    nixpkgs.mpv
-    nixpkgs.pulsemixer
-    nixpkgs.telegram-desktop
-
-    # TODO PDF-latex tools
-    nixpkgs.tectonic
-
-    # Privacy
-    nixpkgs.tomb
-    nixpkgs.qrencode
-    nixpkgs.steghide
-    nixpkgs.gnupg
-)
-#
-# List to store packages that need to be installed
-packages_to_install=()
-
-echo "Checking for installed Nix packages..."
-
-for pkg in "${packages[@]}"; do
-    if nix-env -qA "$pkg" > /dev/null 2>&1; then
-        echo "✔ $pkg is already installed"
+# Function to install packages
+install() {
+    echo -e "${CYAN}Installing packages from packages.nix...${RESET}"
+    if nix-env -iA -f /home/javier/.dotfiles/nix/packages.nix environment.systemPackages; then
+        # clear
+        echo -e "${GREEN}Packages installed correctly.${RESET}"
     else
-        echo "✘ $pkg is not installed"
-        packages_to_install+=("$pkg")
+        # clear
+        echo -e "${RED}Error: Failed to install packages.${RESET}" >&2
+        exit 1
     fi
-done
-# Install missing packages if there are any
-if [ ${#packages_to_install[@]} -gt 0 ]; then
-    echo "Installing missing packages: ${packages_to_install[@]}"
-    nix-env -iA "${packages_to_install[@]}"
-else
-    echo "All packages are already installed."
-fi
+}
+
+# Function to remove all packages
+remove_all() {
+    echo -e "${CYAN}Removing all installed Nix packages...${RESET}"
+    if nix-env -e "*" && nix-collect-garbage -d; then
+        # clear
+        echo -e "${GREEN}All Nix packages removed from nix-profile.${RESET}"
+    else
+        # clear
+        echo -e "${RED}Error: Failed to remove packages.${RESET}" >&2
+        exit 1
+    fi
+}
+
+# Function to remove a single package
+remove_one() {
+    echo -e "${CYAN}Fetching installed packages...${RESET}"
+    installed_packages=$(nix-env -q)
+    if [[ -z "$installed_packages" ]]; then
+        echo -e "${YELLOW}No installed packages found.${RESET}"
+        return
+    fi
+
+    chosen=$(echo "$installed_packages" | fzf --prompt "Select a package to remove: ")
+
+    if [[ -n "$chosen" ]]; then
+        echo -e "${CYAN}Removing package: ${chosen}${RESET}"
+        # clear
+        if nix-env -e "$chosen"; then
+            echo -e "${GREEN}Package '${chosen}' removed successfully.${RESET}"
+        else
+            echo -e "${RED}Error: Failed to remove '${chosen}'.${RESET}" >&2
+            exit 1
+        fi
+    else
+        # clear
+        echo -e "${YELLOW}No package selected.${RESET}"
+    fi
+}
+
+# Options
+install_option="Install packages"
+remove_all_option="Remove all packages"
+remove_one_option="Remove a single package"
+
+# Prompt user for choice
+chosen=$(printf "%s\n%s\n%s\n" "$install_option" "$remove_all_option" "$remove_one_option" | fzf --prompt "Choose an action: ")
+
+# Handle user's choice
+case $chosen in
+    "$install_option")
+        install
+        ;;
+    "$remove_all_option")
+        remove_all
+        ;;
+    "$remove_one_option")
+        remove_one
+        ;;
+    *)
+        echo -e "${YELLOW}Error: Invalid option. Please choose a valid option.${RESET}" >&2
+        exit 1
+        ;;
+esac
+

@@ -1,5 +1,5 @@
 [org/gtk/settings/file-chooser]
-window-position=(0, 0)
+window-position=(537, 35)
 window-size=(845, 1009)
 date-format='regular'
 location-mode='path-bar'
@@ -11,3 +11,17 @@ sort-column='name'
 sort-directories-first=false
 sort-order='ascending'
 type-format='category'
+
+[org/gnome/calculator]
+accuracy=9
+angle-units='degrees'
+base=10
+button-mode='basic'
+number-format='automatic'
+show-thousands=false
+show-zeroes=false
+source-currency=''
+source-units='degree'
+target-currency=''
+target-units='radian'
+word-size=64

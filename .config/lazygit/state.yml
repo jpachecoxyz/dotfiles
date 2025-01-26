@@ -1,8 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /home/javier/.local/src/voidstrap
     - /home/javier/webdev/jpachecoxyz
+    - /home/javier/.local/src/voidstrap
     - /home/javier/webdev/website
     - /home/javier/webdev/jpachecoxyz.github.io
     - /home/javier/.local/src/guix-installer

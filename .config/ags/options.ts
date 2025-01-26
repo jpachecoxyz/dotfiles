@@ -14,7 +14,7 @@ const options = mkOptions(OPTIONS, {
     theme: {
         dark: {
             primary: {
-                bg: opt("#e3e1e9"),
+                bg: opt("#458588"),
                 fg: opt("#282828"),
             },
             error: {
@@ -24,7 +24,7 @@ const options = mkOptions(OPTIONS, {
             bg: opt("#282828"),
             fg: opt("#eeeeee"),
             widget: opt("#eeeeee"),
-            border: opt("#eeeeee"),
+            border: opt("#458588"),
         },
         light: {
             primary: {
@@ -38,19 +38,19 @@ const options = mkOptions(OPTIONS, {
             bg: opt("#fffffa"),
             fg: opt("#121318"),
             widget: opt("#121318"),
-            border: opt("#e3e1e9"),
+            border: opt("#458588"),
         },
 
         blur: opt(0),
         scheme: opt<"dark" | "light">("dark"),
         widget: { opacity: opt(94) },
         border: {
-            width: opt(1),
+            width: opt(0),
             opacity: opt(96),
         },
 
-        shadows: opt(true),
-        padding: opt(7),
+        shadows: opt(false),
+        padding: opt(5),
         spacing: opt(5),
         radius: opt(5),
     },

@@ -7,9 +7,6 @@
 
 # Export all vars
 
-unset  C_INCLUDE_PATH
-unset LIBRARY_PATH
-
 eval "$(guix package --search-paths \
 -p $HOME/.config/guix/current \
 -p $HOME/.guix-home/profile \
@@ -33,8 +30,9 @@ unsetopt PROMPT_SP
 
 # Default programs:
 EDITOR="nvim"
-TERMINAL="kitty -1"
-BROWSER="google-chrome-stable"
+TERMINAL="footclient"
+BROWSER="firefox"
+GPG_TTY=$(tty)
 
 # ~/ Clean-up:
 XDG_CONFIG_HOME="$HOME/.config"
@@ -43,40 +41,25 @@ XDG_BIN_HOME=$HOME/.local/bin/scripts
 XDG_CACHE_HOME="$HOME/.cache"
 XDG_RUNTIME_DIR=$(mktemp -d /tmp/$(id -u)-runtime-dir.XXX)
 XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
-# GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 XCURSOR_THEME="Bibata-Modern-Classic"
 LESSHISTFILE="-"
 WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
 INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/shell/inputrc"
 ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 #export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
-WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
 PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
-CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
-UNISON="${XDG_DATA_HOME:-$HOME/.local/share}/unison"
 HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
-MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config"
-ELECTRUMDIR="${XDG_DATA_HOME:-$HOME/.local/share}/electrum"
 BAT_THEME="gruvbox-dark"
-GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
+# GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
 
 # Guix
 GUIX_PROFILE="/home/javier/.guix-profile"
 . "$GUIX_PROFILE/etc/profile"
-GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
-# LANG=en_US.UTF-8
-# LC_ALL=en_US.UTF-8
+GUIX_LOCPATH="$HOME/.guix-profile/share/locale"
 
 # Nix
-GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 NODE_PATH="/home/javier/.guix-profile/lib/node_modules${NODE_PATH:+:}$NODE_PATH"
 NIX_REMOTE=daemon
 C_INCLUDE_PATH="/home/javier/.guix-profile/include${C_INCLUDE_PATH:+:}$C_INCLUDE_PATH"
@@ -87,10 +70,7 @@ for i in $NIX_PROFILES; do
     export PATH="${PATH}:${i}/bin"
 done
 NIXPKGS_ALLOW_UNFREE=1
-
-XDG_SESSION_TYPE="wayland"
-WAYLAND_DISPLAY="wayland-1"
-# WAYLAND_DISPLAY="wayland-0"
+# XDG_SESSION_TYPE="wayland"
 
 # NNN
 BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
@@ -138,4 +118,5 @@ _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 # Start wayland server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
 xrdb ~/.config/.Xdefaults
+rfkill unblock all
 # [ "$(tty)" = "/dev/tty1" ] && exec sway

@@ -33,7 +33,7 @@ alias \
 
 # Colorize commands when possible.
 alias \
-	ls="eza --icons --git  --group-directories-first" \
+	ls="eza -l --icons --git  --group-directories-first" \
 	cat="bat" \
 	xw="setbg" \
 	lsa="ls -a" \
@@ -110,6 +110,19 @@ ecf(){ cd $XDG_CONFIG_HOME && find . -type f,l -printf "%h/%f\n" | \
 	cd - > /dev/null 2>&1 < /dev/null
 }
 esc(){ cd $XDG_BIN_HOME && find . -type f,l -printf "%h/%f\n" | \
+	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \
+	--height 30 \
+	--prompt="Edit script file: " \
+        --preview-label 'Ctrl-v: Preview' \
+	--bind 'del:execute(rm -ri {})' \
+	--bind 'ctrl-v:execute(bat {1} >/dev/tty)' \
+	--multi \
+	| xargs -r nvim 
+	cd - > /dev/null 2>&1 < /dev/null
+}
+
+
+eca(){ cd $XDG_CACHE_HOME && find . -type f,l -printf "%h/%f\n" | \
 	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \
 	--height 30 \
 	--prompt="Edit script file: " \

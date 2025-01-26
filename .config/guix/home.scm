@@ -5,7 +5,8 @@
 
 (home-environment
  (packages (specifications->packages
-            (list "git"
+            (list 
+                  "git"
                   ;; fonts
                   "fontconfig"
                   "font-jetbrains-mono"
@@ -13,12 +14,14 @@
                   "font-iosevka"
                   "font-nerd-fira-code"
 
-                  ;; Spelling
-                  ;; "emacs-jinx"
-                  ;; "enchant"
-                  ;; "hunspell"
-                  ;; "hunspell-dict-en-us"
+                  ;;; GTK 3
+                  "gtksourceview"
+                  "materia-theme"
 
+                  ;; Tools
+                  "waybar"
+                  "wl-clipboard"
+                  "bat"
                   )))
 
  ;; (services (list 

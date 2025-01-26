@@ -1,4 +1,4 @@
-#+title: jpacheco.xyz Emacs configuration
+#+title: Emacs configuration
 #+author: Javier Pacheco
 #+email: jpacheco@cock.li
 #+description: My custom emacs configuration.
@@ -1278,12 +1278,12 @@
 
 ;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
 
-(use-package jinx
-  :ensure nil
-  :hook (text-mode . jinx-mode)
-  :bind (("M-;" . jinx-correct)
-		 ("<f8>" . jinx-languages)))
-
+(when (eq system-type 'gnu/linux)
+  (use-package jinx
+    :ensure nil
+    :hook (text-mode . jinx-mode)
+    :bind (("M-;" . jinx-correct)
+           ("<f8>" . jinx-languages))))
 #+END_SRC
 * Org.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -1361,27 +1361,29 @@
 (setq org-ellipsis " ")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
- '(;;Places
- ("@home" . ?h)
- ("@work" . ?w)
- ("@kindergardeen" . ?k)
+	  '(;;Places
+		("@home" . ?h)
+		("@work" . ?w)
+		("@kindergardeen" . ?k)
 
- ;; Whom
- ("lia" . ?l)
- ("jr" . ?j)
- ("xiomara" . ?x)
- 
- ;; Devices
- ("@laptop" . ?L)
- ("@phone" . ?p)
+		;; Whom
+		("lia" . ?l)
+		("jr" . ?j)
+		("xiomara" . ?x)
+		
+		;; Devices
+		("@laptop" . ?L)
+		("@phone" . ?p)
 
- ;; Activities
- ("programming" . ?P)
- ("planning" . ?n)
- ("writting" . ?W)
- ("calls" . ?c)
- ("email" . ?e)
- ("errands" . ?r)))
+		;; Activities
+		("programming" . ?P)
+		("planning" . ?n)
+		("writting" . ?W)
+		("calls" . ?c)
+		("email" . ?e)
+		("errands" . ?r)
+		("crypt" . ?C)
+		))
 (setq org-agenda-files
       '("~/public/org/agenda/personal.org"
         "~/public/org/agenda/training.org"
@@ -1389,8 +1391,6 @@
         "~/public/org/agenda/important_dates.org"
         "~/public/org/agenda/contacts.org"
         "~/public/org/agenda/work.org"
-
-
 		))
 (setq org-todo-keywords
     (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
@@ -1514,7 +1514,7 @@
 
 		("W" "Work Agenda"
 		 ,custom-daily-agenda
-		 ((org-agenda-files '("~/docs/org/castlight/PMM.org")
+		 ((org-agenda-files '("~/public/org/agenda/work.org")
  							(org-agenda-fontify-priorities nil)
 							(org-agenda-dim-blocked-tasks nil))))
 		
@@ -1839,6 +1839,28 @@ See `org-capture-templates' for more information."
    '(:inverse-video nil :box nil :weight 'bold))
   :hook
   (org-mode . org-rainbow-tags-mode))
+#+END_SRC
+** Org crypt.
+#+BEGIN_SRC emacs-lisp
+;; Enable org-crypt and epa-file
+(require 'org-crypt)
+(require 'epa-file)
+
+;; Enable epa-file for encryption/decryption of files
+(epa-file-enable)
+(setq epa-file-encrypt-to '("jpacheco@cock.li"))  ; Replace with your GPG key email
+
+;; Configure org-crypt
+(setq org-crypt-tag-matcher "crypt")                    ; Tag used to encrypt entries
+(setq org-crypt-key "jpacheco@cock.li")          ; Replace with your GPG key email
+(setq org-tags-exclude-from-inheritance '("crypt"))     ; Prevent inheritance of "pass" tag
+
+;; Automatically encrypt entries tagged with "pass" before saving
+(add-hook 'before-save-hook. 'org-crypt-use-before-save-magic)
+
+;; Optional: Add keybinding to manually encrypt entries
+(define-key org-mode-map (kbd "C-c C-x C-e") 'org-encrypt-entries)
+(define-key org-mode-map (kbd "C-c C-x C-d") 'org-decrypt-entries)
 #+END_SRC
 
 * Pulsar.
@@ -2523,8 +2545,8 @@ folder, otherwise delete a word"
 
   (user/leader-keys
 	"o" '(:ignore t :wk "Open")
-	"o -" '(ee-nnn :wk "Dired jump to current")
-	;; "o -" '(dired-jump :wk "Dired jump to current")
+	;; "o -" '(ee-nnn :wk "Dired jump to current")
+	"o -" '(dired-jump :wk "Dired jump to current")
 	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
@@ -2663,27 +2685,6 @@ folder, otherwise delete a word"
       ;; Delete the window where fzf was opened
       (delete-window window))))
 #+end_src
-* Javascript.
-#+BEGIN_SRC emacs-lisp :tanlgle jp-config.el
-(use-package js2-mode :ensure t :defer 20
-  :mode
-  (("\\.js\\'" . js2-mode))
-  :custom
-  (js2-include-node-externs t)
-  (js2-global-externs '("customElements"))
-  (js2-highlight-level 3)
-  (js2r-prefer-let-over-var t)
-  (js2r-prefered-quote-type 2)
-  (js-indent-align-list-continuation t)
-  (global-auto-highlight-symbol-mode t)
-  :config
-  (setq js-indent-level 2)
-  ;; patch in basic private field support
-  (advice-add #'js2-identifier-start-p
-            :after-until
-            (lambda (c) (eq c ?#))))
-#+END_SRC
-
 * eee.el
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package eee
