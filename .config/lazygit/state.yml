@@ -1,14 +1,13 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /home/javier/webdev/jpachecoxyz
+    - /home/javier/.dotfiles/.local/src/void-mklive
+    - /home/javier/.local/src/void-mklive
     - /home/javier/.local/src/voidstrap
-    - /home/javier/webdev/website
-    - /home/javier/webdev/jpachecoxyz.github.io
-    - /home/javier/.local/src/guix-installer
+    - /home/javier/.local/src/void-packages
     - /home/javier/pics/art
 startuppopupversion: 5
-lastversion: 0.45.0
+lastversion: 0.45.2
 customcommandshistory:
     - q
 hidecommandlog: false

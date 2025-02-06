@@ -25,3 +25,7 @@ source-units='degree'
 target-currency=''
 target-units='radian'
 word-size=64
+
+[org/gnome/desktop/interface]
+cursor-theme='Bibata-Modern-Classic'
+cursor-size=24

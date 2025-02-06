@@ -1,136 +1,157 @@
 {
-    "margin-top": 10,
-    "margin-bottom": 0,
-    "margin-left": 10,
-    "margin-right": 10,
-    "spacing": 4,
-		// try to keep it 4px across the config
-    "height":30,
-    "modules-left": ["custom/logo", "hyprland/workspaces", "custom/icon", "hyprland/submap"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["mpd",  "pulseaudio", "clock", "battery", "custom/lan", "custom/recorder", "custom/power"],
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "output": ["eDP-1"],
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 47,
+    // "width": 1580,
+    // "modules-left": ["clock", "custom/weather", "hyprland/workspaces", "custom/window_state"],
+    // "modules-center": ["hyprland/window"],
+    // "modules-right": ["network", "bluetooth", "memory", "battery", "backlight", "pulseaudio", "pulseaudio#microphone", "custom/recorder"],
 
-        /*
-        MODULES
-        */
-        "hyprland/submap": {
-            "format": "-> {}",
-            "max-length": 30,
-            "tooltip": false
-        },
-        "custom/icon": {
-        "return-type": "json",
-        // "exec": "~/.config/waybar/state",
-        "exec": "~/.local/bin/scripts/hyprwindow",
-        "interval": "once",
-        // "interval": 1,
+    "modules-left": ["hyprland/workspaces", "custom/window_state", "hyprland/submap"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["network", "bluetooth", "battery", "backlight", "pulseaudio", "custom/weather", "clock", "custom/recorder"],
+
+    "hyprland/window": {
         "format": "{}",
-        "signal": 10
-		},
-        "tray": {
-            "spacing": 10
+        "icon": true,
+        "icon-size": 20,
+    },
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "show-special": true,
+        "all-outputs": false,
+        "on-click": "activate",
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
         },
-        "clock": {
-                "format": "󰅐 {:%I:%M %p}"
-        },
-        "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon} {capacity}%",
-        "format-charging": "󰂄 {capacity}%",
-        "format-plugged": "󰂄 {capacity}%",
-        "format-alt": "{icon} {time}",
-        "format-full": "󱊣  {capacity}%",
-        "format-icons": ["󱊡", "󱊢", "󱊣"]
-        },
-        "network": {
-        "format-wifi": "  {ipaddr}",
-        "format-ethernet": "󰤮 Disconnected",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "󰤮 Disconnected",
-                "tooltip-format-wifi": "  {signalStrength}% ⇅ {bandwidthDownBits}/{bandwidthUpBits}",
-        "on-click": "foot -e nmtui"
-        },
-        "pulseaudio": {
-                "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-                "format": "{icon}  {volume}%",
-                "format-muted": "󰖁 Muted",
-                "format-icons": {
-                "headphone": "",
-                "hands-free": "",
-                "headset": "",
-                "phone": "",
-                "portable": "",
-                "car": "",
-                "default": ["", "", ""]
+        "format-icons": {
+          "active": []
         }
     },
 
-    "custom/recorder": {
-                "format": " ",
-                "return-type": "json",
-                "interval": 1,
-                "exec": "echo '{\"class\": \"recording\"}'",
-                "exec-if": "pgrep wf-recorder"
-        },
-    "mpd": {
-        "format": "{artist} - {title}",
-        "format-stopped": "",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
+    "hyprland/submap": {
+        "format": "💻 {}",
+        "max-length": 25,
+        "tooltip": false
     },
-    "custom/layout": {
-        "return-type": "json",
-        "exec": "hypr-layout",
-        "interval": 1,
-        "format": "{}",
-        "tooltip": true
-    },
-    "custom/lan": {
-        "return-type": "json",
-        "exec": "lantool",
-        "interval": 5,
-        "format": "{} ",
-        "tooltip": true,
-        "on-click": "google-chrome-stable"
-    },
-    "custom/power": {
-        "format" : "⏻ ",
-        "tooltip": false,
-        "menu": "on-click",
-        "menu-file": "~/.config/waybar/power_menu.xml",
-        "menu-actions": {
-            "shutdown": "systemctl shutdown",
-            "reboot": "systemctl reboot",
-            "suspend": "systemctl suspend",
-            "hibernate": "systemctl hibernate",
-        },
-    },
-    "custom/logo": {
-      "format": "    ",
-      "tooltip": false,
-      "on-click": "exec footclient"
-    }
-}
 
+    "tray": {
+        "icon-size": 18,
+        "spacing": 10
+    },
+
+    "clock": {
+        "format": " {:%I:%M %p   %a, %b %e}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl set 1%+",
+        "on-scroll-down": "brightnessctl set 1%-",
+        "min-length": 6
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muted",
+        "on-click": "pamixer --default-source -t",
+        "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_SOURCE@ 5%+",
+        "on-scroll-down": "wpctl set-volume  -l 1.0 @DEFAULT_SOURCE@ 5%-",
+        "scroll-step": 5
+    },
+    
+    "memory": {
+        "interval": 20,
+        "format": "{used:0.1f}G 󰍛"
+    },
+    
+    "temperature": {
+        "thermal-zone": 2,
+        "format": "{temperatureC}°C ",
+        "critical-threshold": 80,
+        "format-critical": "{temperatureC}°C "
+    },
+
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "{ipaddr}/{cidr}",
+        "tooltip-format": "{essid} - {ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}:{essid} {ipaddr}/{cidr}"
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-disabled": "", // an empty format will hide the module
+        "format-connected": " {num_connections}",
+        "tooltip-format": "{device_alias}",
+        "tooltip-format-connected": " {device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}"
+    },
+
+    "custom/weather": {
+        "exec": "curl 'https://wttr.in/Matamoros?format=1' | grep -v Unknown",
+        "interval": 900
+    },
+
+  "custom/recorder": {
+       "format": " ",
+       "return-type": "json",
+       "interval": 1,
+       "exec": "echo '{\"class\": \"recording\"}'",
+       "exec-if": "pgrep wf-recorder"
+    },
+
+  "custom/window_state": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "/usr/bin/env cat /tmp/hyprwindow",
+        "signal": 10,
+    },
+}

@@ -377,12 +377,12 @@
 (fset 'yes-or-no-p 'y-or-n-p) ;; never type: yes or no
 
 ;;; set transparency to 90
-(if (eq system-type 'windows-nt)
-	(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
-  (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
-  (if (eq system-type 'gnu/linux)
-	  (set-frame-parameter nil 'alpha-background 90)
-	(add-to-list 'default-frame-alist '(alpha-background . 90))))
+;; (if (eq system-type 'windows-nt)
+;; 	(set-frame-parameter (selected-frame) 'alpha '(90 . 90))
+;;   (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+;;   (if (eq system-type 'gnu/linux)
+;; 	  (set-frame-parameter nil 'alpha-background 90)
+;; 	(add-to-list 'default-frame-alist '(alpha-background . 50))))
 
 (defun toggle-alpha-transparency ()
   "Toggle transparency based on the operating system."
@@ -996,7 +996,7 @@
 
 (when (eq system-type 'gnu/linux)
   (use-package jinx
-    :ensure nil
+    :ensure t
     :hook (text-mode . jinx-mode)
     :bind (("M-;" . jinx-correct)
            ("<f8>" . jinx-languages))))
@@ -1010,8 +1010,8 @@
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
   :custom
-  ;; (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
-  (org-bullets-bullet-list '("" "" "" "" "" "" "")))
+  (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
+  ;; (org-bullets-bullet-list '("" "" "" "" "" "" "")))
 
 (use-package org-download
   :ensure t
@@ -1070,7 +1070,7 @@
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " ")
+(setq org-ellipsis " ⮧")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
 	  '(;;Places
@@ -1133,6 +1133,16 @@
     (org-refile)))
 
 (add-hook 'org-after-todo-state-change-hook 'jp-autorefile-tasks)
+
+(setq org-structure-template-alist
+      '(("ss" . "src")
+        ("se" . "src emacs-lisp")
+        ("st" . "src emacs-lisp :tangle FILENAME")
+        ("sT" . "src emacs-lisp :tangle FILENAME :mkdirp yes")
+        ("sx" . "src shell :tangle FILENAME")
+        ("sX" . "src shell :tangle FILENAME :shebang \"#!/usr/bin/env bash\"")
+        ("e" . "example")
+        ("X" . "export")))
 
 (use-package org-contacts
   :ensure t)

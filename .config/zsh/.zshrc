@@ -113,6 +113,8 @@ bindkey -s '^t' 'tmount\n'
 
 bindkey -s '^a' 'bc -lq\n'
 
+bindkey -s '^S' 'void-sv.sh\n'
+
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
 bindkey '^[[P' delete-char
@@ -130,9 +132,9 @@ bindkey -M visual '^[[P' vi-delete
 source ~/.config/zsh/autosuggestions.zsh 
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init - zsh)"
 
 # Developement
 eval "$(direnv hook zsh)"

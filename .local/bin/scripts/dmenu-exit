@@ -12,7 +12,7 @@ reboot="Reboot"
 hrestart="Log Out"
 lock="Lock"
 
-chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$hibernate\n$lock" | $dm --prompt "Hyprland - Session: ")
+chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$hibernate\n$lock" | $dm --prompt-text "Hyprland - Session: ")
 case $chosen in
 
     $shutdown)
@@ -25,13 +25,13 @@ case $chosen in
       sudo -A halt
         ;;
     $reboot)
-      sudo reboot
+    doas reboot
         ;;
     $hrestart)
       pkill Hyprland
         ;;
     $lock)
-      hyprlock
+      doas zzz
       ;;
     *) notify-send "Ninguna opcion fue seleccionada..."
 esac

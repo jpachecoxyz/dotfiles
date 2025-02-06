@@ -7,6 +7,7 @@
 
 # Export all vars
 
+export $(dbus-launch)
 eval "$(guix package --search-paths \
 -p $HOME/.config/guix/current \
 -p $HOME/.guix-home/profile \
@@ -22,7 +23,7 @@ set -o allexport
 # Adds `~/.local/bin` to $PATH
 PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
 PATH=$PATH:/home/javier/.local/share/nvim/mason/bin
-PATH=$PATH:~/.local/bin/scripts
+# PATH=$PATH:~/.local/bin/scripts
 
 # Prepend setuid programs.
 
@@ -38,6 +39,7 @@ GPG_TTY=$(tty)
 XDG_CONFIG_HOME="$HOME/.config"
 XDG_DATA_HOME="$HOME/.local/share"
 XDG_BIN_HOME=$HOME/.local/bin/scripts
+# XDG_BIN_HOME=$(find ~/.local/bin -type d -type ! l -printf %p:)
 XDG_CACHE_HOME="$HOME/.cache"
 XDG_RUNTIME_DIR=$(mktemp -d /tmp/$(id -u)-runtime-dir.XXX)
 XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
@@ -53,7 +55,6 @@ HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 BAT_THEME="gruvbox-dark"
 # GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
-
 # Guix
 GUIX_PROFILE="/home/javier/.guix-profile"
 . "$GUIX_PROFILE/etc/profile"
@@ -70,6 +71,7 @@ for i in $NIX_PROFILES; do
     export PATH="${PATH}:${i}/bin"
 done
 NIXPKGS_ALLOW_UNFREE=1
+NIX_CONFIG="experimental-features = nix-command flakes"
 # XDG_SESSION_TYPE="wayland"
 
 # NNN

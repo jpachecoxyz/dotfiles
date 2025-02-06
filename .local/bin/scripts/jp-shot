@@ -9,7 +9,7 @@
 options=$(printf "Region\nWindow\nScreen\nQuit")
 
 # Show the menu using tofi
-OPT=$(echo "$options" | tofi --prompt "Select Screenshot: ")
+OPT=$(echo "$options" | tofi --prompt-text "Select Screenshot: ")
 
 # Handle the selected option
 case $OPT in

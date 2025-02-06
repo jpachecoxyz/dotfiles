@@ -8,12 +8,12 @@
 
 # sudo not required for some system commands
 for command in mount umount su poweroff reboot zzz nixrb; do
-	alias $command="sudo $command"
+	alias $command="doas $command"
 done; unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-	sudo="sudo" \
+	sudo="doas" \
 	rb="reboot" \
 	cp="cp -iv" \
 	de="sudo nvim" \
@@ -33,10 +33,10 @@ alias \
 
 # Colorize commands when possible.
 alias \
-	ls="eza -l --icons --git  --group-directories-first" \
+	ls="eza -l --icons --group-directories-first" \
 	cat="bat" \
 	xw="setbg" \
-	lsa="ls -a" \
+	lsa="eza -la" \
 	lsl="ls -l" \
 	lsla="ls -la" \
 	grep="grep --color=auto" \
@@ -83,6 +83,29 @@ alias \
 	scvp="cd /var/cache/scratchpkg/packages/" \
 	rrp="cd ~/.local/src/ports/" 
 
+# Xbps - void
+# Install packages
+alias xi='sudo xbps-install -Sy'
+# Remove packages and dependencies
+alias xr='sudo xbps-remove -Ro'
+# Search for packages
+alias xs='xbps-query -Rs'
+# List installed packages
+alias xl='xbps-query -l'
+# Upgrade all packages
+alias xu='sudo xbps-install -Su'
+# Show package info
+alias xq='xbps-query -R'
+# Clean xbps cache and remove orphaned packages
+alias xclean='doas xbps-remove -oO && doas rm -r /var/cache/xbps/*'
+
+# alias xbps-src
+alias srclean='cd $HOME/.local/src/void-packages/ && ./xbps-src clean-repocache && ./xbps-src clean && ./xbps-src remove-autodeps && rm -rf hostdir/sources/* && xbps-rindex -r ~/.local/src/void-packages/hostdir/binpkgs && xbps-rindex -c ~/.local/src/void-packages/hostdir/binpkgs'
+alias srcmp='cd $HOME/.local/src/void-packages/ && ./xbps-src -j $(nproc) pkg'
+alias srcmf='cd $HOME/.local/src/void-packages/ && ./xbps-src -j $(nproc) -f pkg'
+alias xbo='cd $HOME/.local/src/void-packages/ && ./xbps-src show-options'
+alias gup='xu && cd $HOME/.local/src/void-packages && git pull && ./xbps-src bootstrap-update && xclean && srclean'
+
 # xchroot to manage venom ports
 alias \
 	cr="sudo xchroot /mnt/venom-dev zsh" \
@@ -94,10 +117,30 @@ alias \
 	ds="cd ~/.dotfiles" \
 	uds="update_dots && hyprctl notify 5 5000 'rgb(458588)' 'fontsize:15  Dotfiles updated correctly'" \
 	dof="yazi ~/.dotfiles" \
-	mu='yt-dlp "$(ytfzf -D -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \
-	ytb='yt-dlp -f b "$(ytfzf -D -I L "$1")" -o - | ffplay - -autoexit -loglevel quiet'
+	mu='yt-dlp "$(ytfzf -I L "$1")" -o - | ffplay - -nodisp -autoexit -loglevel quiet' \
+	ytb='yt-dlp -f b "$(ytfzf -I L "$1")" -o - | ffplay - -autoexit -loglevel quiet'
 
-## Fnctions.
+
+# qemu
+alias void-vm='doas qemu-system-x86_64 -m 2G -smp 2 --enable-kvm \
+    -name "VoidLinux jpachecoxyz" \
+    -boot order=d \
+    -drive file=/home/javier/vms/void/void-linux.qcow2,format=qcow2,if=virtio \
+    -cdrom ~/.local/src/void-mklive/void-jpachecoxyz.iso \
+    -device virtio-net,netdev=user0 \
+    -netdev user,id=user0 \
+    -drive file=/usr/share/OVMF/x64/OVMF_CODE.fd,format=raw,if=pflash'
+
+alias windows='doas qemu-system-x86_64 -m 2G -smp 2 --enable-kvm \
+    -name "VoidLinux jpachecoxyz" \
+    -boot order=d \
+    -drive file=/home/javier/vms/void/void-linux.qcow2,format=qcow2,if=virtio \
+    -cdrom ~/.local/src/void-mklive/windows.iso \
+    -device virtio-net,netdev=user0 \
+    -netdev user,id=user0 \
+    -drive file=/usr/share/OVMF/x64/OVMF_CODE.fd,format=raw,if=pflash'
+
+## Functions.
 ecf(){ cd $XDG_CONFIG_HOME && find . -type f,l -printf "%h/%f\n" | \
 	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \
 	--height 30 \
@@ -109,6 +152,7 @@ ecf(){ cd $XDG_CONFIG_HOME && find . -type f,l -printf "%h/%f\n" | \
 	| xargs -r nvim 
 	cd - > /dev/null 2>&1 < /dev/null
 }
+
 esc(){ cd $XDG_BIN_HOME && find . -type f,l -printf "%h/%f\n" | \
 	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \
 	--height 30 \
@@ -120,7 +164,6 @@ esc(){ cd $XDG_BIN_HOME && find . -type f,l -printf "%h/%f\n" | \
 	| xargs -r nvim 
 	cd - > /dev/null 2>&1 < /dev/null
 }
-
 
 eca(){ cd $XDG_CACHE_HOME && find . -type f,l -printf "%h/%f\n" | \
 	fzf --preview 'bat --style=numbers --color=always --line-range :500 {}' \

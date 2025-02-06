@@ -35,10 +35,10 @@
             "key": "║\u001b[75C║\u001b[75D{#33}󰟾  distro   ",
             "type": "os"
         },
-        // {
-        //     "key": "║\u001b[75C║\u001b[75D{#31}󰍛  packages ",
-        //     "type": "packages",
-        // },
+        {
+            "key": "║\u001b[75C║\u001b[75D{#31}󰍛  packages ",
+            "type": "packages",
+        },
         {
             "key": "║\u001b[75C║\u001b[75D{#34}󰇄  desktop  ",
             "type": "de"

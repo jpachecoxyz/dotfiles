@@ -10,7 +10,7 @@
 #+latex_header: \usepackage[scaled=1]{gentium} \renewcommand\familydefault{\rmdefault} 
 #+latex_header: \usepackage[scaled=.90]{cascadia-code} \renewcommand*\familydefault{\ttdefault}
 #+latex_header: \usepackage[scaled=.85,tabular,lining]{montserrat} \renewcommand*\familydefault{\sfdefault}
-#+latex_header: \setmonofont{IBM Plex Mono}
+#+latex_header: \setmonofont{IBM Plex Mono}[Scale=0.8]
 #+latex_header: \usepackage{lipsum}
 #+latex_header: \usepackage{microtype}
 #+latex_header: \finalhyphendemerits=50000000

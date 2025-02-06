@@ -33,7 +33,7 @@ fi
         
 	## Image
         png|jpg|jpeg|PNG|JPG|JPEG|svg|webp)
-            	nsxiv "$entry"
+            	imv "$entry"
             	exit 1;;
 
         ## Log files

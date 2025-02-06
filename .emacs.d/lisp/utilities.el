@@ -502,7 +502,7 @@ The command supports previewing the currently selected theme."
          (tex-file (concat (file-name-sans-extension org-file) ".tex"))
          (pdf-file (concat (file-name-sans-extension org-file) ".pdf"))
          (tectonic-command (concat "tectonic -Z shell-escape " tex-file))
-         (pdf-dir "pdf/"))
+         (pdf-dir "~/docs/pdf/"))
     ;; Export Org file to LaTeX
     (org-latex-export-to-latex)
     ;; Run tectonic command in a temporary buffer to avoid displaying the output

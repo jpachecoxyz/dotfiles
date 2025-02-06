@@ -41,7 +41,7 @@ remove_vid() {
 
 # Function to ask for upload confirmation
 ask_upload() {
-    UPLOAD=$(printf "yes\nno" | tofi --prompt 'Upload video to 0x0.st? ')
+    UPLOAD=$(printf "yes\nno" | tofi --prompt-text 'Upload video to 0x0.st? ')
     case $UPLOAD in
         'yes')
             check_connection && share || hyprctl notify 3 5000 "rgb(ff5566)" "fontsize:15 Upload failed. Video saved in /tmp/screencast.mp4";;
@@ -53,7 +53,7 @@ ask_upload() {
 
 kill_proc
 
-OPT=$(printf "screencast\narea\nshare\nquit" | tofi --prompt 'Select an option: ')
+OPT=$(printf "screencast\narea\nshare\nquit" | tofi --prompt-text 'Select an option: ')
 case $OPT in
     'screencast')
         sleep 1
