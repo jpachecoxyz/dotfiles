@@ -1,9 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
+    - /home/javier/webdev/theme
     - /home/javier/webdev/jpachecoxyz
-    - /home/javier/.local/src/void-mklive
-    - /home/javier/.dotfiles/.local/src/void-mklive
     - /home/javier/.local/src/voidstrap
     - /home/javier/.local/src/void-packages
     - /home/javier/pics/art

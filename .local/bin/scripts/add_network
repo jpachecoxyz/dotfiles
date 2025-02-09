@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 09/02/25
+# Project: Add wifi network
+
+echo "Name of device: "
+read device
+# read passphrase
+
+passphrase=$(/usr/bin/pinentry-curses --ttyname $(tty) --lc-ctype "$LANG" <<EOF | grep D | sed 's/^..//'
+SETTIMEOUT 30
+SETPROMPT Please enter your SSID passphrase:
+SETOK Yes
+SETCANCEL No
+GETPIN
+BYE
+EOF
+)
+
+clear 
+
+doas wpa_passphrase $device $passphrase  | doas tee -a /etc/wpa_supplicant/wpa_supplicant-lenovo.conf > /dev/null 2>&1 && notify-send "Network log" "Network Added correctly"
+doas sed -i '/#psk=/d' /etc/wpa_supplicant/wpa_supplicant-lenovo.conf
+
