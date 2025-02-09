@@ -2074,6 +2074,7 @@ folder, otherwise delete a word"
     "e d" '(eval-defun :wk "Evaluate defun containing or after point")
     "e e" '(eval-expression :wk "Evaluate and elisp expression")
 	"e f" '(open-specific-dired :wk "Edit Configuration Files")
+	"e o" '(open-org-files :wk "Open my docs org files")
     "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
     "e r" '(eval-region :wk "Evaluate elisp in region")
     "e R" '(eww-reload :which-key "Reload current page in EWW")

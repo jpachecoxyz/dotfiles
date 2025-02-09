@@ -107,7 +107,7 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 bindkey -s '^o' 'yazi\n'
 
-bindkey -s '^L' 'lazygit\n'
+bindkey -s '^G' 'lazygit\n'
 
 bindkey -s '^t' 'tmount\n'
 

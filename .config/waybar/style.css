@@ -67,7 +67,7 @@ tooltip {
 #workspaces button:hover {
     background: #181818;
     color: #cdd6f4;
-    border-radius: 5px;
+    border-radius: 0px;
 }
 
 #custom-recorder,

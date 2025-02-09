@@ -135,7 +135,7 @@ alias windows='doas qemu-system-x86_64 -m 2G -smp 2 --enable-kvm \
     -name "VoidLinux jpachecoxyz" \
     -boot order=d \
     -drive file=/home/javier/vms/void/void-linux.qcow2,format=qcow2,if=virtio \
-    -cdrom ~/.local/src/void-mklive/windows.iso \
+    -cdrom ~/vms/isos/windows.iso \
     -device virtio-net,netdev=user0 \
     -netdev user,id=user0 \
     -drive file=/usr/share/OVMF/x64/OVMF_CODE.fd,format=raw,if=pflash'

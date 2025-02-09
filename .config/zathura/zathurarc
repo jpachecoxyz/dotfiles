@@ -33,7 +33,7 @@ set recolor-keephue             "false"
 
 set database sqlite
 
-set sandbox none
+# set sandbox none
 set statusbar-h-padding 0
 set statusbar-v-padding 0
 set page-padding 10

@@ -540,6 +540,15 @@ The command supports previewing the currently selected theme."
          (file (completing-read "Select file: " all-files nil t)))
     (find-file file)))
 
+(defun open-org-files ()
+  "Open a Lisp or Org file from my docs directory, including subfolders."
+  (interactive)
+  (let* ((directory "~/docs/org")
+         (org-files (find-lisp-find-files directory ".*\\.org$"))
+         (all-files (append org-files))
+         (file (completing-read "Select file: " all-files nil t)))
+    (find-file file)))
+
 ;; Follow urls in the buffer
 (defun list-and-open-url-in-buffer ()
   "List all URLs in the current buffer, display them in the minibuffer, and open a selected URL in the browser."
@@ -631,14 +640,12 @@ The command supports previewing the currently selected theme."
 (defun open-specific-dired ()
   "Ask whether to open config, scripts, or nix config in Dired."
   (interactive)
-  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "nix" "docs"))))
+  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "docs"))))
     (cond
      ((string= choice "config")
       (fzf-find-file "~/.config/"))
      ((string= choice "scripts")
       (fzf-find-file "~/.local/bin/"))
-     ((string= choice "nix")
-      (fzf-find-file "~/.dotfiles/nix/"))
      ((string= choice "docs")
       (fzf-find-file "~/docs/org/"))
      (t
