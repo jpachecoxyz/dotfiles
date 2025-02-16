@@ -1726,14 +1726,6 @@ See `org-capture-templates' for more information."
          :immediate-finish nil
          :kill-buffer t
 		 :unnarrowed t)
-		;; SyMA
-		("nws" "Syma" plain (file "~/public/org/roam/templates/syma.org")
-		 :if-new (file+head "2.2_${slug}.org" "#+title: ${title}\n")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 r
-		 :unnarrowed t)
 
 		))
 ;; UI

@@ -4,6 +4,5 @@
 # Created On: 09/02/25
 # Project: Bring the wifi interface on
 
-
 INTERFACE="$(iwconfig  2>/dev/null | awk '/ESSID/ {print $1}')"
-sudo wpa_supplicant -B -i $INTERFACE -c /etc/wpa_supplicant/wpa_supplicant-lenovo.conf  -D wext &
+wpa_supplicant -B -i $INTERFACE -c /etc/wpa_supplicant/wpa_supplicant-wifi.conf  -D wext &

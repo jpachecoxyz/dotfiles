@@ -98,6 +98,7 @@ alias xu='sudo xbps-install -Su'
 alias xq='xbps-query -R'
 # Clean xbps cache and remove orphaned packages
 alias xclean='doas xbps-remove -oO && doas rm -r /var/cache/xbps/*'
+alias fzp="fuzzypkg"
 
 # alias xbps-src
 alias srclean='cd $HOME/.local/src/void-packages/ && ./xbps-src clean-repocache && ./xbps-src clean && ./xbps-src remove-autodeps && rm -rf hostdir/sources/* && xbps-rindex -r ~/.local/src/void-packages/hostdir/binpkgs && xbps-rindex -c ~/.local/src/void-packages/hostdir/binpkgs'
@@ -122,23 +123,27 @@ alias \
 
 
 # qemu
-alias void-vm='doas qemu-system-x86_64 -m 2G -smp 2 --enable-kvm \
+alias void-vm='qemu-system-x86_64 -m 2G -smp 2 --enable-kvm \
     -name "VoidLinux jpachecoxyz" \
     -boot order=d \
     -drive file=/home/javier/vms/void/void-linux.qcow2,format=qcow2,if=virtio \
     -cdrom ~/.local/src/void-mklive/void-jpachecoxyz.iso \
     -device virtio-net,netdev=user0 \
     -netdev user,id=user0 \
-    -drive file=/usr/share/OVMF/x64/OVMF_CODE.fd,format=raw,if=pflash'
+    -M q35 \
+    -full-screen \
+    -device virtio-serial'
 
-alias windows='doas qemu-system-x86_64 -m 2G -smp 2 --enable-kvm \
-    -name "VoidLinux jpachecoxyz" \
-    -boot order=d \
-    -drive file=/home/javier/vms/void/void-linux.qcow2,format=qcow2,if=virtio \
-    -cdrom ~/vms/isos/windows.iso \
-    -device virtio-net,netdev=user0 \
-    -netdev user,id=user0 \
-    -drive file=/usr/share/OVMF/x64/OVMF_CODE.fd,format=raw,if=pflash'
+alias w11='qemu-system-x86_64 \
+	--enable-kvm \
+	-m 8G \
+	-smp 4 \
+	-cpu qemu64 \
+	-drive file=/home/javier/dwls/Rockwell_VM_11/win11.qcow2,media=disk,cache=unsafe \
+	-M q35 \
+	-full-screen \
+	-vga virtio
+    '
 
 ## Functions.
 ecf(){ cd $XDG_CONFIG_HOME && find . -type f,l -printf "%h/%f\n" | \
