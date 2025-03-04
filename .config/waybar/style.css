@@ -70,12 +70,40 @@ tooltip {
     border-radius: 0px;
 }
 
+#tags button {
+    color: #555555;
+}
+
+#tags button.active {
+    color: #ffffff;
+}
+
+#tags button.focused {
+    color: #a6adc8;
+    /* background: #eba0ac; */
+    border-radius: 5px;
+}
+
+#tags button.urgent {
+    color: #11111b;
+    background: #a6e3a1;
+    border-radius: 0px;
+    animation: animate 1.5s linear infinite; 
+}
+
+#tags button:hover {
+    background: #181818;
+    color: #cdd6f4;
+    border-radius: 0px;
+}
+
 #custom-recorder,
 #hyprland-submap,
 #custom-window_state,
 #window,
 #clock,
 #custom-weather,
+#tags,
 #battery,
 #pulseaudio,
 #network,
@@ -111,6 +139,14 @@ tooltip {
 }
 
 #workspaces {
+    background: #181818;
+    border-radius: 5px 0px 0px 5px;
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+#tags {
     background: #181818;
     border-radius: 5px 0px 0px 5px;
     padding: 0;

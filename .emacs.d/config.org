@@ -1269,7 +1269,7 @@
   (interactive)
   (if (string= ispell-current-dictionary "en_US")
       (progn
-        (setq ispell-current-dictionary "es_MX")
+        (setq ispell-current-dictionary "es")
         (message "Switched to Spanish dictionary"))
     (progn
       (setq ispell-current-dictionary "en_US")

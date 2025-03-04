@@ -26,9 +26,10 @@ alias \
 	yta="yt-dlp -x --audio-format m4a" \
 	yv="ytfzf -t" \
 	t="tmux" \
+	ff="clear && fastfetch" \
 	ta="tmux a" \
 	ffmpeg="ffmpeg -hide_banner" \
-	cls="clear; eza" \
+	cls="clear; eza -la" \
 	clera="clear"
 
 # Colorize commands when possible.

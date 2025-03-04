@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 22/02/25
+# Project: Convert VMs using QEMU interactively
+
+help_message() {
+    echo "Usage: $0 [FORMAT] [OUTPUT] [ARCHIVE]"
+    echo "If no arguments are provided, the script will ask for input."
+    echo ""
+    echo "Options:"
+    echo "  -h, --help    Show this help message and exit."
+    echo ""
+    echo "Example:"
+    echo "  $0 vmdk output.qcow2 vm_disk.vmdk"
+    exit 0
+}
+
+# Check for --help or -h argument
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    help_message
+fi
+
+# If arguments are missing, prompt the user
+if [ -z "$1" ]; then
+    read -p "Enter source format (e.g., vmdk, raw, vdi): " FORMAT
+else
+    FORMAT=$1
+fi
+
+if [ -z "$2" ]; then
+    read -p "Enter output file name (e.g., output.qcow2): " OUTPUT
+else
+    OUTPUT=$2
+fi
+
+if [ -z "$3" ]; then
+    read -p "Enter archive file (e.g., vm_disk.vmdk): " ARCHIVE
+else
+    ARCHIVE=$3
+fi
+
+# Check if qemu-img is installed
+if ! command -v qemu-img > /dev/null 2>&1; then
+    echo "Error: qemu-img is not installed. Please install it first."
+    exit 1
+fi
+
+# Confirm conversion
+echo "Converting $ARCHIVE ($FORMAT) to $OUTPUT (qcow2)..."
+qemu-img convert -p -f "$FORMAT" -O qcow2 "$ARCHIVE" "$OUTPUT"
+
+echo "Conversion completed!"

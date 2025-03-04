@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 22/02/25
+# Project: VM launcher
+
+# Directory containing the VM disk images
+VM_DIR="$HOME/vms/windows"
+
+# Find available .qcow2 files and show only their names (without extension)
+VM_NAME=$(find "$VM_DIR" -maxdepth 1 -type f -name "*.qcow2" | awk -F'/' '{print $NF}' | sed 's/\.qcow2$//' | tofi --prompt="Select a VM: ")
+
+# Exit if no file is selected
+[ -z "$VM_NAME" ] && echo "No VM selected. Exiting..." && exit 1
+
+# Construct the full path (re-adding the extension)
+VM_PATH="$VM_DIR/$VM_NAME.qcow2"
+
+# Run the selected VM
+qemu-system-x86_64 --enable-kvm -m 8G -smp 4 -cpu qemu64 -M q35 \
+  -drive file="$VM_PATH",media=disk,cache=unsafe \
+  -full-screen -vga virtio \
+  -audiodev pipewire,id=audiodev1 -device intel-hda -device hda-duplex,audiodev=audiodev1 \
+  -rtc base=localtime

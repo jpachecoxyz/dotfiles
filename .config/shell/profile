@@ -53,6 +53,7 @@ PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
+PIPEWIRE_RUNTIME_DIR="/run/user/1000"
 BAT_THEME="gruvbox-dark"
 # GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
 # Guix
@@ -72,7 +73,7 @@ for i in $NIX_PROFILES; do
 done
 NIXPKGS_ALLOW_UNFREE=1
 NIX_CONFIG="experimental-features = nix-command flakes"
-# XDG_SESSION_TYPE="wayland"
+# XDG_CURRENT_DESKTOP=wayland
 
 # NNN
 BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"
@@ -120,5 +121,4 @@ _JAVA_AWT_WM_NONREPARENTING=1	# Fix for Java applications in dwm
 # Start wayland server on user's current tty if not already running.
 [ "$(tty)" = "/dev/tty1" ] && exec Hyprland
 xrdb ~/.config/.Xdefaults
-rfkill unblock all
 # [ "$(tty)" = "/dev/tty1" ] && exec sway
