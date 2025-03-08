@@ -1,9 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
+    - /home/javier/.local/src/void-mklive
     - /home/javier/.local/src/void-packages
 startuppopupversion: 5
-lastversion: 0.46.0
+lastversion: 0.48.0
 customcommandshistory:
     - q
 hidecommandlog: false

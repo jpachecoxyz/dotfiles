@@ -149,9 +149,11 @@
     },
 
   "custom/window_state": {
-        "format": "{}",
-        "return-type": "json",
-        "exec": "/usr/bin/env cat /tmp/hyprwindow",
-        "signal": 10,
+        // "format": "{}",
+        // "return-type": "json",
+        // "exec": "/usr/bin/env cat /tmp/hyprwindow",
+        // "signal": 10,
+        "format": " ",
+        "return-type": "json"
     },
 }
