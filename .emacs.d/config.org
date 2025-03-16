@@ -11,12 +11,6 @@
 
 (require 'jp-themes)
 
-;; (setq jp-themes-headings
-;;       '((1 regular 1.2)
-;;         (2 regular 1.1)
-;;         (3 1.0)
-;;         (agenda-date 1)))
-
 (defun jp/toggle-theme ()
   "Toggle between the `jp-eagle` and `jp-autumn` themes."
   (interactive)
@@ -34,7 +28,8 @@
 ;; Load the theme of choice:
 ;; (load-theme 'jp-darkvenom :no-confirm)
 ;; (load-theme 'jp-gruvby :no-confirm)
-(load-theme 'miasma :no-confirm)
+(load-theme 'jp-dream :no-confirm)
+;; (load-theme 'miasma :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 (global-set-key (kbd "<f10>") 'jp/toggle-theme)
@@ -173,13 +168,12 @@
 ;; Set bold-italic font
 (set-face-attribute 'bold-italic nil
                     :family "IBM Plex Mono"
-                    :slant 'italic
-                    :weight 'bold)
+                    :slant 'italic)
 
 ;; Set font for comments to be italic
 (set-face-attribute 'font-lock-comment-face nil
-                    :slant 'italic
-                    :family "IBM Plex Mono")
+                    :family "IBM Plex Mono"
+                    :slant 'italic)
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
@@ -189,13 +183,12 @@
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
                     :family "IBM Plex Mono"
-					:slant bold
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
                     :family "IBM Plex Mono"
-					:slant bold
+					;; :slant bold
                     :height 130)
 
 (custom-set-faces
@@ -998,7 +991,7 @@
 (pretty-hydra-define hydra-org-capture
   (:hint nil :color teal :quit-key ("q" "<escape>") :title (with-faicon "sticky-note" "Org roam notes" 1 -0.05))
   ("Org-roam commands"
-   (("c" org-roam-capture "Capture to Org Roam")
+   (
 	("f" org-roam-node-find "Find Org Roam node")
 	("g" org-roam-node-insert "Insert Org Roam node")
 	("i" org-roam-node-insert-immediate "Insert Org Roam node (immediate)")
@@ -1864,7 +1857,27 @@ See `org-capture-templates' for more information."
 (define-key org-mode-map (kbd "C-c C-x C-e") 'org-encrypt-entries)
 (define-key org-mode-map (kbd "C-c C-x C-d") 'org-decrypt-entries)
 #+END_SRC
-
+* Note taking.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package denote
+  :ensure t
+  :config
+  ;; General key bindings
+  (setq denote-directory (expand-file-name "~/public/org/notes/"))
+  (setq denote-known-keywords '("emacs" "project"))
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  ;;
+  ;; Tweaking the frontmatter
+  (setq denote-org-front-matter
+        "#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Javier Pacheco\n#+startup: content\n#+setup: ~/.emacs.d/latex/manual.org")
+  :bind
+  ("C-c n n" . denote-open-or-create)
+  ("C-c n l" . denote-link-or-create)
+  ("C-c n b" . denote-link-find-file)
+  ("C-c n B" . denote-link-backlinks)
+  )
+#+end_src
 * Pulsar.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package pulsar
@@ -2322,7 +2335,7 @@ folder, otherwise delete a word"
   :bind  (("C-<tab>" . buffer-flip)
           :map buffer-flip-map
           ( "C-<tab>" .   buffer-flip-forward) 
-          ( "C-`" . buffer-flip-backward) 
+          ( "C-<iso-lefttab>" . buffer-flip-backward) 
           ( "M-ESC" .     buffer-flip-abort))
   :config
   (setq buffer-flip-skip-patterns
@@ -2554,6 +2567,9 @@ folder, otherwise delete a word"
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
+    "o m" '((lambda () (interactive)
+              (find-file "~/public/org/roam/mimir.org")) 
+            :wk "Open web org file.")
     "o p" '((lambda () (interactive)
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")

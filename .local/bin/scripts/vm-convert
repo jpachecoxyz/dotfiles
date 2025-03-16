@@ -2,17 +2,14 @@
 
 # Created By: Javier Pacheco - javier@jpacheco.xyz
 # Created On: 22/02/25
-# Project: Convert VMs using QEMU interactively
+# Project: Convert VMs using QEMU interactively with fzf
 
 help_message() {
-    echo "Usage: $0 [FORMAT] [OUTPUT] [ARCHIVE]"
-    echo "If no arguments are provided, the script will ask for input."
+    echo "Usage: $0"
+    echo "The script will interactively ask for input using fzf."
     echo ""
     echo "Options:"
     echo "  -h, --help    Show this help message and exit."
-    echo ""
-    echo "Example:"
-    echo "  $0 vmdk output.qcow2 vm_disk.vmdk"
     exit 0
 }
 
@@ -21,30 +18,28 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     help_message
 fi
 
-# If arguments are missing, prompt the user
-if [ -z "$1" ]; then
-    read -p "Enter source format (e.g., vmdk, raw, vdi): " FORMAT
-else
-    FORMAT=$1
-fi
-
-if [ -z "$2" ]; then
-    read -p "Enter output file name (e.g., output.qcow2): " OUTPUT
-else
-    OUTPUT=$2
-fi
-
-if [ -z "$3" ]; then
-    read -p "Enter archive file (e.g., vm_disk.vmdk): " ARCHIVE
-else
-    ARCHIVE=$3
-fi
-
-# Check if qemu-img is installed
+# Check if required commands are installed
 if ! command -v qemu-img > /dev/null 2>&1; then
     echo "Error: qemu-img is not installed. Please install it first."
     exit 1
 fi
+
+if ! command -v fzf > /dev/null 2>&1; then
+    echo "Error: fzf is not installed. Please install it first."
+    exit 1
+fi
+
+# Select source format
+FORMAT=$(echo "vmdk\nraw\nvdi\nvhdx\nvpc\nqcow2" | fzf --prompt="Select source format: ")
+[ -z "$FORMAT" ] && echo "No format selected. Exiting." && exit 1
+
+# Select archive file
+ARCHIVE=$(find . -maxdepth 1 -type f \( -iname "*.vmdk" -o -iname "*.raw" -o -iname "*.vdi" -o -iname "*.vhdx" -o -iname "*.vpc" -o -iname "*.qcow2" \) | fzf --prompt="Select archive file: ")
+[ -z "$ARCHIVE" ] && echo "No archive selected. Exiting." && exit 1
+
+# Manually enter output file name
+read -p "Enter output file name (e.g., output.qcow2): " OUTPUT
+[ -z "$OUTPUT" ] && echo "No output file name provided. Exiting." && exit 1
 
 # Confirm conversion
 echo "Converting $ARCHIVE ($FORMAT) to $OUTPUT (qcow2)..."

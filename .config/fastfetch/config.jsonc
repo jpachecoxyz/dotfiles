@@ -53,7 +53,7 @@
         },
         {
             "type": "wm",
-            "format": "{} ({3})",
+            "format": "{}",
             "key": "[W]indow manager ",
             "keyColor": "33", 
         },

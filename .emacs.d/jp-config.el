@@ -728,7 +728,7 @@
 (pretty-hydra-define hydra-org-capture
   (:hint nil :color teal :quit-key ("q" "<escape>") :title (with-faicon "sticky-note" "Org roam notes" 1 -0.05))
   ("Org-roam commands"
-   (("c" org-roam-capture "Capture to Org Roam")
+   (
 	("f" org-roam-node-find "Find Org Roam node")
 	("g" org-roam-node-insert "Insert Org Roam node")
 	("i" org-roam-node-insert-immediate "Insert Org Roam node (immediate)")
@@ -1535,6 +1535,25 @@ See `org-capture-templates' for more information."
   :hook
   (org-mode . org-rainbow-tags-mode))
 
+(use-package denote
+  :ensure t
+  :config
+  ;; General key bindings
+  (setq denote-directory (expand-file-name "~/public/org/notes/"))
+  (setq denote-known-keywords '("emacs" "project"))
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  ;;
+  ;; Tweaking the frontmatter
+  (setq denote-org-front-matter
+        "#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Javier Pacheco\n#+startup: content\n#+setup: ~/.emacs.d/latex/manual.org")
+  :bind
+  ("C-c n n" . denote-open-or-create)
+  ("C-c n l" . denote-link-or-create)
+  ("C-c n b" . denote-link-find-file)
+  ("C-c n B" . denote-link-backlinks)
+  )
+
 (use-package pulsar
   :config
   (setq pulsar-pulse t)
@@ -1943,7 +1962,7 @@ folder, otherwise delete a word"
   :bind  (("C-<tab>" . buffer-flip)
           :map buffer-flip-map
           ( "C-<tab>" .   buffer-flip-forward) 
-          ( "C-`" . buffer-flip-backward) 
+          ( "C-<iso-lefttab>" . buffer-flip-backward) 
           ( "M-ESC" .     buffer-flip-abort))
   :config
   (setq buffer-flip-skip-patterns
@@ -2173,6 +2192,9 @@ folder, otherwise delete a word"
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
+    "o m" '((lambda () (interactive)
+              (find-file "~/public/org/roam/mimir.org")) 
+            :wk "Open web org file.")
     "o p" '((lambda () (interactive)
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")
@@ -2307,3 +2329,25 @@ folder, otherwise delete a word"
   (setq ee-terminal-command "kitty")
   (general-evil-define-key 'normal 'global "M-f" 'ee-nnn)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   '((eval setq-local org-refile-targets '((nil :maxlevel . 1))))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed))))
+ '(org-checkbox ((t (:box (:style released-button)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo))))
+ '(org-document-title ((t (:height 1.5)))))

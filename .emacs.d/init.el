@@ -91,13 +91,12 @@
 ;; Set bold-italic font
 (set-face-attribute 'bold-italic nil
                     :family "IBM Plex Mono"
-                    :slant 'italic
-                    :weight 'bold)
+                    :slant 'italic)
 
 ;; Set font for comments to be italic
 (set-face-attribute 'font-lock-comment-face nil
-                    :slant 'italic
-                    :family "IBM Plex Mono")
+                    :family "IBM Plex Mono"
+                    :slant 'italic)
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
@@ -107,13 +106,12 @@
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
                     :family "IBM Plex Mono"
-					:slant bold
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
                     :family "IBM Plex Mono"
-					:slant bold
+					;; :slant bold
                     :height 130)
 
 (custom-set-faces

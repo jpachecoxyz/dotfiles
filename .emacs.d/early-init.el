@@ -3,12 +3,6 @@
 
 (require 'jp-themes)
 
-;; (setq jp-themes-headings
-;;       '((1 regular 1.2)
-;;         (2 regular 1.1)
-;;         (3 1.0)
-;;         (agenda-date 1)))
-
 (defun jp/toggle-theme ()
   "Toggle between the `jp-eagle` and `jp-autumn` themes."
   (interactive)
@@ -26,7 +20,8 @@
 ;; Load the theme of choice:
 ;; (load-theme 'jp-darkvenom :no-confirm)
 ;; (load-theme 'jp-gruvby :no-confirm)
-(load-theme 'miasma :no-confirm)
+(load-theme 'jp-dream :no-confirm)
+;; (load-theme 'miasma :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 (global-set-key (kbd "<f10>") 'jp/toggle-theme)

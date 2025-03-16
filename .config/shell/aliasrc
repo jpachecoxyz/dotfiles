@@ -7,7 +7,7 @@
 [ -f "$XINITRC" ] && alias startx="startx $XINITRC"
 
 # sudo not required for some system commands
-for command in mount umount su poweroff reboot zzz nixrb; do
+for command in mount umount su poweroff reboot zzz nixrb xbps-install xbps-remove; do
 	alias $command="doas $command"
 done; unset command
 

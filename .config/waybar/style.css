@@ -48,7 +48,7 @@ tooltip {
 }
 
 #workspaces button.active {
-    color: #ffffff;
+    color: #458588;
 }
 
 #workspaces button.focused {
@@ -113,7 +113,7 @@ tooltip {
 #workspaces,
 #tray,
 #backlight {
-    background: #181818;
+    background: #1a1a1a;
     opacity: 0.8;
     padding: 0px 10px;
     margin: 3px 0px;
@@ -139,7 +139,7 @@ tooltip {
 }
 
 #workspaces {
-    background: #181818;
+    background: #1a1a1a;
     border-radius: 5px 0px 0px 5px;
     padding: 0;
     margin-left: 10px;
@@ -147,7 +147,7 @@ tooltip {
 }
 
 #tags {
-    background: #181818;
+    background: #1a1a1a;
     border-radius: 5px 0px 0px 5px;
     padding: 0;
     margin-left: 10px;
