@@ -813,7 +813,7 @@
 		hl-todo--regex "\\(\\<\\(TODO\\|DOING\\|FIXME\\|HACK\\|REVIEW\\|NOTE\\|DEPRECATED\\)\\>[:]*\\)"
         hl-todo-keyword-faces
         `(("TODO"       warning bold)
-		  ("DOING"		warning bold italic)
+		  ("DOING"	warning bold)
           ("FIXME"      error bold)
           ("HACK"       font-lock-constant-face italic)
           ("REVIEW"     font-lock-keyword-face bold)
@@ -1388,6 +1388,13 @@ See `org-capture-templates' for more information."
 (setq org-roam-capture-templates
 	  '(
 		;; Notes
+		("i" "Index Note" plain (file "~/public/org/roam/templates/index.org")
+		 :target (file "${slug}.org")
+         :no-save t
+         :immediate-finish nil
+         :kill-buffer t
+		 :posframe t 
+		 :unnarrowed t)
 		("n" "Notes")
 		("np" "Personal")
 		;; Personal
@@ -1534,25 +1541,6 @@ See `org-capture-templates' for more information."
    '(:inverse-video nil :box nil :weight 'bold))
   :hook
   (org-mode . org-rainbow-tags-mode))
-
-(use-package denote
-  :ensure t
-  :config
-  ;; General key bindings
-  (setq denote-directory (expand-file-name "~/public/org/notes/"))
-  (setq denote-known-keywords '("emacs" "project"))
-  (setq denote-infer-keywords t)
-  (setq denote-sort-keywords t)
-  ;;
-  ;; Tweaking the frontmatter
-  (setq denote-org-front-matter
-        "#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Javier Pacheco\n#+startup: content\n#+setup: ~/.emacs.d/latex/manual.org")
-  :bind
-  ("C-c n n" . denote-open-or-create)
-  ("C-c n l" . denote-link-or-create)
-  ("C-c n b" . denote-link-find-file)
-  ("C-c n B" . denote-link-backlinks)
-  )
 
 (use-package pulsar
   :config
@@ -2349,5 +2337,4 @@ folder, otherwise delete a word"
  '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
  '(evil-goggles-yank-face ((t (:inherit diff-changed))))
  '(org-checkbox ((t (:box (:style released-button)))))
- '(org-checkbox-statistics-done ((t (:inherit org-todo))))
- '(org-document-title ((t (:height 1.5)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo)))))

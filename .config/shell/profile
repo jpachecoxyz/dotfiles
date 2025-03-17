@@ -54,6 +54,7 @@ TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 PIPEWIRE_RUNTIME_DIR="/run/user/1000"
+CHROME_FLAGS="--ozone-platform=wayland --enable-features=UseOzonePlatform"
 BAT_THEME="gruvbox-dark"
 # GI_TYPELIB_PATH=/run/current-system/sw/lib/girepository-1.0:$HOME/.nix-profile/lib/girepository-1.0
 # Guix

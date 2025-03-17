@@ -74,24 +74,26 @@
 ;; Fonts settings.
 
 (set-face-attribute 'default nil
-                    :family "JetBrains Mono"
-                    :height 120
+                    :family "Iosevka"
+                    :height 130
                     :weight 'regular)
 
 ;; Set italic font
 (set-face-attribute 'italic nil
-                    :family "JetBrains Mono"
+                    :family "Iosevka"
+                    :height 130
                     :slant 'italic)
 
 ;; Set bold font
 (set-face-attribute 'bold nil
-                    :family "JetBrains Mono"
+                    :family "Iosevka"
+                    :height 130
                     :weight 'bold)
 
-;; Set bold-italic font
-(set-face-attribute 'bold-italic nil
-                    :family "IBM Plex Mono"
-                    :slant 'italic)
+;; ;; Set bold-italic font
+;; (set-face-attribute 'bold-italic nil
+;;                     :family "JetBrains Mono"
+;;                     :slant 'italic)
 
 ;; Set font for comments to be italic
 (set-face-attribute 'font-lock-comment-face nil
@@ -100,8 +102,8 @@
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
-                    :slant 'italic
-                    :family "IBM Plex Mono")
+                    :family "IBM Plex Mono"
+                    :slant 'italic)
 
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
@@ -111,8 +113,9 @@
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
                     :family "IBM Plex Mono"
-					;; :slant bold
+					:slant 'italic
                     :height 130)
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -128,4 +131,5 @@
  '(evil-goggles-yank-face ((t (:inherit diff-changed))))
  '(org-checkbox ((t (:box (:style released-button)))))
  '(org-checkbox-statistics-done ((t (:inherit org-todo))))
- '(org-document-title ((t (:height 1.5)))))
+
+)
