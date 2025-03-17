@@ -2,13 +2,14 @@
 .config/dconf/
 .config/dconf/user
 .config/google-chrome/
+.config/chromium/
 .config/mpd/log
 .config/mpd/pid
 .config/obs-studio/
 
 # local
 .local/share/
-!.local/.share/fonts/
+!.local/share/fonts/
 .local/src/
 .local/state/
 

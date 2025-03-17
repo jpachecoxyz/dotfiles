@@ -20,8 +20,8 @@
 ;; Load the theme of choice:
 ;; (load-theme 'jp-darkvenom :no-confirm)
 ;; (load-theme 'jp-gruvby :no-confirm)
-(load-theme 'jp-dream :no-confirm)
-;; (load-theme 'miasma :no-confirm)
+;; (load-theme 'jp-dream :no-confirm)
+(load-theme 'miasma :no-confirm)
 ;; (load-theme 'jp-elea-dark :no-confirm)
 ;; (load-theme 'jp-owl :no-confirm)
 (global-set-key (kbd "<f10>") 'jp/toggle-theme)
