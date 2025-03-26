@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: instrucciones
+# key: instruct
+# --
+
+#+begin_export latex
+\begin{center}
+\fbox{\fbox{%
+\begin{minipage}{\dimexpr\textwidth-8\fboxsep-8\fboxrule\relax} % Ajusta el ancho
+\centering
+\textbf{${1:Instrucciones de examen...}}
+\end{minipage}%
+}}
+\end{center}
+#+end_export
+$0

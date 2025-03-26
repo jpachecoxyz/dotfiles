@@ -87,7 +87,7 @@ alias \
 
 # Xbps - void
 # Install packages
-alias xi='sudo xbps-install -Sy'
+alias xi='sudo xbps-install'
 # Remove packages and dependencies
 alias xr='sudo xbps-remove -Ro'
 # Search for packages

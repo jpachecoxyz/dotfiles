@@ -1,0 +1,11 @@
+# %------ [[ Exam Content ]] ------%
+
+#+latex_header: \documentclass[12pt,fleqn]{article}
+
+#+latex_header: \def\semester{Curso Basico}
+#+latex_header: \def\acadyear{2025-2026}
+#+latex_header: \def\examdate{Janary/Dec 2025}
+#+latex_header: \def\subjectcode{PLC}
+#+latex_header: \def\subjecttitle{Logica de programacion}
+#+latex_header: \def\timeallowed{$2.5$}
+

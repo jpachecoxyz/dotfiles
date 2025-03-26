@@ -463,7 +463,7 @@
                 shell-mode-hook
                 vterm-mode-hook
                 help-mode-hook
-                org-mode-hook
+                ;; org-mode-hook
                 telega-chat-mode-hook
                 telega-root-mode-hook
 				doc-view-mode-hook
@@ -578,6 +578,21 @@
 				 ("\\subsection{%s}" . "\\subsection*{%s}")
 				 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 				 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+				 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+  (add-to-list 'org-latex-classes
+               '("exam"
+				 "\\documentclass[11pt,addpoints]{exam} [NO-DEFAULT-PACKAGES]
+                \\usepackage{graphicx}
+                \\usepackage{pgf,tikz,pgfplots}
+                \\pgfplotsset{compat=1.15}
+                \\usepgfplotslibrary{fillbetween}
+                \\pointpoints{punto}{puntos}
+                \\pagestyle{headandfoot}"
+				 ("\\section{%s}" . "\\section*{%s}")
+				 ("\\subsection{%s}" . "\\subsection*{%s}")
+				 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+				 ("\\paragraph{%s}" . "\\paragraph*{%s}")
 				 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 (setq org-latex-listings 't)
@@ -589,8 +604,8 @@
 (setq org-export-allow-bind-keywords t)
 
 (setq org-latex-to-pdf-process 
-  '("xelatex -interaction nonstopmode %f"
-     "xelatex -interaction nonstopmode %f")) ;; for multiple passes
+	  '("xelatex -interaction nonstopmode %f"
+		"xelatex -interaction nonstopmode %f")) ;; for multiple passes
 (setq TeX-command-extra-options "-shell-escape")
 
 (setq org-latex-pdf-process
@@ -615,8 +630,8 @@
   :ensure t
   :defer t
   :custom
-  (olivetti-body-width 0.7)
-  :hook (org-mode . olivetti-mode))
+  (olivetti-body-width 0.7))
+  ;; :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
 
@@ -1097,12 +1112,14 @@
 		("crypt" . ?C)
 		))
 (setq org-agenda-files
-      '("~/public/org/agenda/personal.org"
-        "~/public/org/agenda/training.org"
+      '(
+		;; "~/public/org/agenda/personal.org"
+        ;; "~/public/org/agenda/training.org"
         "~/public/org/agenda/bdays.org"
         "~/public/org/agenda/important_dates.org"
-        "~/public/org/agenda/contacts.org"
-        "~/public/org/agenda/work.org"
+        ;; "~/public/org/agenda/contacts.org"
+        ;; "~/public/org/agenda/work.org"
+		"~/public/org/roam/agenda.org"
 		))
 (setq org-todo-keywords
     (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
@@ -1464,6 +1481,40 @@ See `org-capture-templates' for more information."
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 
+(use-package denote
+  :ensure t
+  ;; General configuration
+  :config
+  (setq denote-directory (expand-file-name "~/public/org/notes/"))
+  (setq denote-known-keywords '("emacs" "project"))
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+
+  ;; Tweaking the frontmatter
+  (setq denote-org-front-matter
+		"#+title: %s
+#+date: %s
+#+filetags: %s
+#+identifier: %s
+#+author: Ing. Javier Pacheco
+#+startup: content\n\n")
+  ;; Keybinds
+  :bind
+  ("C-c n n" . denote-open-or-create)
+  ("C-c n l" . denote-link-or-create)
+  ("C-c n b" . denote-link-find-file)
+  ("C-c n B" . denote-link-backlinks))
+
+(with-eval-after-load 'org-capture
+  (add-to-list 'org-capture-templates
+               '("n" "New note (with Denote)" plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 :no-save t
+                 :immediate-finish nil
+                 :kill-buffer t
+                 :jump-to-captured t)))
+
 (use-package org-fancy-priorities
   :ensure t
   :hook ((org-agenda-mode . org-fancy-priorities-mode)
@@ -1541,6 +1592,39 @@ See `org-capture-templates' for more information."
    '(:inverse-video nil :box nil :weight 'bold))
   :hook
   (org-mode . org-rainbow-tags-mode))
+
+(use-package org-modern)
+(add-hook 'org-mode-hook #'org-modern-mode)
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
+;; Add frame borders and window dividers
+(modify-all-frames-parameters
+ '((right-divider-width . 20)
+   (internal-border-width . 20)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
+
+(setq
+ ;; Edit settings
+ org-auto-align-tags nil
+ org-tags-column 0
+ org-catch-invisible-edits 'show-and-error
+ org-special-ctrl-a/e t
+ org-insert-heading-respect-content t
+
+ ;; Org styling, hide markup etc.
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-agenda-tags-column 0
+ org-ellipsis " ⮧"
+ org-modern-fold-stars
+ '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖"))
+
+ )
 
 (use-package pulsar
   :config
@@ -2317,24 +2401,27 @@ folder, otherwise delete a word"
   (setq ee-terminal-command "kitty")
   (general-evil-define-key 'normal 'global "M-f" 'ee-nnn)
   (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(safe-local-variable-values
-   '((eval setq-local org-refile-targets '((nil :maxlevel . 1))))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed))))
- '(org-checkbox ((t (:box (:style released-button)))))
- '(org-checkbox-statistics-done ((t (:inherit org-todo)))))
+
+(use-package telega
+  :ensure t
+  :defer t
+  :custom
+  ;; enable markdown for code snippets
+  (telega-chat-input-markups '("markdown2" "org" nil))
+  ;; use vertico for completion
+  (telega-completing-read-function 'completing-read)
+  :config
+  ;; use shift enter to make multi line messages and enter to send it
+  (define-key telega-chat-mode-map (kbd "S-<return>") #'newline)
+  ;; disable copy message link when moving over text with evil-mode
+  (define-key telega-msg-button-map (kbd "l") nil)
+  ;; avoid showing blank spaces highlighted
+  (add-hook 'telega-chat-mode-hook #'(lambda ()
+                                       (setq-local show-trailing-whitespace nil))))
+
+(defun my/start-telega ()
+  "Start `telega' inside a new perspective and activate 'telega-mode-line-mode'"
+  (interactive)
+  (persp-switch "*telega*")
+  (telega)
+  (telega-mode-line-mode))

@@ -3,7 +3,6 @@
 # [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session && exit;}
 # Enable colors and change prompt:
 autoload -U colors && colors	# Load colors
-fastfetch
 autoload -Uz add-zsh-hook
 setopt prompt_subst
 add-zsh-hook precmd vcs_info
