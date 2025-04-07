@@ -72,7 +72,7 @@
 ;; Call the function during initialization
 (nano-splash-randomize-subtitle)
 
-(defcustom nano-splash-duration 10
+(defcustom nano-splash-duration 2
   "Splash screen duration (in seconds)"
   :type 'float :group 'nano-splash)
 

@@ -1,0 +1,11 @@
+account jpacheco@cock.li
+host mail.cock.li
+port 465
+from jpacheco@cock.li
+user jpacheco@cock.li
+passwordeval "pass jpacheco@cock.li"
+auth on
+tls on
+tls_trust_file	/etc/ssl/certs/ca-certificates.crt
+logfile /home/javier/.local/state/msmtp/msmtp.log
+tls_starttls off

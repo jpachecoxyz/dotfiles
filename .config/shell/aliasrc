@@ -63,10 +63,10 @@ alias \
 	icat="kitten icat --align left" \
 	ni="nix-env -iA" \
 	nr="nix-env -e" \
+	mt="neomutt" \
 	gh="guix home reconfigure ~/.config/guix/home.scm" \
 	gp="guix pull" \
 	reconf="\sudo -E guix system reconfigure ~/.config/guix/system.scm"
-	
 
 alias \
 	g="git" \

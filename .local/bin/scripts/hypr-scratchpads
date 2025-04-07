@@ -34,7 +34,7 @@ toggle_scratchpad(){
 
 case "$1" in
     terminal) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 1250x500" ;;
-    file_manager) toggle_scratchpad "file_manager" "foot -a scratchpad -w 1250x500 -e yazi" ;;
+    file_manager) toggle_scratchpad "file_manager" "foot -a scratchpad -w 1250x500 -e nnn -cdH" ;;
     music_player) toggle_scratchpad "music_player" "foot -a scratchpad -w 1250x500 -e ncmpcpp" ;;
     webcam) toggle_scratchpad "webcam" "foot -a scratchpad -e webcam" ;;
     tomb) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 800x500 -e tmount" ;;

@@ -132,4 +132,25 @@
  '(org-checkbox ((t (:box (:style released-button)))))
  '(org-checkbox-statistics-done ((t (:inherit org-todo))))
 
-)
+ ;; Enable org-crypt and epa-file
+ (require 'org-crypt)
+ (require 'epa-file)
+
+ ;; Enable epa-file for encryption/decryption of files
+ (epa-file-enable)
+
+ (setq epa-file-encrypt-to '("jpacheco@cock.li"))  ; Replace with your GPG key email
+
+ ;; Configure org-crypt
+ (setq org-crypt-tag-matcher "crypt")                    ; Tag used to encrypt entries
+ (setq org-crypt-key "jpacheco@cock.li")          ; Replace with your GPG key email
+ (setq org-tags-exclude-from-inheritance '("crypt"))     ; Prevent inheritance of "crypt" tag
+ (setq epa-pinentry-mode 'loopback) ;; Ensures passphrase prompt in minibuffer
+
+ ;; Automatically encrypt entries tagged with "crypt" before saving
+ (add-hook 'before-save-hook 'org-crypt-use-before-save-magic)
+
+ ;; Define keybindings for manual encryption/decryption
+ (define-key org-mode-map (kbd "C-c C-x e") 'org-encrypt-entries)
+ (define-key org-mode-map (kbd "C-c C-x d") 'org-decrypt-entries)
+ )

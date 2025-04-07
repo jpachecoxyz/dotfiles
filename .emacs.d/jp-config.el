@@ -463,7 +463,7 @@
                 shell-mode-hook
                 vterm-mode-hook
                 help-mode-hook
-                ;; org-mode-hook
+                org-mode-hook
                 telega-chat-mode-hook
                 telega-root-mode-hook
 				doc-view-mode-hook
@@ -500,10 +500,10 @@
 							   ;; ("[ ]" . "")
 							   ;; ("[X]" . "")
 							   ;; ("[-]" . "")
-							   ("#+BEGIN_SRC" . "")
-							   ("#+begin_src" . "")
-							   ("#+END_SRC" . "")
-							   ("#+end_src" . "")
+							   ("#+BEGIN_SRC" . ?λ)
+							   ("#+begin_src" . ?λ)
+							   ("#+END_SRC" . ?⬚)
+							   ("#+end_src" . ?⬚)
 							   ("#+TITLE: " . "")
 							   ("#+title: " . "")))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
@@ -1090,8 +1090,7 @@
 (setq org-tag-alist
 	  '(;;Places
 		("@home" . ?h)
-		("@work" . ?w)
-		("@kindergardeen" . ?k)
+		("@work" . ?W)
 
 		;; Whom
 		("lia" . ?l)
@@ -1100,26 +1099,23 @@
 		
 		;; Devices
 		("@laptop" . ?L)
-		("@phone" . ?p)
 
 		;; Activities
-		("programming" . ?P)
+		("programming" . ?p)
 		("planning" . ?n)
-		("writting" . ?W)
-		("calls" . ?c)
+		("writting" . ?w)
 		("email" . ?e)
-		("errands" . ?r)
-		("crypt" . ?C)
+		("crypt" . ?c)
 		))
 (setq org-agenda-files
       '(
 		;; "~/public/org/agenda/personal.org"
         ;; "~/public/org/agenda/training.org"
-        "~/public/org/agenda/bdays.org"
-        "~/public/org/agenda/important_dates.org"
+        "~/docs/org/agenda/bdays.org"
+        "~/docs/org/agenda/important_dates.org"
         ;; "~/public/org/agenda/contacts.org"
         ;; "~/public/org/agenda/work.org"
-		"~/public/org/roam/agenda.org"
+		"~/docs/org/agenda/agenda.org"
 		))
 (setq org-todo-keywords
     (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
@@ -1161,18 +1157,6 @@
         ("e" . "example")
         ("X" . "export")))
 
-(use-package org-contacts
-  :ensure t)
-
-(defvar my/org-contacts-template "* %(org-contacts-template-name)
-   :PROPERTIES:
-   :EMAIL: %(org-contacts-template-email)
-   :PHONE: %^{Telefono}
-   :IGNORE:
-   :NOTE: %^{NOTA}
-   :BIRTHDAY: %^{Cumpleaños}
-   :END:" "Plantilla para org-contacts.")
-
 (defvar custom-daily-agenda
   `(
 	(tags-todo "+@home|@work"
@@ -1197,30 +1181,30 @@
                 ;; utility in multi-day views.
                 (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                 (org-agenda-format-date "%A %-e %B %Y")
-                (org-agenda-overriding-header "\nToday's agenda\n")))
-    (agenda "" ((org-agenda-start-on-weekday nil)
-                (org-agenda-start-day "+1d")
-                (org-agenda-span 5)
-                (org-deadline-warning-days 0)
-                (org-agenda-block-separator nil)
-                (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                ;; (org-agenda-entry-types '(:deadline))
-                (org-agenda-overriding-header "\nNext five days\n")))
-    ;; (agenda "" ((org-agenda-time-grid nil)
-    ;;             (org-agenda-start-on-weekday nil)
-    ;;             ;; We don't want to replicate the previous section's
-    ;;             ;; three days, so we start counting from the day after.
-    ;;             (org-agenda-start-day "+6d")
-    ;;             (org-agenda-span 14)
-    ;;             (org-agenda-show-all-dates nil)
+                (org-agenda-overriding-header "\nToday's agenda\n")))
+    ;; (agenda "" ((org-agenda-start-on-weekday nil)
+    ;;             (org-agenda-start-day "+1d")
+    ;;             (org-agenda-span 5)
     ;;             (org-deadline-warning-days 0)
     ;;             (org-agenda-block-separator nil)
-    ;;             (org-agenda-entry-types '(:scheduled))
     ;;             (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-    ;;             (org-agenda-overriding-header "\nUpcoming tasks (+14d)\n")))
-	
-	)
-  "Custom agenda for use in `org-agenda-custom-commands'.")
+    ;;             ;; (org-agenda-entry-types '(:deadline))
+    ;;             (org-agenda-overriding-header "\nNext five days\n")))
+(agenda "" ((org-agenda-time-grid nil)
+            (org-agenda-start-on-weekday nil)
+            ;; We don't want to replicate the previous section's
+            ;; three days, so we start counting from the day after.
+            (org-agenda-start-day "+6d")
+            (org-agenda-span 14)
+            (org-agenda-show-all-dates nil)
+            (org-deadline-warning-days 0)
+            (org-agenda-block-separator nil)
+            (org-agenda-entry-types '(:scheduled))
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+            (org-agenda-overriding-header "\nUpcoming tasks (+14d)\n")))
+
+)
+"Custom agenda for use in `org-agenda-custom-commands'.")
 
 (setq org-agenda-custom-commands
       `(
@@ -1288,7 +1272,7 @@
 
 		("b" "Birthday Calendar dates"
 		 ((agenda ""
-				  ((org-agenda-overriding-header "Birthday Calendar dates\n")
+				  ((org-agenda-overriding-header "Birthday Calendar dates\n")
 				   (org-agenda-span 'year)
 				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
 				   (org-agenda-start-day "01")
@@ -1297,7 +1281,7 @@
 					'(org-agenda-skip-entry-if
 					  'notregexp
 					  (regexp-opt '("birthday"))))))))
-
+		
 		))
 
 (eval-after-load "org-agenda"
@@ -1315,6 +1299,18 @@
 (setq org-track-ordered-property-with-tag t)
 (setq org-log-done 'time)
 (setq org-agenda-start-with-log-mode t)
+
+(use-package org-contacts
+  :ensure t)
+
+(defvar my/org-contacts-template "* %(org-contacts-template-name)
+   :PROPERTIES:
+   :EMAIL: %(org-contacts-template-email)
+   :PHONE: %^{Telefono}
+   :IGNORE:
+   :NOTE: %^{NOTA}
+   :BIRTHDAY: %^{Cumpleaños}
+   :END:" "Plantilla para org-contacts.")
 
 ;; Capture
 (setq org-default-notes-file '("~/public/org/agenda/refill.org"))
@@ -1381,156 +1377,55 @@ See `org-capture-templates' for more information."
                    "*** %?\n")                                   ; Place the cursor here finally
 				 "\n"))))
 
-(use-package org-roam
-  :ensure t
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory "~/public/org/roam")
-  (org-roam-completion-everywhere t)
-  :bind (("C-c n n" . org-roam-node-find)
-         ("C-c n b" . org-mark-ring-goto)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n I" . org-roam-node-insert-immediate)
-         :map org-mode-map
-         ("C-M-i" . completion-at-point))
-  :config
-  (org-roam-setup)
-  (org-roam-db-autosync-mode))
-
-;; (setq org-roam-node-display-template
-;;       (concat "${title:*} "
-;;               (propertize "${tags:10}" 'face 'org-tag)))
-
-(setq org-roam-capture-templates
-	  '(
-		;; Notes
-		("i" "Index Note" plain (file "~/public/org/roam/templates/index.org")
-		 :target (file "${slug}.org")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 :posframe t 
-		 :unnarrowed t)
-		("n" "Notes")
-		("np" "Personal")
-		;; Personal
-		("npp" "Personal note" plain (file "~/public/org/roam/templates/notes.org")
-		 :if-new (file+head "1.1_${slug}.org" "#+title: ${title}\n")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 :posframe t 
-		 :unnarrowed t)
-		;; Tecnologia
-		("npt" "Technology" plain (file "~/public/org/roam/templates/notes.org")
-		 :if-new (file+head "1.2_${slug}.org" "#+title: ${title}\n")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 :unnarrowed t)
-
-		;; Trabajo
-		("nw" "Work")
-		;; Autoliv
-		("nwc" "Cell" plain (file "~/public/org/roam/templates/work.org")
-		 :if-new (file+head "2.1_${slug}.org" "#+title: ${title}\n")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 :unnarrowed t)
-		;; equipo
-		("nwe" "Equipment" plain (file "~/public/org/roam/templates/equipo.org")
-		 :if-new (file+head "2.1.1_${slug}.org" "#+title: ${title}\n")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 :unnarrowed t)
-		;; documentacion
-		("nwd" "Documentation" plain (file "~/public/org/roam/templates/documentation.org")
-		 :if-new (file+head "2.1.2_${slug}.org" "#+title: ${title}\n")
-         :no-save t
-         :immediate-finish nil
-         :kill-buffer t
-		 :unnarrowed t)
-
-		))
-;; UI
-(use-package org-roam-ui
-  ;; :hook (after-init . org-roam-ui-mode)
-  :defer t
-  :bind (("C-c n u" . org-roam-ui-open))
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow nil
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start nil))
-
-;; Bind this to C-c n I
-(defun org-roam-node-insert-immediate (arg &rest args)
-  (interactive "P")
-  (let ((args (cons arg args))
-        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
-                                                  '(:immediate-finish t)))))
-    (apply #'org-roam-node-insert args)))
-
-(defun my/org-roam-filter-by-tag (tag-name)
-  (lambda (node)
-    (member tag-name (org-roam-node-tags node))))
-
-(add-hook 'org-capture-mode-hook 'delete-other-windows)
-(add-hook 'org-capture-mode-hook 'evil-insert-state)
+(defun jp:denote-dired-open ()
+  "Short cut to open the notes folder in dired."
+  (interactive)
+  (dired denote-directory))
 
 (use-package denote
   :ensure t
-  ;; General configuration
-  :config
-  (setq denote-directory (expand-file-name "~/public/org/notes/"))
-  (setq denote-known-keywords '("emacs" "project"))
-  (setq denote-infer-keywords t)
-  (setq denote-sort-keywords t)
-
-  ;; Tweaking the frontmatter
-  (setq denote-org-front-matter
-		"#+title: %s
-#+date: %s
-#+filetags: %s
-#+identifier: %s
-#+author: Ing. Javier Pacheco
-#+startup: content\n\n")
+  :hook (dired-mode . denote-dired-mode)
   ;; Keybinds
   :bind
-  ("C-c n n" . denote-open-or-create)
-  ("C-c n l" . denote-link-or-create)
-  ("C-c n b" . denote-link-find-file)
-  ("C-c n B" . denote-link-backlinks))
+  (("C-c n n" . denote-open-or-create)
+   ("C-c n l" . denote-link-or-create)
+   ("C-c n L" . denote-add-links)
+   ("C-c n b" . denote-link-backlinks)
+   ("C-c n f" . #'jp:denote-dired-open)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter)
+   (:map dired-mode-map
+         ("C-c C-d C-i" . denote-dired-link-marked-notes)
+         ("C-c C-d C-r" . denote-dired-rename-files)
+         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
+         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
 
-(with-eval-after-load 'org-capture
-  (add-to-list 'org-capture-templates
-               '("n" "New note (with Denote)" plain
-                 (file denote-last-path)
-                 #'denote-org-capture
-                 :no-save t
-                 :immediate-finish nil
-                 :kill-buffer t
-                 :jump-to-captured t)))
 
-(use-package org-fancy-priorities
+(setq denote-directory (expand-file-name "~/docs/notes"))
+(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+(setq denote-title-history nil)
+(setq denote-files-matching-regexp-history nil)
+(setq denote-history-completion-in-prompts nil)
+(setq denote-infer-keywords t)
+(setq denote-sort-keywords t)
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: content\n\n")
+
+(use-package consult-denote
+  :ensure t)
+
+(use-package denote-menu
   :ensure t
-  :hook ((org-agenda-mode . org-fancy-priorities-mode)
-   (org-mode . org-fancy-priorities-mode))
-  :config
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+  :custom ((denote-menu-show-file-type nil)
+		   (denote-menu-initial-regex "_meta"))
+  :bind 
+  (("C-c n m" . denote-menu-list-notes)))
 
-(setq org-fancy-priorities-list '((?A . "❗")
-                                  (?B . "⬆")
-                                  (?C . "⬇")
-                                  (?D . "☕")
-                                  (?1 . "⚡")
-                                  (?2 . "⮬")
-                                  (?3 . "⮮")
-                                  (?4 . "☕")
-                                  (?I . "Important")))
+(use-package denote-explore
+  :ensure t
+  :bind* (("C-c e n" . denote-explore-network)
+		("C-c e v" . denote-explore-network-regenerate)
+		("C-c e D" . denote-explore-barchart-degree)))
+(setq denote-explore-network-d3-template "~/docs/notes/templates/explore.html")
 
 (use-package org-sidebar
   :ensure t)
@@ -1622,9 +1517,7 @@ See `org-capture-templates' for more information."
  org-agenda-tags-column 0
  org-ellipsis " ⮧"
  org-modern-fold-stars
- '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖"))
-
- )
+ '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
 
 (use-package pulsar
   :config
@@ -1807,10 +1700,6 @@ See `org-capture-templates' for more information."
   (setq
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
-
-(use-package nix-mode
-  :hook (nix-mode . lsp-deferred)
-  :mode "\\.nix\\'")
 
 (use-package yasnippet
   ;; :defer 2
@@ -2260,18 +2149,19 @@ folder, otherwise delete a word"
 	"o" '(:ignore t :wk "Open")
 	;; "o -" '(ee-nnn :wk "Dired jump to current")
 	"o -" '(dired-jump :wk "Dired jump to current")
-	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
+	"o o" '(hydra-agenda-files/body :wk "Open org-agenda files")
+	"o a" '( (lambda () (interactive) (org-agenda nil "a")) :w "Open org Agenda")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
-    "o m" '((lambda () (interactive)
-              (find-file "~/public/org/roam/mimir.org")) 
-            :wk "Open web org file.")
-    "o p" '((lambda () (interactive)
+	"o m" '((lambda () (interactive)
+              (find-file "~/docs/notes/20250327T190743--mimir__meta.org")) 
+			:wk "Open web org file.")
+	"o p" '((lambda () (interactive)
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
-            :wk "Open web org file.")
-	"o o" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
-	"o t" '(term-toggle-term :wk "Toggle terminal")
+			:wk "Open web org file.")
+	"o L" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
+	"o t" '(shell-pop :wk "Toggle terminal")
 	"o s" '(toggle-scratch-buffer :wk "Toggle scratch buffer")
 	"o e" '(toggle-org-buffer :wk "Toggle org buffer")
 	"o F" '(select-frame-by-name :wk "Select frame by name"))
@@ -2425,3 +2315,55 @@ folder, otherwise delete a word"
   (persp-switch "*telega*")
   (telega)
   (telega-mode-line-mode))
+
+(use-package shell-pop
+  :ensure t
+  :config
+  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
+  (setq shell-pop-term-shell "/bin/zsh")  ;; Change this to your preferred shell
+  (setq shell-pop-window-size 50)  ;; Percentage of the screen
+  (setq shell-pop-full-span t)  ;; Full width
+  (setq shell-pop-window-position "bottom")  ;; Position of the shell
+  (setq shell-pop-autocd-to-working-dir t)
+  (setq shell-pop-restore-window-configuration t))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(aggressive-indent all-the-icons-completion all-the-icons-dired auctex
+					   auto-package-update buffer-flip cape consult-denote
+					   consult-dir consult-flycheck corfu counsel-projectile
+					   dap-mode denote-agenda denote-explore denote-menu
+					   diminish dired-open dired-rainbow doom-modeline ellama
+					   evil-collection evil-goggles evil-owl evil-surround
+					   evil-terminal-cursor-changer form-feed fzf general
+					   git-gutter-fringe git-timemachine hide-lines
+					   hide-mode-line highlight-indent-guides highlight-thing
+					   hl-todo htmlize ivy-yasnippet jinx key-chord keycast
+					   kind-icon ligature lorem-ipsum lsp-pyright lsp-ui magit
+					   major-mode-hydra marginalia nerd-icons-completion
+					   nix-mode no-littering nov nyan-mode olivetti orderless
+					   org-auto-tangle org-bullets org-contacts org-download
+					   org-fancy-priorities org-mime org-modern org-rainbow-tags
+					   org-roam-ui org-sidebar org-tree-slide origami ox-hugo
+					   page-break-lines password-store pdf-tools peep-dired
+					   pipenv popper pretty-mode pulsar python-mode
+					   rainbow-delimiters rainbow-mode shackle shell-pop telega
+					   toc-org tree-sitter-langs treesit-ispell undohist
+					   vertico-posframe vundo yasnippet-capf yasnippet-snippets)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(evil-goggles-change-face ((t (:inherit diff-removed))))
+ '(evil-goggles-delete-face ((t (:inherit diff-removed))))
+ '(evil-goggles-paste-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
+ '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
+ '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
+ '(evil-goggles-yank-face ((t (:inherit diff-changed))))
+ '(org-checkbox ((t (:box (:style released-button)))))
+ '(org-checkbox-statistics-done ((t (:inherit org-todo)))))

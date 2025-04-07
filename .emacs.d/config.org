@@ -209,7 +209,28 @@
  '(org-checkbox ((t (:box (:style released-button)))))
  '(org-checkbox-statistics-done ((t (:inherit org-todo))))
 
-)
+ ;; Enable org-crypt and epa-file
+ (require 'org-crypt)
+ (require 'epa-file)
+
+ ;; Enable epa-file for encryption/decryption of files
+ (epa-file-enable)
+
+ (setq epa-file-encrypt-to '("jpacheco@cock.li"))  ; Replace with your GPG key email
+
+ ;; Configure org-crypt
+ (setq org-crypt-tag-matcher "crypt")                    ; Tag used to encrypt entries
+ (setq org-crypt-key "jpacheco@cock.li")          ; Replace with your GPG key email
+ (setq org-tags-exclude-from-inheritance '("crypt"))     ; Prevent inheritance of "crypt" tag
+ (setq epa-pinentry-mode 'loopback) ;; Ensures passphrase prompt in minibuffer
+
+ ;; Automatically encrypt entries tagged with "crypt" before saving
+ (add-hook 'before-save-hook 'org-crypt-use-before-save-magic)
+
+ ;; Define keybindings for manual encryption/decryption
+ (define-key org-mode-map (kbd "C-c C-x e") 'org-encrypt-entries)
+ (define-key org-mode-map (kbd "C-c C-x d") 'org-decrypt-entries)
+ )
 #+end_src
 * Package Manager and some extra files.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -705,7 +726,7 @@
                 shell-mode-hook
                 vterm-mode-hook
                 help-mode-hook
-                ;; org-mode-hook
+                org-mode-hook
                 telega-chat-mode-hook
                 telega-root-mode-hook
 				doc-view-mode-hook
@@ -742,10 +763,10 @@
 							   ;; ("[ ]" . "")
 							   ;; ("[X]" . "")
 							   ;; ("[-]" . "")
-							   ("#+BEGIN_SRC" . "")
-							   ("#+begin_src" . "")
-							   ("#+END_SRC" . "")
-							   ("#+end_src" . "")
+							   ("#+BEGIN_SRC" . ?λ)
+							   ("#+begin_src" . ?λ)
+							   ("#+END_SRC" . ?⬚)
+							   ("#+end_src" . ?⬚)
 							   ("#+TITLE: " . "")
 							   ("#+title: " . "")))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
@@ -1375,8 +1396,7 @@
 (setq org-tag-alist
 	  '(;;Places
 		("@home" . ?h)
-		("@work" . ?w)
-		("@kindergardeen" . ?k)
+		("@work" . ?W)
 
 		;; Whom
 		("lia" . ?l)
@@ -1385,26 +1405,23 @@
 		
 		;; Devices
 		("@laptop" . ?L)
-		("@phone" . ?p)
 
 		;; Activities
-		("programming" . ?P)
+		("programming" . ?p)
 		("planning" . ?n)
-		("writting" . ?W)
-		("calls" . ?c)
+		("writting" . ?w)
 		("email" . ?e)
-		("errands" . ?r)
-		("crypt" . ?C)
+		("crypt" . ?c)
 		))
 (setq org-agenda-files
       '(
 		;; "~/public/org/agenda/personal.org"
         ;; "~/public/org/agenda/training.org"
-        "~/public/org/agenda/bdays.org"
-        "~/public/org/agenda/important_dates.org"
+        "~/docs/org/agenda/bdays.org"
+        "~/docs/org/agenda/important_dates.org"
         ;; "~/public/org/agenda/contacts.org"
         ;; "~/public/org/agenda/work.org"
-		"~/public/org/roam/agenda.org"
+		"~/docs/org/agenda/agenda.org"
 		))
 (setq org-todo-keywords
     (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
@@ -1446,20 +1463,6 @@
         ("e" . "example")
         ("X" . "export")))
 #+END_SRC
-** Org-Contacts.
-#+begin_src emacs-lisp :tangle jp-config.el
-(use-package org-contacts
-  :ensure t)
-
-(defvar my/org-contacts-template "* %(org-contacts-template-name)
-   :PROPERTIES:
-   :EMAIL: %(org-contacts-template-email)
-   :PHONE: %^{Telefono}
-   :IGNORE:
-   :NOTE: %^{NOTA}
-   :BIRTHDAY: %^{Cumpleaños}
-   :END:" "Plantilla para org-contacts.")
-#+end_src
 ** Org-Agenda.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (defvar custom-daily-agenda
@@ -1486,30 +1489,30 @@
                 ;; utility in multi-day views.
                 (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                 (org-agenda-format-date "%A %-e %B %Y")
-                (org-agenda-overriding-header "\nToday's agenda\n")))
-    (agenda "" ((org-agenda-start-on-weekday nil)
-                (org-agenda-start-day "+1d")
-                (org-agenda-span 5)
-                (org-deadline-warning-days 0)
-                (org-agenda-block-separator nil)
-                (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                ;; (org-agenda-entry-types '(:deadline))
-                (org-agenda-overriding-header "\nNext five days\n")))
-    ;; (agenda "" ((org-agenda-time-grid nil)
-    ;;             (org-agenda-start-on-weekday nil)
-    ;;             ;; We don't want to replicate the previous section's
-    ;;             ;; three days, so we start counting from the day after.
-    ;;             (org-agenda-start-day "+6d")
-    ;;             (org-agenda-span 14)
-    ;;             (org-agenda-show-all-dates nil)
+                (org-agenda-overriding-header "\nToday's agenda\n")))
+    ;; (agenda "" ((org-agenda-start-on-weekday nil)
+    ;;             (org-agenda-start-day "+1d")
+    ;;             (org-agenda-span 5)
     ;;             (org-deadline-warning-days 0)
     ;;             (org-agenda-block-separator nil)
-    ;;             (org-agenda-entry-types '(:scheduled))
     ;;             (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-    ;;             (org-agenda-overriding-header "\nUpcoming tasks (+14d)\n")))
-	
-	)
-  "Custom agenda for use in `org-agenda-custom-commands'.")
+    ;;             ;; (org-agenda-entry-types '(:deadline))
+    ;;             (org-agenda-overriding-header "\nNext five days\n")))
+(agenda "" ((org-agenda-time-grid nil)
+            (org-agenda-start-on-weekday nil)
+            ;; We don't want to replicate the previous section's
+            ;; three days, so we start counting from the day after.
+            (org-agenda-start-day "+6d")
+            (org-agenda-span 14)
+            (org-agenda-show-all-dates nil)
+            (org-deadline-warning-days 0)
+            (org-agenda-block-separator nil)
+            (org-agenda-entry-types '(:scheduled))
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+            (org-agenda-overriding-header "\nUpcoming tasks (+14d)\n")))
+
+)
+"Custom agenda for use in `org-agenda-custom-commands'.")
 
 (setq org-agenda-custom-commands
       `(
@@ -1577,7 +1580,7 @@
 
 		("b" "Birthday Calendar dates"
 		 ((agenda ""
-				  ((org-agenda-overriding-header "Birthday Calendar dates\n")
+				  ((org-agenda-overriding-header "Birthday Calendar dates\n")
 				   (org-agenda-span 'year)
 				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
 				   (org-agenda-start-day "01")
@@ -1586,7 +1589,7 @@
 					'(org-agenda-skip-entry-if
 					  'notregexp
 					  (regexp-opt '("birthday"))))))))
-
+		
 		))
 
 (eval-after-load "org-agenda"
@@ -1604,6 +1607,20 @@
 (setq org-track-ordered-property-with-tag t)
 (setq org-log-done 'time)
 (setq org-agenda-start-with-log-mode t)
+#+end_src
+** Org-Contacts.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package org-contacts
+  :ensure t)
+
+(defvar my/org-contacts-template "* %(org-contacts-template-name)
+   :PROPERTIES:
+   :EMAIL: %(org-contacts-template-email)
+   :PHONE: %^{Telefono}
+   :IGNORE:
+   :NOTE: %^{NOTA}
+   :BIRTHDAY: %^{Cumpleaños}
+   :END:" "Plantilla para org-contacts.")
 #+end_src
 ** Org Capture.
 #+begin_src elisp :tangle jp-config.el
@@ -1674,7 +1691,7 @@ See `org-capture-templates' for more information."
 
 #+end_src
 ** Org-roam.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+#+BEGIN_SRC emacs-lisp :tangle no
 (use-package org-roam
   :ensure t
   :init
@@ -1777,70 +1794,59 @@ See `org-capture-templates' for more information."
 #+END_SRC
 ** Denote.
 #+begin_src emacs-lisp :tangle jp-config.el
+(defun jp:denote-dired-open ()
+  "Short cut to open the notes folder in dired."
+  (interactive)
+  (dired denote-directory))
+
 (use-package denote
   :ensure t
-  ;; General configuration
-  :config
-  (setq denote-directory (expand-file-name "~/public/org/notes/"))
-  (setq denote-known-keywords '("emacs" "project"))
-  (setq denote-infer-keywords t)
-  (setq denote-sort-keywords t)
-
-  ;; Tweaking the frontmatter
-  (setq denote-org-front-matter
-		"#+title: %s
-,#+date: %s
-,#+filetags: %s
-,#+identifier: %s
-,#+author: Ing. Javier Pacheco
-,#+startup: content\n\n")
+  :hook (dired-mode . denote-dired-mode)
   ;; Keybinds
   :bind
-  ("C-c n n" . denote-open-or-create)
-  ("C-c n l" . denote-link-or-create)
-  ("C-c n b" . denote-link-find-file)
-  ("C-c n B" . denote-link-backlinks))
+  (("C-c n n" . denote-open-or-create)
+   ("C-c n l" . denote-link-or-create)
+   ("C-c n L" . denote-add-links)
+   ("C-c n b" . denote-link-backlinks)
+   ("C-c n f" . #'jp:denote-dired-open)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter)
+   (:map dired-mode-map
+         ("C-c C-d C-i" . denote-dired-link-marked-notes)
+         ("C-c C-d C-r" . denote-dired-rename-files)
+         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
+         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
 
-(with-eval-after-load 'org-capture
-  (add-to-list 'org-capture-templates
-               '("n" "New note (with Denote)" plain
-                 (file denote-last-path)
-                 #'denote-org-capture
-                 :no-save t
-                 :immediate-finish nil
-                 :kill-buffer t
-                 :jump-to-captured t)))
+
+(setq denote-directory (expand-file-name "~/docs/notes"))
+(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+(setq denote-title-history nil)
+(setq denote-files-matching-regexp-history nil)
+(setq denote-history-completion-in-prompts nil)
+(setq denote-infer-keywords t)
+(setq denote-sort-keywords t)
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: content\n\n")
+
+(use-package consult-denote
+  :ensure t)
 #+end_src
 *** Denote-menu.
-#+begin_src emacs-lisp :tangle FILENAME
-(use-package denote-menu
-  :defer t
-  :ensure t)
-
-(define-key denote-menu-mode-map (kbd "c") #'denote-menu-clear-filters)
-(define-key denote-menu-mode-map (kbd "/ r") #'denote-menu-filter)
-(define-key denote-menu-mode-map (kbd "/ k") #'denote-menu-filter-by-keyword)
-(define-key denote-menu-mode-map (kbd "/ o") #'denote-menu-filter-out-keyword)
-(define-key denote-menu-mode-map (kbd "e") #'denote-menu-export-to-dired)
-#+end_src
-** Org fancy priorities.
 #+begin_src emacs-lisp :tangle jp-config.el
-(use-package org-fancy-priorities
+(use-package denote-menu
   :ensure t
-  :hook ((org-agenda-mode . org-fancy-priorities-mode)
-   (org-mode . org-fancy-priorities-mode))
-  :config
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
-
-(setq org-fancy-priorities-list '((?A . "❗")
-                                  (?B . "⬆")
-                                  (?C . "⬇")
-                                  (?D . "☕")
-                                  (?1 . "⚡")
-                                  (?2 . "⮬")
-                                  (?3 . "⮮")
-                                  (?4 . "☕")
-                                  (?I . "Important")))
+  :custom ((denote-menu-show-file-type nil)
+		   (denote-menu-initial-regex "_meta"))
+  :bind 
+  (("C-c n m" . denote-menu-list-notes)))
+#+end_src
+*** Denote-explore.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package denote-explore
+  :ensure t
+  :bind* (("C-c e n" . denote-explore-network)
+		("C-c e v" . denote-explore-network-regenerate)
+		("C-c e D" . denote-explore-barchart-degree)))
+(setq denote-explore-network-d3-template "~/docs/notes/templates/explore.html")
 #+end_src
 ** Org-sidebar.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -1942,32 +1948,8 @@ See `org-capture-templates' for more information."
  org-agenda-tags-column 0
  org-ellipsis " ⮧"
  org-modern-fold-stars
- '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖"))
-
- )
+ '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
 #+end_src
-** Org crypt.
-#+BEGIN_SRC emacs-lisp
-;; Enable org-crypt and epa-file
-(require 'org-crypt)
-(require 'epa-file)
-
-;; Enable epa-file for encryption/decryption of files
-(epa-file-enable)
-(setq epa-file-encrypt-to '("jpacheco@cock.li"))  ; Replace with your GPG key email
-
-;; Configure org-crypt
-(setq org-crypt-tag-matcher "crypt")                    ; Tag used to encrypt entries
-(setq org-crypt-key "jpacheco@cock.li")          ; Replace with your GPG key email
-(setq org-tags-exclude-from-inheritance '("crypt"))     ; Prevent inheritance of "pass" tag
-
-;; Automatically encrypt entries tagged with "pass" before saving
-(add-hook 'before-save-hook. 'org-crypt-use-before-save-magic)
-
-;; Optional: Add keybinding to manually encrypt entries
-(define-key org-mode-map (kbd "C-c C-x C-e") 'org-encrypt-entries)
-(define-key org-mode-map (kbd "C-c C-x C-d") 'org-decrypt-entries)
-#+END_SRC
 * Pulsar.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package pulsar
@@ -2165,20 +2147,6 @@ See `org-capture-templates' for more information."
   (setq
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
-#+END_SRC
-** Typescript.
-#+begin_src emacs-lisp
-(use-package typescript-mode
-  :mode "\\.ts\\'"
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-level 2))
-#+end_src
-** Nix-mode.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
-(use-package nix-mode
-  :hook (nix-mode . lsp-deferred)
-  :mode "\\.nix\\'")
 #+END_SRC
 ** Yasnippets
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2653,18 +2621,19 @@ folder, otherwise delete a word"
 	"o" '(:ignore t :wk "Open")
 	;; "o -" '(ee-nnn :wk "Dired jump to current")
 	"o -" '(dired-jump :wk "Dired jump to current")
-	"o a" '(hydra-agenda-files/body :wk "Open org-agenda files")
+	"o o" '(hydra-agenda-files/body :wk "Open org-agenda files")
+	"o a" '( (lambda () (interactive) (org-agenda nil "a")) :w "Open org Agenda")
 	"o f" '(make-frame :wk "Open buffer in new frame")
 	"o i" '(jp/org-id-store-link-for-headers :wk "Add ID's to org headers.")
 	"o l" '(open-lisp-and-org-files :wk "Open lisp files")
-    "o m" '((lambda () (interactive)
-              (find-file "~/public/org/roam/mimir.org")) 
-            :wk "Open web org file.")
-    "o p" '((lambda () (interactive)
+	"o m" '((lambda () (interactive)
+              (find-file "~/docs/notes/20250327T190743--mimir__meta.org")) 
+			:wk "Open web org file.")
+	"o p" '((lambda () (interactive)
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
-            :wk "Open web org file.")
-	"o o" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
-	"o t" '(term-toggle-term :wk "Toggle terminal")
+			:wk "Open web org file.")
+	"o L" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
+	"o t" '(shell-pop :wk "Toggle terminal")
 	"o s" '(toggle-scratch-buffer :wk "Toggle scratch buffer")
 	"o e" '(toggle-org-buffer :wk "Toggle org buffer")
 	"o F" '(select-frame-by-name :wk "Select frame by name"))
@@ -2828,4 +2797,17 @@ folder, otherwise delete a word"
   (persp-switch "*telega*")
   (telega)
   (telega-mode-line-mode))
+#+end_src
+* Terminal.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package shell-pop
+  :ensure t
+  :config
+  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
+  (setq shell-pop-term-shell "/bin/zsh")  ;; Change this to your preferred shell
+  (setq shell-pop-window-size 50)  ;; Percentage of the screen
+  (setq shell-pop-full-span t)  ;; Full width
+  (setq shell-pop-window-position "bottom")  ;; Position of the shell
+  (setq shell-pop-autocd-to-working-dir t)
+  (setq shell-pop-restore-window-configuration t))
 #+end_src

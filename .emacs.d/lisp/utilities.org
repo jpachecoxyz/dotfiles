@@ -1,4 +1,3 @@
-
 #+title: Utilities
 #+author: Javier Pacheco
 #+description: Usueful scripts for emacs.
@@ -6,9 +5,6 @@
 #+auto_tangle: t
 
 * Doom Insert item.
-:PROPERTIES:
-:CUSTOM_ID: h:316afaf9-06c6-48b1-a31a-489d68236880
-:END:
 This script wast taken from /doomemacs/, it basicaly insert a item such a heading, subheading, checkbox, etc. based on the item above.
 
 #+begin_src emacs-lisp
@@ -124,9 +120,6 @@ This script wast taken from /doomemacs/, it basicaly insert a item such a headin
 #+end_src
 
 * Highlight yanked text
-:PROPERTIES:
-:CUSTOM_ID: h:e3b358cd-701d-43f2-856f-147fb0a33e0a
-:END:
 This function describes itself so...
 #+begin_src emacs-lisp
 (defun meain/evil-yank-advice (orig-fn beg end &rest args)
@@ -136,9 +129,6 @@ This function describes itself so...
 #+end_src
 
 * Replace '-' with '•'.
-:PROPERTIES:
-:CUSTOM_ID: h:47c63824-a2d9-4d7f-8c37-7f492c4d09db
-:END:
 #+begin_src emacs-lisp
 (defun jp/org-font-setup ()
   ;; Replace list hyphen with dot

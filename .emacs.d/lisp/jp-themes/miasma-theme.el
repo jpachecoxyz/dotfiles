@@ -61,6 +61,21 @@
    `(dired-directory ((,class (:foreground ,miasma-eucalyptus))))
    `(dired-symlink ((,class (:foreground ,miasma-lemon))))
 
+;;;; denote
+   `(denote-faces-date ((,class :foreground ,miasma-eucalyptus)))
+   `(denote-faces-delimiter ((,class :inherit shadow)))
+   `(denote-faces-extension ((,class :inherit shadow)))
+   `(denote-faces-keywords ((,class :inherit bold :foreground ,miasma-brass)))
+   `(denote-faces-link ((,class :inherit link)))
+   `(denote-faces-prompt-current-name ((,class :inherit italic :foreground ,miasma-brass)))
+   `(denote-faces-prompt-new-name ((,class :inherit italic :foreground ,miasma-eucalyptus)))
+   `(denote-faces-prompt-old-name ((,class :inherit italic :foreground ,miasma-fire)))
+   ;; `(denote-faces-signature ((,class :inherit bold :foreground ,string)))
+   `(denote-faces-subdirectory ((,class :inherit bold :foreground ,miasma-olive)))
+   `(denote-faces-time ((,class :inherit denote-faces-date)))
+   `(denote-faces-time-delimiter ((,class :inherit shadow)))
+   `(denote-faces-title (( )))
+
    ;;;;; flyspell
    `(flyspell-duplicate ((,class :underline (:style wave :color ,miasma-tangerine))))
    `(flyspell-incorrect ((,class :underline (:style wave :color ,miasma-terracota))))
