@@ -784,7 +784,8 @@
    (("n" display-line-numbers-mode "line number" :toggle t)
     ("p" toggle-alpha-transparency "Toggle thransparency" :toggle t)
     ("w" whitespace-mode "whitespace" :toggle t)
-    ("r" rainbow-mode "rainbow" :toggle t)
+    ("r" rainbow-mode "
+rainbow" :toggle t)
     ("L" page-break-lines-mode "page break lines" :toggle t))
    "Highlight"
    (("S" pretty-mode "symbol" :toggle t)
@@ -894,31 +895,6 @@
                                 ;; ("pdf" . "zathura")
                                 ("mkv" . "mpv")
                                 ("mp4" . "mpv"))))
-
-(use-package dired-rainbow
-  :config
-  (progn
-    (dired-rainbow-define-chmod directory "#83a598" "d.*")               ;; Blue
-    (dired-rainbow-define html "#fabd2f" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml")) ;; Yellow
-    (dired-rainbow-define xml "#b8bb26" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata")) ;; Green
-    (dired-rainbow-define document "#d3869b" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx")) ;; Purple
-    (dired-rainbow-define markdown "#ebdbb2" ("org" "txt" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt")) ;; Light Background
-    (dired-rainbow-define database "#8ec07c" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc")) ;; Aqua
-    (dired-rainbow-define media "#fe8019" ("mp3" "mp4" "MP3" "MP4" "mkv" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac")) ;; Orange
-    (dired-rainbow-define image "#d3869b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg")) ;; Purple
-    (dired-rainbow-define log "#fb4934" ("log")) ;; Red
-    (dired-rainbow-define shell "#fe8019" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim")) ;; Orange
-    (dired-rainbow-define interpreted "#b8bb26" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js")) ;; Green
-    (dired-rainbow-define compiled "#83a598" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java")) ;; Blue
-    (dired-rainbow-define executable "#8ec07c" ("exe" "msi")) ;; Aqua
-    (dired-rainbow-define compressed "#d3869b" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar")) ;; Purple
-    (dired-rainbow-define packaged "#fabd2f" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp")) ;; Yellow
-    (dired-rainbow-define encrypted "#b8bb26" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem")) ;; Green
-    (dired-rainbow-define fonts "#83a598" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf")) ;; Blue
-    (dired-rainbow-define partition "#fb4934" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak")) ;; Red
-    (dired-rainbow-define vc "#83a598" ("git" "gitignore" "gitattributes" "gitmodules")) ;; Blue
-    (dired-rainbow-define-chmod executable-unix "#b8bb26" "-.*x.*") ;; Green
-    ))
 
 (use-package peep-dired
   :after dired
@@ -1382,6 +1358,39 @@ See `org-capture-templates' for more information."
   (interactive)
   (dired denote-directory))
 
+(defun jp:denote-update-links-matching-regexp (&optional regexp)
+  "Replace denote links under the current level 1 Org heading using `denote-link-insert-links-matching-regexp`.
+Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
+  (interactive)
+  (let ((regexp (or regexp (read-regexp "Match links by regexp (e.g. _estudio_linux): "))))
+    (save-excursion
+      ;; Jump to level-1 heading
+      (unless (and (org-at-heading-p) (= (org-outline-level) 1))
+        (outline-previous-heading)
+        (while (and (org-at-heading-p)
+                  (> (org-outline-level) 1))
+          (outline-previous-heading)))
+      (let* ((start (point))
+             (end (or (save-excursion
+                       (outline-next-heading)
+                       (point))
+                     (point-max)))
+             (first-line nil)
+             (last-line nil))
+        ;; Search for denote links to remove
+        (goto-char start)
+        (while (re-search-forward "^- \\[\\[denote:[^]]+\\]\\[[^]]+\\]\\]" end t)
+          (let ((line-beg (line-beginning-position))
+                (line-end (line-end-position)))
+            (unless first-line (setq first-line line-beg))
+            (setq last-line line-end)))
+        (when (and first-line last-line)
+          ;; Delete the region
+          (delete-region first-line (1+ last-line))
+          ;; Move to where the links were and insert new ones
+          (goto-char first-line)
+          (denote-link-insert-links-matching-regexp regexp))))))
+
 (use-package denote
   :ensure t
   :hook (dired-mode . denote-dired-mode)
@@ -1404,6 +1413,7 @@ See `org-capture-templates' for more information."
 (setq denote-directory (expand-file-name "~/docs/notes"))
 (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
 (setq denote-title-history nil)
+(setq denote-sort-keywords nil)
 (setq denote-files-matching-regexp-history nil)
 (setq denote-history-completion-in-prompts nil)
 (setq denote-infer-keywords t)
@@ -1843,6 +1853,7 @@ folder, otherwise delete a word"
 	      (roam "\\*Capture\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "Magit")
+	      (vterm "\\*vterm\\*")
 		  (ellama "\\(.*(zephyr)\\.org\\)")
 		  (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
@@ -1868,6 +1879,9 @@ folder, otherwise delete a word"
         (help-mode :select t
 				   :align below
 				   :size 0.5)
+        (vterm-mode :select t
+					:align below
+					:size 0.5)
 		(,vcs :regexp t
               :align above
               :size 0.15
@@ -1897,6 +1911,7 @@ folder, otherwise delete a word"
    '("\\*Async Shell Command\\*"
      dired-mode          ;; Treat Dired buffers as popups
      help-mode
+	 vterm-mode
      compilation-mode
 	 "\\(.*(zephyr)\\.org\\)"
      "\\*Warnings\\*"
@@ -2173,11 +2188,12 @@ folder, otherwise delete a word"
 	"p a" '(projectile-add-known-project :wk "Add a project directory"))
 
   (user/leader-keys
-	"r" '(:ignore t :wk "Roam")
-	"r f" '(org-roam-node-find :wk "Org rome node find")
-	"r u" '(org-roam-ui-open :wk "Open org roam map")
-	"r i" '(org-roam-node-insert :wk "Insert Node link")
-	"r I" '(org-roam-node-insert-immediate :wk "Insert new Node link")
+	"r" '(:ignore t :wk "Denote")
+	"r f" '(denote-open-or-create :wk "Denote open note")
+	"r u" '(denote-explore-network :wk "Open denote explorer")
+	"r m" '(denote-menu-list-notes :wk "Denote-menu")
+	"r i" '(denote-insert-link :wk "Insert denote link")
+	"r I" '(jp:denote-update-links-matching-regexp :wk "Update and insert denote missing links")
 	)
 
   (user/leader-keys
@@ -2326,44 +2342,5 @@ folder, otherwise delete a word"
   (setq shell-pop-window-position "bottom")  ;; Position of the shell
   (setq shell-pop-autocd-to-working-dir t)
   (setq shell-pop-restore-window-configuration t))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(aggressive-indent all-the-icons-completion all-the-icons-dired auctex
-					   auto-package-update buffer-flip cape consult-denote
-					   consult-dir consult-flycheck corfu counsel-projectile
-					   dap-mode denote-agenda denote-explore denote-menu
-					   diminish dired-open dired-rainbow doom-modeline ellama
-					   evil-collection evil-goggles evil-owl evil-surround
-					   evil-terminal-cursor-changer form-feed fzf general
-					   git-gutter-fringe git-timemachine hide-lines
-					   hide-mode-line highlight-indent-guides highlight-thing
-					   hl-todo htmlize ivy-yasnippet jinx key-chord keycast
-					   kind-icon ligature lorem-ipsum lsp-pyright lsp-ui magit
-					   major-mode-hydra marginalia nerd-icons-completion
-					   nix-mode no-littering nov nyan-mode olivetti orderless
-					   org-auto-tangle org-bullets org-contacts org-download
-					   org-fancy-priorities org-mime org-modern org-rainbow-tags
-					   org-roam-ui org-sidebar org-tree-slide origami ox-hugo
-					   page-break-lines password-store pdf-tools peep-dired
-					   pipenv popper pretty-mode pulsar python-mode
-					   rainbow-delimiters rainbow-mode shackle shell-pop telega
-					   toc-org tree-sitter-langs treesit-ispell undohist
-					   vertico-posframe vundo yasnippet-capf yasnippet-snippets)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-goggles-change-face ((t (:inherit diff-removed))))
- '(evil-goggles-delete-face ((t (:inherit diff-removed))))
- '(evil-goggles-paste-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-add-face ((t (:inherit diff-added))))
- '(evil-goggles-undo-redo-change-face ((t (:inherit diff-changed))))
- '(evil-goggles-undo-redo-remove-face ((t (:inherit diff-removed))))
- '(evil-goggles-yank-face ((t (:inherit diff-changed))))
- '(org-checkbox ((t (:box (:style released-button)))))
- '(org-checkbox-statistics-done ((t (:inherit org-todo)))))
+(use-package vterm
+  :ensure t)
