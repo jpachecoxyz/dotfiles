@@ -1353,6 +1353,34 @@ See `org-capture-templates' for more information."
                    "*** %?\n")                                   ; Place the cursor here finally
 				 "\n"))))
 
+(use-package denote
+  :ensure t
+  :hook (dired-mode . denote-dired-mode)
+  ;; Keybinds
+  :bind
+  (("C-c n n" . denote-open-or-create)
+   ("C-c n l" . denote-link-or-create)
+   ("C-c n L" . denote-add-links)
+   ("C-c n b" . denote-link-backlinks)
+   ("C-c n f" . #'jp:denote-dired-open)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter)
+   (:map dired-mode-map
+         ("C-c C-d C-i" . denote-dired-link-marked-notes)
+         ("C-c C-d C-r" . denote-dired-rename-files)
+         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
+         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
+
+
+(setq denote-directory (expand-file-name "~/docs/notes"))
+(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+(setq denote-title-history nil)
+(setq denote-sort-keywords nil)
+(setq denote-files-matching-regexp-history nil)
+(setq denote-history-completion-in-prompts nil)
+(setq denote-infer-keywords t)
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: content\n\n")
+
 (defun jp:denote-dired-open ()
   "Short cut to open the notes folder in dired."
   (interactive)
@@ -1391,37 +1419,67 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
           (goto-char first-line)
           (denote-link-insert-links-matching-regexp regexp))))))
 
-(use-package denote
-  :ensure t
-  :hook (dired-mode . denote-dired-mode)
-  ;; Keybinds
-  :bind
-  (("C-c n n" . denote-open-or-create)
-   ("C-c n l" . denote-link-or-create)
-   ("C-c n L" . denote-add-links)
-   ("C-c n b" . denote-link-backlinks)
-   ("C-c n f" . #'jp:denote-dired-open)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n R" . denote-rename-file-using-front-matter)
-   (:map dired-mode-map
-         ("C-c C-d C-i" . denote-dired-link-marked-notes)
-         ("C-c C-d C-r" . denote-dired-rename-files)
-         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
-         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
+;; (defun my/org-next-denote-link ()
+;;   "Jump to the next denote: link in org-mode."
+;;   (interactive)
+;;   (let ((case-fold-search nil))
+;;     (re-search-forward "\\[\\[denote:[0-9T]+\\]\\[[^]]+\\]\\]" nil t)))
 
+;; (defun my/org-previous-denote-link ()
+;;   "Jump to the previous denote: link in org-mode."
+;;   (interactive)
+;;   (let ((case-fold-search nil))
+;;     (re-search-backward "\\[\\[denote:[0-9T]+\\]\\[[^]]+\\]\\]" nil t)))
 
-(setq denote-directory (expand-file-name "~/docs/notes"))
-(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
-(setq denote-title-history nil)
-(setq denote-sort-keywords nil)
-(setq denote-files-matching-regexp-history nil)
-(setq denote-history-completion-in-prompts nil)
-(setq denote-infer-keywords t)
-(setq denote-sort-keywords t)
-(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: content\n\n")
+;; (general-define-key
+;;  :states '(normal visual)        ;; Evil states
+;;  :keymaps 'org-mode-map          ;; Only in org-mode
+;;  "C-j" #'my/org-next-denote-link
+;;  "C-k" #'my/org-previous-denote-link)
+
+(defun denote-insert-pdf-link ()
+  "Insert a Denote-style Org link to a PDF file from ~/docs/pdf, prompting for a custom link title."
+  (interactive)
+  (let* ((pdf-dir (expand-file-name "~/docs/pdf"))
+         (pdf-files (directory-files-recursively pdf-dir "\\.pdf$"))
+         (chosen-file (completing-read "Choose a PDF: " pdf-files nil t))
+         (custom-title (read-string "Enter a link title: ")))
+    (insert (format "- [[file:%s][%s]]"
+                    (file-relative-name chosen-file)
+                    custom-title))))
 
 (use-package consult-denote
   :ensure t)
+
+(use-package denote-silo
+  :ensure t
+  ;; Bind these commands to key bindings of your choice.
+  :commands ( denote-silo-create-note
+              denote-silo-open-or-create
+              denote-silo-select-silo-then-command
+              denote-silo-dired
+              denote-silo-cd )
+  :config
+  ;; Add your silos to this list.  By default, it only includes the
+  ;; value of the variable `denote-directory'.
+  (setq denote-silo-directories
+        (list denote-directory
+              "/home/javier/docs/pdf/")))
+  ;; (setq denote-silo-extras-directories '("~/docs/notes/" "~/docs/pdf/")))
+
+(use-package denote-sequence
+  :ensure t
+  :bind
+  ( :map global-map
+    ("C-c n s s" . denote-sequence)
+    ("C-c n s f" . denote-sequence-find)
+    ("C-c n s l" . denote-sequence-link)
+    ("C-c n s d" . denote-sequence-dired)
+    ("C-c n s r" . denote-sequence-reparent)
+    ("C-c n s c" . denote-sequence-convert))
+  :config
+  ;; The default sequence scheme is `numeric'.
+  (setq denote-sequence-scheme 'numeric))
 
 (use-package denote-menu
   :ensure t
@@ -1435,7 +1493,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   :bind* (("C-c e n" . denote-explore-network)
 		("C-c e v" . denote-explore-network-regenerate)
 		("C-c e D" . denote-explore-barchart-degree)))
-(setq denote-explore-network-d3-template "~/docs/notes/templates/explore.html")
+(setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
 
 (use-package org-sidebar
   :ensure t)

@@ -554,16 +554,16 @@ The command supports previewing the currently selected theme."
 (global-set-key (kbd "C-c u b") 'publish-my-blog)
 
 ;; Search roam
-(defun jp/search-roam ()
-  "Run consult-ripgrep on the org roam directory"
-  (interactive)
-  (consult-ripgrep org-roam-directory nil))
-(global-set-key (kbd "C-c n s") 'jp/search-roam)
+;; (defun jp/search-roam ()
+;;   "Run consult-ripgrep on the org roam directory"
+;;   (interactive)
+;;   (consult-ripgrep org-roam-directory nil))
+;; (global-set-key (kbd "C-c n s") 'jp/search-roam)
 
 (defun jp/yt-shorts-timer ()
   (interactive)
-  (org-timer-set-timer "55s"))
-(global-set-key (kbd "<f4>") 'jp/yt-shorts-timer)
+  (org-timer-set-timer "5"))
+(global-set-key (kbd "f4>") 'jp/yt-shorts-timer)
 
 ;; A function to toggle between org-edit-special and org-edit-src-exit
 (defun my/org-edit-toggle ()
@@ -579,7 +579,7 @@ The command supports previewing the currently selected theme."
 (defun open-specific-dired ()
   "Ask whether to open config, scripts, or nix config in Dired."
   (interactive)
-  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "notes" "docs"))))
+  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "notes" "pdf's" "docs"))))
     (cond
      ((string= choice "config")
       (fzf-find-file "~/.config/"))
@@ -587,6 +587,8 @@ The command supports previewing the currently selected theme."
       (fzf-find-file "~/.local/bin/"))
      ((string= choice "notes")
       (fzf-find-file "~/docs/notes/"))
+     ((string= choice "pdf's")
+      (consult-find "~/docs/notes/pdf/"))
      ((string= choice "docs")
       (fzf-find-file "~/docs/org/"))
      (t
