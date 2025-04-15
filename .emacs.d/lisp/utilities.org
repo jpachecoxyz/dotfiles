@@ -604,18 +604,6 @@ The command supports previewing the currently selected theme."
 
 (global-set-key (kbd "C-c u b") 'publish-my-blog)
 
-;; Search roam
-;; (defun jp/search-roam ()
-;;   "Run consult-ripgrep on the org roam directory"
-;;   (interactive)
-;;   (consult-ripgrep org-roam-directory nil))
-;; (global-set-key (kbd "C-c n s") 'jp/search-roam)
-
-(defun jp/yt-shorts-timer ()
-  (interactive)
-  (org-timer-set-timer "5"))
-(global-set-key (kbd "f4>") 'jp/yt-shorts-timer)
-
 ;; A function to toggle between org-edit-special and org-edit-src-exit
 (defun my/org-edit-toggle ()
   "Toggle between org-edit-special and org-edit-src-exit."

@@ -74,19 +74,19 @@
 ;; Fonts settings.
 
 (set-face-attribute 'default nil
-                    :family "Iosevka"
+                    :family "Iosevka Nerd Font"
                     :height 130
                     :weight 'regular)
 
 ;; Set italic font
 (set-face-attribute 'italic nil
-                    :family "Iosevka"
+                    :family "Iosevka Nerd Font"
                     :height 130
                     :slant 'italic)
 
 ;; Set bold font
 (set-face-attribute 'bold nil
-                    :family "Iosevka"
+                    :family "Iosevka Nerd Font"
                     :height 130
                     :weight 'bold)
 

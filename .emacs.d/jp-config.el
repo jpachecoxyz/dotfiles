@@ -147,11 +147,11 @@
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-(use-package pretty-mode
-  :defer t 
-  :ensure t
-  :hook
-  (prog-mode . pretty-mode))
+ ;; (use-package pretty-mode
+ ;;   :defer t 
+ ;;   :ensure t
+ ;;   :hook
+ ;;   (prog-mode . pretty-mode))
 
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
@@ -461,6 +461,7 @@
 ;; Disable line numbers for some modes
 (dolist (mode '(term-mode-hook
                 shell-mode-hook
+				dired-mode-hook
                 vterm-mode-hook
                 help-mode-hook
                 org-mode-hook
@@ -881,6 +882,7 @@ rainbow" :toggle t)
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-up-directory
     "l" 'dired-open-file))
+(add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode 1)))
 
 (use-package all-the-icons-dired
   :ensure t
@@ -1386,38 +1388,32 @@ See `org-capture-templates' for more information."
   (interactive)
   (dired denote-directory))
 
-(defun jp:denote-update-links-matching-regexp (&optional regexp)
-  "Replace denote links under the current level 1 Org heading using `denote-link-insert-links-matching-regexp`.
-Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
+(defun my/denote-or-org-link ()
+  "Run `denote-find-link`. If nothing is inserted, show Org links in minibuffer."
   (interactive)
-  (let ((regexp (or regexp (read-regexp "Match links by regexp (e.g. _estudio_linux): "))))
+  (let ((before (buffer-substring-no-properties (point-min) (point-max))))
+    (call-interactively #'denote-find-link)
+    (run-at-time
+     "0.1 sec" nil
+     (lambda ()
+       (let ((after (buffer-substring-no-properties (point-min) (point-max))))
+         (when (string= before after)
+           (let ((links (my/org-collect-links)))
+             (if links
+                 (let ((chosen (completing-read "Org links: " links)))
+                   (when chosen
+                     (kill-new chosen)
+                     (message "Copied link to clipboard: %s" chosen)))
+               (message "No Denote or Org links found.")))))))))
+
+(defun my/org-collect-links ()
+  "Collect all Org-style links ([[...]]) in the current buffer."
+  (let (links)
     (save-excursion
-      ;; Jump to level-1 heading
-      (unless (and (org-at-heading-p) (= (org-outline-level) 1))
-        (outline-previous-heading)
-        (while (and (org-at-heading-p)
-                  (> (org-outline-level) 1))
-          (outline-previous-heading)))
-      (let* ((start (point))
-             (end (or (save-excursion
-                       (outline-next-heading)
-                       (point))
-                     (point-max)))
-             (first-line nil)
-             (last-line nil))
-        ;; Search for denote links to remove
-        (goto-char start)
-        (while (re-search-forward "^- \\[\\[denote:[^]]+\\]\\[[^]]+\\]\\]" end t)
-          (let ((line-beg (line-beginning-position))
-                (line-end (line-end-position)))
-            (unless first-line (setq first-line line-beg))
-            (setq last-line line-end)))
-        (when (and first-line last-line)
-          ;; Delete the region
-          (delete-region first-line (1+ last-line))
-          ;; Move to where the links were and insert new ones
-          (goto-char first-line)
-          (denote-link-insert-links-matching-regexp regexp))))))
+      (goto-char (point-min))
+      (while (re-search-forward org-link-bracket-re nil t)
+        (push (match-string 0) links)))
+    (delete-dups links)))
 
 ;; (defun my/org-next-denote-link ()
 ;;   "Jump to the next denote: link in org-mode."
@@ -1471,20 +1467,21 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   :ensure t
   :bind
   ( :map global-map
-    ("C-c n s s" . denote-sequence)
+    ("C-c n s s" . denote-sequence-new-sibling)
+    ("C-c n s p" . denote-sequence-new-parent)
     ("C-c n s f" . denote-sequence-find)
     ("C-c n s l" . denote-sequence-link)
     ("C-c n s d" . denote-sequence-dired)
     ("C-c n s r" . denote-sequence-reparent)
-    ("C-c n s c" . denote-sequence-convert))
+    ("C-c n s c" . denote-sequence-new-child))
   :config
-  ;; The default sequence scheme is `numeric'.
-  (setq denote-sequence-scheme 'numeric))
+  (setq denote-sequence-scheme 'numeric)
+  (setq denote-sequence-type-history nil))
 
 (use-package denote-menu
   :ensure t
   :custom ((denote-menu-show-file-type nil)
-		   (denote-menu-initial-regex "_meta"))
+		   (denote-menu-initial-regex "==[0-9]+--.*_meta.org"))
   :bind 
   (("C-c n m" . denote-menu-list-notes)))
 
@@ -2042,6 +2039,7 @@ folder, otherwise delete a word"
    "<" "<gv"
    ">" ">gv"
    )
+  (define-key evil-insert-state-map (kbd "C-c C-c") 'evil-normal-state)
 
   (define-key evil-visual-state-map (kbd "<") (lambda ()
 												(interactive)
@@ -2137,6 +2135,7 @@ folder, otherwise delete a word"
     "f d" '(find-grep-dired :wk "Search for string in files in DIR")
     "f f" '(my/transient-goto-file-buffer :wk "Go to buffer or file.")
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
+    "f l" '(denote-find-link :wk "Denote find links")
     "f p" '((lambda () (interactive)
               (find-file "~/.emacs.d/config.org")) 
             :wk "Open noobemacs Configuraiton file.")
@@ -2257,6 +2256,9 @@ folder, otherwise delete a word"
   (user/leader-keys
 	"s" '(:ignore t :wk "Search")
 	"s d" '(dictionary-search :wk "Search dictionary")
+	"s c" '(denote-sequence-new-child-of-current :wk "Denote child of current")
+	"s s" '(denote-sequence-new-sibling-of-current :wk "Denote sibling of current")
+	"s p" '(denote-sequence-new-parent :wk "Denote new parent")
 	"s m" '(man :wk "Man pages")
 	"s t" '(tldr :wk "Lookup TLDR docs for a command")
 	"s w" '(woman :wk "Similar to man but doesn't require man"))
@@ -2400,5 +2402,85 @@ folder, otherwise delete a word"
   (setq shell-pop-window-position "bottom")  ;; Position of the shell
   (setq shell-pop-autocd-to-working-dir t)
   (setq shell-pop-restore-window-configuration t))
+
 (use-package vterm
   :ensure t)
+
+(use-package all-the-icons)
+
+(use-package dashboard
+  :hook
+  (after-init . dashboard-setup-startup-hook)
+  :ensure t
+  :config
+  (setq dashboard-set-heading-icons t
+		dashboard-set-file-icons t
+		dashboard-set-init-info t
+		dashboard-set-navigator t)
+  (setq dashboard-banner-logo-title
+		(seq-random-elt  '("Automation is good, so long as you know exactly where to put the machine. – Eliyahu Goldratt"
+						   "Anything that can be automated will be automated. – Shoshana Zuboff"
+						   "Automation applied to an efficient operation will magnify the efficiency. – Bill Gates"
+						   "The first rule of any technology used in a business is that automation applied to an efficient operation will magnify the efficiency. – Bill Gates"
+						   "Automation doesn’t mean replacing humans. It means freeing them to work smarter. – Unknown"
+						   "Focus on automating tasks, not roles. – Unknown"
+						   "You can’t automate creativity, but you can free up time for it through automation. – Unknown"
+						   "By automating processes, you create more time for innovation. – Unknown"
+						   "The real power of automation lies in its ability to eliminate redundancy and error. – Unknown"
+						   "Automation is the way to simplify your work, not your thinking. – Unknown"
+						   "Programs must be written for people to read, and only incidentally for machines to execute. – Harold Abelson and Gerald Jay Sussman"
+						   "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. – Martin Fowler"
+						   "Programming isn’t about what you know; it’s about what you can figure out. – Chris Pine"
+						   "The best error message is the one that never shows up. – Thomas Fuchs"
+						   "Give a man a program, frustrate him for a day. Teach a man to program, frustrate him for a lifetime. – Muhammad Waseem"
+						   "First, solve the problem. Then, write the code. – John Johnson"
+						   "Code is like humor. When you have to explain it, it’s bad. – Cory House"
+						   "The only way to learn a new programming language is by writing programs in it. – Dennis Ritchie"
+						   "Deleted code is debugged code. – Jeff Sickel"
+						   "Programming is the art of algorithm design and the craft of debugging errant code. – Ellen Ullman")))
+
+  ;; Define una lista de imágenes
+  (setq my/dashboard-images '("~/.emacs.d/GNU.png"))
+  ;; Selecciona una imagen aleatoria de la lista
+  (setq dashboard-startup-banner (nth (random (length my/dashboard-images)) my/dashboard-images))) 
+
+;; (setq dashboard-page-separator "\n\f\n")
+(setq dashboard-items '((recents  . 5)
+						(bookmarks . 5)
+						(agenda . 5)
+						))
+
+(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+
+;; para usar los iconos de nerd font
+(setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+(setq dashboard-icon-type 'nerd-icons) ;; use `nerd-icons' package
+
+
+(setq dashboard-item-names '(("Recent Files:" . "Archivos Recientes:")
+                             ("Agenda for today:" . "Para hoy agenda:")
+                             ("Agenda for the coming week:" . "Agenda:")
+							 ("Projects:" . "Proyectos:")))
+
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+(setq dashboard-center-content t)
+(setq dashbpard-set-footer nil)
+
+(setq dashboard-startupify-list '(dashboard-insert-banner
+                                  dashboard-insert-newline
+                                  dashboard-insert-banner-title
+                                  dashboard-insert-newline
+                                  dashboard-insert-navigator
+                                  dashboard-insert-newline
+                                  dashboard-insert-init-info
+                                  dashboard-insert-items
+                                  dashboard-insert-newline))
+
+(setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+
+(use-package all-the-icons-ivy
+  :init (all-the-icons-ivy-setup))
+
+(global-set-key (kbd "<f10>") 'dashboard-open)
+(setq dashboard-week-agenda t)
