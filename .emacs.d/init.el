@@ -74,19 +74,19 @@
 ;; Fonts settings.
 
 (set-face-attribute 'default nil
-                    :family "Iosevka Nerd Font"
+                    :family "Fira Code"
                     :height 130
                     :weight 'regular)
 
 ;; Set italic font
 (set-face-attribute 'italic nil
-                    :family "Iosevka Nerd Font"
+                    :family "Fira Code"
                     :height 130
                     :slant 'italic)
 
 ;; Set bold font
 (set-face-attribute 'bold nil
-                    :family "Iosevka Nerd Font"
+                    :family "Fira Code"
                     :height 130
                     :weight 'bold)
 
@@ -102,17 +102,20 @@
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
-                    :family "IBM Plex Mono"
+                    ;; :family "IBM Plex Mono"
+                    :family "Fira Code"
                     :slant 'italic)
 
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
-                    :family "IBM Plex Mono"
+                    ;; :family "IBM Plex Mono"
+                    :family "Fira Code"
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
-                    :family "IBM Plex Mono"
+                    ;; :family "IBM Plex Mono"
+                    :family "Fira Code"
 					:slant 'italic
                     :height 130)
 

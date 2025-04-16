@@ -113,22 +113,22 @@
 (setq hl-line-sticky-flag t)
 ;; (global-hl-line-mode 1)
 
-(use-package nyan-mode
-  :ensure t
-  :init (nyan-mode))
+;; (use-package nyan-mode
+;;   :ensure t
+;;   :init (nyan-mode))
 
-(defun my/toggle-nyan-mode ()
-  "Enable or disable `nyan-mode` depending on whether the buffer needs scrolling."
-  (if (>= (line-number-at-pos (point-max)) (window-body-height))
-      (nyan-mode 1)  ;; Enable nyan-mode if the buffer has more lines than the window height
-    (nyan-mode -1))) ;; Disable nyan-mode otherwise
+;; (defun my/toggle-nyan-mode ()
+;;   "Enable or disable `nyan-mode` depending on whether the buffer needs scrolling."
+;;   (if (>= (line-number-at-pos (point-max)) (window-body-height))
+;;       (nyan-mode 1)  ;; Enable nyan-mode if the buffer has more lines than the window height
+;;     (nyan-mode -1))) ;; Disable nyan-mode otherwise
 
-(defun my/setup-nyan-mode-toggle ()
-  "Set up automatic toggling of `nyan-mode`."
-  (add-hook 'window-size-change-functions #'my/toggle-nyan-mode)
-  (add-hook 'post-command-hook #'my/toggle-nyan-mode))
+;; (defun my/setup-nyan-mode-toggle ()
+;;   "Set up automatic toggling of `nyan-mode`."
+;;   (add-hook 'window-size-change-functions #'my/toggle-nyan-mode)
+;;   (add-hook 'post-command-hook #'my/toggle-nyan-mode))
 
-(my/setup-nyan-mode-toggle)
+;; (my/setup-nyan-mode-toggle)
 
 (use-package diminish
   :ensure t)
@@ -162,6 +162,21 @@
   evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
   :config
   (evil-mode))
+
+(defun my/evil-open-at-point ()
+  "Open link at point in org-mode or run `dashboard-return` in dashboard-mode. Do nothing elsewhere."
+  (interactive)
+  (cond
+   ((eq major-mode 'org-mode)
+    (org-open-at-point))
+
+   ((eq major-mode 'dashboard-mode)
+    (when (fboundp 'dashboard-return)
+      (dashboard-return)))
+
+   (t nil))) ;; do nothing
+
+(define-key evil-normal-state-map (kbd "RET") #'my/evil-open-at-point)
 
 (use-package evil-collection
   :after evil
@@ -998,6 +1013,7 @@ rainbow" :toggle t)
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 
+(require 'org-indent)
 (add-hook 'org-mode-hook 'org-indent-mode)
 
 (use-package org-bullets
@@ -1355,6 +1371,98 @@ See `org-capture-templates' for more information."
                    "*** %?\n")                                   ; Place the cursor here finally
 				 "\n"))))
 
+(use-package org-sidebar
+  :ensure t)
+
+(use-package ox-hugo
+  :ensure t
+  :after ox)
+
+(use-package hide-lines
+  :ensure t
+  :defer t)
+
+(defun terror/slide-setup ()
+  (global-hl-line-mode -1)
+  (org-bullets-mode 1)
+  (setq text-scale-mode-amount 2)
+  (text-scale-mode 1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 50)
+  (org-display-inline-images)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode 1)
+  (hide-lines-matching "#\\+begin_src")
+  (hide-lines-matching "#\\+end_src"))
+
+(defun terror/slide-end ()
+  (global-hl-line-mode -1)
+  (setq text-scale-mode-amount 0)
+  (text-scale-mode -1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 0)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode -1)
+  (org-fold-show-all))
+
+(use-package org-tree-slide
+  :ensure t
+  :after org
+  :hook ((org-tree-slide-play . terror/slide-setup)
+         (org-tree-slide-stop . terror/slide-end))
+  :init
+  (setq org-image-actual-width nil
+		org-tree-slide-header t
+		org-tree-slide-breadcrumbs " > "
+		org-tree-slide-activate-message "Let's begin..."
+		org-tree-slide-deactivate-message "The end."))
+
+(global-set-key (kbd "<f7>") 'org-tree-slide-mode)
+(global-set-key (kbd "S-<f7>") 'org-tree-slide-skip-done-toggle)
+(with-eval-after-load "org-tree-slide"
+  (define-key org-tree-slide-mode-map (kbd "<f1>") 'org-tree-slide-move-previous-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
+
+(use-package org-rainbow-tags
+  :ensure t
+  :custom
+  (org-rainbow-tags-hash-start-index 20)
+  (org-rainbow-tags-extra-face-attributes
+   '(:inverse-video nil :box nil :weight 'bold))
+  :hook
+  (org-mode . org-rainbow-tags-mode))
+
+(use-package org-modern)
+(add-hook 'org-mode-hook #'org-modern-mode)
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
+;; Add frame borders and window dividers
+(modify-all-frames-parameters
+ '((right-divider-width . 20)
+   (internal-border-width . 20)))
+(dolist (face '(window-divider
+                window-divider-first-pixel
+                window-divider-last-pixel))
+  (face-spec-reset-face face)
+  (set-face-foreground face (face-attribute 'default :background)))
+(set-face-background 'fringe (face-attribute 'default :background))
+
+(setq
+ ;; Edit settings
+ org-auto-align-tags nil
+ org-tags-column 0
+ org-catch-invisible-edits 'show-and-error
+ org-special-ctrl-a/e t
+ org-insert-heading-respect-content t
+
+ ;; Org styling, hide markup etc.
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-agenda-tags-column 0
+ org-ellipsis " ⮧"
+ org-modern-fold-stars
+ '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
+
 (use-package denote
   :ensure t
   :hook (dired-mode . denote-dired-mode)
@@ -1367,6 +1475,8 @@ See `org-capture-templates' for more information."
    ("C-c n f" . #'jp:denote-dired-open)
    ("C-c n r" . denote-rename-file)
    ("C-c n R" . denote-rename-file-using-front-matter)
+   ("C-c n q c" . denote-query-contents-link)
+   ("C-c n q f" . denote-query-filenames-link)
    (:map dired-mode-map
          ("C-c C-d C-i" . denote-dired-link-marked-notes)
          ("C-c C-d C-r" . denote-dired-rename-files)
@@ -1381,7 +1491,9 @@ See `org-capture-templates' for more information."
 (setq denote-files-matching-regexp-history nil)
 (setq denote-history-completion-in-prompts nil)
 (setq denote-infer-keywords t)
-(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: content\n\n")
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
+(setq denote-query-links-display-buffer-action
+      '((display-buffer-same-window)))
 
 (defun jp:denote-dired-open ()
   "Short cut to open the notes folder in dired."
@@ -1491,98 +1603,6 @@ See `org-capture-templates' for more information."
 		("C-c e v" . denote-explore-network-regenerate)
 		("C-c e D" . denote-explore-barchart-degree)))
 (setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
-
-(use-package org-sidebar
-  :ensure t)
-
-(use-package ox-hugo
-  :ensure t
-  :after ox)
-
-(use-package hide-lines
-  :ensure t
-  :defer t)
-
-(defun terror/slide-setup ()
-  (global-hl-line-mode -1)
-  (org-bullets-mode 1)
-  (setq text-scale-mode-amount 2)
-  (text-scale-mode 1)
-  (set-frame-parameter (selected-frame)
-                       'internal-border-width 50)
-  (org-display-inline-images)
-  (toggle-frame-fullscreen)
-  (hide-mode-line-mode 1)
-  (hide-lines-matching "#\\+begin_src")
-  (hide-lines-matching "#\\+end_src"))
-
-(defun terror/slide-end ()
-  (global-hl-line-mode -1)
-  (setq text-scale-mode-amount 0)
-  (text-scale-mode -1)
-  (set-frame-parameter (selected-frame)
-                       'internal-border-width 0)
-  (toggle-frame-fullscreen)
-  (hide-mode-line-mode -1)
-  (org-fold-show-all))
-
-(use-package org-tree-slide
-  :ensure t
-  :after org
-  :hook ((org-tree-slide-play . terror/slide-setup)
-         (org-tree-slide-stop . terror/slide-end))
-  :init
-  (setq org-image-actual-width nil
-		org-tree-slide-header t
-		org-tree-slide-breadcrumbs " > "
-		org-tree-slide-activate-message "Let's begin..."
-		org-tree-slide-deactivate-message "The end."))
-
-(global-set-key (kbd "<f7>") 'org-tree-slide-mode)
-(global-set-key (kbd "S-<f7>") 'org-tree-slide-skip-done-toggle)
-(with-eval-after-load "org-tree-slide"
-  (define-key org-tree-slide-mode-map (kbd "<f1>") 'org-tree-slide-move-previous-tree)
-  (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
-
-(use-package org-rainbow-tags
-  :ensure t
-  :custom
-  (org-rainbow-tags-hash-start-index 20)
-  (org-rainbow-tags-extra-face-attributes
-   '(:inverse-video nil :box nil :weight 'bold))
-  :hook
-  (org-mode . org-rainbow-tags-mode))
-
-(use-package org-modern)
-(add-hook 'org-mode-hook #'org-modern-mode)
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-
-;; Add frame borders and window dividers
-(modify-all-frames-parameters
- '((right-divider-width . 20)
-   (internal-border-width . 20)))
-(dolist (face '(window-divider
-                window-divider-first-pixel
-                window-divider-last-pixel))
-  (face-spec-reset-face face)
-  (set-face-foreground face (face-attribute 'default :background)))
-(set-face-background 'fringe (face-attribute 'default :background))
-
-(setq
- ;; Edit settings
- org-auto-align-tags nil
- org-tags-column 0
- org-catch-invisible-edits 'show-and-error
- org-special-ctrl-a/e t
- org-insert-heading-respect-content t
-
- ;; Org styling, hide markup etc.
- org-hide-emphasis-markers t
- org-pretty-entities t
- org-agenda-tags-column 0
- org-ellipsis " ⮧"
- org-modern-fold-stars
- '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
 
 (use-package pulsar
   :config
@@ -2469,13 +2489,16 @@ folder, otherwise delete a word"
 
 (setq dashboard-startupify-list '(dashboard-insert-banner
                                   dashboard-insert-newline
+                                  dashboard-insert-newline
+                                  dashboard-insert-newline
                                   dashboard-insert-banner-title
                                   dashboard-insert-newline
                                   dashboard-insert-navigator
                                   dashboard-insert-newline
-                                  dashboard-insert-init-info
                                   dashboard-insert-items
-                                  dashboard-insert-newline))
+                                  dashboard-insert-newline
+                                  dashboard-insert-init-info
+								  ))
 
 (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
 
