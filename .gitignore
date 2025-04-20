@@ -6,6 +6,7 @@
 .config/mpd/log
 .config/mpd/pid
 .config/obs-studio/
+.config/GIMP/
 
 # local
 .local/share/
