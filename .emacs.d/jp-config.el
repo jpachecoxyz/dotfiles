@@ -2415,7 +2415,7 @@ folder, otherwise delete a word"
                                   dashboard-insert-newline
                                   dashboard-insert-newline
                                   dashboard-insert-banner-title
-                                  dashboard-insert-newline
+                                  ;; dashboard-insert-newline
                                   dashboard-insert-navigator
                                   dashboard-insert-newline
                                   dashboard-insert-items
