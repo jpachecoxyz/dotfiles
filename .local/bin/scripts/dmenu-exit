@@ -4,7 +4,7 @@
 # Created On: 23/10/2023
 # Project: dmenu-exit script
 
-dm="tofi"
+dm="fuzzel -d -p"
 
 # Options
 shutdown="Shutdown"
@@ -12,7 +12,7 @@ reboot="Reboot"
 hrestart="Log Out"
 lock="Lock"
 
-chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$hibernate\n$lock" | $dm --prompt-text "Hyprland - Session: ")
+chosen=$(printf "$reboot\n$shutdown\n$hrestart\n$lock" | $dm "Hyprland - Session: ")
 case $chosen in
 
     $shutdown)

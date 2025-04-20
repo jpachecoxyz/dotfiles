@@ -937,6 +937,79 @@ rainbow" :toggle t)
   :after projectile
   :config (counsel-projectile-mode))
 
+;; ;; Set speller and dicts
+(if lpr-windows-system
+	(setenv "LANG" "en_US, es_MX"))
+(if lpr-windows-system
+	(setenv "DICPATH"
+			(concat (getenv "HOME") ".emacs.d/lang")))
+(setq ispell-hunspell-dict-paths-alist
+	  '(("en_US" "~/.emacs.d/lang/en_US.aff")
+		("es_MX" "~/.emacs.d/lang/es_MX.aff")))
+
+(if lpr-windows-system
+	;;; Windows
+	(setq ispell-local-dictionary-alist
+		  ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
+		  ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
+		  '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+			("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
+	;;; Linux
+  (setq ispell-local-dictionary-alist
+		'(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+		  ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
+
+(setq ispell-program-name "hunspell")
+(setq ispell-local-dictionary "en_US")
+
+;; ;; flyspell spellcheck on the fly...
+;; (use-package flyspell
+;;   :defer t
+;;   ;;:delight
+;;   :custom
+;;   (flyspell-abbrev-p t)
+;;   (flyspell-issue-message-flag nil)
+;;   (flyspell-issue-welcome-flag nil)
+;;   (flyspell-mode 1))
+
+;; (use-package flyspell-correct-ivy
+;;   :after flyspell
+;;   :bind (:map flyspell-mode-map
+;;       ("M-\\" . flyspell-correct-word-before-point))
+;;   :custom (flyspell-correct-interface 'flyspell-correct-ivy))
+
+;; (use-package ispell
+;;   :custom
+;;   (ispell-silently-savep t))
+
+;; ;; Activate spellcheck in text mode, org, txt files etc...
+;; (add-hook 'text-mode-hook
+;;   '(lambda () (flyspell-mode 1)))
+
+;; ;; Change betwen English and Spanish, 
+;; ;; English is he default.
+(defvar ispell-current-dictionary "en_US")
+
+(defun toggle-ispell-dictionary ()
+  (interactive)
+  (if (string= ispell-current-dictionary "en_US")
+      (progn
+        (setq ispell-current-dictionary "es")
+        (message "Switched to Spanish dictionary"))
+    (progn
+      (setq ispell-current-dictionary "en_US")
+      (message "Switched to English dictionary")))
+  (ispell-change-dictionary ispell-current-dictionary))
+
+;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
+
+(when (eq system-type 'gnu/linux)
+  (use-package jinx
+    :ensure t
+    :hook (text-mode . jinx-mode)
+    :bind (("M-;" . jinx-correct)
+           ("<f8>" . jinx-languages))))
+
 (use-package toc-org
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
@@ -1438,7 +1511,7 @@ See `org-capture-templates' for more information."
 (defun denote-dired-filter (regex)
   "Open denote-sequence-dired and filter files by REGEX.
 Automatically marks files matching REGEX, inverts marks, then operates on them."
-  (interactive "sFilter files by regex: ")
+  (interactive "sFilter files by REGEXP: ")
   (denote-sequence-dired)
   (let ((buffer (car (seq-filter (lambda (b) 
                                    (string-match "\\*Denote Sequences" (buffer-name b)))
@@ -2244,17 +2317,6 @@ folder, otherwise delete a word"
 (use-package password-store
   :ensure t)
 
-(use-package ellama
-  :init
-  (setopt ellama-language "English")
-  (setopt ellama-user-nick "jpachecoxyz")
-  (setopt ellama-keymap-prefix "C-c e")
-  (require 'llm-ollama)
-  (setopt ellama-provider
-          (make-llm-ollama
-           :chat-model "zephyr"
-           :embedding-model "zephyr")))
-
 (use-package fzf
   :bind
   ;; Don't forget to set keybinds!
@@ -2303,13 +2365,6 @@ folder, otherwise delete a word"
       ;; Delete the window where fzf was opened
       (delete-window window))))
 
-(use-package eee
-  :load-path "~/.emacs.d/lisp/eee.el"
-  :config
-  (setq ee-terminal-command "kitty")
-  (general-evil-define-key 'normal 'global "M-f" 'ee-nnn)
-  (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
-
 (use-package telega
   :ensure t
   :defer t
@@ -2333,20 +2388,6 @@ folder, otherwise delete a word"
   (persp-switch "*telega*")
   (telega)
   (telega-mode-line-mode))
-
-(use-package shell-pop
-  :ensure t
-  :config
-  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
-  (setq shell-pop-term-shell "/bin/zsh")  ;; Change this to your preferred shell
-  (setq shell-pop-window-size 50)  ;; Percentage of the screen
-  (setq shell-pop-full-span t)  ;; Full width
-  (setq shell-pop-window-position "bottom")  ;; Position of the shell
-  (setq shell-pop-autocd-to-working-dir t)
-  (setq shell-pop-restore-window-configuration t))
-
-(use-package vterm
-  :ensure t)
 
 (use-package all-the-icons)
 

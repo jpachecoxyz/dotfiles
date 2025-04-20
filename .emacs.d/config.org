@@ -1241,7 +1241,7 @@ rainbow" :toggle t)
   :config (counsel-projectile-mode))
 #+END_SRC
 * Spell-check:
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp :tangle jp-config.el
 ;; ;; Set speller and dicts
 (if lpr-windows-system
 	(setenv "LANG" "en_US, es_MX"))
@@ -2000,7 +2000,7 @@ See `org-capture-templates' for more information."
 (defun denote-dired-filter (regex)
   "Open denote-sequence-dired and filter files by REGEX.
 Automatically marks files matching REGEX, inverts marks, then operates on them."
-  (interactive "sFilter files by regex: ")
+  (interactive "sFilter files by REGEXP: ")
   (denote-sequence-dired)
   (let ((buffer (car (seq-filter (lambda (b) 
                                    (string-match "\\*Denote Sequences" (buffer-name b)))
@@ -2043,7 +2043,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 (use-package consult-denote
   :ensure t)
 #+end_src
-*** Denote-silo.
+** Denote-silo.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package denote-silo
   :ensure t
@@ -2061,7 +2061,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
               "/home/javier/docs/pdf/")))
   ;; (setq denote-silo-extras-directories '("~/docs/notes/" "~/docs/pdf/")))
 #+end_src
-*** Denote-sequence.
+** Denote-sequence.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package denote-sequence
   :ensure t
@@ -2078,7 +2078,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
   (setq denote-sequence-scheme 'numeric)
   (setq denote-sequence-type-history nil))
 #+end_src
-*** Denote-menu.
+** Denote-menu.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package denote-menu
   :ensure t
@@ -2087,7 +2087,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
   :bind 
   (("C-c n m" . denote-menu-list-notes)))
 #+end_src
-*** Denote-explore.
+** Denote-explore.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package denote-explore
   :ensure t
@@ -2858,7 +2858,7 @@ folder, otherwise delete a word"
   :ensure t)
 #+END_SRC
 * Ellama.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+#+BEGIN_SRC emacs-lisp :tangle no
 (use-package ellama
   :init
   (setopt ellama-language "English")
@@ -2920,15 +2920,6 @@ folder, otherwise delete a word"
       ;; Delete the window where fzf was opened
       (delete-window window))))
 #+end_src
-* eee.el
-#+begin_src emacs-lisp :tangle jp-config.el
-(use-package eee
-  :load-path "~/.emacs.d/lisp/eee.el"
-  :config
-  (setq ee-terminal-command "kitty")
-  (general-evil-define-key 'normal 'global "M-f" 'ee-nnn)
-  (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
-#+end_src
 * Telega.el
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package telega
@@ -2954,22 +2945,6 @@ folder, otherwise delete a word"
   (persp-switch "*telega*")
   (telega)
   (telega-mode-line-mode))
-#+end_src
-* Terminal.
-#+begin_src emacs-lisp :tangle jp-config.el
-(use-package shell-pop
-  :ensure t
-  :config
-  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
-  (setq shell-pop-term-shell "/bin/zsh")  ;; Change this to your preferred shell
-  (setq shell-pop-window-size 50)  ;; Percentage of the screen
-  (setq shell-pop-full-span t)  ;; Full width
-  (setq shell-pop-window-position "bottom")  ;; Position of the shell
-  (setq shell-pop-autocd-to-working-dir t)
-  (setq shell-pop-restore-window-configuration t))
-
-(use-package vterm
-  :ensure t)
 #+end_src
 * Dashboard.
 #+begin_src emacs-lisp :tangle jp-config.el

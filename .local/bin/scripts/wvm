@@ -8,7 +8,7 @@
 VM_DIR="$HOME/vms/windows"
 
 # Find available .qcow2 files and show only their names (without extension)
-VM_NAME=$(find "$VM_DIR" -maxdepth 1 -type f -name "*.qcow2" | awk -F'/' '{print $NF}' | sed 's/\.qcow2$//' | tofi --prompt-text="Select a VM: ")
+VM_NAME=$(find "$VM_DIR" -maxdepth 1 -type f -name "*.qcow2" | awk -F'/' '{print $NF}' | sed 's/\.qcow2$//' | fuzzel -d -p "Select a VM: ")
 
 # Exit if no file is selected
 [ -z "$VM_NAME" ] && notify-send "Virtualization" "No VM selected. \nExiting..." && exit 1
