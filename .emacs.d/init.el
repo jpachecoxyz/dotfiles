@@ -14,14 +14,7 @@
 (setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
 (defvaralias 'c-basic-offset 'tab-width)
 
-(setq visible-bell 1)
-(setq-default current-language-environment "English")
-(setq keyboard-coding-system 'utf-8)
-
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(setq visible-bell t)
 
 (setq-default truncate-lines t)
 (setq-default fill-column 80)
@@ -74,19 +67,19 @@
 ;; Fonts settings.
 
 (set-face-attribute 'default nil
-                    :family "Fira Code"
+                    :family "Iosevka"
                     :height 130
                     :weight 'regular)
 
 ;; Set italic font
 (set-face-attribute 'italic nil
-                    :family "Fira Code"
+                    :family "Iosevka"
                     :height 130
                     :slant 'italic)
 
 ;; Set bold font
 (set-face-attribute 'bold nil
-                    :family "Fira Code"
+                    :family "Iosevka"
                     :height 130
                     :weight 'bold)
 
@@ -97,25 +90,25 @@
 
 ;; Set font for comments to be italic
 (set-face-attribute 'font-lock-comment-face nil
-                    :family "IBM Plex Mono"
+                    :family "IBM Iosevka"
                     :slant 'italic)
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
                     ;; :family "IBM Plex Mono"
-                    :family "Fira Code"
+                    :family "Iosevka"
                     :slant 'italic)
 
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
                     ;; :family "IBM Plex Mono"
-                    :family "Fira Code"
+                    :family "Iosevka"
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
                     ;; :family "IBM Plex Mono"
-                    :family "Fira Code"
+                    :family "Iosevka"
 					:slant 'italic
                     :height 130)
 

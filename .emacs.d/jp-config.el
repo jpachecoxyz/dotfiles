@@ -479,6 +479,7 @@
 				dired-mode-hook
                 vterm-mode-hook
                 help-mode-hook
+				nov-mode-hook
                 org-mode-hook
                 telega-chat-mode-hook
                 telega-root-mode-hook
@@ -906,9 +907,9 @@ rainbow" :toggle t)
 (use-package dired-open
   :after dired
   :config
-  (setq dired-open-extensions '(("gif" . "nsxiv")
-                                ("jpg" . "nsxiv")
-                                ("png" . "nsxiv")
+  (setq dired-open-extensions '(
+                                ("jpg" . "imv")
+                                ("png" . "imv")
                                 ;; ("pdf" . "zathura")
                                 ("mkv" . "mpv")
                                 ("mp4" . "mpv"))))
@@ -935,79 +936,6 @@ rainbow" :toggle t)
 (use-package counsel-projectile
   :after projectile
   :config (counsel-projectile-mode))
-
-;; ;; Set speller and dicts
-(if lpr-windows-system
-	(setenv "LANG" "en_US, es_MX"))
-(if lpr-windows-system
-	(setenv "DICPATH"
-			(concat (getenv "HOME") ".emacs.d/lang")))
-(setq ispell-hunspell-dict-paths-alist
-	  '(("en_US" "~/.emacs.d/lang/en_US.aff")
-		("es_MX" "~/.emacs.d/lang/es_MX.aff")))
-
-(if lpr-windows-system
-	;;; Windows
-	(setq ispell-local-dictionary-alist
-		  ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
-		  ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
-		  '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
-			("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
-	;;; Linux
-  (setq ispell-local-dictionary-alist
-		'(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-		  ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
-
-(setq ispell-program-name "hunspell")
-(setq ispell-local-dictionary "en_US")
-
-;; ;; flyspell spellcheck on the fly...
-;; (use-package flyspell
-;;   :defer t
-;;   ;;:delight
-;;   :custom
-;;   (flyspell-abbrev-p t)
-;;   (flyspell-issue-message-flag nil)
-;;   (flyspell-issue-welcome-flag nil)
-;;   (flyspell-mode 1))
-
-;; (use-package flyspell-correct-ivy
-;;   :after flyspell
-;;   :bind (:map flyspell-mode-map
-;;       ("M-\\" . flyspell-correct-word-before-point))
-;;   :custom (flyspell-correct-interface 'flyspell-correct-ivy))
-
-;; (use-package ispell
-;;   :custom
-;;   (ispell-silently-savep t))
-
-;; ;; Activate spellcheck in text mode, org, txt files etc...
-;; (add-hook 'text-mode-hook
-;;   '(lambda () (flyspell-mode 1)))
-
-;; ;; Change betwen English and Spanish, 
-;; ;; English is he default.
-(defvar ispell-current-dictionary "en_US")
-
-(defun toggle-ispell-dictionary ()
-  (interactive)
-  (if (string= ispell-current-dictionary "en_US")
-      (progn
-        (setq ispell-current-dictionary "es")
-        (message "Switched to Spanish dictionary"))
-    (progn
-      (setq ispell-current-dictionary "en_US")
-      (message "Switched to English dictionary")))
-  (ispell-change-dictionary ispell-current-dictionary))
-
-;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
-
-(when (eq system-type 'gnu/linux)
-  (use-package jinx
-    :ensure t
-    :hook (text-mode . jinx-mode)
-    :bind (("M-;" . jinx-correct)
-           ("<f8>" . jinx-languages))))
 
 (use-package toc-org
   :commands toc-org-enable
@@ -1079,7 +1007,7 @@ rainbow" :toggle t)
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " ⮧")
+(setq org-ellipsis " [...]")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
 	  '(;;Places
@@ -1432,37 +1360,6 @@ See `org-capture-templates' for more information."
   :hook
   (org-mode . org-rainbow-tags-mode))
 
-(use-package org-modern)
-(add-hook 'org-mode-hook #'org-modern-mode)
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-
-;; Add frame borders and window dividers
-(modify-all-frames-parameters
- '((right-divider-width . 20)
-   (internal-border-width . 20)))
-(dolist (face '(window-divider
-                window-divider-first-pixel
-                window-divider-last-pixel))
-  (face-spec-reset-face face)
-  (set-face-foreground face (face-attribute 'default :background)))
-(set-face-background 'fringe (face-attribute 'default :background))
-
-(setq
- ;; Edit settings
- org-auto-align-tags nil
- org-tags-column 0
- org-catch-invisible-edits 'show-and-error
- org-special-ctrl-a/e t
- org-insert-heading-respect-content t
-
- ;; Org styling, hide markup etc.
- org-hide-emphasis-markers t
- org-pretty-entities t
- org-agenda-tags-column 0
- org-ellipsis " ⮧"
- org-modern-fold-stars
- '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
-
 (use-package denote
   :ensure t
   :hook (dired-mode . denote-dired-mode)
@@ -1477,9 +1374,11 @@ See `org-capture-templates' for more information."
    ("C-c n R" . denote-rename-file-using-front-matter)
    ("C-c n q c" . denote-query-contents-link)
    ("C-c n q f" . denote-query-filenames-link)
+   ("C-c n i i" . denote-insert-image)
    (:map dired-mode-map
          ("C-c C-d C-i" . denote-dired-link-marked-notes)
          ("C-c C-d C-r" . denote-dired-rename-files)
+         ("C-c C-d C-f" . denote-dired-filter)
          ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
          ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
 
@@ -1494,6 +1393,7 @@ See `org-capture-templates' for more information."
 (setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
 (setq denote-query-links-display-buffer-action
       '((display-buffer-same-window)))
+(setq denote-link--prepare-links-format "%s\n")
 
 (defun jp:denote-dired-open ()
   "Short cut to open the notes folder in dired."
@@ -1526,6 +1426,28 @@ See `org-capture-templates' for more information."
       (while (re-search-forward org-link-bracket-re nil t)
         (push (match-string 0) links)))
     (delete-dups links)))
+
+(defun denote-insert-image ()
+  "Prompt to select an image from ~/docs/notes/img/ and insert its absolute path as [[...]] link."
+  (interactive)
+  (let* ((img-dir (expand-file-name "~/docs/notes/img/"))
+         (filename (read-file-name "Select image: " img-dir nil t)))
+    (when (and filename (file-exists-p filename))
+      (insert (format "[[%s]]" (expand-file-name filename))))))
+
+(defun denote-dired-filter (regex)
+  "Open denote-sequence-dired and filter files by REGEX.
+Automatically marks files matching REGEX, inverts marks, then operates on them."
+  (interactive "sFilter files by regex: ")
+  (denote-sequence-dired)
+  (let ((buffer (car (seq-filter (lambda (b) 
+                                   (string-match "\\*Denote Sequences" (buffer-name b)))
+                                 (buffer-list)))))
+    (when buffer
+      (with-current-buffer buffer
+        (dired-mark-files-regexp regex)
+        (dired-toggle-marks)
+        (dired-do-kill-lines)))))
 
 ;; (defun my/org-next-denote-link ()
 ;;   "Jump to the next denote: link in org-mode."
@@ -1839,11 +1761,11 @@ See `org-capture-templates' for more information."
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+  ;; (setq register-preview-delay 0.5
+  ;;       register-preview-function #'consult-register-format)
+  ;; (advice-add #'register-preview :override #'consult-register-window)
+  ;; (setq xref-show-xrefs-function #'consult-xref
+  ;;       xref-show-definitions-function #'consult-xref)
   :config
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
@@ -2460,7 +2382,7 @@ folder, otherwise delete a word"
 						   "Programming is the art of algorithm design and the craft of debugging errant code. – Ellen Ullman")))
 
   ;; Define una lista de imágenes
-  (setq my/dashboard-images '("~/.emacs.d/GNU.png"))
+  (setq my/dashboard-images '("~/.emacs.d/gnu.png"))
   ;; Selecciona una imagen aleatoria de la lista
   (setq dashboard-startup-banner (nth (random (length my/dashboard-images)) my/dashboard-images))) 
 
@@ -2487,7 +2409,8 @@ folder, otherwise delete a word"
 (setq dashboard-center-content t)
 (setq dashbpard-set-footer nil)
 
-(setq dashboard-startupify-list '(dashboard-insert-banner
+(setq dashboard-startupify-list '(dashboard-insert-newline
+								  dashboard-insert-banner
                                   dashboard-insert-newline
                                   dashboard-insert-newline
                                   dashboard-insert-newline
@@ -2507,3 +2430,18 @@ folder, otherwise delete a word"
 
 (global-set-key (kbd "<f10>") 'dashboard-open)
 (setq dashboard-week-agenda t)
+
+(use-package nov
+  :after org
+  :ensure t
+  :mode ("\\.epub\\'" . nov-mode)
+  :hook ((nov-mode . my-nov-font-setup)
+         (nov-mode . visual-line-mode)
+         (nov-mode . visual-fill-column-mode))
+  :config
+  (setq nov-text-width 80
+        visual-fill-column-center-text t
+		nov-variable-pitch nil))
+
+(defun my-nov-font-setup ()
+  (face-remap-add-relative 'variable-pitch :family "Iosevka" :height 1.0))

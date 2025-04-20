@@ -36,6 +36,9 @@ BROWSER="firefox"
 GPG_TTY=$(tty)
 
 # ~/ Clean-up:
+LANG=en_US.UTF-8
+LC_ALL=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
 XDG_CONFIG_HOME="$HOME/.config"
 XDG_DATA_HOME="$HOME/.local/share"
 XDG_BIN_HOME=$HOME/.local/bin/scripts

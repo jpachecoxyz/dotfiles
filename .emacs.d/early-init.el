@@ -60,6 +60,6 @@
 ;; Initialize package sources
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 ;; (require 'nano-splash)	;; Splash screen
-(require 'buffer-move)   	;; Buffer-move for better window management
+;; (require 'buffer-move)   	;; Buffer-move for better window management
 (require 'utilities)		;; Custom scripts
-(require 'term-toggle)	;; toggle-term
+;; (require 'term-toggle)	;; toggle-term

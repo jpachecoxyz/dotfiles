@@ -618,18 +618,20 @@ The command supports previewing the currently selected theme."
 (defun open-specific-dired ()
   "Ask whether to open config, scripts, or nix config in Dired."
   (interactive)
-  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "notes" "pdf's" "docs"))))
+  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "notes" "pdf's" "books" "docs"))))
     (cond
      ((string= choice "config")
       (fzf-find-file "~/.config/"))
      ((string= choice "scripts")
       (fzf-find-file "~/.local/bin/"))
      ((string= choice "notes")
-      (fzf-find-file "~/docs/notes/"))
+      (consult-find "~/docs/notes/"))
      ((string= choice "pdf's")
       (consult-find "~/docs/notes/pdf/"))
+     ((string= choice "books")
+      (consult-find "~/docs/books/"))
      ((string= choice "docs")
-      (fzf-find-file "~/docs/org/"))
+      (consult-find "~/docs/org/"))
      (t
       (message "Invalid choice")))))
 

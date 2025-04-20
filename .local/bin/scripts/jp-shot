@@ -6,10 +6,30 @@
 
 
 # Define your options 
-options=$(printf "Region\nWindow\nScreen\nQuit")
+options=$(printf "Region\nWindow\nDenote Screenshot\nScreen\nQuit")
+denote_dir="$HOME/docs/notes/img"
 
-# Show the menu using tofi
-OPT=$(echo "$options" | tofi --prompt-text "Select Screenshot: ")
+generate_filename() {
+    timestamp=$(date +"%Y%m%dT%H%M%S")
+
+    # Prompt for title
+    title=$(echo | fuzzel -d -w 50 -p "Title: ")
+    [ -z "$title" ] && title="screenshot"
+    title=$(echo "$title" | sed 's/^ *//;s/ *$//' | tr ' ' '-')  # trim + replace spaces
+
+    # Prompt for keywords (comma-separated)
+    keywords=$(echo | fuzzel -d -w 50 -p "Keywords (comma separated): ")
+    if [ -n "$keywords" ]; then
+        # Remove spaces, replace commas with underscores
+        clean_keywords=$(echo "$keywords" | tr -d ' ' | tr ',' '_')
+        keywords="__${clean_keywords}"
+    fi
+
+    printf "%s--%s%s.png\n" "$timestamp" "$title" "$keywords"
+}
+
+# Show the menu using fuzzel
+OPT=$(echo "$options" | fuzzel -d -p "Select Screenshot: ")
 
 # Handle the selected option
 case $OPT in
@@ -18,6 +38,11 @@ case $OPT in
         ;;
     'Window')
         hyprshot -m window --clipboard && wl-paste | swappy -f -
+        ;;
+    'Denote Screenshot')
+        filename=$(generate_filename)
+        filepath="$screenshot_dir/$filename"
+        hyprshot -m region -o "$denote_dir" -f "$filename"
         ;;
     'Screen')
         # Use grim for fullscreen screenshot because hyprshot takes too long

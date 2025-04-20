@@ -1114,7 +1114,7 @@ text should not be underlined as well) yet still blend in."
 	`(custom-variable-tag ((,c :inherit bold :foreground ,variable)))
 ;;;; dashboard
 	`(dashboard-heading ((,c :foreground ,name)))
-	`(dashboard-items-face (( ))) ; use the underlying style of all-the-icons
+	`(dashboard-items-face ((,c :inherit link ))) ; use the underlying style of all-the-icons
 ;;;; denote
 	`(denote-faces-date ((,c :foreground ,date-common)))
 	`(denote-faces-delimiter ((,c :inherit shadow)))
