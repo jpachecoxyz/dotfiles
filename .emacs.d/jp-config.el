@@ -647,7 +647,7 @@
   :ensure t
   :defer t
   :custom
-  (olivetti-body-width 0.7))
+  (olivetti-body-width 0.6))
   ;; :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
@@ -1468,10 +1468,24 @@ See `org-capture-templates' for more information."
       '((display-buffer-same-window)))
 (setq denote-link--prepare-links-format "%s\n")
 
-(defun jp:denote-dired-open ()
-  "Short cut to open the notes folder in dired."
+(defun jp:denote-dired-open()
+  "Open `denote-directory` in Dired and filter only notes matching proper Denote filename pattern."
   (interactive)
-  (dired denote-directory))
+  (dired denote-directory)
+  (dired-mark-files-regexp "^[0-9]\\{8\\}T[0-9]\\{6\\}--[^=].*\\.org$")
+  (dired-toggle-marks)
+  (dired-do-kill-lines)
+  (let ((messages '(
+                    "🧠🌿 Mind garden pruned: only pure ideas are blooming."
+                    "🧠✨ Mind map refreshed: only clear branches remain."
+                    "🪴📝 Notes pruned: a clean path through your thoughts."
+                    "🔍🌟 Only well-formed thoughts sparkle here now."
+                    "📜🌱 Organized scrolls: the chaos fades, clarity grows."
+                    "🧩📚 Puzzle pieces placed: only true notes stay."
+                    "🌌✍️ Mental constellation aligned: shining ideas ahead."
+                    "🌿📖 Your knowledge forest breathes freely now."
+                    )))
+    (message "%s" (nth (random (length messages)) messages))))
 
 (defun my/denote-or-org-link ()
   "Run `denote-find-link`. If nothing is inserted, show Org links in minibuffer."
@@ -1567,7 +1581,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
   ;; value of the variable `denote-directory'.
   (setq denote-silo-directories
         (list denote-directory
-              "/home/javier/docs/pdf/")))
+              "~/docs/notes/inbox/")))
   ;; (setq denote-silo-extras-directories '("~/docs/notes/" "~/docs/pdf/")))
 
 (use-package denote-sequence
@@ -1921,6 +1935,7 @@ folder, otherwise delete a word"
           (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
 	      (docs "\\*devdocs\\*")
 	      (roam "\\*Capture\\*")
+	      (org-log "\\*Org Note\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "Magit")
 	      (vterm "\\*vterm\\*")
@@ -1932,6 +1947,9 @@ folder, otherwise delete a word"
                           :size 0.2)
         ("*Async Shell Command*" :ignore t)
         (,repls :regexp t
+                :align below
+                :size 0.3)
+        (,org-log :regexp t
                 :align below
                 :size 0.3)
         (occur-mode :select t
@@ -2156,6 +2174,7 @@ folder, otherwise delete a word"
             :wk "Open noobemacs Configuraiton file.")
     "f r" '(recentf :wk "Find recent files")
     "f u" '(sudo-edit-find-file :wk "Sudo find file")
+    "f n" '(consult-denote-find :wk "Find Denotes")
     "f U" '(sudo-edit :wk "Sudo edit file"))
 
   (user/leader-keys
