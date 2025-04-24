@@ -136,7 +136,7 @@
    `(org-headline-todo ((,class (:foreground ,miasma-eucalyptus :weight bold))))
    `(org-todo ((,class (:foreground ,miasma-brass :weight bold))))
    `(org-date ((,class (:foreground ,miasma-sky :underline (:style line)))))
-   `(org-document-title ((,class (:height 1.5 :foreground ,miasma-copper))))
+   `(org-document-title ((,class (:height 1.0 :foreground ,miasma-copper))))
    `(org-checkbox ((t (:background ,miasma-light-charcoal
 								   :foreground ,miasma-tangerine
 								   :box (:line-width 2 :color ,miasma-graphite

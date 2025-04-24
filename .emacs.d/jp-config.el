@@ -452,6 +452,7 @@
 (setq-default fill-column 80)
 ;; Enable display-fill-column-indicator
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) 
+(add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
 
 ;;Doom insert item below
 (require 'bind-key)
@@ -520,9 +521,7 @@
 							   ("#+BEGIN_SRC" . ?λ)
 							   ("#+begin_src" . ?λ)
 							   ("#+END_SRC" . ?⬚)
-							   ("#+end_src" . ?⬚)
-							   ("#+TITLE: " . "")
-							   ("#+title: " . "")))
+							   ("#+end_src" . ?⬚)))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
@@ -645,7 +644,6 @@
 
 (use-package olivetti
   :ensure t
-  :defer t
   :custom
   (olivetti-body-width 0.6))
   ;; :hook (org-mode . olivetti-mode))
@@ -1438,7 +1436,7 @@ See `org-capture-templates' for more information."
   :hook (dired-mode . denote-dired-mode)
   ;; Keybinds
   :bind
-  (("C-c n n" . denote-open-or-create)
+  (("C-c n n" . denote-create-note)
    ("C-c n l" . denote-link-or-create)
    ("C-c n L" . denote-add-links)
    ("C-c n b" . denote-link-backlinks)
@@ -1657,6 +1655,36 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
     "k" 'doc-view-previous-page))
 
 (add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)
+
+(use-package justify-kp
+  :ensure t)
+
+(setq nov-text-width t)
+
+(defun my-nov-window-configuration-change-hook ()
+  (my-nov-post-html-render-hook)
+  (remove-hook 'window-configuration-change-hook
+               'my-nov-window-configuration-change-hook
+               t))
+
+(defun my-nov-post-html-render-hook ()
+  (if (get-buffer-window)
+      (let ((max-width (pj-line-width))
+            buffer-read-only)
+        (save-excursion
+          (goto-char (point-min))
+          (while (not (eobp))
+            (when (not (looking-at "^[[:space:]]*$"))
+              (goto-char (line-end-position))
+              (when (> (shr-pixel-column) max-width)
+                (goto-char (line-beginning-position))
+                (pj-justify)))
+            (forward-line 1))))
+    (add-hook 'window-configuration-change-hook
+              'my-nov-window-configuration-change-hook
+              nil t)))
+
+(add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
 
 (use-package tree-sitter
   :ensure t

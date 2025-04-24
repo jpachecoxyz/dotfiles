@@ -28,7 +28,7 @@ list_services() {
 
 # Select a service using fzf
 # selected_service=$(list_services | fzf --prompt="Select a service: ")
-selected_service=$(list_services | tofi --prompt-text "Select a service: ")
+selected_service=$(list_services | fuzzel -d -p "Select a service: ")
 
 # Exit if no service was selected
 if [[ -z "$selected_service" ]]; then
@@ -38,7 +38,7 @@ fi
 
 # Action menu
 # action=$(printf "Start\nStop\nRestart\nStatus" | fzf --prompt="Action for $selected_service: " --height=10 --reverse)
-action=$(printf "Start\nStop\nRestart\nStatus" | tofi --prompt-text "Action for $selected_service: ")
+action=$(printf "Start\nStop\nRestart\nStatus" | fuzzel -d -p "Action for $selected_service: ")
 
 # Perform the selected action
 case $action in
