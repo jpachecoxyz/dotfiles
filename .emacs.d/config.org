@@ -308,16 +308,16 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-(with-eval-after-load 'doom-modeline
-  (doom-modeline-def-segment lsp
-    "Displays LSP server status."
-    (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
-      (concat
-       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
-       (propertize (nerd-icons-mdicon "nf-md-repeat")
-                   'face `(:family ,(nerd-icons-mdicon-family) :inherit))
-                   ;; 'display '(raise -0.1))
-       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
+;; (with-eval-after-load 'doom-modeline
+;;   (doom-modeline-def-segment lsp
+;;     "Displays LSP server status."
+;;     (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
+;;       (concat
+;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
+;;        (propertize (nerd-icons-mdicon "nf-md-repeat")
+;;                    'face `(:family ,(nerd-icons-mdicon-family) :inherit))
+;;                    ;; 'display '(raise -0.1))
+;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
 
 (use-package hide-mode-line
   :ensure t
@@ -494,7 +494,7 @@
   (setq key-chord-two-keys-delay 0.5))
 #+END_SRC
 * Corfu.
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+#+BEGIN_SRC emacs-lisp :tangle no
 (use-package corfu
   ;; TAB-and-Go customizations
   :custom
@@ -636,7 +636,20 @@
 ;; Hook the function to major modes where you want this behavior
 (add-hook 'prog-mode-hook #'my-prioritize-yasnippet-capf)
 (add-hook 'text-mode-hook #'my-prioritize-yasnippet-capf)
-
+#+END_SRC
+* Company.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package company
+  :ensure t
+  :hook (prog-mode . company-mode)   ;; Only activate in prog-mode
+  :config
+  (setq company-dabbrev-downcase 0)
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
+  (setq company-tooltip-align-annotations t))
+#+end_src
+* Orderles
+#+begin_src emacs-lisp :tangle jp-config.el
 ;; Ensure Corfu appears in the right position
 (use-package orderless
   :ensure t
@@ -1633,17 +1646,6 @@ rainbow" :toggle t)
 
 (setq org-capture-templates
       `(
-		("p" "Posts")
-		("pa" "Add a Post"
-         entry
-         ;; File path and headline where the captured post should be stored.
-         (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Posts:")
-         (function org-hugo-new-subtree-post-capture-template) :empty-lines-before 2)
-
-		("pi" "Idea for a Post"
-		 entry (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Ideas:")
-		 "* TODO %^{Name of the post: }%?" :empty-lines-before 2)
-
         ("s" "Scheduled Task" entry (file+headline "~/public/org/agenda/refill.org" "Priority")
          "** TODO [#A] %? %^G \n  SCHEDULED: %^t" :empty-lines 1)
 
@@ -1825,6 +1827,35 @@ See `org-capture-templates' for more information."
 (use-package ox-hugo
   :ensure t
   :after ox)
+(setq org-hugo-base-dir "~/webdev/jpachecoxyz/")
+(defun jp:create-hugo-post ()
+  "Create a new Hugo post buffer with metadata in Org format, unsaved."
+  (interactive)
+  (let* ((title (read-string "Post title: "))
+         (description (read-string "Post description: "))
+         (tags (read-string "Tags (separated by spaces): "))
+         (is-draft (y-or-n-p "Is this a draft? "))
+         (slug (replace-regexp-in-string " " "-" (downcase title)))
+         (file-name (concat slug ".org"))
+         (file-path (expand-file-name file-name "~/webdev/jpachecoxyz/org/posts/"))
+         (date (format-time-string "%Y-%m-%d"))
+         (draft-string (if is-draft "true" "false"))) ;; <-- move the IF here!
+    (find-file file-path)
+    (insert (format "#+title: %s\n" title))
+    (insert (format "#+description: %s\n" description))
+    (insert (format "#+date: %s\n" date))
+    (insert (format "#+export_file_name: %s\n" slug))
+    (insert "#+hugo_base_dir: ~/webdev/jpachecoxyz/\n")
+    (insert "#+hugo_section: posts\n")
+    (insert (format "#+hugo_tags: %s\n" tags))
+    (insert "#+hugo_custom_front_matter: toc true\n")
+    (insert "#+hugo_auto_set_lastmod: nil\n")
+    (insert (format "#+hugo_draft: %s\n" draft-string)) ;; <- use the precomputed value here
+    (goto-char (point-max))
+    (insert "\n") ;; Ensure a blank line before the cursor
+    (set-buffer-modified-p t)))
+
+(global-set-key (kbd "C-c n p") #'jp:create-hugo-post)
 #+END_SRC
 ** Org-tree-slide.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2210,79 +2241,14 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 (with-eval-after-load 'treesit
   (setq treesit-font-lock-level 4))
 #+END_SRC
-** LSP
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
-(defun jp/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  ;; :hook (lsp-mode . jp/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+** Eglot.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package eglot
+  :ensure nil   ;; because it's built-in!
+  :hook (prog-mode . eglot-ensure)   ;; Automatically start eglot in programming modes
   :config
-  (lsp-enable-which-key-integration t)
-  (setq lsp-auto-guess-root t)
-  (setq lsp-log-io nil)
-  (setq lsp-restart 'auto-restart)
-  (setq lsp-enable-symbol-highlighting t)
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-signature-render-documentation nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-headerline-breadcrumb-icons-enable nil)
-  (setq lsp-eldoc-hook nil)
-  (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-modeline-diagnostics-enable nil)
-  (setq lsp-semantic-tokens-enable nil)
-  (setq lsp-enable-folding nil)
-  (setq lsp-enable-imenu nil)
-  (setq lsp-enable-snippet nil)
-  (setq read-process-output-max (* 1024 1024)) ;; 1MB
-  (setq lsp-treemacs-symbols-position-params '((side . right) (slot . 2) (window-width . 35)))
-  (setq lsp-idle-delay 0.0))
-
-(defun toggle-lsp-treemacs-symbols ()
-  "Toggle the visibility of the lsp-treemacs-symbols buffer."
-  (interactive)
-  (let ((buffer (get-buffer "*LSP Symbols List*")))
-    (if (and buffer (get-buffer-window buffer))
-        (delete-window (get-buffer-window buffer))
-      (lsp-treemacs-symbols))))
-
-(global-set-key (kbd "<f5>") 'toggle-lsp-treemacs-symbols)
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-border (face-foreground 'default))
-  (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-delay 0.05))
-
-(use-package dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
-  :commands dap-debug
-  :config
-  ;; Set up Node debugging
-  (require 'dap-node)
-  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-
-  ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
-#+END_SRC
-
+  (setq eglot-autoshutdown t))   ;; Automatically shutdown server when buffer closes
+#+end_src
 ** Ligature.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package ligature
@@ -2316,7 +2282,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package python-mode
   :ensure t
-  :hook (python-mode . lsp-deferred)
+  :hook (python-mode . eglot)
   :custom
   ;; NOTE: Set these if Python 3 is called "python3" on your system!
   ;; (python-shell-interpreter "python3")
@@ -2325,11 +2291,11 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
   :config
   (require 'dap-python))
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-pyright)
+;;                           (lsp-deferred))))  ; or lsp-deferred
 
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
@@ -3096,4 +3062,9 @@ folder, otherwise delete a word"
 
 (defun my-nov-font-setup ()
   (face-remap-add-relative 'variable-pitch :family "Iosevka" :height 1.0))
+#+end_src
+* HTTPS:
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package simple-httpd
+  :ensure t)
 #+end_src

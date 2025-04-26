@@ -72,16 +72,16 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-(with-eval-after-load 'doom-modeline
-  (doom-modeline-def-segment lsp
-    "Displays LSP server status."
-    (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
-      (concat
-       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
-       (propertize (nerd-icons-mdicon "nf-md-repeat")
-                   'face `(:family ,(nerd-icons-mdicon-family) :inherit))
-                   ;; 'display '(raise -0.1))
-       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
+;; (with-eval-after-load 'doom-modeline
+;;   (doom-modeline-def-segment lsp
+;;     "Displays LSP server status."
+;;     (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
+;;       (concat
+;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
+;;        (propertize (nerd-icons-mdicon "nf-md-repeat")
+;;                    'face `(:family ,(nerd-icons-mdicon-family) :inherit))
+;;                    ;; 'display '(raise -0.1))
+;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
 
 (use-package hide-mode-line
   :ensure t
@@ -233,147 +233,14 @@
   (key-chord-define evil-normal-state-map  "sc" 'evil-avy-goto-char-2)
   (setq key-chord-two-keys-delay 0.5))
 
-(use-package corfu
-  ;; TAB-and-Go customizations
-  :custom
-  (corfu-cycle t)                 ; Allows cycling through candidates
-  (corfu-auto nil)                  ; Enable auto completion
-  (corfu-auto-prefix 1)
-  (corfu-auto-delay 0.2)
-  (corfu-popupinfo-delay '(0.5 . 0.5))
-  (corfu-preview-current 'valid) ; insert previewed candidate
-  (corfu-preselect 'prompt)
-  (corfu-on-exact-match nil)      ; Don't auto expand tempel snippets
-  (corfu-min-width 40)
-  (corfu-max-width corfu-min-width)     ; Always have the same width
-  (corfu-count 14)
-  (corfu-scroll-margin 4)
-  (corfu-right-margin-width 1.0) ; Give some margin to align with nerd-icons left margin.
-  (corfu-left-margin-width 1.0)
-  (corfu-quit-at-boundary nil)
-  (corfu-separator ?\s)            ; Use space
-  (corfu-quit-no-match 'separator) ; Don't quit if there is `corfu-separator' inserted
-  (corfu-preview-current 'insert)  ; Preview first candidate. Insert on input if only one
-  (corfu-preselect-first t)        ; Preselect first candidate?
-
-  ;; Use TAB for cycling, default is `corfu-complete'.
-  :bind
-  (:map corfu-map
-		("TAB" . corfu-next)
-		([tab] . corfu-next)
-		("S-TAB" . corfu-previous)
-		([backtab] . corfu-previous))
-
-  :init
-  ;; (global-corfu-mode)
-  (corfu-history-mode)
-  (corfu-popupinfo-mode) ; Popup completion info
-  :config
-  (add-hook 'eshell-mode-hook
-			(lambda () (setq-local corfu-quit-at-boundary t
-							  corfu-quit-no-match t
-							  corfu-auto nil) (corfu-mode)) nil t)
-
-  :hook ((prog-mode . corfu-mode)
-		 (text-mode . corfu-mode)))
-
-
-;; (use-package corfu-doc
-;;   :after corfu
-;;   :config
-;;   (define-key corfu-map (kbd "M-p") #'corfu-doc-scroll-down) ;; corfu-next
-;;   (define-key corfu-map (kbd "M-n") #'corfu-doc-scroll-up)  ;; corfu-previous
-;;   (setq corfu-doc-display-within-parent-frame nil)
-;;   (add-hook 'corfu-mode-hook #'corfu-doc-mode))
-;; (define-key corfu-map (kbd "M-d") #'corfu-doc-toggle)
-
-;; Icons
-(use-package kind-icon
+(use-package company
   :ensure t
-  :after corfu
-  :custom
-  (kind-icon-use-icons t)
-  (kind-icon-default-face 'corfu-default) ; Have background color be the same as `corfu' face background
-  (kind-icon-blend-background nil)  ; Use midpoint color between foreground and background colors ("blended")?
-  (kind-icon-blend-frac 0.08)
+  :hook (prog-mode . company-mode)   ;; Only activate in prog-mode
   :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
-
-(setq kind-icon-mapping
-	  '((array          "a"   :icon "symbol-array"       :face font-lock-type-face              :collection "vscode")
-		(boolean        "b"   :icon "symbol-boolean"     :face font-lock-builtin-face           :collection "vscode")
-		(color          "#"   :icon "symbol-color"       :face success                          :collection "vscode")
-		(command        "cm"  :icon "chevron-right"      :face default                          :collection "vscode")
-		(constant       "co"  :icon "symbol-constant"    :face font-lock-constant-face          :collection "vscode")
-		(class          "c"   :icon "symbol-class"       :face font-lock-type-face              :collection "vscode")
-		(constructor    "cn"  :icon "symbol-method"      :face font-lock-function-name-face     :collection "vscode")
-		(enum           "e"   :icon "symbol-enum"        :face font-lock-builtin-face           :collection "vscode")
-		(enummember     "em"  :icon "symbol-enum-member" :face font-lock-builtin-face           :collection "vscode")
-		(enum-member    "em"  :icon "symbol-enum-member" :face font-lock-builtin-face           :collection "vscode")
-		(event          "ev"  :icon "symbol-event"       :face font-lock-warning-face           :collection "vscode")
-		(field          "fd"  :icon "symbol-field"       :face font-lock-variable-name-face     :collection "vscode")
-		(file           "f"   :icon "symbol-file"        :face font-lock-string-face            :collection "vscode")
-		(folder         "d"   :icon "folder"             :face font-lock-doc-face               :collection "vscode")
-		(function       "f"   :icon "symbol-method"      :face font-lock-function-name-face     :collection "vscode")
-		(interface      "if"  :icon "symbol-interface"   :face font-lock-type-face              :collection "vscode")
-		(keyword        "kw"  :icon "symbol-keyword"     :face font-lock-keyword-face           :collection "vscode")
-		(macro          "mc"  :icon "lambda"             :face font-lock-keyword-face)
-		(magic          "ma"  :icon "lightbulb-autofix"  :face font-lock-builtin-face           :collection "vscode")
-		(method         "m"   :icon "symbol-method"      :face font-lock-function-name-face     :collection "vscode")
-		(module         "{"   :icon "file-code-outline"  :face font-lock-preprocessor-face)
-		(numeric        "nu"  :icon "symbol-numeric"     :face font-lock-builtin-face           :collection "vscode")
-		(operator       "op"  :icon "symbol-operator"    :face font-lock-comment-delimiter-face :collection "vscode")
-		(param          "pa"  :icon "gear"               :face default                          :collection "vscode")
-		(property       "pr"  :icon "symbol-property"    :face font-lock-variable-name-face     :collection "vscode")
-		(reference      "rf"  :icon "library"            :face font-lock-variable-name-face     :collection "vscode")
-		(snippet        "S"   :icon "symbol-snippet"     :face font-lock-string-face            :collection "vscode")
-		(string         "s"   :icon "symbol-string"      :face font-lock-string-face            :collection "vscode")
-		(struct         "%"   :icon "symbol-structure"   :face font-lock-variable-name-face     :collection "vscode")
-		(text           "tx"  :icon "symbol-key"         :face font-lock-doc-face               :collection "vscode")
-		(typeparameter  "tp"  :icon "symbol-parameter"   :face font-lock-type-face              :collection "vscode")
-		(type-parameter "tp"  :icon "symbol-parameter"   :face font-lock-type-face              :collection "vscode")
-		(unit           "u"   :icon "symbol-ruler"       :face font-lock-constant-face          :collection "vscode")
-		(value          "v"   :icon "symbol-enum"        :face font-lock-builtin-face           :collection "vscode")
-		(variable       "va"  :icon "symbol-variable"    :face font-lock-variable-name-face     :collection "vscode")
-		(t              "."   :icon "question"           :face font-lock-warning-face           :collection "vscode")))
-
-;; yasnippets integration with corfu.
-(use-package yasnippet-capf
-  :after cape)
-
-(use-package cape
-  :bind (("C-c p p" . completion-at-point) ;; capf
-         ("C-c p t" . complete-tag)        ;; etags
-         ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
-         ("C-c p h" . cape-history)
-         ("C-c p f" . cape-file)
-         ("C-c p k" . cape-keyword)
-         ("C-c p s" . cape-elisp-symbol)
-         ("C-c p e" . cape-elisp-block)
-         ("C-c p a" . cape-abbrev)
-         ("C-c p l" . cape-line)
-         ("C-c p w" . cape-dict)
-         ("C-c p :" . cape-emoji)
-         ("C-c p \\" . cape-tex)
-         ("C-c p _" . cape-tex)
-         ("C-c p ^" . cape-tex)
-         ("C-c p &" . cape-sgml)
-         ("C-c p r" . cape-rfc1345))
-  :init
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
-
-;; Function to prioritize yasnippet-capf in completion-at-point-functions
-(defun my-prioritize-yasnippet-capf ()
-  "Ensure `yasnippet-capf` is the first in `completion-at-point-functions`."
-  (let ((yas-capf (car (remove 'yasnippet-capf completion-at-point-functions))))
-    (setq completion-at-point-functions
-          (cons 'yasnippet-capf (remove 'yasnippet-capf completion-at-point-functions)))))
-
-;; Hook the function to major modes where you want this behavior
-(add-hook 'prog-mode-hook #'my-prioritize-yasnippet-capf)
-(add-hook 'text-mode-hook #'my-prioritize-yasnippet-capf)
+  (setq company-dabbrev-downcase 0)
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
+  (setq company-tooltip-align-annotations t))
 
 ;; Ensure Corfu appears in the right position
 (use-package orderless
@@ -1318,17 +1185,6 @@ rainbow" :toggle t)
 
 (setq org-capture-templates
       `(
-		("p" "Posts")
-		("pa" "Add a Post"
-         entry
-         ;; File path and headline where the captured post should be stored.
-         (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Posts:")
-         (function org-hugo-new-subtree-post-capture-template) :empty-lines-before 2)
-
-		("pi" "Idea for a Post"
-		 entry (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Ideas:")
-		 "* TODO %^{Name of the post: }%?" :empty-lines-before 2)
-
         ("s" "Scheduled Task" entry (file+headline "~/public/org/agenda/refill.org" "Priority")
          "** TODO [#A] %? %^G \n  SCHEDULED: %^t" :empty-lines 1)
 
@@ -1376,6 +1232,35 @@ See `org-capture-templates' for more information."
 (use-package ox-hugo
   :ensure t
   :after ox)
+(setq org-hugo-base-dir "~/webdev/jpachecoxyz/")
+(defun jp:create-hugo-post ()
+  "Create a new Hugo post buffer with metadata in Org format, unsaved."
+  (interactive)
+  (let* ((title (read-string "Post title: "))
+         (description (read-string "Post description: "))
+         (tags (read-string "Tags (separated by spaces): "))
+         (is-draft (y-or-n-p "Is this a draft? "))
+         (slug (replace-regexp-in-string " " "-" (downcase title)))
+         (file-name (concat slug ".org"))
+         (file-path (expand-file-name file-name "~/webdev/jpachecoxyz/org/posts/"))
+         (date (format-time-string "%Y-%m-%d"))
+         (draft-string (if is-draft "true" "false"))) ;; <-- move the IF here!
+    (find-file file-path)
+    (insert (format "#+title: %s\n" title))
+    (insert (format "#+description: %s\n" description))
+    (insert (format "#+date: %s\n" date))
+    (insert (format "#+export_file_name: %s\n" slug))
+    (insert "#+hugo_base_dir: ~/webdev/jpachecoxyz/\n")
+    (insert "#+hugo_section: posts\n")
+    (insert (format "#+hugo_tags: %s\n" tags))
+    (insert "#+hugo_custom_front_matter: toc true\n")
+    (insert "#+hugo_auto_set_lastmod: nil\n")
+    (insert (format "#+hugo_draft: %s\n" draft-string)) ;; <- use the precomputed value here
+    (goto-char (point-max))
+    (insert "\n") ;; Ensure a blank line before the cursor
+    (set-buffer-modified-p t)))
+
+(global-set-key (kbd "C-c n p") #'jp:create-hugo-post)
 
 (use-package hide-lines
   :ensure t
@@ -1704,75 +1589,11 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 (with-eval-after-load 'treesit
   (setq treesit-font-lock-level 4))
 
-(defun jp/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  ;; :hook (lsp-mode . jp/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+(use-package eglot
+  :ensure nil   ;; because it's built-in!
+  :hook (prog-mode . eglot-ensure)   ;; Automatically start eglot in programming modes
   :config
-  (lsp-enable-which-key-integration t)
-  (setq lsp-auto-guess-root t)
-  (setq lsp-log-io nil)
-  (setq lsp-restart 'auto-restart)
-  (setq lsp-enable-symbol-highlighting t)
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-signature-render-documentation nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-headerline-breadcrumb-icons-enable nil)
-  (setq lsp-eldoc-hook nil)
-  (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-modeline-diagnostics-enable nil)
-  (setq lsp-semantic-tokens-enable nil)
-  (setq lsp-enable-folding nil)
-  (setq lsp-enable-imenu nil)
-  (setq lsp-enable-snippet nil)
-  (setq read-process-output-max (* 1024 1024)) ;; 1MB
-  (setq lsp-treemacs-symbols-position-params '((side . right) (slot . 2) (window-width . 35)))
-  (setq lsp-idle-delay 0.0))
-
-(defun toggle-lsp-treemacs-symbols ()
-  "Toggle the visibility of the lsp-treemacs-symbols buffer."
-  (interactive)
-  (let ((buffer (get-buffer "*LSP Symbols List*")))
-    (if (and buffer (get-buffer-window buffer))
-        (delete-window (get-buffer-window buffer))
-      (lsp-treemacs-symbols))))
-
-(global-set-key (kbd "<f5>") 'toggle-lsp-treemacs-symbols)
-
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-border (face-foreground 'default))
-  (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-delay 0.05))
-
-(use-package dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
-  :commands dap-debug
-  :config
-  ;; Set up Node debugging
-  (require 'dap-node)
-  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
-
-  ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
+  (setq eglot-autoshutdown t))   ;; Automatically shutdown server when buffer closes
 
 (use-package ligature
   :defer 1
@@ -1801,7 +1622,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 
 (use-package python-mode
   :ensure t
-  :hook (python-mode . lsp-deferred)
+  :hook (python-mode . eglot)
   :custom
   ;; NOTE: Set these if Python 3 is called "python3" on your system!
   ;; (python-shell-interpreter "python3")
@@ -1810,11 +1631,11 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
   :config
   (require 'dap-python))
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-pyright)
+;;                           (lsp-deferred))))  ; or lsp-deferred
 
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
@@ -2533,3 +2354,6 @@ folder, otherwise delete a word"
 
 (defun my-nov-font-setup ()
   (face-remap-add-relative 'variable-pitch :family "Iosevka" :height 1.0))
+
+(use-package simple-httpd
+  :ensure t)

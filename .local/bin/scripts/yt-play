@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 25/04/25
+# Project: A minimal video player
+
+# Get URL from clipboard
+URL=$(wl-paste)
+
+# Check if URL is empty
+if [ -z "$URL" ]; then
+    notify-send "❌ Clipboard is empty." "Copy a YouTube URL first."
+    exit 1
+fi
+
+# Check if clipboard content looks like a URL (basic check with case)
+case "$URL" in
+    http://*|https://*)
+        # It's a valid URL, continue
+        ;;
+    *)
+        notify-send "❌ Invalid URL." "Clipboard content is not a valid link."
+        exit 1
+        ;;
+esac
+
+# Confirm action
+notify-send "🎬 Streaming Video" "$URL"
+
+# Stream the video
+yt-dlp "$URL" -o - | ffplay -

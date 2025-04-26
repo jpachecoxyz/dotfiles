@@ -585,12 +585,10 @@ The command supports previewing the currently selected theme."
 
 ;; Update my web-page
 (defun publish-my-blog ()
-  "Export all subtrees with Hugo, then run the publish blog script within Emacs and display a success message in the minibuffer."
+  "Run the publish blog script within Emacs and display a success message in the minibuffer."
   (interactive)
   (let ((commit-msg (read-string "Enter commit message: ")))
-    ;; Export all subtrees with Hugo
-    (org-hugo-export-wim-to-md :all-subtrees)
-    ;; Run the publish script
+    ;; Just run the publish script
     (let ((process (start-process-shell-command
                     "publish-blog"                       ; Process name
                     "*publish-blog-output*"              ; Output buffer
