@@ -646,7 +646,28 @@
   (setq company-dabbrev-downcase 0)
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 1)
+  (setq company-icon-size 25)
   (setq company-tooltip-align-annotations t))
+
+(setq company-tooltip-align-annotations t ; aligns annotation to the right
+      company-tooltip-limit 12 ; bigger popup window
+      company-idle-delay 0.5   ; decrease delay before autocompletion popup shows
+      company-echo-delay (if (display-graphic-p) nil 0)
+      company-minimum-prefix-length 2
+      company-require-match nil
+      company-dabbrev-ignore-case nil
+      company-dabbrev-downcase nil
+      company-dabbrev-minimum-length 10 ; Use buffer completion at 10 charcters.
+      company-global-modes '(not erc-mode message-mode help-mode
+                                 gud-mode eshell-mode shell-mode)
+      ;;company-backends '((company-capf :with company-yasnippet)
+      ;;                   (company-dabbrev-code company-keywords company-files)
+      ;;                   company-dabbrev))
+
+      ;; This puts snippet completion first.
+      company-backends '((:separate company-yasnippet company-files company-bbdb company-semantic company-cmake company-capf :with company-tempo company-clang
+									company-dabbrev-code company-gtags company-keywords
+									company-oddmuse company-dabbrev)))
 #+end_src
 * Orderles
 #+begin_src emacs-lisp :tangle jp-config.el
@@ -1990,9 +2011,9 @@ See `org-capture-templates' for more information."
   "Open `denote-directory` in Dired and filter only notes matching proper Denote filename pattern."
   (interactive)
   (dired denote-directory)
-  (dired-mark-files-regexp "^[0-9]\\{8\\}T[0-9]\\{6\\}--[^=].*\\.org$")
-  (dired-toggle-marks)
-  (dired-do-kill-lines)
+  ;; (dired-mark-files-regexp "^[0-9]\\{8\\}T[0-9]\\{6\\}--[^=].*\\.org$")
+  ;; (dired-toggle-marks)
+  ;; (dired-do-kill-lines)
   (let ((messages '(
                     "🧠🌿 Mind garden pruned: only pure ideas are blooming."
                     "🧠✨ Mind map refreshed: only clear branches remain."
@@ -2223,12 +2244,11 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 * LSP and other languages configuration and packages.
 ** Tree-sitter.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
-(use-package tree-sitter
+(use-package treesit-auto
   :ensure t
-  :hook
-  (tree-sitter-after-on . tree-sitter-hl-mode)
+  :custom (treesit-auto-install t)
   :config
-  (global-tree-sitter-mode))
+  (global-treesit-auto-mode))
 
 (use-package tree-sitter-langs
   :ensure t)
@@ -2244,10 +2264,91 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 ** Eglot.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package eglot
-  :ensure nil   ;; because it's built-in!
-  :hook (prog-mode . eglot-ensure)   ;; Automatically start eglot in programming modes
+  :defer t
+  :ensure nil
+  :bind (:map eglot-mode-map
+              ("C-c C-d" . eldoc-box-help-at-point)
+              ("<M-return>" . eglot-code-actions)
+              ("C-c C-s" . xref-find-references))
   :config
-  (setq eglot-autoshutdown t))   ;; Automatically shutdown server when buffer closes
+  ;; Tailwind LSP support
+  (add-to-list 'eglot-server-programs
+               '(((heex-ts-mode :language-id "html")
+                  (web-mode :language-id "html"))
+                 . ("tailwindcss-language-server" "--stdio")))
+
+  (with-eval-after-load 'eglot
+    (evil-define-key 'normal eglot-mode-map
+      (kbd "K") #'eldoc-box-help-at-point)))
+
+(add-hook 'python-ts-mode-hook 'eglot-ensure)
+
+(defun my/goto-definition-dumb-jump-fallback ()
+  "Go to definition using eglot when is active otherwise use dumb-jump."
+  (interactive)
+  (if (and (featurep 'eglot) (eglot-managed-p))
+      (xref-find-definitions (thing-at-point 'symbol))
+    (if (member major-mode '(emacs-lisp-mode lisp-interaction-mode))
+        (xref-find-definitions (thing-at-point 'symbol))
+      (dumb-jump-go))))
+
+(use-package eldoc-box
+  :ensure t
+  :custom
+  ;; remove child frame as soon as cursor moves to another position
+  (eldoc-box-cleanup-interval 0))
+
+(use-package flymake-shellcheck
+  :ensure t
+  :defer t
+  :if (executable-find "shellcheck")
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'bash-ts-mode-hook 'flymake-shellcheck-load))
+
+(with-eval-after-load 'reformatter
+  (reformatter-define sh-format
+    :program "shfmt"
+    :args '("-i" "2" "-")
+    :group 'sh))
+
+(use-package bash-ts-mode
+  :ensure nil
+  :mode-hydra
+  ((:title (concat (nerd-icons--icon-info-for-buffer) " Bash commands"))
+   ("Format"
+    (("f" sh-format-buffer)))))
+
+(with-eval-after-load 'reformatter
+  (reformatter-define python-ruff-format
+    :program "ruff"
+    :args '("format" "-")
+    :group 'python)
+
+  (reformatter-define python-sort-imports
+    :program "ruff"
+    :args '("check" "--fix" "--select" "I001" "-")
+    :group 'python))
+
+(setq python-shell-completion-native-enable nil)
+
+(use-package flymake-ruff
+  :ensure t)
+
+(use-package python-ts-mode
+  :ensure nil
+  :defer t
+  :mode "\\.py\\'"
+  :mode-hydra
+  ((:title (concat (nerd-icons-icon-for-buffer) " Python commands"))
+   ("Format"
+    (("f" python-ruff-format-buffer)
+     ("si" python-sort-imports-region))
+    "Testing"
+    (("tt" pythontest-test-at-point)
+     ("tf" pythontest-test-file)
+     ("ta" pythontest-test-all))))
+  :hook (python-ts-mode . flymake-ruff-load))
 #+end_src
 ** Ligature.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2279,7 +2380,7 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
   :hook (prog-mode . aggressive-indent-mode))
 #+END_SRC
 ** Python-mode
-#+BEGIN_SRC emacs-lisp :tangle jp-config.el
+#+BEGIN_SRC emacs-lisp :tangle no
 (use-package python-mode
   :ensure t
   :hook (python-mode . eglot)
@@ -2304,6 +2405,10 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
 #+END_SRC
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package flymake-ruff
+  :ensure t)
+#+end_src
 ** Yasnippets
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package yasnippet
