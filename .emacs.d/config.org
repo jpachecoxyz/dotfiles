@@ -763,6 +763,42 @@
 (eval-after-load 'auto-complete '(global-auto-complete-mode 1))
 (global-set-key [escape] 'keyboard-escape-quit)
 
+;; Eshell
+(defun jp/eshell-git-branch ()
+  "Return current Git branch name, or nil if not in a Git repo."
+  (when (and (eshell-search-path "git")
+             (vc-git-root default-directory))
+    (let ((branch (ignore-errors
+                    (car (process-lines "git" "rev-parse" "--abbrev-ref" "HEAD")))))
+      (unless (or (null branch) (string= branch "HEAD"))
+        branch))))
+
+(defun jp/eshell-prompt ()
+  "Custom Eshell prompt: (λ jpachecoxyz) in <dir> (git: <branch>)"
+  (let* ((user "jpachecoxyz")
+         (dir (abbreviate-file-name (eshell/pwd)))
+         (branch (jp/eshell-git-branch)))
+    (concat
+     (propertize (format "(λ %s)" user)
+                 'face 'font-lock-keyword-face)
+     (propertize " in " 'face 'default)
+     (propertize dir 'face 'font-lock-string-face)
+     (when branch
+       (propertize (format " (git: %s)" branch)
+                   'face 'font-lock-function-name-face))
+     "\n$ ")))
+
+(setq eshell-prompt-function #'jp/eshell-prompt)
+(setq eshell-prompt-regexp "^[^#$\n]*[$] ")
+
+(bind-keys*
+ ("C-<backspace>" . (lambda ()
+                      (interactive)
+                      (when (eq major-mode 'eshell-mode)
+                        (goto-char (point-max))
+                        (insert "clear 1")
+                        (eshell-send-input)))))
+
 (delete-selection-mode 1)    ;; You can select text and delete it by typing.
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
 (electric-pair-mode 1)       ;; Turns on automatic parens pairing
@@ -2061,19 +2097,16 @@ See `org-capture-templates' for more information."
     (when (and filename (file-exists-p filename))
       (insert (format "[[%s]]" (expand-file-name filename))))))
 
-(defun denote-dired-filter (regex)
-  "Open denote-sequence-dired and filter files by REGEX.
-Automatically marks files matching REGEX, inverts marks, then operates on them."
-  (interactive "sFilter files by REGEXP: ")
-  (denote-sequence-dired)
-  (let ((buffer (car (seq-filter (lambda (b) 
-                                   (string-match "\\*Denote Sequences" (buffer-name b)))
-                                 (buffer-list)))))
-    (when buffer
-      (with-current-buffer buffer
-        (dired-mark-files-regexp regex)
-        (dired-toggle-marks)
-        (dired-do-kill-lines)))))
+(defun denote-dired-filter ()
+  "Mark files by regex, toggle marks, and kill selected files.
+Follows the sequence: % m (regex), t, K."
+  (interactive)
+  (unless (derived-mode-p 'dired-mode)
+    (user-error "Not in a Dired buffer"))
+  (message "Enter regex to mark files: ")
+  (call-interactively 'dired-mark-files-regexp) ; % m (user enters regex)
+  (dired-toggle-marks)                         ; t (toggle marks)
+  (dired-do-kill-lines))                       ; K (kill marked files)
 
 ;; (defun my/org-next-denote-link ()
 ;;   "Jump to the next denote: link in org-mode."
@@ -2279,9 +2312,11 @@ Automatically marks files matching REGEX, inverts marks, then operates on them."
 
   (with-eval-after-load 'eglot
     (evil-define-key 'normal eglot-mode-map
-      (kbd "K") #'eldoc-box-help-at-point)))
+      (kbd "K") #'eldoc-box-help-at-point))
+(setf (alist-get 'elixir-ts-mode eglot-server-programs) `(,(if (executable-find "lexical") "lexical" (expand-file-name "~/.local/src/lexical/bin/start_lexical.sh")))))
 
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
+(add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
 (defun my/goto-definition-dumb-jump-fallback ()
   "Go to definition using eglot when is active otherwise use dumb-jump."
@@ -2567,9 +2602,8 @@ folder, otherwise delete a word"
 	      (org-log "\\*Org Note\\*")
 	      (warnings "\\*Warnings\\*")
 	      (magit "Magit")
-	      (vterm "\\*vterm\\*")
 		  (ellama "\\(.*(zephyr)\\.org\\)")
-		  (dired "Dired by name")
+		  ;; (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
                           :align above
@@ -2579,8 +2613,8 @@ folder, otherwise delete a word"
                 :align below
                 :size 0.3)
         (,org-log :regexp t
-                :align below
-                :size 0.3)
+                  :align below
+                  :size 0.3)
         (occur-mode :select t
 					:align right
 					:size 0.3)
@@ -2596,9 +2630,6 @@ folder, otherwise delete a word"
         (help-mode :select t
 				   :align below
 				   :size 0.5)
-        (vterm-mode :select t
-					:align below
-					:size 0.5)
 		(,vcs :regexp t
               :align above
               :size 0.15
@@ -2609,9 +2640,6 @@ folder, otherwise delete a word"
 		(,magit :regexp t 
 				:same t
 				:select t)
-		(peep-dired-mode :select t
-						 :size 0.6
-						 :align below)
 		(,roam :regexp t 
 			   :same t
 			   :select t))))
@@ -2622,15 +2650,13 @@ folder, otherwise delete a word"
 ** Popper.
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package popper
-  :bind (("C-`"   . popper-toggle-latest)
+  :bind (("C-`"   . popper-toggle)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type)) ;; Optional keybindings
   :custom
   (popper-reference-buffers
    '("\\*Async Shell Command\\*"
-     dired-mode          ;; Treat Dired buffers as popups
      help-mode
-	 vterm-mode
      compilation-mode
 	 "\\(.*(zephyr)\\.org\\)"
      "\\*Warnings\\*"
@@ -2906,7 +2932,7 @@ folder, otherwise delete a word"
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
 			:wk "Open web org file.")
 	"o L" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
-	"o t" '(shell-pop :wk "Toggle terminal")
+	"o t" '(toggle-eshell-buffer :wk "Toggle terminal")
 	"o s" '(toggle-scratch-buffer :wk "Toggle scratch buffer")
 	"o e" '(toggle-org-buffer :wk "Toggle org buffer")
 	"o F" '(select-frame-by-name :wk "Select frame by name"))

@@ -1,11 +1,12 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
+    - /home/javier/.local/src/logman
     - /home/javier/docs
     - /home/javier/webdev/jpachecoxyz
     - /home/javier/.local/src/void-packages
 startuppopupversion: 5
-lastversion: 0.48.0
+lastversion: 0.49.0
 customcommandshistory:
     - q
 hidecommandlog: false

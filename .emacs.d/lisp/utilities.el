@@ -336,11 +336,15 @@ clipboard"
 
 ;; Toggle *eshell* buffer.
 (defun toggle-eshell-buffer ()
-  "Toggle the *eshell* buffer"
+  "Toggle the visibility of the *eshell* buffer.
+If already in the buffer, bury it. Otherwise, switch to it or launch Eshell."
   (interactive)
-  (if (string= (buffer-name) "*eshell*")
-	  (bury-buffer)
-	(switch-to-buffer (get-buffer-create "*eshell*"))))
+  (let ((buf (get-buffer "*eshell*")))
+    (if (string= (buffer-name) "*eshell*")
+        (bury-buffer)
+      (if buf
+          (switch-to-buffer buf)
+        (eshell)))))
 
 (defun my-show-doc-or-describe-symbol ()
   "Show LSP UI doc if LSP is active, otherwise describe symbol at point."

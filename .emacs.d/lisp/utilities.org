@@ -375,11 +375,15 @@ clipboard"
 
 ;; Toggle *eshell* buffer.
 (defun toggle-eshell-buffer ()
-  "Toggle the *eshell* buffer"
+  "Toggle the visibility of the *eshell* buffer.
+If already in the buffer, bury it. Otherwise, switch to it or launch Eshell."
   (interactive)
-  (if (string= (buffer-name) "*eshell*")
-	  (bury-buffer)
-	(switch-to-buffer (get-buffer-create "*eshell*"))))
+  (let ((buf (get-buffer "*eshell*")))
+    (if (string= (buffer-name) "*eshell*")
+        (bury-buffer)
+      (if buf
+          (switch-to-buffer buf)
+        (eshell)))))
 #+END_SRC
 * Doc at point.
 #+BEGIN_SRC emacs-lisp
