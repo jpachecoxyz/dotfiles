@@ -434,6 +434,20 @@
       (add-to-list 'evil-collection-mode-list 'help) ;; evilify help mode
       (evil-collection-init))
 #+END_SRC
+** Evil-commenter.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package evil-nerd-commenter
+  :ensure t
+  :after evil)
+#+end_src
+** Evil-numbers.
+#+begin_src emacs-lisp :tangle jp-config.el
+(use-package evil-numbers
+  :ensure t
+  :after evil)
+(define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
+#+end_src
 ** Evil-surround.
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
 (use-package evil-surround
@@ -647,7 +661,18 @@
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 1)
   (setq company-icon-size 25)
-  (setq company-tooltip-align-annotations t))
+  (setq company-tooltip-align-annotations t)
+  
+  ;; Use TAB to select completion
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  
+  ;; Use C-j and C-k for navigation
+  (define-key company-active-map (kbd "C-j") 'company-select-next)
+  (define-key company-active-map (kbd "C-k") 'company-select-previous)
+  
+  ;; Allow TAB to complete even when the selection isn't explicitly highlighted
+  (setq company-selection-wrap-around t))
 
 (setq company-tooltip-align-annotations t ; aligns annotation to the right
       company-tooltip-limit 12 ; bigger popup window
@@ -666,8 +691,8 @@
 
       ;; This puts snippet completion first.
       company-backends '((:separate company-yasnippet company-files company-bbdb company-semantic company-cmake company-capf :with company-tempo company-clang
-									company-dabbrev-code company-gtags company-keywords
-									company-oddmuse company-dabbrev)))
+                                    company-dabbrev-code company-gtags company-keywords
+                                    company-oddmuse company-dabbrev)))
 #+end_src
 * Orderles
 #+begin_src emacs-lisp :tangle jp-config.el
@@ -1450,6 +1475,7 @@ rainbow" :toggle t)
 
 (setq org-agenda-start-on-weekday nil)
 (setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-inhibit-startup t)
 
 (setq org-startup-folded 'overview)
 (setq org-adapt-indentation nil)
@@ -1457,7 +1483,7 @@ rainbow" :toggle t)
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " [...]")
+(setq org-ellipsis " ⤵")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
 	  '(;;Places
@@ -1479,19 +1505,21 @@ rainbow" :toggle t)
 		("email" . ?e)
 		("crypt" . ?c)
 		))
-(setq org-agenda-files
-      '(
-		;; "~/public/org/agenda/personal.org"
-        ;; "~/public/org/agenda/training.org"
-        "~/docs/org/agenda/bdays.org"
-        "~/docs/org/agenda/important_dates.org"
-        ;; "~/public/org/agenda/contacts.org"
-        ;; "~/public/org/agenda/work.org"
-		"~/docs/org/agenda/agenda.org"
-		))
-(setq org-todo-keywords
-    (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
-	    (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
+(with-eval-after-load 'org
+  (setq org-agenda-files
+		'(
+		  ;; "~/public/org/agenda/personal.org"
+          ;; "~/public/org/agenda/training.org"
+          "~/docs/org/agenda/bdays.org"
+          "~/docs/org/agenda/important_dates.org"
+          ;; "~/public/org/agenda/contacts.org"
+          ;; "~/public/org/agenda/work.org"
+		  "~/docs/org/agenda/agenda.org"
+		  )))
+
+  (setq org-todo-keywords
+		(quote ((sequence "TODO" "DOING" "|" "DONE(d)")
+				(sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 ;; TODO colors
 (setq org-todo-keyword-faces
     '(
@@ -2317,6 +2345,7 @@ Follows the sequence: % m (regex), t, K."
 
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
+(add-hook 'rust-mode-hook 'eglot-ensure)
 
 (defun my/goto-definition-dumb-jump-fallback ()
   "Go to definition using eglot when is active otherwise use dumb-jump."
@@ -2443,6 +2472,92 @@ Follows the sequence: % m (regex), t, K."
 #+begin_src emacs-lisp :tangle jp-config.el
 (use-package flymake-ruff
   :ensure t)
+#+end_src
+** Uv-activate.
+#+begin_src emacs-lisp :tangle jp-config.el
+(defun uv-activate ()
+  "Activate Python environment managed by uv based on current project directory.
+Looks for .venv directory in project root and activates the Python interpreter."
+  (interactive)
+  (let* ((project-root (project-root (project-current t)))
+         (venv-path (expand-file-name ".venv" project-root))
+         (python-path (expand-file-name
+                       (if (eq system-type 'windows-nt)
+                           "Scripts/python.exe"
+                         "bin/python")
+                       venv-path)))
+    (if (file-exists-p python-path)
+        (progn
+          ;; Set Python interpreter path
+          (setq python-shell-interpreter python-path)
+
+          ;; Update exec-path to include the venv's bin directory
+          (let ((venv-bin-dir (file-name-directory python-path)))
+            (setq exec-path (cons venv-bin-dir
+                                  (remove venv-bin-dir exec-path))))
+
+          ;; Update PATH environment variable
+          (setenv "PATH" (concat (file-name-directory python-path)
+                                 path-separator
+                                 (getenv "PATH")))
+
+          ;; Update VIRTUAL_ENV environment variable
+          (setenv "VIRTUAL_ENV" venv-path)
+
+          ;; Remove PYTHONHOME if it exists
+          (setenv "PYTHONHOME" nil)
+
+          (message "Activated UV Python environment at %s" venv-path))
+      (error "No UV Python environment found in %s" project-root))))
+#+end_src
+** Rust-mode
+#+begin_src emacs-lisp :tangle jp-config
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . eglot))
+#+end_src
+** Common-lisp.
+#+begin_src emacs-lisp :tangle jp-config.el
+(dolist (package '(slime paredit rainbow-delimiters))
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;; Configure SBCL as the Lisp program for SLIME.
+(add-to-list 'exec-path "/usr/bin")
+(setq inferior-lisp-program "sbcl")
+
+;; Enable Paredit.
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
+(add-hook 'ielm-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+
+(require 'paredit)
+(defun override-slime-del-key ()
+  (define-key slime-repl-mode-map
+			  (read-kbd-macro paredit-backward-delete-key) nil))
+(add-hook 'slime-repl-mode-hook 'override-slime-del-key)
+
+;; Enable Rainbow Delimiters.
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'ielm-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-interaction-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+
+;; Customize Rainbow Delimiters.
+(require 'rainbow-delimiters)
+(set-face-foreground 'rainbow-delimiters-depth-1-face "#c66")  ; red
+(set-face-foreground 'rainbow-delimiters-depth-2-face "#6c6")  ; green
+(set-face-foreground 'rainbow-delimiters-depth-3-face "#69f")  ; blue
+(set-face-foreground 'rainbow-delimiters-depth-4-face "#cc6")  ; yellow
+(set-face-foreground 'rainbow-delimiters-depth-5-face "#6cc")  ; cyan
+(set-face-foreground 'rainbow-delimiters-depth-6-face "#c6c")  ; magenta
+(set-face-foreground 'rainbow-delimiters-depth-7-face "#ccc")  ; light gray
+(set-face-foreground 'rainbow-delimiters-depth-8-face "#999")  ; medium gray
+(set-face-foreground 'rainbow-delimiters-depth-9-face "#666")  ; dark gray
 #+end_src
 ** Yasnippets
 #+BEGIN_SRC emacs-lisp :tangle jp-config.el
@@ -2761,6 +2876,12 @@ folder, otherwise delete a word"
     "." '(find-file :wk "Find file")
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
+
+  (evil-define-key '(normal visual) 'global
+	(kbd "g c c") #'evilnc-comment-or-uncomment-lines)
+
+  (evil-define-key '(visual) 'global
+	(kbd "g c") #'evilnc-comment-or-uncomment-lines)
 
   (user/leader-keys
 	"a" '(:ignore t :wk "Ellama A.I.")
@@ -3132,10 +3253,10 @@ folder, otherwise delete a word"
   ;; Selecciona una imagen aleatoria de la lista
   (setq dashboard-startup-banner (nth (random (length my/dashboard-images)) my/dashboard-images))) 
 
-;; (setq dashboard-page-separator "\n\f\n")
+(setq dashboard-page-separator "\f\n")
 (setq dashboard-items '((recents  . 5)
 						(bookmarks . 5)
-						(agenda . 5)
+						(projects . 5)
 						))
 
 (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))

@@ -1,8 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /home/javier/.local/src/logman
     - /home/javier/docs
+    - /home/javier/.local/src/logman
     - /home/javier/webdev/jpachecoxyz
     - /home/javier/.local/src/void-packages
 startuppopupversion: 5
