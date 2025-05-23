@@ -1,65 +1,70 @@
-;; Load theme first, so our eyes keep safe at startup...
-(add-to-list 'load-path "~/.emacs.d/lisp/jp-themes")
+;;; early-init.el --- Emacs Solo (no external packages) Configuration --- Early Init  -*- lexical-binding: t; -*-
+;;
+;; Author: Rahul Martim Juliato
+;; URL: https://github.com/LionyxML/emacs-solo
+;; Package-Requires: ((emacs "30.1"))
+;; Keywords: config
+;; SPDX-License-Identifier: GPL-3.0-or-later
+;;
 
-(require 'jp-themes)
+;;; Commentary:
+;;  Early init configuration for Emacs Solo
+;;
 
-(defun jp/toggle-theme ()
-  "Toggle between the `jp-eagle` and `jp-autumn` themes."
-  (interactive)
-  (let ((current-theme (car custom-enabled-themes)))
-    (if (eq current-theme 'jp-eagle)
-        (progn
-          ;; (disable-theme 'jp-eagle)
-          (jp-themes-select 'miasma)
-          (message "Dark theme loaded."))
-      (progn
-        (jp-themes-select 'jp-eagle)
-        (message "Light theme loaded.")))))
+;;; Code:
 
-(mapc #'disable-theme custom-enabled-themes)
-;; Load the theme of choice:
-;; (load-theme 'jp-darkvenom :no-confirm)
-;; (load-theme 'jp-gruvby :no-confirm)
-;; (load-theme 'jp-dream :no-confirm)
-(load-theme 'miasma :no-confirm)
-;; (load-theme 'jp-elea-dark :no-confirm)
-;; (load-theme 'jp-owl :no-confirm)
-(global-set-key (kbd "<f10>") 'jp/toggle-theme)
+;;; -------------------- PERFORMANCE & HACKS
+;; HACK: inscrease startup speed
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6
+      vc-handled-backends '(Git))
 
-;; Disable GUI when foundit
-(when (fboundp 'menu-bar-mode)
-  (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-(when (fboundp 'horizontal-scroll-bar-mode)
-  (horizontal-scroll-bar-mode -1))
 
-;; Initial message
-(setq initial-scratch-message
-	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
-;; --
-;; It’s difficult to be rigorous about whether a machine really ’knows’, ’thinks’, etc.,
-;; because we’re hard put to define these things. We understand human mental processes
-;; only slightly better than a fish understands swimming.
-;; --
-;; <Jhon McCarthy>\n\n
-;;; Code:\n")
+;; HACK: avoid being flashbanged
+(defun emacs-solo/avoid-initial-flash-of-light ()
+  "Avoid flash of light when starting Emacs."
+  (setq mode-line-format nil)
+  ;; These colors should match your selected theme for maximum effect
+  (set-face-attribute 'default nil :background "#222222" :foreground "#222222"))
 
-;; (setq initial-scratch-message
-;; 	  ";;; -*- Calling emacs an editor is like calling the Earth a hunk of dirt.  -*- lexical-binding: t; -*-
-;; ;; --
-;; ;; There are two ways to construct a software design:
-;; ;; One is to make it so simple that it is obvious that there are no deficiencies,
-;; ;; and the other is to make it so complicated that there are no obvious deficiencies.
-;; ;; --
-;; ;; <C. A. R. Hoare>\n\n
-;; ;;; Code:\n")
+(defun emacs-solo/reset-default-foreground ()
+  "Reset the foreground color of the default face."
+    (set-face-attribute 'default nil :foreground (face-foreground 'default)))
 
-;; Initialize package sources
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-;; (require 'nano-splash)	;; Splash screen
-;; (require 'buffer-move)   	;; Buffer-move for better window management
-(require 'utilities)		;; Custom scripts
-;; (require 'term-toggle)	;; toggle-term
+(emacs-solo/avoid-initial-flash-of-light)                           ; HACK start
+(add-hook 'after-init-hook #'emacs-solo/reset-default-foreground)   ; HACK undo
+
+
+;; Always start Emacs and new frames maximized
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+
+;; Better Window Management handling
+(setq frame-resize-pixelwise t
+      frame-inhibit-implied-resize t
+      frame-title-format
+      '(:eval
+        (let ((project (project-current)))
+          (if project
+              (concat "Emacs - [p] "
+                      (file-name-nondirectory (directory-file-name (project-root project))))
+              (concat "Emacs - " (buffer-name))))))
+
+(setq inhibit-compacting-font-caches t)
+
+
+;; Disables unused UI Elements
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'tooltip-mode) (tooltip-mode -1))
+
+
+;; Avoid raising the *Messages* buffer if anything is still without
+;; lexical bindings
+(setq warning-minimum-level :error)
+(setq warning-suppress-types '((lexical-binding)))
+
+
+(provide 'early-init)
+;;; early-init.el ends here

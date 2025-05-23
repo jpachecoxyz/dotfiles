@@ -144,19 +144,19 @@
 ;; Fonts settings.
 
 (set-face-attribute 'default nil
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
                     :height 130
                     :weight 'regular)
 
 ;; Set italic font
 (set-face-attribute 'italic nil
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
                     :height 130
                     :slant 'italic)
 
 ;; Set bold font
 (set-face-attribute 'bold nil
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
                     :height 130
                     :weight 'bold)
 
@@ -167,25 +167,25 @@
 
 ;; Set font for comments to be italic
 (set-face-attribute 'font-lock-comment-face nil
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
                     :slant 'italic)
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
                     ;; :family "IBM Plex Mono"
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
                     :slant 'italic)
 
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
                     ;; :family "IBM Plex Mono"
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
                     ;; :family "IBM Plex Mono"
-                    :family "Fira Code"
+                    :family "JetBrains Mono Nerd Font"
 					:slant 'italic
                     :height 130)
 

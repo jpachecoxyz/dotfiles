@@ -1,4 +1,4 @@
-% Created 2025-04-12 Sat 21:49
+% Created 2025-05-15 Thu 22:26
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -29,7 +29,7 @@
 
 
 \section{early-init.el}
-\label{sec:org991db2a}
+\label{sec:org2c88063}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; Load theme first, so our eyes keep safe at startup...
 (add-to-list 'load-path "~/.emacs.d/lisp/jp-themes")
@@ -92,14 +92,14 @@
 
 ;; Initialize package sources
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(require 'nano-splash)	;; Splash screen
-(require 'buffer-move)   	;; Buffer-move for better window management
+;; (require 'nano-splash)	;; Splash screen
+;; (require 'buffer-move)   	;; Buffer-move for better window management
 (require 'utilities)		;; Custom scripts
-(require 'term-toggle)	;; toggle-term
+;; (require 'term-toggle)	;; toggle-term
 
 \end{minted}
 \section{init.el}
-\label{sec:orge898442}
+\label{sec:orgd6acb58}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (setq byte-compile-warnings '(cl-functions))
 (defun my-generate-tab-stops (&optional width max)
@@ -117,14 +117,7 @@
 (setq-default tab-width 4) ; Assuming you want your tabs to be four spaces wide
 (defvaralias 'c-basic-offset 'tab-width)
 
-(setq visible-bell 1)
-(setq-default current-language-environment "English")
-(setq keyboard-coding-system 'utf-8)
-
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(setq visible-bell t)
 
 (setq-default truncate-lines t)
 (setq-default fill-column 80)
@@ -177,19 +170,19 @@
 ;; Fonts settings.
 
 (set-face-attribute 'default nil
-                    :family "Iosevka"
+                    :family "Fira Code"
                     :height 130
                     :weight 'regular)
 
 ;; Set italic font
 (set-face-attribute 'italic nil
-                    :family "Iosevka"
+                    :family "Fira Code"
                     :height 130
                     :slant 'italic)
 
 ;; Set bold font
 (set-face-attribute 'bold nil
-                    :family "Iosevka"
+                    :family "Fira Code"
                     :height 130
                     :weight 'bold)
 
@@ -200,22 +193,25 @@
 
 ;; Set font for comments to be italic
 (set-face-attribute 'font-lock-comment-face nil
-                    :family "IBM Plex Mono"
+                    :family "Fira Code"
                     :slant 'italic)
 
 ;; Optionally, also set italic for doc comments
 (set-face-attribute 'font-lock-doc-face nil
-                    :family "IBM Plex Mono"
+                    ;; :family "IBM Plex Mono"
+                    :family "Fira Code"
                     :slant 'italic)
 
 ;; Set monospaced font for code and programming modes
 (set-face-attribute 'org-block nil
-                    :family "IBM Plex Mono"
+                    ;; :family "IBM Plex Mono"
+                    :family "Fira Code"
                     :height 120)
 
 ;; Optionally, set the code block font (Org-mode source blocks, markdown, etc.)
 (set-face-attribute 'org-verbatim nil
-                    :family "IBM Plex Mono"
+                    ;; :family "IBM Plex Mono"
+                    :family "Fira Code"
                     :slant 'italic
                     :height 130)
 
@@ -259,7 +255,7 @@
  )
 \end{minted}
 \section{Package Manager and some extra files.}
-\label{sec:org75858c3}
+\label{sec:orgc54ed1a}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; ;; Initialize package sources
 ;; (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -302,7 +298,7 @@
   :config (setq async-bytecomp-package-mode 1))
 \end{minted}
 \section{Keycast.}
-\label{sec:orge661284}
+\label{sec:org38efc80}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package keycast
   :hook (after-init . keycast-mode)
@@ -324,7 +320,7 @@
   (add-to-list 'global-mode-string '("" keycast-mode-line)))
 \end{minted}
 \section{Custom modeline.}
-\label{sec:org00aa86b}
+\label{sec:org75b348e}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; Load modeline
 ;; (require 'custom-modeline)
@@ -341,16 +337,16 @@
   :ensure t
   :hook (after-init . doom-modeline-mode))
 
-(with-eval-after-load 'doom-modeline
-  (doom-modeline-def-segment lsp
-    "Displays LSP server status."
-    (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
-      (concat
-       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
-       (propertize (nerd-icons-mdicon "nf-md-repeat")
-                   'face `(:family ,(nerd-icons-mdicon-family) :inherit))
-                   ;; 'display '(raise -0.1))
-       (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
+;; (with-eval-after-load 'doom-modeline
+;;   (doom-modeline-def-segment lsp
+;;     "Displays LSP server status."
+;;     (when (and (bound-and-true-p lsp-mode) (lsp-workspaces))
+;;       (concat
+;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))
+;;        (propertize (nerd-icons-mdicon "nf-md-repeat")
+;;                    'face `(:family ,(nerd-icons-mdicon-family) :inherit))
+;;                    ;; 'display '(raise -0.1))
+;;        (propertize (doom-modeline-spc) 'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive))))))
 
 (use-package hide-mode-line
   :ensure t
@@ -382,28 +378,28 @@
 (setq hl-line-sticky-flag t)
 ;; (global-hl-line-mode 1)
 
-(use-package nyan-mode
-  :ensure t
-  :init (nyan-mode))
+;; (use-package nyan-mode
+;;   :ensure t
+;;   :init (nyan-mode))
 
-(defun my/toggle-nyan-mode ()
-  "Enable or disable `nyan-mode` depending on whether the buffer needs scrolling."
-  (if (>= (line-number-at-pos (point-max)) (window-body-height))
-      (nyan-mode 1)  ;; Enable nyan-mode if the buffer has more lines than the window height
-    (nyan-mode -1))) ;; Disable nyan-mode otherwise
+;; (defun my/toggle-nyan-mode ()
+;;   "Enable or disable `nyan-mode` depending on whether the buffer needs scrolling."
+;;   (if (>= (line-number-at-pos (point-max)) (window-body-height))
+;;       (nyan-mode 1)  ;; Enable nyan-mode if the buffer has more lines than the window height
+;;     (nyan-mode -1))) ;; Disable nyan-mode otherwise
 
-(defun my/setup-nyan-mode-toggle ()
-  "Set up automatic toggling of `nyan-mode`."
-  (add-hook 'window-size-change-functions #'my/toggle-nyan-mode)
-  (add-hook 'post-command-hook #'my/toggle-nyan-mode))
+;; (defun my/setup-nyan-mode-toggle ()
+;;   "Set up automatic toggling of `nyan-mode`."
+;;   (add-hook 'window-size-change-functions #'my/toggle-nyan-mode)
+;;   (add-hook 'post-command-hook #'my/toggle-nyan-mode))
 
-(my/setup-nyan-mode-toggle)
+;; (my/setup-nyan-mode-toggle)
 
 (use-package diminish
   :ensure t)
 \end{minted}
 \section{Icons/Eyecandy Stuff.}
-\label{sec:orga54fbe0}
+\label{sec:org48f8bdf}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{elisp}
 (use-package all-the-icons-completion
   :ensure t
@@ -419,16 +415,16 @@
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
-(use-package pretty-mode
-  :defer t 
-  :ensure t
-  :hook
-  (prog-mode . pretty-mode))
+ ;; (use-package pretty-mode
+ ;;   :defer t 
+ ;;   :ensure t
+ ;;   :hook
+ ;;   (prog-mode . pretty-mode))
 \end{minted}
 \section{Evil-mode.}
-\label{sec:orgc5e8708}
+\label{sec:orgeba4dad}
 \subsection{Evil.}
-\label{sec:org0820642}
+\label{sec:orgfd75dc1}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
@@ -439,9 +435,24 @@
   evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
   :config
   (evil-mode))
+
+(defun my/evil-open-at-point ()
+  "Open link at point in org-mode or run `dashboard-return` in dashboard-mode. Do nothing elsewhere."
+  (interactive)
+  (cond
+   ((eq major-mode 'org-mode)
+    (org-open-at-point))
+
+   ((eq major-mode 'dashboard-mode)
+    (when (fboundp 'dashboard-return)
+      (dashboard-return)))
+
+   (t nil))) ;; do nothing
+
+(define-key evil-normal-state-map (kbd "RET") #'my/evil-open-at-point)
 \end{minted}
 \subsection{Evil-collection.}
-\label{sec:orgd12fb02}
+\label{sec:org6274907}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package evil-collection
   :after evil
@@ -449,8 +460,24 @@
       (add-to-list 'evil-collection-mode-list 'help) ;; evilify help mode
       (evil-collection-init))
 \end{minted}
+\subsection{Evil-commenter.}
+\label{sec:org007006c}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package evil-nerd-commenter
+  :ensure t
+  :after evil)
+\end{minted}
+\subsection{Evil-numbers.}
+\label{sec:orgf4260f3}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package evil-numbers
+  :ensure t
+  :after evil)
+(define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-s") 'evil-numbers/dec-at-pt)
+\end{minted}
 \subsection{Evil-surround.}
-\label{sec:org7566764}
+\label{sec:org21c8c28}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package evil-surround
   :ensure t
@@ -465,7 +492,7 @@
   (define-key evil-motion-state-map (kbd "TAB") nil))
 \end{minted}
 \subsection{Evil-Goggles.}
-\label{sec:org0483b87}
+\label{sec:org8e4b9a3}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package evil-goggles
   :ensure t
@@ -475,7 +502,7 @@
   (evil-goggles-use-diff-faces))
 \end{minted}
 \subsection{Evil-owl.}
-\label{sec:org46ae9ba}
+\label{sec:orgddccdf0}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package evil-owl
   :config
@@ -485,7 +512,7 @@
   (evil-owl-mode))
 \end{minted}
 \subsection{Evil-terminal-changer}
-\label{sec:orgc136753}
+\label{sec:org27bb823}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package evil-terminal-cursor-changer
   :ensure t)
@@ -496,7 +523,7 @@
 (setq evil-emacs-state-cursor  'hbar) ; _
 \end{minted}
 \section{keychord.}
-\label{sec:org7ded1cc}
+\label{sec:org77499e7}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package key-chord
   :ensure t
@@ -514,7 +541,7 @@
   (setq key-chord-two-keys-delay 0.5))
 \end{minted}
 \section{Corfu.}
-\label{sec:orga3c1951}
+\label{sec:org28cb769}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package corfu
   ;; TAB-and-Go customizations
@@ -657,7 +684,54 @@
 ;; Hook the function to major modes where you want this behavior
 (add-hook 'prog-mode-hook #'my-prioritize-yasnippet-capf)
 (add-hook 'text-mode-hook #'my-prioritize-yasnippet-capf)
+\end{minted}
+\section{Company.}
+\label{sec:orgd8ae2c2}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package company
+  :ensure t
+  :hook (prog-mode . company-mode)   ;; Only activate in prog-mode
+  :config
+  (setq company-dabbrev-downcase 0)
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
+  (setq company-icon-size 25)
+  (setq company-tooltip-align-annotations t)
 
+  ;; Use TAB to select completion
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection)
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+
+  ;; Use C-j and C-k for navigation
+  (define-key company-active-map (kbd "C-j") 'company-select-next)
+  (define-key company-active-map (kbd "C-k") 'company-select-previous)
+
+  ;; Allow TAB to complete even when the selection isn't explicitly highlighted
+  (setq company-selection-wrap-around t))
+
+(setq company-tooltip-align-annotations t ; aligns annotation to the right
+      company-tooltip-limit 12 ; bigger popup window
+      company-idle-delay 0.5   ; decrease delay before autocompletion popup shows
+      company-echo-delay (if (display-graphic-p) nil 0)
+      company-minimum-prefix-length 2
+      company-require-match nil
+      company-dabbrev-ignore-case nil
+      company-dabbrev-downcase nil
+      company-dabbrev-minimum-length 10 ; Use buffer completion at 10 charcters.
+      company-global-modes '(not erc-mode message-mode help-mode
+                                 gud-mode eshell-mode shell-mode)
+      ;;company-backends '((company-capf :with company-yasnippet)
+      ;;                   (company-dabbrev-code company-keywords company-files)
+      ;;                   company-dabbrev))
+
+      ;; This puts snippet completion first.
+      company-backends '((:separate company-yasnippet company-files company-bbdb company-semantic company-cmake company-capf :with company-tempo company-clang
+                                    company-dabbrev-code company-gtags company-keywords
+                                    company-oddmuse company-dabbrev)))
+\end{minted}
+\section{Orderles}
+\label{sec:org171644b}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; Ensure Corfu appears in the right position
 (use-package orderless
   :ensure t
@@ -665,13 +739,13 @@
   (setq completion-styles '(orderless basic)))
 \end{minted}
 \section{Posframe:}
-\label{sec:org6464ee6}
+\label{sec:org0570f6d}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package posframe
   :ensure t)
 \end{minted}
 \section{General settings.}
-\label{sec:orgec65004}
+\label{sec:orgfc2fbbf}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (setq default-directory "~/")
 ;; Setting RETURN key in org-mode to follow links
@@ -741,6 +815,7 @@
 (setq-default fill-column 80)
 ;; Enable display-fill-column-indicator
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode) 
+(add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
 
 ;;Doom insert item below
 (require 'bind-key)
@@ -750,6 +825,42 @@
 (setq confirm-kill-emacs nil)
 (eval-after-load 'auto-complete '(global-auto-complete-mode 1))
 (global-set-key [escape] 'keyboard-escape-quit)
+
+;; Eshell
+(defun jp/eshell-git-branch ()
+  "Return current Git branch name, or nil if not in a Git repo."
+  (when (and (eshell-search-path "git")
+             (vc-git-root default-directory))
+    (let ((branch (ignore-errors
+                    (car (process-lines "git" "rev-parse" "--abbrev-ref" "HEAD")))))
+      (unless (or (null branch) (string= branch "HEAD"))
+        branch))))
+
+(defun jp/eshell-prompt ()
+  "Custom Eshell prompt: (λ jpachecoxyz) in <dir> (git: <branch>)"
+  (let* ((user "jpachecoxyz")
+         (dir (abbreviate-file-name (eshell/pwd)))
+         (branch (jp/eshell-git-branch)))
+    (concat
+     (propertize (format "(λ %s)" user)
+                 'face 'font-lock-keyword-face)
+     (propertize " in " 'face 'default)
+     (propertize dir 'face 'font-lock-string-face)
+     (when branch
+       (propertize (format " (git: %s)" branch)
+                   'face 'font-lock-function-name-face))
+     "\n$ ")))
+
+(setq eshell-prompt-function #'jp/eshell-prompt)
+(setq eshell-prompt-regexp "^[^#$\n]*[$] ")
+
+(bind-keys*
+ ("C-<backspace>" . (lambda ()
+                      (interactive)
+                      (when (eq major-mode 'eshell-mode)
+                        (goto-char (point-max))
+                        (insert "clear 1")
+                        (eshell-send-input)))))
 
 (delete-selection-mode 1)    ;; You can select text and delete it by typing.
 (electric-indent-mode -1)    ;; Turn off the weird indenting that Emacs does by default.
@@ -768,6 +879,7 @@
                 dired-mode-hook
                 vterm-mode-hook
                 help-mode-hook
+                nov-mode-hook
                 org-mode-hook
                 telega-chat-mode-hook
                 telega-root-mode-hook
@@ -808,9 +920,7 @@
                                ("#+BEGIN_SRC" . ?λ)
                                ("#+begin_src" . ?λ)
                                ("#+END_SRC" . ?⬚)
-                               ("#+end_src" . ?⬚)
-                               ("#+TITLE: " . "")
-                               ("#+title: " . "")))
+                               ("#+end_src" . ?⬚)))
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 (add-hook 'org-mode-hook 'prettify-symbols-mode)
 
@@ -838,13 +948,13 @@
                                      (dedicated . t)))
 \end{minted}
 \section{Alias.}
-\label{sec:orgf67cf63}
+\label{sec:orgea6ce20}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (defalias 'lp 'list-packages)
 (defalias 'pi 'package-install)
 \end{minted}
 \section{Latex stuff.}
-\label{sec:org69b02bd}
+\label{sec:orgc2397b1}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; LaTeX Classes
 (with-eval-after-load 'ox-latex
@@ -938,32 +1048,31 @@
         ))		;; color and level of transparency.
 \end{minted}
 \subsection{References to latex stuff:}
-\label{sec:org7ade5cd}
+\label{sec:orgc0f55bf}
 \begin{itemize}
 \item \href{https://www.overleaf.com/learn/latex/Using\_colors\_in\_LaTeX}{Colors in latex.}
 \item \href{https://orgmode.org/manual/Tables-in-LaTeX-export.html}{Tables formating in org files}
 \end{itemize}
 \section{Olivetti}
-\label{sec:org79116c1}
+\label{sec:orgddfdfd0}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package olivetti
   :ensure t
-  :defer t
   :custom
-  (olivetti-body-width 0.7))
+  (olivetti-body-width 0.6))
   ;; :hook (org-mode . olivetti-mode))
 
 (global-set-key (kbd "<f1>") 'olivetti-mode)
 \end{minted}
 \section{Undohist.}
-\label{sec:orgae4e5f6}
+\label{sec:orgb7d6b16}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package undohist
   :ensure t)
 (undohist-initialize)
 \end{minted}
 \section{Git.}
-\label{sec:org20446c7}
+\label{sec:org1feb1d7}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package git-timemachine
   :defer t
@@ -973,13 +1082,13 @@
   (evil-define-key 'normal git-timemachine-mode-map (kbd "C-k") 'git-timemachine-show-next-revision))
 \end{minted}
 \subsection{Magit.}
-\label{sec:org8a07c8b}
+\label{sec:org27177bb}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package magit
   :defer t)
 \end{minted}
 \subsection{Vundo.}
-\label{sec:orgd638b4c}
+\label{sec:orgc31d72d}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package vundo
   :defer t
@@ -989,7 +1098,7 @@
   ("C-x u" . vundo))
 \end{minted}
 \subsection{Git-gutter.}
-\label{sec:org7e9e80f}
+\label{sec:org87e87ca}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package git-gutter
   :init (global-git-gutter-mode 1)
@@ -1004,13 +1113,13 @@
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 \end{minted}
 \subsection{Transient}
-\label{sec:orgf815bd0}
+\label{sec:org40a9c66}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package transient
   :defer t)
 \end{minted}
 \subsection{vc custom formating.}
-\label{sec:org86b1e9e}
+\label{sec:org9e5eca7}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (setq vc-git-root-log-format
     `("%d %h %ai %an: %s"
@@ -1027,7 +1136,7 @@
         (4 'change-log-date))))
 \end{minted}
 \section{Hydra:}
-\label{sec:orgd5d070d}
+\label{sec:org7b42eff}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package hydra
   :ensure t)
@@ -1165,7 +1274,7 @@ rainbow" :toggle t)
 (hydra-posframe-mode)
 \end{minted}
 \section{Hl-TODO.}
-\label{sec:org696082a}
+\label{sec:org3788adc}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package hl-todo
   :defer t
@@ -1194,7 +1303,7 @@ rainbow" :toggle t)
 
 \end{minted}
 \section{Rainbow modes}
-\label{sec:orgc90e856}
+\label{sec:orgcc52f7b}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{elisp}
 (use-package rainbow-delimiters
   :defer t
@@ -1206,7 +1315,7 @@ rainbow" :toggle t)
   :hook ((org-mode prog-mode) . rainbow-mode))
 \end{minted}
 \section{Which-key.}
-\label{sec:orgb85a999}
+\label{sec:org226a5d4}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package which-key
   :init
@@ -1227,7 +1336,7 @@ rainbow" :toggle t)
     which-key-separator " → " ))
 \end{minted}
 \section{Dired.}
-\label{sec:org48c1ff4}
+\label{sec:org44137dd}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package dired
   :ensure nil
@@ -1247,9 +1356,9 @@ rainbow" :toggle t)
 (use-package dired-open
   :after dired
   :config
-  (setq dired-open-extensions '(("gif" . "nsxiv")
-                                ("jpg" . "nsxiv")
-                                ("png" . "nsxiv")
+  (setq dired-open-extensions '(
+                                ("jpg" . "imv")
+                                ("png" . "imv")
                                 ;; ("pdf" . "zathura")
                                 ("mkv" . "mpv")
                                 ("mp4" . "mpv"))))
@@ -1263,7 +1372,7 @@ rainbow" :toggle t)
 
 \end{minted}
 \section{Projectile}
-\label{sec:org647f010}
+\label{sec:org09b16da}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package projectile
   :diminish projectile-mode
@@ -1282,7 +1391,7 @@ rainbow" :toggle t)
   :config (counsel-projectile-mode))
 \end{minted}
 \section{Spell-check:}
-\label{sec:orgc1b057f}
+\label{sec:org94c6d8e}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; ;; Set speller and dicts
 (if lpr-windows-system
@@ -1358,12 +1467,13 @@ rainbow" :toggle t)
            ("<f8>" . jinx-languages))))
 \end{minted}
 \section{Org.}
-\label{sec:org6670211}
+\label{sec:orge915a1a}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package toc-org
   :commands toc-org-enable
   :init (add-hook 'org-mode-hook 'toc-org-enable))
 
+(require 'org-indent)
 (add-hook 'org-mode-hook 'org-indent-mode)
 
 (use-package org-bullets
@@ -1388,7 +1498,7 @@ rainbow" :toggle t)
 (add-hook 'cycle-region-post-preview-hook 'evil-normal-state)
 \end{minted}
 \subsection{Org custom configuration:}
-\label{sec:orgfd7eb46}
+\label{sec:orgdc59bd3}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-auto-tangle
   :hook (org-mode . org-auto-tangle-mode)
@@ -1425,6 +1535,7 @@ rainbow" :toggle t)
 
 (setq org-agenda-start-on-weekday nil)
 (setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-inhibit-startup t)
 
 (setq org-startup-folded 'overview)
 (setq org-adapt-indentation nil)
@@ -1432,7 +1543,7 @@ rainbow" :toggle t)
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " ⮧")
+(setq org-ellipsis " ⤵")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
       '(;;Places
@@ -1454,19 +1565,21 @@ rainbow" :toggle t)
         ("email" . ?e)
         ("crypt" . ?c)
         ))
-(setq org-agenda-files
-      '(
-        ;; "~/public/org/agenda/personal.org"
-        ;; "~/public/org/agenda/training.org"
-        "~/docs/org/agenda/bdays.org"
-        "~/docs/org/agenda/important_dates.org"
-        ;; "~/public/org/agenda/contacts.org"
-        ;; "~/public/org/agenda/work.org"
-        "~/docs/org/agenda/agenda.org"
-        ))
-(setq org-todo-keywords
-    (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
-        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
+(with-eval-after-load 'org
+  (setq org-agenda-files
+        '(
+          ;; "~/public/org/agenda/personal.org"
+          ;; "~/public/org/agenda/training.org"
+          "~/docs/org/agenda/bdays.org"
+          "~/docs/org/agenda/important_dates.org"
+          ;; "~/public/org/agenda/contacts.org"
+          ;; "~/public/org/agenda/work.org"
+          "~/docs/org/agenda/agenda.org"
+          )))
+
+  (setq org-todo-keywords
+        (quote ((sequence "TODO" "DOING" "|" "DONE(d)")
+                (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 ;; TODO colors
 (setq org-todo-keyword-faces
     '(
@@ -1505,7 +1618,7 @@ rainbow" :toggle t)
         ("X" . "export")))
 \end{minted}
 \subsection{Org-Agenda.}
-\label{sec:org0aafbe4}
+\label{sec:org63a967c}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (defvar custom-daily-agenda
   `(
@@ -1651,7 +1764,7 @@ rainbow" :toggle t)
 (setq org-agenda-start-with-log-mode t)
 \end{minted}
 \subsection{Org-Contacts.}
-\label{sec:org08b2810}
+\label{sec:orgcb3b0f5}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-contacts
   :ensure t)
@@ -1666,7 +1779,7 @@ rainbow" :toggle t)
    :END:" "Plantilla para org-contacts.")
 \end{minted}
 \subsection{Org Capture.}
-\label{sec:orgd0084f7}
+\label{sec:orge4244e9}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{elisp}
 ;; Capture
 (setq org-default-notes-file '("~/public/org/agenda/refill.org"))
@@ -1681,17 +1794,6 @@ rainbow" :toggle t)
 
 (setq org-capture-templates
       `(
-        ("p" "Posts")
-        ("pa" "Add a Post"
-         entry
-         ;; File path and headline where the captured post should be stored.
-         (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Posts:")
-         (function org-hugo-new-subtree-post-capture-template) :empty-lines-before 2)
-
-        ("pi" "Idea for a Post"
-         entry (file+headline "~/webdev/jpachecoxyz/org/jpacheco.xyz.org" "Ideas:")
-         "* TODO %^{Name of the post: }%?" :empty-lines-before 2)
-
         ("s" "Scheduled Task" entry (file+headline "~/public/org/agenda/refill.org" "Priority")
          "** TODO [#A] %? %^G \n  SCHEDULED: %^t" :empty-lines 1)
 
@@ -1735,7 +1837,7 @@ See `org-capture-templates' for more information."
 
 \end{minted}
 \subsection{Org-roam.}
-\label{sec:org0114b05}
+\label{sec:org24784e3}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-roam
   :ensure t
@@ -1838,7 +1940,7 @@ See `org-capture-templates' for more information."
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
 \end{minted}
 \subsection{Org-remark.}
-\label{sec:orga0e0f76}
+\label{sec:orgb4bb28c}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-remark-global-tracking
   ;; It is recommended that `org-remark-global-tracking-mode' be
@@ -1865,179 +1967,50 @@ See `org-capture-templates' for more information."
          ("C-c n r" . org-remark-remove)
          ("C-c n d" . org-remark-delete)))
 \end{minted}
-\subsection{Denote.}
-\label{sec:orgf7bfa06}
-\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package denote
-  :ensure t
-  :hook (dired-mode . denote-dired-mode)
-  ;; Keybinds
-  :bind
-  (("C-c n n" . denote-open-or-create)
-   ("C-c n l" . denote-link-or-create)
-   ("C-c n L" . denote-add-links)
-   ("C-c n b" . denote-link-backlinks)
-   ("C-c n f" . #'jp:denote-dired-open)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n R" . denote-rename-file-using-front-matter)
-   (:map dired-mode-map
-         ("C-c C-d C-i" . denote-dired-link-marked-notes)
-         ("C-c C-d C-r" . denote-dired-rename-files)
-         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
-         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
-
-
-(setq denote-directory (expand-file-name "~/docs/notes"))
-(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
-(setq denote-title-history nil)
-(setq denote-sort-keywords nil)
-(setq denote-files-matching-regexp-history nil)
-(setq denote-history-completion-in-prompts nil)
-(setq denote-infer-keywords t)
-(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: content\n\n")
-
-(defun jp:denote-dired-open ()
-  "Short cut to open the notes folder in dired."
-  (interactive)
-  (dired denote-directory))
-
-(defun jp:denote-update-links-matching-regexp (&optional regexp)
-  "Replace denote links under the current level 1 Org heading using `denote-link-insert-links-matching-regexp`.
-Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
-  (interactive)
-  (let ((regexp (or regexp (read-regexp "Match links by regexp (e.g. _estudio_linux): "))))
-    (save-excursion
-      ;; Jump to level-1 heading
-      (unless (and (org-at-heading-p) (= (org-outline-level) 1))
-        (outline-previous-heading)
-        (while (and (org-at-heading-p)
-                  (> (org-outline-level) 1))
-          (outline-previous-heading)))
-      (let* ((start (point))
-             (end (or (save-excursion
-                       (outline-next-heading)
-                       (point))
-                     (point-max)))
-             (first-line nil)
-             (last-line nil))
-        ;; Search for denote links to remove
-        (goto-char start)
-        (while (re-search-forward "^- \\[\\[denote:[^]]+\\]\\[[^]]+\\]\\]" end t)
-          (let ((line-beg (line-beginning-position))
-                (line-end (line-end-position)))
-            (unless first-line (setq first-line line-beg))
-            (setq last-line line-end)))
-        (when (and first-line last-line)
-          ;; Delete the region
-          (delete-region first-line (1+ last-line))
-          ;; Move to where the links were and insert new ones
-          (goto-char first-line)
-          (denote-link-insert-links-matching-regexp regexp))))))
-
-;; (defun my/org-next-denote-link ()
-;;   "Jump to the next denote: link in org-mode."
-;;   (interactive)
-;;   (let ((case-fold-search nil))
-;;     (re-search-forward "\\[\\[denote:[0-9T]+\\]\\[[^]]+\\]\\]" nil t)))
-
-;; (defun my/org-previous-denote-link ()
-;;   "Jump to the previous denote: link in org-mode."
-;;   (interactive)
-;;   (let ((case-fold-search nil))
-;;     (re-search-backward "\\[\\[denote:[0-9T]+\\]\\[[^]]+\\]\\]" nil t)))
-
-;; (general-define-key
-;;  :states '(normal visual)        ;; Evil states
-;;  :keymaps 'org-mode-map          ;; Only in org-mode
-;;  "C-j" #'my/org-next-denote-link
-;;  "C-k" #'my/org-previous-denote-link)
-
-(defun denote-insert-pdf-link ()
-  "Insert a Denote-style Org link to a PDF file from ~/docs/pdf, prompting for a custom link title."
-  (interactive)
-  (let* ((pdf-dir (expand-file-name "~/docs/pdf"))
-         (pdf-files (directory-files-recursively pdf-dir "\\.pdf$"))
-         (chosen-file (completing-read "Choose a PDF: " pdf-files nil t))
-         (custom-title (read-string "Enter a link title: ")))
-    (insert (format "- [[file:%s][%s]]"
-                    (file-relative-name chosen-file)
-                    custom-title))))
-
-(use-package consult-denote
-  :ensure t)
-\end{minted}
-\subsubsection{Denote-silo.}
-\label{sec:orgb8fdb50}
-\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package denote-silo
-  :ensure t
-  ;; Bind these commands to key bindings of your choice.
-  :commands ( denote-silo-create-note
-              denote-silo-open-or-create
-              denote-silo-select-silo-then-command
-              denote-silo-dired
-              denote-silo-cd )
-  :config
-  ;; Add your silos to this list.  By default, it only includes the
-  ;; value of the variable `denote-directory'.
-  (setq denote-silo-directories
-        (list denote-directory
-              "/home/javier/docs/pdf/")))
-  ;; (setq denote-silo-extras-directories '("~/docs/notes/" "~/docs/pdf/")))
-\end{minted}
-\subsubsection{Denote-sequence.}
-\label{sec:orgf006bf7}
-\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package denote-sequence
-  :ensure t
-  :bind
-  ( :map global-map
-    ("C-c n s s" . denote-sequence-new-sibling)
-    ("C-c n s p" . denote-sequence-new-parent)
-    ("C-c n s f" . denote-sequence-find)
-    ("C-c n s l" . denote-sequence-link)
-    ("C-c n s d" . denote-sequence-dired)
-    ("C-c n s r" . denote-sequence-reparent)
-    ("C-c n s c" . denote-sequence-new-child))
-  :config
-  (setq denote-sequence-scheme 'numeric)
-  (setq denote-sequence-type-history nil))
-\end{minted}
-\subsubsection{Denote-menu.}
-\label{sec:org286e5e9}
-\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package denote-menu
-  :ensure t
-  :custom ((denote-menu-show-file-type nil)
-           (denote-menu-initial-regex "==[0-9]+--.*_meta.org"))
-  :bind 
-  (("C-c n m" . denote-menu-list-notes)))
-\end{minted}
-\subsubsection{Denote-explore.}
-\label{sec:org653900b}
-\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package denote-explore
-  :ensure t
-  :bind* (("C-c e n" . denote-explore-network)
-        ("C-c e v" . denote-explore-network-regenerate)
-        ("C-c e D" . denote-explore-barchart-degree)))
-(setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
-\end{minted}
 \subsection{Org-sidebar.}
-\label{sec:org76df66e}
+\label{sec:org97b874f}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-sidebar
   :ensure t)
 \end{minted}
 \subsection{Ox-hugo.}
-\label{sec:org29010a5}
+\label{sec:org93d5dc8}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package ox-hugo
   :ensure t
   :after ox)
+(setq org-hugo-base-dir "~/webdev/jpachecoxyz/")
+(defun jp:create-hugo-post ()
+  "Create a new Hugo post buffer with metadata in Org format, unsaved."
+  (interactive)
+  (let* ((title (read-string "Post title: "))
+         (description (read-string "Post description: "))
+         (tags (read-string "Tags (separated by spaces): "))
+         (is-draft (y-or-n-p "Is this a draft? "))
+         (slug (replace-regexp-in-string " " "-" (downcase title)))
+         (file-name (concat slug ".org"))
+         (file-path (expand-file-name file-name "~/webdev/jpachecoxyz/org/posts/"))
+         (date (format-time-string "%Y-%m-%d"))
+         (draft-string (if is-draft "true" "false"))) ;; <-- move the IF here!
+    (find-file file-path)
+    (insert (format "#+title: %s\n" title))
+    (insert (format "#+description: %s\n" description))
+    (insert (format "#+date: %s\n" date))
+    (insert (format "#+export_file_name: %s\n" slug))
+    (insert "#+hugo_base_dir: ~/webdev/jpachecoxyz/\n")
+    (insert "#+hugo_section: posts\n")
+    (insert (format "#+hugo_tags: %s\n" tags))
+    (insert "#+hugo_custom_front_matter: toc true\n")
+    (insert "#+hugo_auto_set_lastmod: nil\n")
+    (insert (format "#+hugo_draft: %s\n" draft-string)) ;; <- use the precomputed value here
+    (goto-char (point-max))
+    (insert "\n") ;; Ensure a blank line before the cursor
+    (set-buffer-modified-p t)))
+
+(global-set-key (kbd "C-c n p") #'jp:create-hugo-post)
 \end{minted}
 \subsection{Org-tree-slide.}
-\label{sec:org10e0e57}
+\label{sec:org9935e2b}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package hide-lines
   :ensure t
@@ -2085,7 +2058,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
 \end{minted}
 \subsection{Org-rainbow-tags.}
-\label{sec:org1582ca8}
+\label{sec:orgc030792}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-rainbow-tags
   :ensure t
@@ -2097,7 +2070,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   (org-mode . org-rainbow-tags-mode))
 \end{minted}
 \subsection{Org-modern.}
-\label{sec:org4ad7676}
+\label{sec:org784647e}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package org-modern)
 (add-hook 'org-mode-hook #'org-modern-mode)
@@ -2126,12 +2099,205 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
  org-hide-emphasis-markers t
  org-pretty-entities t
  org-agenda-tags-column 0
- org-ellipsis " ⮧"
- org-modern-fold-stars
- '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
+ org-ellipsis " [...]")
+
+ ;; org-modern-fold-stars
+;; '(("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖") ("⁖" . "⁖")))
+\end{minted}
+\section{Denote.}
+\label{sec:orgc81b6a5}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package denote
+  :ensure t
+  :hook (dired-mode . denote-dired-mode)
+  ;; Keybinds
+  :bind
+  (("C-c n n" . denote-create-note)
+   ("C-c n l" . denote-link-or-create)
+   ("C-c n L" . denote-add-links)
+   ("C-c n b" . denote-link-backlinks)
+   ("C-c n f" . #'jp:denote-dired-open)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter)
+   ("C-c n q c" . denote-query-contents-link)
+   ("C-c n q f" . denote-query-filenames-link)
+   ("C-c n i i" . denote-insert-image)
+   (:map dired-mode-map
+         ("C-c C-d C-i" . denote-dired-link-marked-notes)
+         ("C-c C-d C-r" . denote-dired-rename-files)
+         ("C-c C-d C-f" . denote-dired-filter)
+         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
+         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
+
+
+(setq denote-directory (expand-file-name "~/docs/notes"))
+(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+(setq denote-title-history nil)
+(setq denote-sort-keywords nil)
+(setq denote-files-matching-regexp-history nil)
+(setq denote-history-completion-in-prompts nil)
+(setq denote-infer-keywords t)
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
+(setq denote-query-links-display-buffer-action
+      '((display-buffer-same-window)))
+(setq denote-link--prepare-links-format "%s\n")
+
+(defun jp:denote-dired-open()
+  "Open `denote-directory` in Dired and filter only notes matching proper Denote filename pattern."
+  (interactive)
+  (dired denote-directory)
+  ;; (dired-mark-files-regexp "^[0-9]\\{8\\}T[0-9]\\{6\\}--[^=].*\\.org$")
+  ;; (dired-toggle-marks)
+  ;; (dired-do-kill-lines)
+  (let ((messages '(
+                    "🧠🌿 Mind garden pruned: only pure ideas are blooming."
+                    "🧠✨ Mind map refreshed: only clear branches remain."
+                    "🪴📝 Notes pruned: a clean path through your thoughts."
+                    "🔍🌟 Only well-formed thoughts sparkle here now."
+                    "📜🌱 Organized scrolls: the chaos fades, clarity grows."
+                    "🧩📚 Puzzle pieces placed: only true notes stay."
+                    "🌌✍️ Mental constellation aligned: shining ideas ahead."
+                    "🌿📖 Your knowledge forest breathes freely now."
+                    )))
+    (message "%s" (nth (random (length messages)) messages))))
+
+(defun my/denote-or-org-link ()
+  "Run `denote-find-link`. If nothing is inserted, show Org links in minibuffer."
+  (interactive)
+  (let ((before (buffer-substring-no-properties (point-min) (point-max))))
+    (call-interactively #'denote-find-link)
+    (run-at-time
+     "0.1 sec" nil
+     (lambda ()
+       (let ((after (buffer-substring-no-properties (point-min) (point-max))))
+         (when (string= before after)
+           (let ((links (my/org-collect-links)))
+             (if links
+                 (let ((chosen (completing-read "Org links: " links)))
+                   (when chosen
+                     (kill-new chosen)
+                     (message "Copied link to clipboard: %s" chosen)))
+               (message "No Denote or Org links found.")))))))))
+
+(defun my/org-collect-links ()
+  "Collect all Org-style links ([[...]]) in the current buffer."
+  (let (links)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward org-link-bracket-re nil t)
+        (push (match-string 0) links)))
+    (delete-dups links)))
+
+(defun denote-insert-image ()
+  "Prompt to select an image from ~/docs/notes/img/ and insert its absolute path as [[...]] link."
+  (interactive)
+  (let* ((img-dir (expand-file-name "~/docs/notes/img/"))
+         (filename (read-file-name "Select image: " img-dir nil t)))
+    (when (and filename (file-exists-p filename))
+      (insert (format "[[%s]]" (expand-file-name filename))))))
+
+(defun denote-dired-filter ()
+  "Mark files by regex, toggle marks, and kill selected files.
+Follows the sequence: % m (regex), t, K."
+  (interactive)
+  (unless (derived-mode-p 'dired-mode)
+    (user-error "Not in a Dired buffer"))
+  (message "Enter regex to mark files: ")
+  (call-interactively 'dired-mark-files-regexp) ; % m (user enters regex)
+  (dired-toggle-marks)                         ; t (toggle marks)
+  (dired-do-kill-lines))                       ; K (kill marked files)
+
+;; (defun my/org-next-denote-link ()
+;;   "Jump to the next denote: link in org-mode."
+;;   (interactive)
+;;   (let ((case-fold-search nil))
+;;     (re-search-forward "\\[\\[denote:[0-9T]+\\]\\[[^]]+\\]\\]" nil t)))
+
+;; (defun my/org-previous-denote-link ()
+;;   "Jump to the previous denote: link in org-mode."
+;;   (interactive)
+;;   (let ((case-fold-search nil))
+;;     (re-search-backward "\\[\\[denote:[0-9T]+\\]\\[[^]]+\\]\\]" nil t)))
+
+;; (general-define-key
+;;  :states '(normal visual)        ;; Evil states
+;;  :keymaps 'org-mode-map          ;; Only in org-mode
+;;  "C-j" #'my/org-next-denote-link
+;;  "C-k" #'my/org-previous-denote-link)
+
+(defun denote-insert-pdf-link ()
+  "Insert a Denote-style Org link to a PDF file from ~/docs/pdf, prompting for a custom link title."
+  (interactive)
+  (let* ((pdf-dir (expand-file-name "~/docs/pdf"))
+         (pdf-files (directory-files-recursively pdf-dir "\\.pdf$"))
+         (chosen-file (completing-read "Choose a PDF: " pdf-files nil t))
+         (custom-title (read-string "Enter a link title: ")))
+    (insert (format "- [[file:%s][%s]]"
+                    (file-relative-name chosen-file)
+                    custom-title))))
+
+(use-package consult-denote
+  :ensure t)
+\end{minted}
+\subsection{Denote-silo.}
+\label{sec:org1dc4055}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package denote-silo
+  :ensure t
+  ;; Bind these commands to key bindings of your choice.
+  :commands ( denote-silo-create-note
+              denote-silo-open-or-create
+              denote-silo-select-silo-then-command
+              denote-silo-dired
+              denote-silo-cd )
+  :config
+  ;; Add your silos to this list.  By default, it only includes the
+  ;; value of the variable `denote-directory'.
+  (setq denote-silo-directories
+        (list denote-directory
+              "~/docs/notes/inbox/")))
+  ;; (setq denote-silo-extras-directories '("~/docs/notes/" "~/docs/pdf/")))
+\end{minted}
+\subsection{Denote-sequence.}
+\label{sec:org0f6bbae}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package denote-sequence
+  :ensure t
+  :bind
+  ( :map global-map
+    ("C-c n s s" . denote-sequence-new-sibling)
+    ("C-c n s p" . denote-sequence-new-parent)
+    ("C-c n s f" . denote-sequence-find)
+    ("C-c n s l" . denote-sequence-link)
+    ("C-c n s d" . denote-sequence-dired)
+    ("C-c n s r" . denote-sequence-reparent)
+    ("C-c n s c" . denote-sequence-new-child))
+  :config
+  (setq denote-sequence-scheme 'numeric)
+  (setq denote-sequence-type-history nil))
+\end{minted}
+\subsection{Denote-menu.}
+\label{sec:org311941d}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package denote-menu
+  :ensure t
+  :custom ((denote-menu-show-file-type nil)
+           (denote-menu-initial-regex "==[0-9]+--.*_meta.org"))
+  :bind 
+  (("C-c n m" . denote-menu-list-notes)))
+\end{minted}
+\subsection{Denote-explore.}
+\label{sec:org41ecb1a}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package denote-explore
+  :ensure t
+  :bind* (("C-c e n" . denote-explore-network)
+        ("C-c e v" . denote-explore-network-regenerate)
+        ("C-c e D" . denote-explore-barchart-degree)))
+(setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
 \end{minted}
 \section{Pulsar.}
-\label{sec:org157fc0d}
+\label{sec:org54427ed}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package pulsar
   :config
@@ -2143,7 +2309,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   :bind ("<f2>" . pulsar-pulse-line))
 \end{minted}
 \section{PDF's}
-\label{sec:org3f2c3e8}
+\label{sec:org6138859}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package pdf-tools
   :defer t
@@ -2181,17 +2347,49 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
 
 (add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)
 \end{minted}
-\section{LSP and other languages configuration and packages.}
-\label{sec:org7703c8c}
-\subsection{Tree-sitter.}
-\label{sec:orgd4adf96}
+\section{EPUB.}
+\label{sec:org9b3870c}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package tree-sitter
+(use-package justify-kp
+  :ensure t)
+
+(setq nov-text-width t)
+
+(defun my-nov-window-configuration-change-hook ()
+  (my-nov-post-html-render-hook)
+  (remove-hook 'window-configuration-change-hook
+               'my-nov-window-configuration-change-hook
+               t))
+
+(defun my-nov-post-html-render-hook ()
+  (if (get-buffer-window)
+      (let ((max-width (pj-line-width))
+            buffer-read-only)
+        (save-excursion
+          (goto-char (point-min))
+          (while (not (eobp))
+            (when (not (looking-at "^[[:space:]]*$"))
+              (goto-char (line-end-position))
+              (when (> (shr-pixel-column) max-width)
+                (goto-char (line-beginning-position))
+                (pj-justify)))
+            (forward-line 1))))
+    (add-hook 'window-configuration-change-hook
+              'my-nov-window-configuration-change-hook
+              nil t)))
+
+(add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
+\end{minted}
+\section{LSP and other languages configuration and packages.}
+\label{sec:orgb46788f}
+\subsection{Tree-sitter.}
+\label{sec:org76a222b}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package treesit-auto
   :ensure t
-  :hook
-  (tree-sitter-after-on . tree-sitter-hl-mode)
+  :custom (treesit-auto-install t)
   :config
-  (global-tree-sitter-mode))
+  (global-treesit-auto-mode))
 
 (use-package tree-sitter-langs
   :ensure t)
@@ -2204,81 +2402,101 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
 (with-eval-after-load 'treesit
   (setq treesit-font-lock-level 4))
 \end{minted}
-\subsection{LSP}
-\label{sec:orge3bcdcf}
+\subsection{Eglot.}
+\label{sec:orgaa005d0}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(defun jp/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  ;; :hook (lsp-mode . jp/lsp-mode-setup)
-  :init
-  (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+(use-package eglot
+  :defer t
+  :ensure nil
+  :bind (:map eglot-mode-map
+              ("C-c C-d" . eldoc-box-help-at-point)
+              ("<M-return>" . eglot-code-actions)
+              ("C-c C-s" . xref-find-references))
   :config
-  (lsp-enable-which-key-integration t)
-  (setq lsp-auto-guess-root t)
-  (setq lsp-log-io nil)
-  (setq lsp-restart 'auto-restart)
-  (setq lsp-enable-symbol-highlighting t)
-  (setq lsp-enable-on-type-formatting nil)
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-signature-render-documentation nil)
-  (setq lsp-headerline-breadcrumb-enable nil)
-  (setq lsp-headerline-breadcrumb-icons-enable nil)
-  (setq lsp-eldoc-hook nil)
-  (setq lsp-modeline-code-actions-enable nil)
-  (setq lsp-modeline-diagnostics-enable nil)
-  (setq lsp-semantic-tokens-enable nil)
-  (setq lsp-enable-folding nil)
-  (setq lsp-enable-imenu nil)
-  (setq lsp-enable-snippet nil)
-  (setq read-process-output-max (* 1024 1024)) ;; 1MB
-  (setq lsp-treemacs-symbols-position-params '((side . right) (slot . 2) (window-width . 35)))
-  (setq lsp-idle-delay 0.0))
+  ;; Tailwind LSP support
+  (add-to-list 'eglot-server-programs
+               '(((heex-ts-mode :language-id "html")
+                  (web-mode :language-id "html"))
+                 . ("tailwindcss-language-server" "--stdio")))
 
-(defun toggle-lsp-treemacs-symbols ()
-  "Toggle the visibility of the lsp-treemacs-symbols buffer."
+  (with-eval-after-load 'eglot
+    (evil-define-key 'normal eglot-mode-map
+      (kbd "K") #'eldoc-box-help-at-point))
+(setf (alist-get 'elixir-ts-mode eglot-server-programs) `(,(if (executable-find "lexical") "lexical" (expand-file-name "~/.local/src/lexical/bin/start_lexical.sh")))))
+
+(add-hook 'python-ts-mode-hook 'eglot-ensure)
+(add-hook 'elixir-ts-mode-hook 'eglot-ensure)
+(add-hook 'rust-mode-hook 'eglot-ensure)
+
+(defun my/goto-definition-dumb-jump-fallback ()
+  "Go to definition using eglot when is active otherwise use dumb-jump."
   (interactive)
-  (let ((buffer (get-buffer "*LSP Symbols List*")))
-    (if (and buffer (get-buffer-window buffer))
-        (delete-window (get-buffer-window buffer))
-      (lsp-treemacs-symbols))))
+  (if (and (featurep 'eglot) (eglot-managed-p))
+      (xref-find-definitions (thing-at-point 'symbol))
+    (if (member major-mode '(emacs-lisp-mode lisp-interaction-mode))
+        (xref-find-definitions (thing-at-point 'symbol))
+      (dumb-jump-go))))
 
-(global-set-key (kbd "<f5>") 'toggle-lsp-treemacs-symbols)
+(use-package eldoc-box
+  :ensure t
+  :custom
+  ;; remove child frame as soon as cursor moves to another position
+  (eldoc-box-cleanup-interval 0))
 
-(use-package lsp-ui
-  :commands lsp-ui-mode
-  :config
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-doc-header t)
-  (setq lsp-ui-doc-include-signature t)
-  (setq lsp-ui-doc-border (face-foreground 'default))
-  (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-delay 0.05))
+(use-package flymake-shellcheck
+  :ensure t
+  :defer t
+  :if (executable-find "shellcheck")
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'bash-ts-mode-hook 'flymake-shellcheck-load))
 
-(use-package dap-mode
-  ;; Uncomment the config below if you want all UI panes to be hidden by default!
-  ;; :custom
-  ;; (lsp-enable-dap-auto-configure nil)
-  ;; :config
-  ;; (dap-ui-mode 1)
-  :commands dap-debug
-  :config
-  ;; Set up Node debugging
-  (require 'dap-node)
-  (dap-node-setup) ;; Automatically installs Node debug adapter if needed
+(with-eval-after-load 'reformatter
+  (reformatter-define sh-format
+    :program "shfmt"
+    :args '("-i" "2" "-")
+    :group 'sh))
 
-  ;; Bind `C-c l d` to `dap-hydra` for easy access
-  (general-define-key
-    :keymaps 'lsp-mode-map
-    :prefix lsp-keymap-prefix
-    "d" '(dap-hydra t :wk "debugger")))
+(use-package bash-ts-mode
+  :ensure nil
+  :mode-hydra
+  ((:title (concat (nerd-icons--icon-info-for-buffer) " Bash commands"))
+   ("Format"
+    (("f" sh-format-buffer)))))
+
+(with-eval-after-load 'reformatter
+  (reformatter-define python-ruff-format
+    :program "ruff"
+    :args '("format" "-")
+    :group 'python)
+
+  (reformatter-define python-sort-imports
+    :program "ruff"
+    :args '("check" "--fix" "--select" "I001" "-")
+    :group 'python))
+
+(setq python-shell-completion-native-enable nil)
+
+(use-package flymake-ruff
+  :ensure t)
+
+(use-package python-ts-mode
+  :ensure nil
+  :defer t
+  :mode "\\.py\\'"
+  :mode-hydra
+  ((:title (concat (nerd-icons-icon-for-buffer) " Python commands"))
+   ("Format"
+    (("f" python-ruff-format-buffer)
+     ("si" python-sort-imports-region))
+    "Testing"
+    (("tt" pythontest-test-at-point)
+     ("tf" pythontest-test-file)
+     ("ta" pythontest-test-all))))
+  :hook (python-ts-mode . flymake-ruff-load))
 \end{minted}
 \subsection{Ligature.}
-\label{sec:orgb140187}
+\label{sec:org2827e6b}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package ligature
   :defer 1
@@ -2303,17 +2521,17 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   (global-ligature-mode t))
 \end{minted}
 \subsection{Auto indent}
-\label{sec:orgbd6a025}
+\label{sec:org61984e0}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package aggressive-indent
   :hook (prog-mode . aggressive-indent-mode))
 \end{minted}
 \subsection{Python-mode}
-\label{sec:org52a3d66}
+\label{sec:orgfce4b74}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package python-mode
   :ensure t
-  :hook (python-mode . lsp-deferred)
+  :hook (python-mode . eglot)
   :custom
   ;; NOTE: Set these if Python 3 is called "python3" on your system!
   ;; (python-shell-interpreter "python3")
@@ -2322,11 +2540,11 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   :config
   (require 'dap-python))
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp-deferred))))  ; or lsp-deferred
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-pyright)
+;;                           (lsp-deferred))))  ; or lsp-deferred
 
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
@@ -2335,8 +2553,101 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
 \end{minted}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package flymake-ruff
+  :ensure t)
+\end{minted}
+\subsection{Uv-activate.}
+\label{sec:org58347f5}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(defun uv-activate ()
+  "Activate Python environment managed by uv based on current project directory.
+Looks for .venv directory in project root and activates the Python interpreter."
+  (interactive)
+  (let* ((project-root (project-root (project-current t)))
+         (venv-path (expand-file-name ".venv" project-root))
+         (python-path (expand-file-name
+                       (if (eq system-type 'windows-nt)
+                           "Scripts/python.exe"
+                         "bin/python")
+                       venv-path)))
+    (if (file-exists-p python-path)
+        (progn
+          ;; Set Python interpreter path
+          (setq python-shell-interpreter python-path)
+
+          ;; Update exec-path to include the venv's bin directory
+          (let ((venv-bin-dir (file-name-directory python-path)))
+            (setq exec-path (cons venv-bin-dir
+                                  (remove venv-bin-dir exec-path))))
+
+          ;; Update PATH environment variable
+          (setenv "PATH" (concat (file-name-directory python-path)
+                                 path-separator
+                                 (getenv "PATH")))
+
+          ;; Update VIRTUAL_ENV environment variable
+          (setenv "VIRTUAL_ENV" venv-path)
+
+          ;; Remove PYTHONHOME if it exists
+          (setenv "PYTHONHOME" nil)
+
+          (message "Activated UV Python environment at %s" venv-path))
+      (error "No UV Python environment found in %s" project-root))))
+\end{minted}
+\subsection{Rust-mode}
+\label{sec:orge4d9332}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . eglot))
+\end{minted}
+\subsection{Common-lisp.}
+\label{sec:orge1c76ac}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(dolist (package '(slime paredit rainbow-delimiters))
+  (unless (package-installed-p package)
+    (package-install package)))
+
+;; Configure SBCL as the Lisp program for SLIME.
+(add-to-list 'exec-path "/usr/bin")
+(setq inferior-lisp-program "sbcl")
+
+;; Enable Paredit.
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
+(add-hook 'ielm-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+
+(require 'paredit)
+(defun override-slime-del-key ()
+  (define-key slime-repl-mode-map
+              (read-kbd-macro paredit-backward-delete-key) nil))
+(add-hook 'slime-repl-mode-hook 'override-slime-del-key)
+
+;; Enable Rainbow Delimiters.
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'ielm-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-interaction-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'slime-repl-mode-hook 'rainbow-delimiters-mode)
+
+;; Customize Rainbow Delimiters.
+(require 'rainbow-delimiters)
+(set-face-foreground 'rainbow-delimiters-depth-1-face "#c66")  ; red
+(set-face-foreground 'rainbow-delimiters-depth-2-face "#6c6")  ; green
+(set-face-foreground 'rainbow-delimiters-depth-3-face "#69f")  ; blue
+(set-face-foreground 'rainbow-delimiters-depth-4-face "#cc6")  ; yellow
+(set-face-foreground 'rainbow-delimiters-depth-5-face "#6cc")  ; cyan
+(set-face-foreground 'rainbow-delimiters-depth-6-face "#c6c")  ; magenta
+(set-face-foreground 'rainbow-delimiters-depth-7-face "#ccc")  ; light gray
+(set-face-foreground 'rainbow-delimiters-depth-8-face "#999")  ; medium gray
+(set-face-foreground 'rainbow-delimiters-depth-9-face "#666")  ; dark gray
+\end{minted}
 \subsection{Yasnippets}
-\label{sec:orgaf87966}
+\label{sec:orgda0cb1e}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package yasnippet
   ;; :defer 2
@@ -2357,7 +2668,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   :ensure t)
 \end{minted}
 \subsection{Indent-bars.}
-\label{sec:orgf7263e9}
+\label{sec:org8fd2c02}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package highlight-indent-guides
   :config
@@ -2370,7 +2681,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
     :init (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 \end{minted}
 \subsection{Highlight-thing.}
-\label{sec:org2087579}
+\label{sec:org91f7e56}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package highlight-thing
   :ensure t
@@ -2380,7 +2691,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
 (setq highlight-thing-exclude-thing-under-point nil)
 \end{minted}
 \section{Consult}
-\label{sec:orgc828e90}
+\label{sec:org2715816}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
@@ -2400,11 +2711,11 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
 
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
-  (setq register-preview-delay 0.5
-        register-preview-function #'consult-register-format)
-  (advice-add #'register-preview :override #'consult-register-window)
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+  ;; (setq register-preview-delay 0.5
+  ;;       register-preview-function #'consult-register-format)
+  ;; (advice-add #'register-preview :override #'consult-register-window)
+  ;; (setq xref-show-xrefs-function #'consult-xref
+  ;;       xref-show-definitions-function #'consult-xref)
   :config
   (consult-customize
    consult-theme :preview-key '(:debounce 0.2 any)
@@ -2428,7 +2739,7 @@ Deletes old links and inserts new ones matching REGEXP (asks if not provided)."
   :ensure t)
 \end{minted}
 \section{Vertico.}
-\label{sec:org0e56c01}
+\label{sec:orgcaf4dfc}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 ;; Enable vertico
 (use-package savehist
@@ -2459,8 +2770,8 @@ folder, otherwise delete a word"
   :custom-face
   (vertico-current ((t (:background "#5C6370"))))
   :init
-  (vertico-posframe-mode))
-  ;; (vertico-mode))
+  (vertico-mode))
+  ;; (vertico-posframe-mode))
 
 (use-package orderless
   :init
@@ -2476,7 +2787,7 @@ folder, otherwise delete a word"
 (vertico-multiform-mode 1)
 \end{minted}
 \section{Marginalia}
-\label{sec:org13f1c5b}
+\label{sec:orgfbd59e7}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package marginalia
   :after vertico
@@ -2487,9 +2798,9 @@ folder, otherwise delete a word"
   (marginalia-mode))
 \end{minted}
 \section{Windows and Popups rules}
-\label{sec:org4fc08bf}
+\label{sec:org6e881a2}
 \subsection{Shackle.}
-\label{sec:org5cf809e}
+\label{sec:org0faa4ae}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package shackle
   :custom
@@ -2498,11 +2809,11 @@ folder, otherwise delete a word"
           (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
           (docs "\\*devdocs\\*")
           (roam "\\*Capture\\*")
+          (org-log "\\*Org Note\\*")
           (warnings "\\*Warnings\\*")
           (magit "Magit")
-          (vterm "\\*vterm\\*")
           (ellama "\\(.*(zephyr)\\.org\\)")
-          (dired "Dired by name")
+          ;; (dired "Dired by name")
           (scratch    "\\*scratch\\*"))
       `((compilation-mode :noselect t
                           :align above
@@ -2511,6 +2822,9 @@ folder, otherwise delete a word"
         (,repls :regexp t
                 :align below
                 :size 0.3)
+        (,org-log :regexp t
+                  :align below
+                  :size 0.3)
         (occur-mode :select t
                     :align right
                     :size 0.3)
@@ -2526,9 +2840,6 @@ folder, otherwise delete a word"
         (help-mode :select t
                    :align below
                    :size 0.5)
-        (vterm-mode :select t
-                    :align below
-                    :size 0.5)
         (,vcs :regexp t
               :align above
               :size 0.15
@@ -2539,9 +2850,6 @@ folder, otherwise delete a word"
         (,magit :regexp t 
                 :same t
                 :select t)
-        (peep-dired-mode :select t
-                         :size 0.6
-                         :align below)
         (,roam :regexp t 
                :same t
                :select t))))
@@ -2550,18 +2858,16 @@ folder, otherwise delete a word"
   :config (shackle-mode))
 \end{minted}
 \subsection{Popper.}
-\label{sec:orge555172}
+\label{sec:orgef32642}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package popper
-  :bind (("C-`"   . popper-toggle-latest)
+  :bind (("C-`"   . popper-toggle)
          ("M-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type)) ;; Optional keybindings
   :custom
   (popper-reference-buffers
    '("\\*Async Shell Command\\*"
-     dired-mode          ;; Treat Dired buffers as popups
      help-mode
-     vterm-mode
      compilation-mode
      "\\(.*(zephyr)\\.org\\)"
      "\\*Warnings\\*"
@@ -2572,7 +2878,7 @@ folder, otherwise delete a word"
   (popper-echo-mode +1)) ;; For echo messages when popups are toggled
 \end{minted}
 \section{Page break lines.}
-\label{sec:orgf605c24}
+\label{sec:org6fd59b2}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package form-feed
   :config (global-form-feed-mode))
@@ -2582,14 +2888,14 @@ folder, otherwise delete a word"
   (page-break-lines-mode))
 \end{minted}
 \section{Htmlize:}
-\label{sec:org7213c1d}
+\label{sec:org66b31d9}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package htmlize
   :ensure t
   :defer t)
 \end{minted}
 \section{Buffer-flip.}
-\label{sec:orgf1ce475}
+\label{sec:orge1b83fc}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package buffer-flip
   :defer t
@@ -2612,7 +2918,7 @@ folder, otherwise delete a word"
       )))
 \end{minted}
 \section{Key-binds - General.}
-\label{sec:org5478453}
+\label{sec:org0b50b5c}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package general
   :config
@@ -2670,6 +2976,12 @@ folder, otherwise delete a word"
     "." '(find-file :wk "Find file")
     "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
+
+  (evil-define-key '(normal visual) 'global
+    (kbd "g c c") #'evilnc-comment-or-uncomment-lines)
+
+  (evil-define-key '(visual) 'global
+    (kbd "g c") #'evilnc-comment-or-uncomment-lines)
 
   (user/leader-keys
     "a" '(:ignore t :wk "Ellama A.I.")
@@ -2742,11 +3054,13 @@ folder, otherwise delete a word"
     "f d" '(find-grep-dired :wk "Search for string in files in DIR")
     "f f" '(my/transient-goto-file-buffer :wk "Go to buffer or file.")
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
+    "f l" '(denote-find-link :wk "Denote find links")
     "f p" '((lambda () (interactive)
               (find-file "~/.emacs.d/config.org")) 
             :wk "Open noobemacs Configuraiton file.")
     "f r" '(recentf :wk "Find recent files")
     "f u" '(sudo-edit-find-file :wk "Sudo find file")
+    "f n" '(consult-denote-find :wk "Find Denotes")
     "f U" '(sudo-edit :wk "Sudo edit file"))
 
   (user/leader-keys
@@ -2839,7 +3153,7 @@ folder, otherwise delete a word"
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org")) 
             :wk "Open web org file.")
     "o L" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
-    "o t" '(shell-pop :wk "Toggle terminal")
+    "o t" '(toggle-eshell-buffer :wk "Toggle terminal")
     "o s" '(toggle-scratch-buffer :wk "Toggle scratch buffer")
     "o e" '(toggle-org-buffer :wk "Toggle org buffer")
     "o F" '(select-frame-by-name :wk "Select frame by name"))
@@ -2862,6 +3176,9 @@ folder, otherwise delete a word"
   (user/leader-keys
     "s" '(:ignore t :wk "Search")
     "s d" '(dictionary-search :wk "Search dictionary")
+    "s c" '(denote-sequence-new-child-of-current :wk "Denote child of current")
+    "s s" '(denote-sequence-new-sibling-of-current :wk "Denote sibling of current")
+    "s p" '(denote-sequence-new-parent :wk "Denote new parent")
     "s m" '(man :wk "Man pages")
     "s t" '(tldr :wk "Lookup TLDR docs for a command")
     "s w" '(woman :wk "Similar to man but doesn't require man"))
@@ -2903,13 +3220,13 @@ folder, otherwise delete a word"
   )
 \end{minted}
 \section{Password-menu.}
-\label{sec:orge497e34}
+\label{sec:org976e42b}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package password-store
   :ensure t)
 \end{minted}
 \section{Ellama.}
-\label{sec:org61c0ac0}
+\label{sec:org05ce525}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package ellama
   :init
@@ -2923,7 +3240,7 @@ folder, otherwise delete a word"
            :embedding-model "zephyr")))
 \end{minted}
 \section{Fzf.}
-\label{sec:org4a7eeaf}
+\label{sec:orgc958372}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package fzf
   :bind
@@ -2973,18 +3290,8 @@ folder, otherwise delete a word"
       ;; Delete the window where fzf was opened
       (delete-window window))))
 \end{minted}
-\section{eee.el}
-\label{sec:org4336a3b}
-\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package eee
-  :load-path "~/.emacs.d/lisp/eee.el"
-  :config
-  (setq ee-terminal-command "kitty")
-  (general-evil-define-key 'normal 'global "M-f" 'ee-nnn)
-  (general-evil-define-key 'normal 'global "M-p" 'ee-btop))
-\end{minted}
 \section{Telega.el}
-\label{sec:orgfadd94b}
+\label{sec:org0c6fecd}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
 (use-package telega
   :ensure t
@@ -3010,27 +3317,114 @@ folder, otherwise delete a word"
   (telega)
   (telega-mode-line-mode))
 \end{minted}
-\section{Terminal.}
-\label{sec:orgf4249a7}
+\section{Dashboard.}
+\label{sec:org5c122e5}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package shell-pop
+(use-package all-the-icons)
+
+(use-package dashboard
+  :hook
+  (after-init . dashboard-setup-startup-hook)
   :ensure t
   :config
-  (setq shell-pop-shell-type '("ansi-term" "*ansi-term*" (lambda () (ansi-term shell-pop-term-shell))))
-  (setq shell-pop-term-shell "/bin/zsh")  ;; Change this to your preferred shell
-  (setq shell-pop-window-size 50)  ;; Percentage of the screen
-  (setq shell-pop-full-span t)  ;; Full width
-  (setq shell-pop-window-position "bottom")  ;; Position of the shell
-  (setq shell-pop-autocd-to-working-dir t)
-  (setq shell-pop-restore-window-configuration t))
+  (setq dashboard-set-heading-icons t
+        dashboard-set-file-icons t
+        dashboard-set-init-info t
+        dashboard-set-navigator t)
+  (setq dashboard-banner-logo-title
+        (seq-random-elt  '("Automation is good, so long as you know exactly where to put the machine. – Eliyahu Goldratt"
+                           "Anything that can be automated will be automated. – Shoshana Zuboff"
+                           "Automation applied to an efficient operation will magnify the efficiency. – Bill Gates"
+                           "The first rule of any technology used in a business is that automation applied to an efficient operation will magnify the efficiency. – Bill Gates"
+                           "Automation doesn’t mean replacing humans. It means freeing them to work smarter. – Unknown"
+                           "Focus on automating tasks, not roles. – Unknown"
+                           "You can’t automate creativity, but you can free up time for it through automation. – Unknown"
+                           "By automating processes, you create more time for innovation. – Unknown"
+                           "The real power of automation lies in its ability to eliminate redundancy and error. – Unknown"
+                           "Automation is the way to simplify your work, not your thinking. – Unknown"
+                           "Programs must be written for people to read, and only incidentally for machines to execute. – Harold Abelson and Gerald Jay Sussman"
+                           "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. – Martin Fowler"
+                           "Programming isn’t about what you know; it’s about what you can figure out. – Chris Pine"
+                           "The best error message is the one that never shows up. – Thomas Fuchs"
+                           "Give a man a program, frustrate him for a day. Teach a man to program, frustrate him for a lifetime. – Muhammad Waseem"
+                           "First, solve the problem. Then, write the code. – John Johnson"
+                           "Code is like humor. When you have to explain it, it’s bad. – Cory House"
+                           "The only way to learn a new programming language is by writing programs in it. – Dennis Ritchie"
+                           "Deleted code is debugged code. – Jeff Sickel"
+                           "Programming is the art of algorithm design and the craft of debugging errant code. – Ellen Ullman")))
 
-(use-package vterm
-  :ensure t)
+  ;; Define una lista de imágenes
+  (setq my/dashboard-images '("~/.emacs.d/gnu.png"))
+  ;; Selecciona una imagen aleatoria de la lista
+  (setq dashboard-startup-banner (nth (random (length my/dashboard-images)) my/dashboard-images))) 
+
+(setq dashboard-page-separator "\f\n")
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        ))
+
+(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
+
+;; para usar los iconos de nerd font
+(setq dashboard-display-icons-p t) ;; display icons on both GUI and terminal
+(setq dashboard-icon-type 'nerd-icons) ;; use `nerd-icons' package
+
+
+(setq dashboard-item-names '(("Recent Files:" . "Archivos Recientes:")
+                             ("Agenda for today:" . "Para hoy agenda:")
+                             ("Agenda for the coming week:" . "Agenda:")
+                             ("Projects:" . "Proyectos:")))
+
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+(setq dashboard-center-content t)
+(setq dashbpard-set-footer nil)
+
+(setq dashboard-startupify-list '(dashboard-insert-newline
+                                  dashboard-insert-banner
+                                  dashboard-insert-newline
+                                  dashboard-insert-newline
+                                  dashboard-insert-newline
+                                  dashboard-insert-banner-title
+                                  ;; dashboard-insert-newline
+                                  dashboard-insert-navigator
+                                  dashboard-insert-newline
+                                  dashboard-insert-items
+                                  dashboard-insert-newline
+                                  dashboard-insert-init-info
+                                  ))
+
+(setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+
+(use-package all-the-icons-ivy
+  :init (all-the-icons-ivy-setup))
+
+(global-set-key (kbd "<f10>") 'dashboard-open)
+(setq dashboard-week-agenda t)
 \end{minted}
-\section{Nova}
-\label{sec:org0891772}
+\section{Nov.}
+\label{sec:org919098a}
 \begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
-(use-package nova
-  :vc (:url "https://github.com/thisisran/nova"))
+(use-package nov
+  :after org
+  :ensure t
+  :mode ("\\.epub\\'" . nov-mode)
+  :hook ((nov-mode . my-nov-font-setup)
+         (nov-mode . visual-line-mode)
+         (nov-mode . visual-fill-column-mode))
+  :config
+  (setq nov-text-width 80
+        visual-fill-column-center-text t
+        nov-variable-pitch nil))
+
+(defun my-nov-font-setup ()
+  (face-remap-add-relative 'variable-pitch :family "Iosevka" :height 1.0))
+\end{minted}
+\section{HTTPS:}
+\label{sec:orgff7d53e}
+\begin{minted}[linenos=true,numbersep=2pt,breaklines=true,bgcolor=GreenYellow!20]{common-lisp}
+(use-package simple-httpd
+  :ensure t)
 \end{minted}
 \end{document}

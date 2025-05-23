@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: 18/05/25
+# Project: Run commands in terminal
+
+
+foot -a scratchpad -w 1250x500 -e bash -c "$* ; tput setaf 5 bold ; read -p 'Press any key to continue ...' -s -n 1"
