@@ -1,4 +1,19 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("/home/javier/.dotfiles/.emacs.d/private.el" . 3802)
- ("/home/javier/.dotfiles/.emacs.d/backup/config.org" . 49452)
- ("/home/javier/.dotfiles/.emacs.d/init.el" . 36735))
+(("/home/javier/.dotfiles/.emacs.d/backup/config.org" . 53517)
+ ("/home/javier/.dotfiles/.emacs.d/init.el" . 72471)
+ ("/home/javier/" (dired-filename . "/home/javier/vimium-options.json"))
+ ("/home/javier/docs/notes/"
+  (dired-filename
+   . "/home/javier/docs/notes/20250523T201942--como-administrar-el-dinero__personal_finanzas.org"))
+ ("/home/javier/docs/notes/20250523T201942--como-administrar-el-dinero__personal_finanzas.org"
+  . 395)
+ ("/home/javier/.dotfiles/.emacs.d/backup/"
+  (dired-filename . "/home/javier/.dotfiles/.emacs.d/backup/config.org"))
+ ("/home/javier/.dotfiles/.emacs.d/"
+  (dired-filename . "/home/javier/.dotfiles/.emacs.d/backup"))
+ ("/home/" (dired-filename . "/home/javier"))
+ ("/home/javier/docs/" (dired-filename . "/home/javier/docs/notes"))
+ ("/home/javier/docs/notes/20250419T112526==13=2--elaboracion-de-un-plan-de-mantenimiento__estudio_mantenimiento.org"
+  . 746)
+ ("/home/javier/docs/notes/20250326T200523--git__linux.org" . 2421)
+ ("/home/javier/.dotfiles/.emacs.d/private.el" . 3802))

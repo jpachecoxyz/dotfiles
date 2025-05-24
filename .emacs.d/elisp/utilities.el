@@ -657,5 +657,4 @@ The command supports previewing the currently selected theme."
                (mapcar (lambda (x) (list (car x) (cadr x) 'my/goto-file-buffer))
                        my/goto-file-buffer-alist))])))
 
-(message "Utilities loaded ...")
 (provide 'utilities)
