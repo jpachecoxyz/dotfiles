@@ -24,12 +24,12 @@
   :type 'boolean
   :group 'emacs-solo)
 
-(defcustom emacs-solo-enable-olivetti nil
+(defcustom emacs-solo-enable-olivetti t
   "Enable `emacs-solo-olivetti'."
   :type 'boolean
   :group 'emacs-solo)
 
-(defcustom emacs-solo-enable-dired-gutter nil
+(defcustom emacs-solo-enable-dired-gutter t
   "Enable `emacs-solo-enable-dired-gutter'."
   :type 'boolean
   :group 'emacs-solo)
@@ -148,12 +148,12 @@
   ;; won't ask for encoding (because undecided-unix) every single keystroke
   (modify-coding-system-alist 'file "" 'utf-8)
 
-  (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font" :height 110)
+  (set-face-attribute 'default nil :family "Iosevka" :height 120)
 
   (when (eq system-type 'darwin)
     (setq insert-directory-program "gls")
     (setq mac-command-modifier 'meta)
-    (set-face-attribute 'default nil :family "JetBrainsMono Nerd Font" :height 130))
+    (set-face-attribute 'default nil :family "Iosevka" :height 130))
 
   ;; Save manual customizations to other file than init.el
   (setq custom-file (locate-user-emacs-file "custom-vars.el"))
@@ -434,337 +434,6 @@ It has effect when `tab-bar-tab-hints' is non-nil."
               (expand-file-name "cert.pem" user-emacs-directory)))))
 
 
-;;; ICOMPLETE
-;; (use-package icomplete
-;;   :bind (:map icomplete-minibuffer-map
-;;               ("C-n" . icomplete-forward-completions)
-;;               ("C-p" . icomplete-backward-completions)
-;;               ("C-v" . icomplete-vertical-toggle)
-;;               ("RET" . icomplete-force-complete-and-exit)
-;;               ("C-j" . exit-minibuffer)) ;; So we can exit commands like `multi-file-replace-regexp-as-diff'
-;;   :hook
-;;   (after-init-hook . (lambda ()
-;;                        (fido-mode -1)
-;;                        (icomplete-vertical-mode 1)))
-;;   :config
-;;   (setq icomplete-delay-completions-threshold 0)
-;;   (setq icomplete-compute-delay 0)
-;;   (setq icomplete-show-matches-on-no-input t)
-;;   (setq icomplete-hide-common-prefix nil)
-;;   (setq icomplete-prospects-height 10)
-;;   (setq icomplete-separator " . ")
-;;   (setq icomplete-with-completion-tables t)
-;;   (setq icomplete-in-buffer t)
-;;   (setq icomplete-max-delay-chars 0)
-;;   (setq icomplete-scroll t)
-
-;;   ;; EMACS-31
-;;   (when (and (>= emacs-major-version 31)
-;;              (boundp 'icomplete-vertical-in-buffer-adjust-list))
-
-;;     (setq icomplete-vertical-in-buffer-adjust-list t)
-;;     (setq icomplete-vertical-render-prefix-indicator t)
-;;     ;; (setq icomplete-vertical-selected-prefix-indicator   " @ ")
-;;     ;; (setq icomplete-vertical-unselected-prefix-indicator "   ")
-;;     )
-
-;;   (if icomplete-in-buffer
-;;       (advice-add 'completion-at-point
-;;                   :after #'minibuffer-hide-completions))
-
-;;   ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2025-03/msg02638.html
-;;   ;;
-;;   ;; I'm currently proposing these features on bug#75784 (bug-gnu-emacs).
-;;   ;; If they get accepted we can get rid of this giant block.
-;;   ;;
-;;   ;; === FIXME: I'm reviewing it to the icomplete PATCH
-
-;;   ;; EMACS-31
-;;   (when (or (< emacs-major-version 31)
-;;             (not (boundp 'icomplete-vertical-in-buffer-adjust-list)))
-
-;;     (defface icomplete-vertical-selected-prefix-indicator-face
-;;       '((t :inherit font-lock-keyword-face :weight bold :foreground "cyan"))
-;;       "Face used for the prefix set by `icomplete-vertical-selected-prefix-indicator'."
-;;       :group 'icomplete
-;;       :version "31.1")
-
-;;     (defface icomplete-vertical-unselected-prefix-indicator-face
-;;       '((t :inherit font-lock-keyword-face :weight normal :foreground "gray"))
-;;       "Face used for the prefix set by `icomplete-vertical-unselected-prefix-indicator'."
-;;       :group 'icomplete
-;;       :version "31.1")
-
-;;     (defcustom icomplete-vertical-in-buffer-adjust-list t
-;;       "Control whether in-buffer completion should align the cursor position.
-;; If this is t and `icomplete-in-buffer' is t, and `icomplete-vertical-mode'
-;; is activated, the in-buffer vertical completions are shown aligned to the
-;; cursor position when the completion started, not on the first column, as
-;; the default behaviour."
-;;       :type 'boolean
-;;       :group 'icomplete
-;;       :version "31.1")
-
-;;     (defcustom icomplete-vertical-render-prefix-indicator t
-;;       "Control whether a indicator is added as a prefix to each candidate.
-;; If this is t and `icomplete-vertical-mode' is activated, a indicator,
-;; controlled by `icomplete-vertical-selected-prefix-indicator' is shown
-;; as a prefix to the current under selection candidate, while the
-;; remaining of the candidates will receive the indicator controlled
-;; by `icomplete-vertical-unselected-prefix-indicator'."
-;;       :type 'boolean
-;;       :group 'icomplete
-;;       :version "31.1")
-
-;;     (defcustom icomplete-vertical-selected-prefix-indicator "» "
-;;       "Prefix string used to mark the selected completion candidate.
-;; If `icomplete-vertical-render-prefix-indicator' is t, the string
-;; defined here is used as a prefix of the currently selected entry in the
-;; list.  It can be further customized by the face
-;; `icomplete-vertical-selected-prefix-indicator-face'."
-;;       :type 'string
-;;       :group 'icomplete
-;;       :version "31.1")
-
-;;     (defcustom icomplete-vertical-unselected-prefix-indicator "  "
-;;       "Prefix string used on the unselected completion candidates.
-;; If `icomplete-vertical-render-prefix-indicator' is t, the string
-;; defined here is used as a prefix for all unselected entries in the list.
-;; list.  It can be further customized by the face
-;; `icomplete-vertical-unselected-prefix-indicator-face'."
-;;       :type 'string
-;;       :group 'icomplete
-;;       :version "31.1")
-
-;;     ;; FIXME: make this into PATCH - OK
-;;     (defun icomplete-vertical--adjust-lines-for-column (lines buffer data)
-;;       "Adjust the LINES to align with the column in BUFFER based on DATA."
-;;       (if icomplete-vertical-in-buffer-adjust-list
-;;           (let* ((column (current-column))
-;;                  (prefix-indicator-width
-;;                   (if icomplete-vertical-render-prefix-indicator
-;;                       (max (length icomplete-vertical-selected-prefix-indicator)
-;;                            (length icomplete-vertical-unselected-prefix-indicator))
-;;                     0))
-;;                  (wrapped-line (with-current-buffer buffer
-;;                                  (save-excursion
-;;                                    (goto-char (car data))
-;;                                    (beginning-of-line)
-;;                                    (count-screen-lines (point) (car data)))))
-;;                  (window-width (+ (window-hscroll) (window-body-width)))
-;;                  (longest-line-width (apply #'max (mapcar #'length lines)))
-;;                  (spaces-to-add
-;;                   (if (> wrapped-line 1)
-;;                       (- column (* (- wrapped-line 1) (- window-width 5)))
-;;                     column))
-;;                  (spaces-to-add-avoiding-scrolling
-;;                   (if (>= (+ spaces-to-add longest-line-width prefix-indicator-width) window-width)
-;;                       (- spaces-to-add longest-line-width)
-;;                     spaces-to-add)))
-
-;;             (mapcar (lambda (line)
-;;                       (concat (make-string spaces-to-add-avoiding-scrolling ?\s) line))
-;;                     lines))
-;;         lines))
-
-;;     ;; FIXME: what to demo/test:
-;;     ;;
-;;     ;; This patch provides two more new features, which improves icomplete-vertical-mode, 1 and 2,
-;;     ;; explained below:
-;;     ;;
-;;     ;;
-;;     ;; 1.) Improve feature provided by `icomplete-in-buffer'.
-;;     ;;     If user, besides setting `icomplete-in-buffer' to t, also set the
-;;     ;;     new `icomplete-vertical-in-buffer-adjust-list' to t, the following are fixed/ improved:
-;;     ;;
-;;     ;; Without the new `icomplete-vertical-in-buffer-adjust-list':
-;;     ;; - [ ] wrapped lines   - completion candidates on different columns always shows candidates at column 0
-;;     ;; - [ ] wrapped lines   - completion candidates on different lines always shows candidates at column 0
-;;     ;; - [ ] wrapped lines   - completion candidates close to the end of buffer won't be printed
-;;     ;; - [ ] truncated lines - completion candidates on different columns always shows candidates at column 0
-;;     ;; - [ ] truncated lines - completion candidates on horizontally scrolled windows won't appear on buffer
-;;     ;;                         as they're on column 0
-;;     ;; - [ ] truncated lines - completion candidates close to the end of buffer wont be shown
-;;     ;;
-;;     ;;
-;;     ;; With the new `icomplete-vertical-in-buffer-adjust-list':
-;;     ;; - [ ] wrapped lines   - fix    : completion candidates on different columns will always be printed
-;;     ;;                                  under the cursor
-;;     ;; - [ ] wrapped lines   - feature: completion candidates on different columns close to the end
-;;     ;;                                  of the buffer will adjust so they stay visible
-;;     ;; - [ ] wrapped lines   - fix:   : completion candidates on different lines always be printed under
-;;     ;;                                  the cursor
-;;     ;; - [ ] wrapped lines   - fix    : if icomplete-prospects-height won't fit from current line to the
-;;     ;;                                  end of vertical space, our window will be scrolled so we have at
-;;     ;;                                  least this amount of lines. This ensures our candidates list is
-;;     ;;                                  always visible
-;;     ;; - [ ] truncated lines - fix    : completion candidates on different columns will always be printed
-;;     ;;                                  under the cursor
-;;     ;; - [ ] truncated lines - feature: completion candidates on different columns close to the end
-;;     ;;                                  of the buffer will adjust so they stay visible even when we scroll
-;;     ;;                                  horizontally
-;;     ;; - [ ] truncated lines - feature: completion candidates on horizontally scrolled windows will be
-;;     ;;                                  printed under the cursor
-;;     ;; - [ ] wrapped lines   - feature: if icomplete-prospects-height won't fit from current line to the
-;;     ;;                                  end of vertical space, our window will be scrolled so we have at
-;;     ;;                                  least this amount of lines. This ensures our candidates list is
-;;     ;;                                  always visible
-;;     ;; - [ ] from wrapped    - feature: if we are on wrapped lines and manually horiontal scroll, the lines
-;;     ;;       to truncated               will become automatically truncated, in this case, all the features
-;;     ;;                                  above still works from either mode (wrapped or truncated).
-;;     ;;
-;;     ;;
-;;     ;; 2.) Implements new feature which provides customizable prefix indicators
-;;     ;;
-;;     ;; Setting `icomplete-vertical-render-prefix-indicator' to t will provide a prefix indicator
-;;     ;; to indicate the current selected candidate, by default "» ".
-;;     ;;
-;;     ;; This prefix is customizable through the variable `icomplete-vertical-selected-prefix-indicator'
-;;     ;; and de face `icomplete-vertical-selected-prefix-indicator-face'.
-;;     ;;
-;;     ;; Users can also customize an indicator to the not selected candidates trhough the use of
-;;     ;; the variable `icomplete-vertical-unselected-prefix-indicator', by default: "  ", and the face
-;;     ;; `icomplete-vertical-unselected-prefix-indicator-face'.
-;;     ;;
-
-
-;;     ;; FIXME: remove this after patch
-;;     (defun icomplete-vertical--ensure-visible-lines-inside-buffer ()
-;;       "Ensure the completion list is visible in regular buffers only.
-;; Scrolls the screen to be at least `icomplete-prospects-height' real lines
-;; away from the bottom.  Counts wrapped lines as real lines."
-;;       (unless (minibufferp)
-;;         (let* ((window-height (window-body-height))
-;;                (current-line (count-screen-lines (window-start) (point)))
-;;                (lines-to-bottom (- window-height current-line)))
-;;           (when (< lines-to-bottom icomplete-prospects-height)
-;;             (scroll-up (- icomplete-prospects-height lines-to-bottom))))))
-
-
-;;     (defun icomplete-vertical--add-indicator-to-selected (comp)
-;;       "Add indicators to the selected/unselected COMP completions."
-;;       (if (and icomplete-vertical-render-prefix-indicator
-;;                (get-text-property 0 'icomplete-selected comp))
-;;           (concat (propertize icomplete-vertical-selected-prefix-indicator
-;;                               'face 'icomplete-vertical-selected-prefix-indicator-face)
-;;                   comp)
-;;         (concat (propertize icomplete-vertical-unselected-prefix-indicator
-;;                             'face 'icomplete-vertical-unselected-prefix-indicator-face)
-;;                 comp)))
-
-
-;;     (cl-defun icomplete--render-vertical
-;;         (comps md &aux scroll-above scroll-below
-;;                (total-space ; number of mini-window lines available
-;;                 (1- (min
-;;                      icomplete-prospects-height
-;;                      (truncate (max-mini-window-lines) 1)))))
-;;       ;; Welcome to loopapalooza!
-;;       ;;
-;;       ;; First, be mindful of `icomplete-scroll' and manual scrolls.  If
-;;       ;; `icomplete--scrolled-completions' and `icomplete--scrolled-past'
-;;       ;; are:
-;;       ;;
-;;       ;; - both nil, there is no manual scroll;
-;;       ;; - both non-nil, there is a healthy manual scroll that doesn't need
-;;       ;;   to be readjusted (user just moved around the minibuffer, for
-;;       ;;   example);
-;;       ;; - non-nil and nil, respectively, a refiltering took place and we
-;;       ;;   may need to readjust them to the new filtered `comps'.
-;;       (when (and icomplete-scroll                                    ;; FIXME: remove this after patch
-;;                  (not icomplete--scrolled-completions)
-;;                  (not icomplete--scrolled-past))
-;;         (icomplete-vertical--ensure-visible-lines-inside-buffer))
-;;       (when (and icomplete-scroll
-;;                  icomplete--scrolled-completions
-;;                  (null icomplete--scrolled-past))
-;;         (icomplete-vertical--ensure-visible-lines-inside-buffer)     ;; FIXME: remove this after patch
-;;         (cl-loop with preds
-;;                  for (comp . rest) on comps
-;;                  when (equal comp (car icomplete--scrolled-completions))
-;;                  do
-;;                  (setq icomplete--scrolled-past preds
-;;                        comps (cons comp rest))
-;;                  (completion--cache-all-sorted-completions
-;;                   (icomplete--field-beg)
-;;                   (icomplete--field-end)
-;;                   comps)
-;;                  and return nil
-;;                  do (push comp preds)
-;;                  finally (setq icomplete--scrolled-completions nil)))
-;;       ;; Then, in this pretty ugly loop, collect completions to display
-;;       ;; above and below the selected one, considering scrolling
-;;       ;; positions.
-;;       (cl-loop with preds = icomplete--scrolled-past
-;;                with succs = (cdr comps)
-;;                with space-above = (- total-space
-;;                                      1
-;;                                      (cl-loop for (_ . r) on comps
-;;                                               repeat (truncate total-space 2)
-;;                                               while (listp r)
-;;                                               count 1))
-;;                repeat total-space
-;;                for neighbor = nil
-;;                if (and preds (> space-above 0)) do
-;;                (push (setq neighbor (pop preds)) scroll-above)
-;;                (cl-decf space-above)
-;;                else if (consp succs) collect
-;;                (setq neighbor (pop succs)) into scroll-below-aux
-;;                while neighbor
-;;                finally (setq scroll-below scroll-below-aux))
-;;       ;; Halfway there...
-;;       (let* ((selected (propertize (car comps) 'icomplete-selected t))
-;;              (chosen (append scroll-above (list selected) scroll-below))
-;;              (tuples (icomplete--augment md chosen))
-;;              max-prefix-len max-comp-len lines nsections)
-;;         (add-face-text-property 0 (length selected)
-;;                                 'icomplete-selected-match 'append selected)
-;;         ;; Figure out parameters for horizontal spacing
-;;         (cl-loop
-;;          for (comp prefix) in tuples
-;;          maximizing (length prefix) into max-prefix-len-aux
-;;          maximizing (length comp) into max-comp-len-aux
-;;          finally (setq max-prefix-len max-prefix-len-aux
-;;                        max-comp-len max-comp-len-aux))
-;;         ;; Serialize completions and section titles into a list
-;;         ;; of lines to render
-;;         (cl-loop
-;;          for (comp prefix suffix section) in tuples
-;;          when section
-;;          collect (propertize section 'face 'icomplete-section) into lines-aux
-;;          and count 1 into nsections-aux
-;;          for comp = (icomplete-vertical--add-indicator-to-selected comp)
-;;          when (get-text-property 0 'icomplete-selected comp)
-;;          do (add-face-text-property 0 (length comp)
-;;                                     'icomplete-selected-match 'append comp)
-;;          collect (concat prefix
-;;                          (make-string (max 0 (- max-prefix-len (length prefix))) ? )
-;;                          (completion-lazy-hilit comp)
-;;                          (make-string (max 0 (- max-comp-len (length comp))) ? )
-;;                          suffix)
-;;          into lines-aux
-;;          finally (setq lines lines-aux
-;;                        nsections nsections-aux))
-;;         ;; Kick out some lines from the beginning due to extra sections.
-;;         ;; This hopes to keep the selected entry more or less in the
-;;         ;; middle of the dropdown-like widget when `icomplete-scroll' is
-;;         ;; t.  Funky, but at least I didn't use `cl-loop'
-;;         (setq lines
-;;               (nthcdr
-;;                (cond ((<= (length lines) total-space) 0)
-;;                      ((> (length scroll-above) (length scroll-below)) nsections)
-;;                      (t (min (ceiling nsections 2) (length scroll-above))))
-;;                lines))
-;;         (when icomplete--in-region-buffer
-;;           (setq lines (icomplete-vertical--adjust-lines-for-column
-;;                        lines icomplete--in-region-buffer completion-in-region--data)))
-;;         ;; At long last, render final string return value.  This may still
-;;         ;; kick out lines at the end.
-;;         (concat " \n"
-;;                 (cl-loop for l in lines repeat total-space concat l concat "\n")))))
-
-;;   ;; end use-package
-;;   )
 
 ;;; DIRED
 (use-package dired
@@ -1821,7 +1490,7 @@ Otherwise, open the repository's main page."
      (fg-mode-line-active "#A6Accd")
      (bg-mode-line-active "#232635")
      (fg-mode-line-inactive "#676E95")
-     (bg-mode-line-inactive "#282c3d")
+     (bg-mode-line-inactive "#444444")
      ;; (border-mode-line-active "#676E95")
      ;; (border-mode-line-inactive bg-dim)
      (border-mode-line-active nil)
@@ -2249,10 +1918,10 @@ Replacing `Git-' with a branch symbol."
                                 (t (symbol-name evil-state))))))
                     (propertize (format "[%s] " tag)
                                 'face 'font-lock-builtin-face)))
-                  (:propertize "𝛌  " face font-lock-keyword-face)
+                  ;; (:propertize "𝛌  " face font-lock-keyword-face)
 
-                  (:propertize
-                   ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote))
+                  ;; (:propertize
+                  ;;  ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote))
 
                   mode-line-frame-identification
                   mode-line-buffer-identification
@@ -2993,13 +2662,15 @@ Windows are labeled starting from the top-left window and proceeding top to bott
     (emacs-solo/center-document--adjust-margins))
 
 
-  (add-hook 'org-mode-hook #'emacs-solo/center-document-mode)
+  ;; (add-hook 'org-mode-hook #'emacs-solo/center-document-mode)
   (add-hook 'gnus-group-mode-hook #'emacs-solo/center-document-mode)
   (add-hook 'gnus-summary-mode-hook #'emacs-solo/center-document-mode)
   (add-hook 'gnus-article-mode-hook #'emacs-solo/center-document-mode)
 
   ;; (add-hook 'newsticker-treeview-list-mode-hook 'emacs-solo/timed-center-visual-fill-on)
   ;; (add-hook 'newsticker-treeview-item-mode-hook 'emacs-solo/timed-center-visual-fill-on)
+
+  :bind ("<f1>" . #'emacs-solo/center-document-mode)
   )
 
 
@@ -3887,9 +3558,12 @@ If a stream is already playing, kill it before starting a new one."
 ;;   ;; :hook (after-init . doom-modeline-mode))
 ;;   :init (doom-modeline-mode 1))
 
-;; (use-package hide-mode-line
-;;   :ensure t
-;;   :defer t)
+(use-package hide-lines
+  :ensure t)
+
+(use-package hide-mode-line
+  :ensure t
+  :defer t)
 
 ;; (setq doom-modeline-icon nil)
 ;; (setq doom-modeline-enable-word-count nil)
@@ -3957,6 +3631,17 @@ If a stream is already playing, kill it before starting a new one."
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;;; DIRED RELATED
+(use-package dired-open
+  :ensure t
+  :after dired)
+  ;; :config
+  ;; (setq dired-open-extensions '(
+  ;;                               ("jpg" . "imv")
+  ;;                               ("png" . "imv")
+  ;;                               ;; ("pdf" . "zathura")
+  ;;                               ("mkv" . "mpv")
+  ;;                               ("mp4" . "mpv"))))
+
 (use-package peep-dired
   :after dired
   :hook (evil-normalize-keymaps . peep-dired-hook)
@@ -3964,6 +3649,31 @@ If a stream is already playing, kill it before starting a new one."
   (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 
+(use-package dired-preview
+  :ensure t
+  :after dired)
+(add-hook 'dired-mode-hook #'dired-preview-mode)
+(setq dired-preview-delay 0.1)
+(setq dired-preview-max-size (expt 2 20))
+(setq dired-preview-ignored-extensions-regexp
+        (concat "\\."
+                "\\(gz\\|"
+                "zst\\|"
+                "tar\\|"
+                "xz\\|"
+                "rar\\|"
+                "zip\\|"
+                "iso\\|"
+                "epub"
+                "\\)"))
+
+(defun my-dired-preview-to-the-right ()
+  "My preferred `dired-preview-display-action-alist-function'."
+  '((display-buffer-in-side-window)
+    (side . right)
+    (window-width . 0.4)))
+
+(setq dired-preview-display-action-alist #'my-dired-preview-to-the-right)
 ;;; EVIL
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
@@ -4461,7 +4171,7 @@ Follows the sequence: % m (regex), t, K."
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
     "f l" '(denote-find-link :wk "Denote find links")
     "f p" '((lambda () (interactive)
-              (find-file "~/.emacs.d/config.org"))
+              (find-file "~/.emacs.d/init.el"))
             :wk "Open noobemacs Configuraiton file.")
     "f r" '(recentf :wk "Find recent files")
     "f u" '(sudo-edit-find-file :wk "Sudo find file")
@@ -4792,8 +4502,8 @@ folder, otherwise delete a word"
 ; Settings:
 (setq-default fill-column 80)
 ;; Enable display-fill-column-indicator
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-(add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
+;; (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+;; (add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
 
 (defun my-show-doc-or-describe-symbol ()
   "Show LSP UI doc if LSP is active, otherwise describe symbol at point."
@@ -4906,6 +4616,53 @@ folder, otherwise delete a word"
   (setq pulsar-face 'isearch)
   (pulsar-global-mode 1)
   :bind ("<f2>" . pulsar-pulse-line))
+
+(defun terror/slide-setup ()
+  (global-hl-line-mode -1)
+  (org-bullets-mode 1)
+  (setq text-scale-mode-amount 2)
+  (text-scale-mode 1)
+  (emacs-solo/center-document-mode 1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 50)
+  (org-display-inline-images)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode 1)
+  (hide-lines-matching "#\\+begin_src")
+  (hide-lines-matching "#\\+end_src"))
+
+(defun terror/slide-end ()
+  (global-hl-line-mode -1)
+  (setq text-scale-mode-amount 0)
+  (text-scale-mode -1)
+  (emacs-solo/center-document-mode -1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 0)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode -1)
+  (org-fold-show-all))
+
+(use-package org-tree-slide
+  :ensure t
+  :after org
+  :hook ((org-tree-slide-play . terror/slide-setup)
+         (org-tree-slide-stop . terror/slide-end))
+  :init
+  (setq org-image-actual-width nil
+        org-tree-slide-header t
+        org-tree-slide-breadcrumbs " > "
+        org-tree-slide-activate-message "Presentation Begins"
+        org-tree-slide-deactivate-message "End of presentation"))
+
+(add-hook 'org-tree-slide-play-hook #'terror/slide-setup)
+(add-hook 'org-tree-slide-stop-hook #'terror/slide-end)
+
+
+(global-set-key (kbd "<f12>") 'org-tree-slide-mode)
+(global-set-key (kbd "S-<f12>") 'org-tree-slide-skip-done-toggle)
+(with-eval-after-load "org-tree-slide"
+  (define-key org-tree-slide-mode-map (kbd "<f1>") 'org-tree-slide-move-previous-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
 
 ; Settings
 (global-visual-line-mode t)  ;; Enable truncated lines
