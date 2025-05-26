@@ -1,19 +1,50 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("/home/javier/.dotfiles/.emacs.d/backup/config.org" . 53517)
- ("/home/javier/.dotfiles/.emacs.d/init.el" . 72471)
- ("/home/javier/" (dired-filename . "/home/javier/vimium-options.json"))
+(("/home/javier/.dotfiles/.emacs.d/private.el" . 686)
+ ("/home/javier/.local/" (dired-filename . "/home/javier/.local/src"))
+ ("/home/javier/.local/src/"
+  (dired-filename . "/home/javier/.local/src/emacs-solo"))
+ ("/home/javier/" (dired-filename . "/home/javier/.local"))
+ ("/home/javier/.dotfiles/.emacs.d/early-init.el" . 875)
+ ("/home/javier/.local/src/emacs-solo/"
+  (dired-filename . "/home/javier/.local/src/emacs-solo/init.el"))
+ ("/home/javier/.local/src/emacs-solo/init.el" . 14291)
+ ("/home/javier/.local/src/emacs-solo/etc/"
+  (dired-filename . "/home/javier/.local/src/emacs-solo/etc/gnus"))
+ ("/home/javier/.local/src/emacs-solo/elisp/" . 45)
+ ("/home/javier/.local/src/emacs-solo/doc/"
+  (dired-filename
+   . "/home/javier/.local/src/emacs-solo/doc/demo-01-overall.png"))
+ ("/home/javier/.local/src/figlet-fonts/"
+  (dired-filename . "/home/javier/.local/src/figlet-fonts/.git"))
+ ("/home/javier/.local/share/"
+  (dired-filename . "/home/javier/.local/share/Trash"))
+ ("/home/javier/.local/lib/"
+  (dired-filename . "/home/javier/.local/lib/python3.10"))
+ ("/home/javier/.icons/"
+  (dired-filename . "/home/javier/.icons/Bibata-Modern-Classic"))
+ ("/home/javier/.hex/" (dired-filename . "/home/javier/.hex/packages"))
+ ("/home/javier/.gnupg/"
+  (dired-filename . "/home/javier/.gnupg/openpgp-revocs.d"))
+ ("/home/javier/.emacs.d/"
+  (dired-filename . "/home/javier/.emacs.d/.cask"))
+ ("/home/javier/.dotfiles/"
+  (dired-filename . "/home/javier/.dotfiles/.emacs.d"))
+ ("/home/javier/.dotfiles/.emacs.d/"
+  (dired-filename . "/home/javier/.dotfiles/.emacs.d/init.el"))
  ("/home/javier/docs/notes/"
   (dired-filename
    . "/home/javier/docs/notes/20250523T201942--como-administrar-el-dinero__personal_finanzas.org"))
  ("/home/javier/docs/notes/20250523T201942--como-administrar-el-dinero__personal_finanzas.org"
-  . 395)
+  . 212)
+ ("/home/javier/.emacs.d/elisp/"
+  (dired-filename . "/home/javier/.emacs.d/elisp/utilities.el"))
+ ("/home/javier/.dotfiles/.emacs.d/elisp/utilities.el" . 26489)
+ ("/home/javier/.dotfiles/.emacs.d/backup/config.org" . 53517)
  ("/home/javier/.dotfiles/.emacs.d/backup/"
-  (dired-filename . "/home/javier/.dotfiles/.emacs.d/backup/config.org"))
- ("/home/javier/.dotfiles/.emacs.d/"
-  (dired-filename . "/home/javier/.dotfiles/.emacs.d/backup"))
+  (dired-filename
+   . "/home/javier/.dotfiles/.emacs.d/backup/config.org"))
  ("/home/" (dired-filename . "/home/javier"))
  ("/home/javier/docs/" (dired-filename . "/home/javier/docs/notes"))
  ("/home/javier/docs/notes/20250419T112526==13=2--elaboracion-de-un-plan-de-mantenimiento__estudio_mantenimiento.org"
   . 746)
- ("/home/javier/docs/notes/20250326T200523--git__linux.org" . 2421)
- ("/home/javier/.dotfiles/.emacs.d/private.el" . 3802))
+ ("/home/javier/docs/notes/20250326T200523--git__linux.org" . 2421))

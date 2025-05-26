@@ -574,6 +574,7 @@ The command supports previewing the currently selected theme."
       (message "Not in a source block.")))) ; If not, do nothing
 
 ;; open dired in to especific directories
+;;;###autoload
 (defun open-specific-dired ()
   "Ask whether to open config, scripts, or nix config in Dired."
   (interactive)

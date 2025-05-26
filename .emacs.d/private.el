@@ -6,19 +6,21 @@
 
 ;;; Code:
 
-;; ;; Initialize package sources
+;; Initialize package sources
+;; Install use-package support
+(require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                         ;; ("org" . "https://orgmode.org/elpa/")
                         ("gnu" . "https://elpa.gnu.org/packages/")
                         ("elpa" . "https://elpa.gnu.org/packages/")))
-;; (package-initialize)
+(package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 ;; Initialize use-package on non-Linux platforms
-;; (unless (package-installed-p 'use-package)
-;; (package-install 'use-package))
-;; (require 'use-package)
-;; (setq use-package-always-ensure t)
+(unless (package-installed-p 'use-package)
+(package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
 
 (use-package auto-package-update
   :custom
@@ -29,20 +31,20 @@
   (auto-package-update-maybe)
   (auto-package-update-at-time "09:00"))
 
-(use-package no-littering)
+(use-package no-littering
+  :ensure t)
 
 ;; no-littering doesn't set this by default so we must place
 ;; auto save files in the same path as it uses for sessions
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
-(use-package async
-  :config (setq async-bytecomp-package-mode 1))
-
 ;;; UTILITIES
+;; (message (expand-file-name (concat user-emacs-directory "elisp/utilities.el")))
 (use-package utilities
   :load-path "~/.emacs.d/elisp"
-  :demand t)  ;; or `:demand t` if you want to load it immediately
+  :defer 5
+  :init (message "utilities loaded correctly"))
 
 ;;; DOOM-MODELINE
 ;; (use-package doom-modeline
@@ -50,9 +52,12 @@
 ;;   ;; :hook (after-init . doom-modeline-mode))
 ;;   :init (doom-modeline-mode 1))
 
-;; (use-package hide-mode-line
-;;   :ensure t
-;;   :defer t)
+(use-package hide-lines
+  :ensure t)
+
+(use-package hide-mode-line
+  :ensure t
+  :defer t)
 
 ;; (setq doom-modeline-icon nil)
 ;; (setq doom-modeline-enable-word-count nil)
@@ -120,6 +125,17 @@
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
 ;;; DIRED RELATED
+(use-package dired-open
+  :ensure t
+  :after dired)
+  ;; :config
+  ;; (setq dired-open-extensions '(
+  ;;                               ("jpg" . "imv")
+  ;;                               ("png" . "imv")
+  ;;                               ;; ("pdf" . "zathura")
+  ;;                               ("mkv" . "mpv")
+  ;;                               ("mp4" . "mpv"))))
+
 (use-package peep-dired
   :after dired
   :hook (evil-normalize-keymaps . peep-dired-hook)
@@ -127,6 +143,31 @@
   (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 
+(use-package dired-preview
+  :ensure t
+  :after dired)
+(add-hook 'dired-mode-hook #'dired-preview-mode)
+(setq dired-preview-delay 0.1)
+(setq dired-preview-max-size (expt 2 20))
+(setq dired-preview-ignored-extensions-regexp
+        (concat "\\."
+                "\\(gz\\|"
+                "zst\\|"
+                "tar\\|"
+                "xz\\|"
+                "rar\\|"
+                "zip\\|"
+                "iso\\|"
+                "epub"
+                "\\)"))
+
+(defun my-dired-preview-to-the-right ()
+  "My preferred `dired-preview-display-action-alist-function'."
+  '((display-buffer-in-side-window)
+    (side . right)
+    (window-width . 0.4)))
+
+(setq dired-preview-display-action-alist #'my-dired-preview-to-the-right)
 ;;; EVIL
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
@@ -261,11 +302,14 @@
                                     company-dabbrev-code company-gtags company-keywords
                                     company-oddmuse company-dabbrev)))
 
+(add-hook 'prog-mode-hook #'company-mode)
+(add-hook 'org-mode-hook #'company-mode)
+
 ;;; ORDERLESS
 (use-package orderless
   :ensure t
-  :init
-  (setq completion-styles '(orderless basic)))
+  :custom
+  (setq completion-styles '(orderless)))
 
 ;;; POSFRAME
 (use-package posframe
@@ -293,6 +337,7 @@
          ("C-c C-d C-f" . denote-dired-filter)
          ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
          ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
+(add-hook 'dired-mode-hook #'denote-dired-mode)
 
 
 (setq denote-directory (expand-file-name "~/docs/notes"))
@@ -621,7 +666,7 @@ Follows the sequence: % m (regex), t, K."
     "f g" '(counsel-grep-or-swiper :wk "Search for string current file")
     "f l" '(denote-find-link :wk "Denote find links")
     "f p" '((lambda () (interactive)
-              (find-file "~/.emacs.d/config.org"))
+              (find-file "~/.emacs.d/private.el"))
             :wk "Open noobemacs Configuraiton file.")
     "f r" '(recentf :wk "Find recent files")
     "f u" '(sudo-edit-find-file :wk "Sudo find file")
@@ -863,18 +908,12 @@ folder, otherwise delete a word"
   (vertico-mode))
   ;; (vertico-posframe-mode))
 
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
+;; (use-package vertico-posframe
+;;   :ensure t)
 
-(use-package vertico-posframe
-  :ensure t)
-
-(add-to-list 'vertico-multiform-categories
-             '(jinx grid (vertico-grid-annotate . 20)))
-(vertico-multiform-mode 1)
+;; (add-to-list 'vertico-multiform-categories
+;;              '(jinx grid (vertico-grid-annotate . 20)))
+;; (vertico-multiform-mode 1)
 
 (use-package marginalia
   :after vertico
@@ -903,6 +942,8 @@ folder, otherwise delete a word"
   :ensure t
   :hook ((org-mode . rainbow-mode)
          (prog-mode . rainbow-mode)))
+(add-hook 'org-mode-hook #'rainbow-mode)
+(add-hook 'prog-mode-hook #'rainbow-mode)
 
 (use-package highlight-indent-guides
   :config
@@ -921,13 +962,15 @@ folder, otherwise delete a word"
 (setq highlight-thing-delay-seconds 0.2)
 (setq highlight-thing-exclude-thing-under-point nil)
 
-;;;###autoload
 (use-package yasnippet
   ;; :defer 2
   ;; :init (yas-reload-all)
   :custom (yas-keymap-disable-hook (lambda () (frame-visible-p corfu--frame)))
   :hook ((prog-mode . yas-minor-mode)
          (org-mode . yas-minor-mode)))
+
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+(add-hook 'org-mode-hook #'yas-minor-mode)
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -940,11 +983,16 @@ folder, otherwise delete a word"
 (use-package ivy-yasnippet
   :ensure t)
 
+;; (use-package fill-column-indicator
+;;   :ensure nil
+;;   :config
+;;     (set-face-background 'fill-column-indicator "white"))
+
 ; Settings:
 (setq-default fill-column 80)
 ;; Enable display-fill-column-indicator
-(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
-(add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
+;; (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+;; (add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
 
 (defun my-show-doc-or-describe-symbol ()
   "Show LSP UI doc if LSP is active, otherwise describe symbol at point."
@@ -969,6 +1017,7 @@ folder, otherwise delete a word"
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
+(add-hook 'org-mode-hook #'org-auto-tangle-mode)
 
 (use-package org-mime
   :ensure t)
@@ -1021,6 +1070,32 @@ folder, otherwise delete a word"
    '(:inverse-video nil :box nil :weight 'bold))
   :hook
   (org-mode . org-rainbow-tags-mode))
+(add-hook 'org-mode-hook #'org-rainbow-tags-mode)
+
+(use-package toc-org
+  :commands toc-org-enable
+  :init (add-hook 'org-mode-hook 'toc-org-enable))
+
+(require 'org-indent)
+(add-hook 'org-mode-hook 'org-indent-mode)
+
+(use-package org-bullets
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("⁖" "⁖" "⁖" "⁖" "⁖" "○" "●")))
+  ;; (org-bullets-bullet-list '("" "" "" "" "" "" "")))
+(add-hook 'org-mode-hook #'org-bullets-mode)
+
+(use-package org-download
+  :ensure t
+  :defer t)
+
+(require 'org-tempo)
+(require 'org-id)
+(setq org-id-link-to-org-use-id 'use-existing)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-x x i") 'jp/org-id-headline)
+(global-set-key (kbd "C-x x I") 'jp/org-id-headlines)
 
 (use-package pulsar
   :config
@@ -1030,6 +1105,53 @@ folder, otherwise delete a word"
   (setq pulsar-face 'isearch)
   (pulsar-global-mode 1)
   :bind ("<f2>" . pulsar-pulse-line))
+
+(defun terror/slide-setup ()
+  (global-hl-line-mode -1)
+  (org-bullets-mode 1)
+  (setq text-scale-mode-amount 2)
+  (text-scale-mode 1)
+  (emacs-solo/center-document-mode 1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 50)
+  (org-display-inline-images)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode 1)
+  (hide-lines-matching "#\\+begin_src")
+  (hide-lines-matching "#\\+end_src"))
+
+(defun terror/slide-end ()
+  (global-hl-line-mode -1)
+  (setq text-scale-mode-amount 0)
+  (text-scale-mode -1)
+  (emacs-solo/center-document-mode -1)
+  (set-frame-parameter (selected-frame)
+                       'internal-border-width 0)
+  (toggle-frame-fullscreen)
+  (hide-mode-line-mode -1)
+  (org-fold-show-all))
+
+(use-package org-tree-slide
+  :ensure t
+  :after org
+  :hook ((org-tree-slide-play . terror/slide-setup)
+         (org-tree-slide-stop . terror/slide-end))
+  :init
+  (setq org-image-actual-width nil
+        org-tree-slide-header t
+        org-tree-slide-breadcrumbs " > "
+        org-tree-slide-activate-message "Presentation Begins"
+        org-tree-slide-deactivate-message "End of presentation"))
+
+(add-hook 'org-tree-slide-play-hook #'terror/slide-setup)
+(add-hook 'org-tree-slide-stop-hook #'terror/slide-end)
+
+
+(global-set-key (kbd "<f12>") 'org-tree-slide-mode)
+(global-set-key (kbd "S-<f12>") 'org-tree-slide-skip-done-toggle)
+(with-eval-after-load "org-tree-slide"
+  (define-key org-tree-slide-mode-map (kbd "<f1>") 'org-tree-slide-move-previous-tree)
+  (define-key org-tree-slide-mode-map (kbd "<f2>") 'org-tree-slide-move-next-tree))
 
 ; Settings
 (global-visual-line-mode t)  ;; Enable truncated lines
@@ -1055,7 +1177,7 @@ folder, otherwise delete a word"
 (setq org-log-done 'time)
 (setq org-hide-emphasis-markers t)
 (setq org-log-into-drawer t)
-(setq org-ellipsis " [...]")
+(setq org-ellipsis " ⤵")
 (setq org-directory "~/public/org/")
 (setq org-tag-alist
       '(;;Places
@@ -1263,6 +1385,7 @@ folder, otherwise delete a word"
      (define-key org-agenda-mode-map (kbd "<backtab>") 'org-agenda-previous-item)))
 
 (add-hook 'org-agenda-mode-hook 'page-break-lines-mode)
+(global-set-key (kbd "C-c C-h") 'consult-org-agenda)
 (setq org-agenda-skip-deadline-if-done t)
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-window-setup 'current-window)
@@ -1626,10 +1749,188 @@ See `org-capture-templates' for more information."
       ;; Delete the window where fzf was opened
       (delete-window window))))
 
+;;; LATEX
+;; LaTeX Classes
+(with-eval-after-load 'ox-latex
+  ;; Add custom class for: Manuals
+  (add-to-list 'org-latex-classes
+               '("manuals"
+                 "\\documentclass[a4paper,12pt]{article}  [NO-DEFAULT-PACKAGES] [PACKAGES] [EXTRA]
 
-(message "private file loaded...")
+                \\usepackage{fontspec}
+                \\usepackage[scaled=1]{gentium} \\renewcommand\\familydefault{\\rmdefault}
+                \\usepackage[scaled=.90]{cascadia-code} \\renewcommand*\\familydefault{\\ttdefault}
+                \\usepackage[scaled=.85,tabular,lining]{montserrat} \\renewcommand*\\familydefault{\\sfdefault}
+
+                \\usepackage[a4paper, left=1in, right=1in, top=1in, bottom=1in]{geometry}
+                \\setlength{\\textheight}{9.5in}
+                \\setlength{\\textwidth}{6.5in}
+
+                \\usepackage{hyperref}
+                \\hypersetup{
+                    colorlinks,
+                    citecolor=gray,
+                    filecolor=orange,
+                    linkcolor=black,
+                    urlcolor=NavyBlue
+                }
+                \\usepackage{bookmark}
+
+                \\usepackage{minted}
+                \\usepackage[dvipsnames]{xcolor}
+                \\usepackage{listings}
+
+                \\usepackage{fancyhdr}
+                \\usepackage{lastpage}
+                \\pagestyle{fancy}
+                \\fancyhf{}
+                \\fancyhead[R]{\\bf{\\leftmark}}
+                \\fancyfoot[C]{\\thepage{} of \\pageref{LastPage}}
+                \\fancyfoot[R]{ Javier Pacheco }
+
+                \\AddToHook{cmd/section/before}{\\clearpage}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+  (add-to-list 'org-latex-classes
+               '("exam"
+                 "\\documentclass[11pt,addpoints]{exam} [NO-DEFAULT-PACKAGES]
+                \\usepackage{graphicx}
+                \\usepackage{pgf,tikz,pgfplots}
+                \\pgfplotsset{compat=1.15}
+                \\usepgfplotslibrary{fillbetween}
+                \\pointpoints{punto}{puntos}
+                \\pagestyle{headandfoot}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+(setq org-latex-listings 't)
+(setq TeX-engine 'xetex)
+
+(use-package auctex
+  :ensure t)
+
+(setq org-export-allow-bind-keywords t)
+
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode %f"
+        "xelatex -interaction nonstopmode %f")) ;; for multiple passes
+(setq TeX-command-extra-options "-shell-escape")
+
+(setq org-latex-pdf-process
+      '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+(setq org-latex-listings 'minted)       ;; Use minted for code blocks
+(setq org-latex-minted-options          ;; Here you add the options
+      '(
+        ("linenos" "true")				;; Enable line numbers.
+        ("numbersep" "2pt")				;; separation of numbers.
+        ("breaklines" "true")				;; enable breaklines.
+        ;; ("frame" "leftline")				;; Add a leftline to the frame.
+        ;; ("framerule" "2pt")				;; Weight of the leftline.
+        ;; ("labelposition" "bottomline")	;; Position of label.
+        ("bgcolor" "GreenYellow!20")
+
+        ))		;; color and level of transparency.
 
 
+;;; SPELL
+
+(if lpr-windows-system
+    (setenv "LANG" "en_US, es_MX"))
+(if lpr-windows-system
+    (setenv "DICPATH"
+            (concat (getenv "HOME") ".emacs.d/lang")))
+(setq ispell-hunspell-dict-paths-alist
+      '(("en_US" "~/.emacs.d/lang/en_US.aff")
+        ("es_MX" "~/.emacs.d/lang/es_MX.aff")))
+
+(if lpr-windows-system
+    ;;; Windows
+    (setq ispell-local-dictionary-alist
+          ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
+          ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
+          '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+            ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
+    ;;; Linux
+  (setq ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+          ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
+
+(setq ispell-program-name "hunspell")
+(setq ispell-local-dictionary "en_US")
+
+
+;; ;; Change betwen English and Spanish,
+;; ;; English is he default.
+(defvar ispell-current-dictionary "en_US")
+
+(defun toggle-ispell-dictionary ()
+  (interactive)
+  (if (string= ispell-current-dictionary "en_US")
+      (progn
+        (setq ispell-current-dictionary "es")
+        (message "Switched to Spanish dictionary"))
+    (progn
+      (setq ispell-current-dictionary "en_US")
+      (message "Switched to English dictionary")))
+  (ispell-change-dictionary ispell-current-dictionary))
+
+;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
+
+(when (eq system-type 'gnu/linux)
+  (use-package jinx
+    :ensure t
+    :hook (text-mode . jinx-mode)
+    :bind (("M-;" . jinx-correct)
+           ("<f8>" . jinx-languages))))
+(add-hook 'text-mode-hook #'jinx-mode)
+
+
+;;; PDF
+(use-package pdf-tools
+  :defer t
+  :commands (pdf-loader-install)
+  :mode "\\.pdf\\'"
+  :bind (:map pdf-view-mode-map
+              ("j" . pdf-view-next-page-command)
+              ("k" . pdf-view-previous-page-command))
+  :init (pdf-loader-install)
+  :config (add-to-list 'revert-without-query ".pdf"))
+
+(add-hook 'pdf-view-mode-hook (blink-cursor-mode -1))
+
+(defun my-evil-pdf-view-keybindings ()
+  (evil-define-key 'normal doc-view-mode-map
+    "j" 'pdf-view-next-page-command
+    "k" 'pdf-view-previous-page-command))
+
+(add-hook 'pdf-view-mode-hook 'my-evil-pdf-view-keybindings)
+
+(use-package doc-view
+  :custom
+  (doc-view-resolution 200)
+  (doc-view-mupdf-use-svg t)
+  (large-file-warning-threshold (* 50 (expt 2 20)))
+  :bind
+  (:map doc-view-mode-map
+        ("j" . doc-view-next-page)
+        ("k" . doc-view-previous-page)))
+
+(defun my-evil-doc-view-keybindings ()
+  (evil-define-key 'normal doc-view-mode-map
+    "j" 'doc-view-next-page
+    "k" 'doc-view-previous-page))
+
+(add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)
 
 (provide 'private)
 ;;; private.el ends here

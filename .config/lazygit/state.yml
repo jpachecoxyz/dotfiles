@@ -6,7 +6,7 @@ recentrepos:
     - /home/javier/webdev/jpachecoxyz
     - /home/javier/.local/src/void-packages
 startuppopupversion: 5
-lastversion: 0.49.0
+lastversion: 0.50.0
 customcommandshistory:
     - q
 hidecommandlog: false
