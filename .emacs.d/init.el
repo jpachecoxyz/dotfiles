@@ -82,6 +82,8 @@
   (column-number-mode nil)
   (line-number-mode nil)
   (line-spacing nil)
+  (global-visual-line-mode t)
+  (visual-line-mode t)
   (completion-ignore-case t)
   (completions-detailed t)
   (delete-by-moving-to-trash t)

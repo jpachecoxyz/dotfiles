@@ -1,0 +1,9 @@
+#+TYPST: #set page(paper: "a4", margin: (x:2cm, y:2cm))
+#+TYPST: #set text(font: "Iosevka", size: 10pt)
+#+TYPST: #set par(justify: true, leading: 0.52em)
+#+TYPST: #import "@preview/codly:1.3.0": *
+#+TYPST: #import "@preview/codly-languages:0.1.1": *
+#+TYPST: #show: codly-init.with()
+#+TYPST: #codly(zebra-fill: none)
+#+TYPST: #codly(fill: yellow.lighten(80%))
+#+TYPST: #codly(display-name: false)

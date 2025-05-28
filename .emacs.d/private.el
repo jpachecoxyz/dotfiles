@@ -1224,6 +1224,7 @@ folder, otherwise delete a word"
 
 (advice-add 'org-refile :after 'org-save-all-org-buffers)
 (add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'text-mode-hook 'visual-line-mode)
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;; Attempt to open info files in new windows.
@@ -1635,6 +1636,7 @@ See `org-capture-templates' for more information."
           (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
           (docs "\\*devdocs\\*")
           (roam "\\*Capture\\*")
+          (typst "\\*typst-ts-compilation\\*")
           (org-log "\\*Org Note\\*")
           (warnings "\\*Warnings\\*")
           (magit "Magit")
@@ -1662,6 +1664,8 @@ See `org-capture-templates' for more information."
         (,ellama :regexp t
                  :same t)
         (,warnings :regexp t
+                   :ignore t)
+        (,typst :regexp t
                    :ignore t)
         (help-mode :select t
                    :align below
@@ -1840,6 +1844,36 @@ See `org-capture-templates' for more information."
         ("bgcolor" "GreenYellow!20")
 
         ))		;; color and level of transparency.
+
+
+(with-eval-after-load 'eglot
+  (with-eval-after-load 'typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))))
+
+(setq-default eglot-workspace-configuration
+            '(:tinymist (:exportPdf "onSave")))
+
+(use-package ox-typst
+  :ensure t
+  :after ox)
+
+(use-package treesit-auto
+  :ensure t
+  :custom (treesit-auto-install t)
+  :config
+  (global-treesit-auto-mode))
+
+(use-package treesit-ispell
+  :ensure t
+  :defer t
+  :bind (("C-x C-s" . treesit-ispell-run-at-point)))
+
+(with-eval-after-load 'treesit
+  (setq treesit-font-lock-level 4))
 
 
 ;;; SPELL
