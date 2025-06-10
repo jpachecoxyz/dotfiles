@@ -43,7 +43,7 @@
 ;; (message (expand-file-name (concat user-emacs-directory "elisp/utilities.el")))
 (use-package utilities
   :load-path "~/.emacs.d/elisp"
-  :defer 5
+  :defer 1
   :init (message "utilities loaded correctly"))
 
 ;;; DOOM-MODELINE
@@ -118,23 +118,10 @@
 (use-package nerd-icons
 :ensure t)
 
-(use-package nerd-icons-completion
-  :after marginalia
-  :config
-  (nerd-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
 ;;; DIRED RELATED
 (use-package dired-open
   :ensure t
   :after dired)
-  ;; :config
-  ;; (setq dired-open-extensions '(
-  ;;                               ("jpg" . "imv")
-  ;;                               ("png" . "imv")
-  ;;                               ;; ("pdf" . "zathura")
-  ;;                               ("mkv" . "mpv")
-  ;;                               ("mp4" . "mpv"))))
 
 (use-package peep-dired
   :after dired
@@ -143,31 +130,7 @@
   (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
   (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 
-(use-package dired-preview
-  :ensure t
-  :after dired)
-(add-hook 'dired-mode-hook #'dired-preview-mode)
-(setq dired-preview-delay 0.1)
-(setq dired-preview-max-size (expt 2 20))
-(setq dired-preview-ignored-extensions-regexp
-        (concat "\\."
-                "\\(gz\\|"
-                "zst\\|"
-                "tar\\|"
-                "xz\\|"
-                "rar\\|"
-                "zip\\|"
-                "iso\\|"
-                "epub"
-                "\\)"))
 
-(defun my-dired-preview-to-the-right ()
-  "My preferred `dired-preview-display-action-alist-function'."
-  '((display-buffer-in-side-window)
-    (side . right)
-    (window-width . 0.4)))
-
-(setq dired-preview-display-action-alist #'my-dired-preview-to-the-right)
 ;;; EVIL
 (use-package evil
   :init      ;; tweak evil's configuration before loading it
@@ -178,7 +141,10 @@
   evil-mode-line-format nil
   evil-undo-system 'undo-redo)  ;; Adds vim-like C-r redo functionality
   :config
-  (evil-mode))
+  (evil-mode)
+  (modify-syntax-entry ?_ "w")
+  (evil-set-leader '(normal insert visual motion) (kbd "\\"))
+  (evil-define-key nil 'global (kbd "<leader>t") 'photon-vterm-toggle))
 
 (defun my/evil-open-at-point ()
   "Open link at point in org-mode or run `dashboard-return` in dashboard-mode. Do nothing elsewhere."
@@ -304,6 +270,7 @@
 
 (add-hook 'prog-mode-hook #'company-mode)
 (add-hook 'org-mode-hook #'company-mode)
+(add-hook 'typst-ts-mode-hook #'company-mode)
 
 ;;; ORDERLESS
 (use-package orderless
@@ -338,7 +305,6 @@
          ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
          ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
 (add-hook 'dired-mode-hook #'denote-dired-mode)
-
 
 (setq denote-directory (expand-file-name "~/docs/notes"))
 (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
@@ -763,7 +729,7 @@ Follows the sequence: % m (regex), t, K."
               (find-file "~/webdev/jpachecoxyz/org/jpacheco.xyz.org"))
             :wk "Open web org file.")
     "o L" '(list-and-open-url-in-buffer :wk "Follow urls in buffer")
-    "o t" '(toggle-eshell-buffer :wk "Toggle terminal")
+    "o t" '(vterm-toggle :wk "Toggle terminal")
     "o s" '(toggle-scratch-buffer :wk "Toggle scratch buffer")
     "o e" '(toggle-org-buffer :wk "Toggle org buffer")
     "o F" '(select-frame-by-name :wk "Select frame by name"))
@@ -801,7 +767,7 @@ Follows the sequence: % m (regex), t, K."
     "t o" '(org-mode :wk "Toggle org mode")
     "t p" 'org-export-to-latex-and-compile-with-tectonic :wk "Export this buffer to pdf using Tectonic"
     "t r" '(rainbow-mode :wk "Toggle rainbow mode")
-    "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+    "t t" '(vterm-toggle :wk "Toggle terminal"))
 
   (user/leader-keys
     "w" '(:ignore t :wk "Windows")
@@ -908,8 +874,8 @@ folder, otherwise delete a word"
   (vertico-mode))
   ;; (vertico-posframe-mode))
 
-;; (use-package vertico-posframe
-;;   :ensure t)
+(use-package vertico-posframe
+  :ensure t)
 
 ;; (add-to-list 'vertico-multiform-categories
 ;;              '(jinx grid (vertico-grid-annotate . 20)))
@@ -918,8 +884,8 @@ folder, otherwise delete a word"
 (use-package marginalia
   :after vertico
   :ensure t
-  :custom
-  (marginalia-annotators '(marginalia-annonators-heavy marginalia-annotators-light nil))
+  ;; :custom
+  ;; (marginalia-annotators '(marginalia-annonators-heavy marginalia-annotators-light nil))
   :init
   (marginalia-mode))
 
@@ -1629,63 +1595,103 @@ See `org-capture-templates' for more information."
                        my/goto-file-buffer-alist))])))
 
 ;;; WINDOW RULES
+;; (use-package shackle
+;;   :custom
+;;   ((shackle-rules
+;;     (let ((repls "\\*\\(cider-repl\\|sly-mrepl\\|ielm\\)")
+;;           (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
+;;           (docs "\\*devdocs\\*")
+;;           (vterm "\\*vterm\\*")
+;;           (roam "\\*Capture\\*")
+;;           (typst "\\*typst-ts-compilation\\*")
+;;           (org-log "\\*Org Note\\*")
+;;           (warnings "\\*Warnings\\*")
+;;           (magit "Magit")
+;;           (ellama "\\(.*(zephyr)\\.org\\)")
+;;           ;; (dired "Dired by name")
+;;           (scratch    "\\*scratch\\*"))
+;;       `((compilation-mode :noselect t
+;;                           :align above
+;;                           :size 0.2)
+;;         ("*Async Shell Command*" :ignore t)
+;;         (,repls :regexp t
+;;                 :align below
+;;                 :size 0.3)
+;;         (,org-log :regexp t
+;;                   :align below
+;;                   :size 0.3)
+;;         (occur-mode :select t
+;;                     :align right
+;;                     :size 0.3)
+;;         (diff-mode :select t)
+;;         (,docs :regexp t
+;;                :size 0.4
+;;                :align right
+;;                :select t)
+;;         (vterm-mode
+;;                :size 0.6
+;;                :align below
+;;                :select t)
+;;         (,ellama :regexp t
+;;                  :same t)
+;;         (,warnings :regexp t
+;;                    :ignore t)
+;;         (,typst :regexp t
+;;                    :ignore t)
+;;         (help-mode :select t
+;;                    :align below
+;;                    :size 0.5)
+;;         (,vcs :regexp t
+;;               :align above
+;;               :size 0.15
+;;               :select t)
+;;         (,scratch :regexp t
+;;                   :same t
+;;                   :select t)
+;;         (,magit :regexp t
+;;                 :same t
+;;                 :select t)
+;;         (,roam :regexp t
+;;                :same t
+;;                :select t))))
+;;    (shackle-default-rule nil ; '(:inhibit-window-quit t)
+;;                          ))
+;;   :config (shackle-mode))
+
 (use-package shackle
   :custom
-  ((shackle-rules
-    (let ((repls "\\*\\(cider-repl\\|sly-mrepl\\|ielm\\)")
-          (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
-          (docs "\\*devdocs\\*")
-          (roam "\\*Capture\\*")
-          (typst "\\*typst-ts-compilation\\*")
-          (org-log "\\*Org Note\\*")
-          (warnings "\\*Warnings\\*")
-          (magit "Magit")
-          (ellama "\\(.*(zephyr)\\.org\\)")
-          ;; (dired "Dired by name")
-          (scratch    "\\*scratch\\*"))
-      `((compilation-mode :noselect t
-                          :align above
-                          :size 0.2)
-        ("*Async Shell Command*" :ignore t)
-        (,repls :regexp t
-                :align below
-                :size 0.3)
-        (,org-log :regexp t
-                  :align below
-                  :size 0.3)
-        (occur-mode :select t
-                    :align right
-                    :size 0.3)
-        (diff-mode :select t)
-        (,docs :regexp t
-               :size 0.4
-               :align right
-               :select t)
-        (,ellama :regexp t
-                 :same t)
-        (,warnings :regexp t
-                   :ignore t)
-        (,typst :regexp t
-                   :ignore t)
-        (help-mode :select t
-                   :align below
-                   :size 0.5)
-        (,vcs :regexp t
-              :align above
-              :size 0.15
-              :select t)
-        (,scratch :regexp t
-                  :same t
-                  :select t)
-        (,magit :regexp t
-                :same t
-                :select t)
-        (,roam :regexp t
-               :same t
-               :select t))))
-   (shackle-default-rule nil ; '(:inhibit-window-quit t)
-                         ))
-  :config (shackle-mode))
+  (shackle-default-rule nil)
+  :config
+  (let ((repls "\\*\\(cider-repl\\|sly-mrepl\\|ielm\\)")
+        (vcs   "\\*\\(Flymake\\|Package-Lint\\|vc-\\(git\\|got\\) :\\).*")
+        (docs "\\*devdocs\\*")
+        (vterm "\\*vterm\\*.*")
+        (roam "\\*Capture\\*")
+        (typst "\\*typst-ts-compilation\\*")
+        (org-log "\\*Org Note\\*")
+        (warnings "\\*Warnings\\*")
+        (magit "Magit")
+        (ellama "\\(.*(zephyr)\\.org\\)")
+        (scratch "\\*scratch\\*"))
+    (setq shackle-rules
+          `((compilation-mode :noselect t :align above :size 0.2)
+            ("*Async Shell Command*" :ignore t)
+            (,repls :regexp t :align below :size 0.3)
+            (,org-log :regexp t :align below :size 0.3)
+            (occur-mode :select t :align right :size 0.3)
+            (diff-mode :select t)
+            (,docs :regexp t :size 0.4 :align right :select t)
+            (,vterm :regexp t :size 0.4 :align below :select t) ;; Fixed here
+            (,ellama :regexp t :same t)
+            (,warnings :regexp t :ignore t)
+            (,typst :regexp t :ignore t)
+            (help-mode :select t :align below :size 0.5)
+            (,vcs :regexp t :align above :size 0.15 :select t)
+            (,scratch :regexp t :same t :select t)
+            (,magit :regexp t :same t :select t)
+            (,roam :regexp t :same t :select t))))
+  (shackle-mode 1))
+
 
 (use-package popper
   :bind (("C-`"   . popper-toggle)
@@ -1694,11 +1700,7 @@ See `org-capture-templates' for more information."
   :custom
   (popper-reference-buffers
    '("\\*Async Shell Command\\*"
-     help-mode
-     compilation-mode
-     "\\(.*(zephyr)\\.org\\)"
-     "\\*Warnings\\*"
-     "\\*Messages\\*"))
+    ("\\*vterm\\*.*")))
   (popper-display-control t) ;; Let Popper handle popups entirely
   :config
   (popper-mode +1)
@@ -1845,21 +1847,17 @@ See `org-capture-templates' for more information."
 
         ))		;; color and level of transparency.
 
-
-(with-eval-after-load 'eglot
-  (with-eval-after-load 'typst-ts-mode
-    (add-to-list 'eglot-server-programs
-                 `((typst-ts-mode) .
-                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
-                                          "tinymist"
-                                          "typst-lsp"))))))
-
-(setq-default eglot-workspace-configuration
-            '(:tinymist (:exportPdf "onSave")))
-
+;;; TYPST
 (use-package ox-typst
   :ensure t
   :after ox)
+
+(use-package typst-ts-mode
+  :vc (:url "https://codeberg.org/meow_king/typst-ts-mode")
+  :custom
+  (typst-ts-watch-options "--open")
+  :config
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
 
 (use-package treesit-auto
   :ensure t
@@ -1875,29 +1873,27 @@ See `org-capture-templates' for more information."
 (with-eval-after-load 'treesit
   (setq treesit-font-lock-level 4))
 
+(with-eval-after-load 'eglot
+  (with-eval-after-load 'typst-ts-mode
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))))
+
+(setq-default eglot-workspace-configuration
+            '(:tinymist (:exportPdf "onSave")))
+
 
 ;;; SPELL
-
-(if lpr-windows-system
-    (setenv "LANG" "en_US, es_MX"))
-(if lpr-windows-system
-    (setenv "DICPATH"
-            (concat (getenv "HOME") ".emacs.d/lang")))
 (setq ispell-hunspell-dict-paths-alist
       '(("en_US" "~/.emacs.d/lang/en_US.aff")
         ("es_MX" "~/.emacs.d/lang/es_MX.aff")))
 
-(if lpr-windows-system
-    ;;; Windows
-    (setq ispell-local-dictionary-alist
-          ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
-          ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
-          '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
-            ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "es_MX") nil utf-8)))
     ;;; Linux
-  (setq ispell-local-dictionary-alist
-        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-          ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8))))
+(setq ispell-local-dictionary-alist
+    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+        ("es_ES" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)))
 
 (setq ispell-program-name "hunspell")
 (setq ispell-local-dictionary "en_US")
@@ -1911,7 +1907,7 @@ See `org-capture-templates' for more information."
   (interactive)
   (if (string= ispell-current-dictionary "en_US")
       (progn
-        (setq ispell-current-dictionary "es")
+        (setq ispell-current-dictionary "es_ES")
         (message "Switched to Spanish dictionary"))
     (progn
       (setq ispell-current-dictionary "en_US")
@@ -1920,14 +1916,26 @@ See `org-capture-templates' for more information."
 
 ;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
 
-(when (eq system-type 'gnu/linux)
-  (use-package jinx
-    :ensure t
-    :hook (text-mode . jinx-mode)
-    :bind (("M-;" . jinx-correct)
-           ("<f8>" . jinx-languages))))
-(add-hook 'text-mode-hook #'jinx-mode)
+;; (when (eq system-type 'gnu/linux)
+;;   (use-package jinx
+;;     :ensure t
+;;     :hook (text-mode . jinx-mode)
+;;     :bind (("M-;" . jinx-correct)
+;;            ("<f8>" . jinx-languages))))
+;; (add-hook 'text-mode-hook #'jinx-mode)
 
+(use-package jinx
+  :hook (text-mode . jinx-mode)
+  :bind (("M-;" . jinx-correct)
+         ("<f8>" . jinx-languages))
+  :custom
+  ;; Ruta a tus diccionarios
+  (jinx-dictionary-alist
+   '(("en_US" . "/usr/share/hunspell/en_US.aff")
+     ("es_ES" . "/usr/share/hunspell/es_ES.aff"))))
+;; Enable jinx only in certain modes
+(dolist (hook '(text-mode-hook prog-mode-hook conf-mode-hook))
+  (add-hook hook #'jinx-mode))
 
 ;;; PDF
 (use-package pdf-tools
@@ -1965,6 +1973,71 @@ See `org-capture-templates' for more information."
     "k" 'doc-view-previous-page))
 
 (add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)
+
+;;; VTERM
+(defun my/select-from-zsh-history ()
+  "Selectt one option from ~/.zsh_history file."
+  (with-temp-buffer
+    (insert-file-contents (expand-file-name "~/.cache/zsh/history"))
+    (let* ((raw-content (buffer-substring-no-properties (point-min) (point-max)))
+           (lines (string-split raw-content "\n"))
+           (choices (mapcar (lambda (line) (second (string-split line ";"))) lines)))
+      (completing-read "Select command: " choices))))
+
+(defun my/insert-from-zsh-history ()
+  "Search into zsh history and insert the selected choice into buffer."
+  (interactive)
+  (when-let* ((selected-choice (my/select-from-zsh-history)))
+    (vterm-insert selected-choice)))
+
+(use-package vterm
+  :ensure t
+  ;; :defer t
+  :hook
+  (vterm-mode . (lambda ()
+                  (setq-local show-trailing-whitespace nil)))
+  :custom
+  (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=yes")
+  (vterm-always-compile-module t))
+
+(use-package vterm-toggle
+  :ensure t
+  :custom
+  (vterm-toggle-scope 'project)
+  (vterm-toggle-hide-method 'reset-window-configration)
+  :hook
+  (vterm-toggle-show . evil-insert-state))
+
+(defvar photon-main-frame (selected-frame))
+(defvar photon-main-window (selected-window))
+
+(defun photon-vterm-toggle ()
+  (interactive)
+  (let ((buf (buffer-name)))
+    (if (equal (selected-frame) photon-main-frame)
+    (progn
+      (unless (get-buffer "*vterm*")
+        (vterm)
+        (switch-to-buffer buf))
+      (posframe-show "*vterm*"
+             :poshandler 'posframe-poshandler-frame-center
+             :width 180
+             :height 20
+             :left-fringe 10
+             :right-fringe 10
+             :border-width 2
+             :border-color "#A6Accd"
+             :window-point (with-current-buffer "*vterm*"
+                     (point))
+             :accept-focus t)
+      (select-frame-set-input-focus (with-current-buffer "*vterm*"
+                      posframe--frame)))
+      (progn
+    (posframe-hide-all)
+    (select-frame-set-input-focus photon-main-frame)
+    (select-window photon-main-window)))))
+
+(define-key vterm-mode-map (kbd "<normal-state> <escape>") 'photon-vterm-toggle)
 
 (provide 'private)
 ;;; private.el ends here

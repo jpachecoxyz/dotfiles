@@ -591,7 +591,7 @@ The command supports previewing the currently selected theme."
      ((string= choice "books")
       (consult-find "~/docs/books/"))
      ((string= choice "docs")
-      (consult-find "~/docs/org/"))
+      (consult-find "~/docs/typst/"))
      (t
       (message "Invalid choice")))))
 

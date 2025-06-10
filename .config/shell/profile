@@ -38,7 +38,7 @@ GPG_TTY=$(tty)
 # ~/ Clean-up:
 LANG=en_US.UTF-8
 LC_ALL=en_US.UTF-8
-LANGUAGE=en_US.UTF-8
+# LANGUAGE=en_US.UTF-8
 XDG_CONFIG_HOME="$HOME/.config"
 XDG_DATA_HOME="$HOME/.local/share"
 XDG_BIN_HOME=$HOME/.local/bin/scripts
@@ -75,11 +75,14 @@ CPLUS_INCLUDE_PATH="/home/javier/.guix-profile/include${CPLUS_INCLUDE_PATH:+:}$C
 LIBRARY_PATH="/home/javier/.guix-profile/lib${LIBRARY_PATH:+:}$LIBRARY_PATH"
 NIX_PROFILES="/nix/var/nix/profiles/default $HOME/.nix-profile"
 for i in $NIX_PROFILES; do
-    export PATH="${PATH}:${i}/bin"
+	export PATH="${PATH}:${i}/bin"
 done
 NIXPKGS_ALLOW_UNFREE=1
 NIX_CONFIG="experimental-features = nix-command flakes"
 # XDG_CURRENT_DESKTOP=wayland
+GDK_BACKEND=wayland
+CLUTTER_BACKEND=wayland
+QT_QPA_PLATFORM=wayland
 
 # NNN
 BLK="0B" CHR="0B" DIR="04" EXE="06" REG="00" HARDLINK="06" SYMLINK="06" MISSING="00" ORPHAN="09" FIFO="06" SOCK="0B" OTHER="06"

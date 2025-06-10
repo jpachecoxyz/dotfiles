@@ -1,5 +1,7 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-(("/home/javier/.dotfiles/.emacs.d/private.el" . 686)
+(("/home/javier/docs/typst/3_cv/admin.typ" . 6291)
+ ("/home/javier/.dotfiles/.emacs.d/private.el" . 73071)
+ ("/home/javier/.dotfiles/.emacs.d/init.el" . 2710)
  ("/home/javier/.local/" (dired-filename . "/home/javier/.local/src"))
  ("/home/javier/.local/src/"
   (dired-filename . "/home/javier/.local/src/emacs-solo"))
@@ -12,8 +14,7 @@
   (dired-filename . "/home/javier/.local/src/emacs-solo/etc/gnus"))
  ("/home/javier/.local/src/emacs-solo/elisp/" . 45)
  ("/home/javier/.local/src/emacs-solo/doc/"
-  (dired-filename
-   . "/home/javier/.local/src/emacs-solo/doc/demo-01-overall.png"))
+  (dired-filename . "/home/javier/.local/src/emacs-solo/doc/demo-01-overall.png"))
  ("/home/javier/.local/src/figlet-fonts/"
   (dired-filename . "/home/javier/.local/src/figlet-fonts/.git"))
  ("/home/javier/.local/share/"
@@ -25,10 +26,8 @@
  ("/home/javier/.hex/" (dired-filename . "/home/javier/.hex/packages"))
  ("/home/javier/.gnupg/"
   (dired-filename . "/home/javier/.gnupg/openpgp-revocs.d"))
- ("/home/javier/.emacs.d/"
-  (dired-filename . "/home/javier/.emacs.d/.cask"))
- ("/home/javier/.dotfiles/"
-  (dired-filename . "/home/javier/.dotfiles/.emacs.d"))
+ ("/home/javier/.emacs.d/" (dired-filename . "/home/javier/.emacs.d/.cask"))
+ ("/home/javier/.dotfiles/" (dired-filename . "/home/javier/.dotfiles/.emacs.d"))
  ("/home/javier/.dotfiles/.emacs.d/"
   (dired-filename . "/home/javier/.dotfiles/.emacs.d/init.el"))
  ("/home/javier/docs/notes/"
@@ -41,8 +40,7 @@
  ("/home/javier/.dotfiles/.emacs.d/elisp/utilities.el" . 26489)
  ("/home/javier/.dotfiles/.emacs.d/backup/config.org" . 53517)
  ("/home/javier/.dotfiles/.emacs.d/backup/"
-  (dired-filename
-   . "/home/javier/.dotfiles/.emacs.d/backup/config.org"))
+  (dired-filename . "/home/javier/.dotfiles/.emacs.d/backup/config.org"))
  ("/home/" (dired-filename . "/home/javier"))
  ("/home/javier/docs/" (dired-filename . "/home/javier/docs/notes"))
  ("/home/javier/docs/notes/20250419T112526==13=2--elaboracion-de-un-plan-de-mantenimiento__estudio_mantenimiento.org"

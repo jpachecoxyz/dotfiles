@@ -7,30 +7,35 @@ autoload -Uz add-zsh-hook
 setopt prompt_subst
 add-zsh-hook precmd vcs_info
 
-newline=$'\n'
-set_prompt() {
-    if [[ $UID -eq 0 ]]; then
-        # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{red}❯❯ %f'
-        # PROMPT='%F{red}❯❯ %f'
-        PROMPT='%F{red} λ %f'
-        RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
-    else
-        # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{blue}❯❯ %f'
-        # PROMPT='%F{cyan}❯❯ %f'
-        PROMPT='%F{magenta}%B(λ jpachecoxyz) -> %b%f '
-        RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
-    fi
-}
-# Call the function to set the initial prompt
-set_prompt
-# Define a precmd function to reset the prompt before each command
-precmd() {
-    set_prompt
-}
+# newline=$'\n'
+# set_prompt() {
+#     if [[ $UID -eq 0 ]]; then
+#         # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{red}❯❯ %f'
+#         # PROMPT='%F{red}❯❯ %f'
+#         PROMPT='%F{red} λ %f'
+#         RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
+#     else
+#         # PROMPT='%1 %F{cyan}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{blue}❯❯ %f'
+#         # PROMPT='%F{cyan}❯❯ %f'
+#         PROMPT='%F{magenta}%B(λ jpachecoxyz) -> %b%f '
+#         RPROMPT='%F{magenta}%~%f%F{magenta}${vcs_info_msg_0_}%f'
+#     fi
+# }
+# # Call the function to set the initial prompt
+# set_prompt
+# # Define a precmd function to reset the prompt before each command
+# precmd() {
+#     set_prompt
+# }
 
 # PROMPT='%1 %F{magenta}%/%f%F{blue}${vcs_info_msg_0_}%f%b ${newline}%F{blue}❯❯ %f'
 # PROMPT='%1 %F{cyan}%n%f%b %F{cyan}❯❯ %f'
 # RPROMPT='%F{magenta}[%2~%f%F{magenta}${vcs_info_msg_0_}]%f'
+
+# set up prompt
+NEWLINE=$'\n'
+# PROMPT="${NEWLINE}%K{#2E3440}%F{#E5E9F0}$(date +%_I:%M%P) %K{#3b4252}%F{#ECEFF4} %n %K{#4c566a} %~ %f%k ❯ " # nord theme
+PROMPT="${NEWLINE}%K{#3c3836}%F{#d5c4a1} %n@void %K{#504945} %~ %f%k ❯ " # warmer theme
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true

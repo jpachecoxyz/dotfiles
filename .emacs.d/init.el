@@ -34,7 +34,7 @@
   :type 'boolean
   :group 'emacs-solo)
 
-(defcustom emacs-solo-enable-dired-gutter t
+(defcustom emacs-solo-enable-dired-gutter nil
   "Enable `emacs-solo-enable-dired-gutter'."
   :type 'boolean
   :group 'emacs-solo)
@@ -155,12 +155,12 @@
   ;; won't ask for encoding (because undecided-unix) every single keystroke
   (modify-coding-system-alist 'file "" 'utf-8)
 
-  (set-face-attribute 'default nil :family "Iosevka" :height 120)
+  (set-face-attribute 'default nil :family "IosevkaNerdFont" :height 120)
 
   (when (eq system-type 'darwin)
     (setq insert-directory-program "gls")
     (setq mac-command-modifier 'meta)
-    (set-face-attribute 'default nil :family "Iosevka" :height 130))
+    (set-face-attribute 'default nil :family "IosevkaNerdFont" :height 130))
 
   ;; Save manual customizations to other file than init.el
   (setq custom-file (locate-user-emacs-file "custom-vars.el"))
@@ -169,6 +169,7 @@
   ;; Set line-number-mode with relative numbering
   (setq display-line-numbers-type 'relative)
   (add-hook 'prog-mode-hook #'display-line-numbers-mode)
+  (add-hook 'typst-ts-mode-hook #'display-line-numbers-mode)
 
   ;; A Protesilaos life savier HACK
   ;; Add option "d" to whenever using C-x s or C-x C-c, allowing a quick preview
@@ -369,8 +370,15 @@
       (window-width 1.0)
       (dedicated . t))
 
-     )))
+     ("\\*typst-ts-compilation\\*"
+      (display-buffer-in-side-window)
+      (side . bottom)
+      (slot . -1))
 
+     )))
+(add-to-list 'display-buffer-alist
+             '("\\*typst-ts-compilation\\*"
+               (display-buffer-no-window)))
 
 ;;; TAB-BAR
 (use-package tab-bar
@@ -1421,6 +1429,7 @@ Otherwise, open the repository's main page."
       (eglot-ensure)))
 
   (add-hook 'prog-mode-hook #'emacs-solo/eglot-setup)
+  (add-hook 'typst-ts-mode-hook #'emacs-solo/eglot-setup)
 
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp")))
