@@ -39,6 +39,7 @@ case "$1" in
     webcam) toggle_scratchpad "webcam" "foot -a scratchpad -e webcam" ;;
     tomb) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 800x500 -e tmount" ;;
     fzmount) toggle_scratchpad "scratchpad" "foot -a scratchpad -w 800x500 -e fzmount" ;;
+    emacs) toggle_scratchpad "Emacs" "emacs" ;;
 esac
 
 # The next tha you need to do is declare the keybinds in the  hyprland configuration 

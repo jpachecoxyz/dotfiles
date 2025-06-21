@@ -14,6 +14,3 @@ sudo nixos-rebuild switch --flake . && home-manager switch --flake .
 
 # Provide some feedback when done
 echo "Dotfiles setup complete."
-
-mkdir -p ~/pics/
-git clone https://codeberg.org/toru/art ~/pics/ --depth 1

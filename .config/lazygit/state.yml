@@ -1,13 +1,13 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/javier/.dotfiles
-    - /home/javier/code/python/dcmv
     - /home/javier/docs
+    - /home/javier/code/python/dcmv
     - /home/javier/.local/src/logman
     - /home/javier/webdev/jpachecoxyz
     - /home/javier/.local/src/void-packages
 startuppopupversion: 5
-lastversion: 0.51.1
+lastversion: 0.52.0
 customcommandshistory:
     - q
 hidecommandlog: false

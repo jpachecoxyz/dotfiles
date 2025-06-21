@@ -1,12 +1,12 @@
 [Default Applications]
-application/pdf=org.pwmt.zathura-pdf-poppler.desktop
-image/jpeg=nsxiv.desktop
-image/png=nsxiv.desktop
-x-scheme-handler/tg=userapp-Telegram Desktop-BH1PZ2.desktop
-x-scheme-handler/magnet=userapp-transmission-gtk-KUR7U2.desktop
-x-scheme-handler/tonsite=org.telegram.desktop.desktop
+application/pdf=org.pwmt.zathura.desktop
+; image/jpeg=nsxiv.desktop
+; image/png=nsxiv.desktop
+; x-scheme-handler/tg=userapp-Telegram Desktop-BH1PZ2.desktop
+; x-scheme-handler/magnet=userapp-transmission-gtk-KUR7U2.desktop
+; x-scheme-handler/tonsite=org.telegram.desktop.desktop
 
 [Added Associations]
-x-scheme-handler/tg=org.telegram.desktop.desktop;userapp-Telegram Desktop-BH1PZ2.desktop;
-x-scheme-handler/magnet=userapp-transmission-gtk-U7N3R2.desktop;userapp-transmission-gtk-KUR7U2.desktop;
-x-scheme-handler/tonsite=userapp-Telegram Desktop-0DXOZ2.desktop;org.telegram.desktop.desktop;
+; x-scheme-handler/tg=org.telegram.desktop.desktop;userapp-Telegram Desktop-BH1PZ2.desktop;
+; x-scheme-handler/magnet=userapp-transmission-gtk-U7N3R2.desktop;userapp-transmission-gtk-KUR7U2.desktop;
+; x-scheme-handler/tonsite=userapp-Telegram Desktop-0DXOZ2.desktop;org.telegram.desktop.desktop;

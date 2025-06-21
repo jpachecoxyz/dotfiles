@@ -16,39 +16,20 @@ plugins = [
 
 [scratchpads.term]
 animation = "fromBottom"
-command = "kitty --class scratchpad"
+command = "foot -a scratchpad -T Scratchpad"
 lazy = true
-size = "75% 60%"
+size = "75% 50%"
 max_size = "1920px 100%"
-margin = 50
-
-[scratchpads.music_player]
-animation = "fromRight"
-# command = "foot -a scratchpad -e ncmpcpp"
-command = "kitty --class scratchpad -e ncmpcpp"
-class = "scratchpad"
-lazy = true
-size = "75% 60%"
-max_size = "1920px 100%"
-margin = 50
-
-[scratchpads.file_manager]
-animation = "fromLeft"
-# command = "foot -a scratchpad -e yazi"
-command = "kitty --class scratchpad -e nnn -cH"
-class = "scratchpad"
-lazy = true
-size = "75% 60%"
-position = "5% 10%"
-max_size = "1920px 100%"
-margin = 50
+position = "15% 25%"
+margin = 70
 
 [scratchpads.tomb]
 animation = "fromBottom"
-command = "kitty --class scratchpad -e tmount.sh"
+command = "foot -a scratchpad -e tmount.sh"
 lazy = true
-size = "75% 60%"
+size = "50% 40%"
 max_size = "1920px 100%"
+position = "25% 55%"
 margin = 50
 
 [scratchpads.emacs]
@@ -59,14 +40,17 @@ lazy = true
 
 # Shorcuts_menu 
 [shortcuts_menu]
-engine = "tofi"
+engine = "fuzzel"
 # parameters = "-p '[prompt] 🍰 ' -dmenu -matching fuzzy -i"
 command_start = "💀 "
 
 [shortcuts_menu.entries]
-# "Tombs" = "pypr toggle tomb && hyprctl dispatch bringactivetotop && $updateWaybar"
-# "Mount Devices" = "hypr-scratchpads fzmount"
-# "Open telegram" = "telegram-desktop"
+"tombs" = "pypr toggle tomb && hyprctl dispatch bringactivetotop && $updateWaybar"
+"mount" = "hypr-scratchpads fzmount"
+"clipboard" = [
+    {name="entry", command="cliphist list", filter="s/\t.*//"},
+    "cliphist decode '[entry]' | wl-copy"
+]
 
 # layout_center.
 [layout_center]

@@ -7,7 +7,7 @@
 #+latex_header: \usepackage[dvipsnames]{xcolor}
 
 #+latex: \rmfamily
-#+latex_header: \usepackage[scaled=1]{gentium} \renewcommand\familydefault{\rmdefault} 
+#+latex_header: \usepackage[scaled=1]{gentium} \renewcommand\familydefault{\rmdefault}
 #+latex_header: \usepackage[scaled=.90]{cascadia-code} \renewcommand*\familydefault{\ttdefault}
 #+latex_header: \usepackage[scaled=.85,tabular,lining]{montserrat} \renewcommand*\familydefault{\sfdefault}
 #+latex_header: \usepackage{lipsum}
@@ -34,10 +34,10 @@
 #+latex_header: \fancyhf{}
 #+latex_header: \fancyhead[R]{\bf{\leftmark}}
 #+latex_header: \fancyfoot[C]{\thepage{} of \pageref{LastPage}}
-#+latex_header: \fancyfoot[R]{ Javier Pacheco }
+# #+latex_header: \fancyfoot[R]{ Javier Pacheco }
 
 # %------ [[ Codeblocks Format ]] ------%
 #+latex_header: \usepackage{minted}
 #+latex_header: \usepackage{listings}
 
-#+latex_header: \AddToHook{cmd/section/before}{\clearpage}
+# #+latex_header: \AddToHook{cmd/section/before}{\clearpage}

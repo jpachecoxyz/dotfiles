@@ -120,7 +120,7 @@ in
     pkgs.ollama
 
     # Terminal tools
-    pkgs-unstable.yazi    # File manager
+    # pkgs-unstable.yazi    # File manager
     pkgs.zellij           # Terminal multiplexer
     pkgs.lazygit          # git tui frontend
     pkgs.gtk3-x11         # gtk-launcher
@@ -136,8 +136,8 @@ in
     pkgs.cliphist
     pkgs.grimblast
     pkgs.mako
-    # pkgs.foot
-    pkgs.kitty
+    pkgs.foot
+    # pkgs.kitty
     pkgs.cron
     pkgs.tree
     pkgs.fzf
@@ -151,10 +151,8 @@ in
     pkgs.imagemagick
     pkgs.fastfetch
     pkgs.wf-recorder
-    pkgs.tofi
-    pkgs.transmission-gtk
-    pkgs.wlsunset
-    pkgs-unstable.matugen
+    # pkgs.tofi
+    pkgs.fuzzel
 
     # Browser / web
     pkgs.qutebrowser
@@ -178,12 +176,10 @@ in
     pkgs-unstable.gowall
 
     # graphics
-    pkgs.nsxiv
     pkgs.slurp
     pkgs.swappy
     pkgs.hyprshot
     pkgs.grim
-    pkgs.xorg.xrdb
 
     # tools
     pkgs.poppler
@@ -217,9 +213,6 @@ in
     pkgs.pinentry-curses
     pkgs.pass
     pkgs.gnupg
-
-    # Design
-    pkgs-unstable.freecad-wayland
 
     # Custom packages
     whdd

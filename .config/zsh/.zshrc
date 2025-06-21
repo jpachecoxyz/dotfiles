@@ -34,8 +34,8 @@ add-zsh-hook precmd vcs_info
 
 # set up prompt
 NEWLINE=$'\n'
-# PROMPT="${NEWLINE}%K{#2E3440}%F{#E5E9F0}$(date +%_I:%M%P) %K{#3b4252}%F{#ECEFF4} %n %K{#4c566a} %~ %f%k ❯ " # nord theme
-PROMPT="${NEWLINE}%K{#3c3836}%F{#d5c4a1} %n@void %K{#504945} %~ %f%k ❯ " # warmer theme
+PROMPT="${NEWLINE}%K{#2E3440}%F{#E5E9F0} %n@void %K{#3b4252} %~ %f%k ❯ " # nord theme
+# PROMPT="${NEWLINE}%K{#3c3836}%F{#d5c4a1} %n@void %K{#504945} %~ %f%k ❯ " # warmer theme
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true

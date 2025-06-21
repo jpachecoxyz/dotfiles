@@ -1,2 +1,27 @@
-#!/bin/sh
-exec emacsclient -c -a ""
+#!/usr/bin/env bash
+
+EMACS_CLASS="Emacs"
+
+# Obtener información de clientes en JSON
+clients=$(hyprctl clients -j)
+
+# Verificar si Emacs está abierto
+emacs_info=$(echo "$clients" | jq -r ".[] | select(.class == \"$EMACS_CLASS\")")
+
+if [[ -n "$emacs_info" ]]; then
+    # Emacs está abierto
+    emacs_address=$(echo "$emacs_info" | jq -r '.address')
+    emacs_workspace=$(echo "$emacs_info" | jq -r '.workspace.id')
+    current_workspace=$(hyprctl activeworkspace -j | jq -r '.id')
+
+    if [[ "$emacs_workspace" == "$current_workspace" ]]; then
+        # Está visible → ocultar con fakefullscreen
+        hyprctl dispatch fakefullscreen "$emacs_address"
+    else
+        # Está en otro workspace → ir a su workspace
+        hyprctl dispatch workspace "$emacs_workspace"
+    fi
+else
+    # Emacs no está abierto → lanzarlo
+    emacsclient --create-frame --alternate-editor="" -c &
+fi

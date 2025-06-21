@@ -232,6 +232,81 @@
   (define-key evil-normal-state-map (kbd "M-q") 'kill-current-buffer))
 (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
 
+(use-package origami
+  ;; :disabled
+  :config
+  ;;origami https://github.com/gregsexton/origami.el
+  ;; (use-package origami)
+  (global-origami-mode 1)
+
+  (defun nin-origami-toggle-node ()
+    (interactive)
+    (if (equal major-mode 'org-mode)
+    (org-cycle)
+      (save-excursion ;; leave point where it is
+    (goto-char (point-at-eol))             ;; then go to the end of line
+    (origami-toggle-node (current-buffer) (point)))))                 ;; and try to fold
+
+  (add-hook 'prog-mode-hook
+        (lambda ()
+          ;; parsers see in variable origami-parser-alist
+          (setq-local origami-fold-style 'triple-braces)
+          (origami-mode)
+          (origami-close-all-nodes (current-buffer))
+          ))
+  ;; mapping works only in normal mode
+  (evil-define-key 'normal prog-mode-map (kbd "<tab>") 'nin-origami-toggle-node)
+  ;; (evil-define-key 'normal php-mode-map (kbd "TAB") 'nin-origami-toggle-node)
+  ;; (evil-define-key 'normal php-mode-map (kbd "<tab>") 'nin-origami-toggle-node)
+
+  (define-key evil-normal-state-map "za" 'origami-forward-toggle-node)
+  (define-key evil-normal-state-map "zR" 'origami-close-all-nodes)
+  (define-key evil-normal-state-map "zM" 'origami-open-all-nodes)
+  (define-key evil-normal-state-map "zr" 'origami-close-node-recursively)
+  (define-key evil-normal-state-map "zm" 'origami-open-node-recursively)
+  (define-key evil-normal-state-map "zo" 'origami-show-node)
+  (define-key evil-normal-state-map "zc" 'origami-close-node)
+  (define-key evil-normal-state-map "zj" 'origami-forward-fold)
+  (define-key evil-normal-state-map "zk" 'origami-previous-fold)
+  (define-key evil-visual-state-map "zf"
+    '(lambda ()
+       "create fold and add comment to it"
+       (interactive)
+       (setq start (region-beginning))
+       (setq end (region-end))
+       (deactivate-mark)
+       (and (< end start)
+        (setq start (prog1 end (setq end start))))
+       (goto-char start)
+       (beginning-of-line)
+       (indent-according-to-mode)
+       (if (equal major-mode 'emacs-lisp-mode)
+       (insert ";; ")
+     ;; (indent-according-to-mode)
+     (insert comment-start " "))
+
+       ;; (insert comment-start " ")
+       (setq start (point))
+       (insert "Folding" " {{{")
+       (newline-and-indent)
+       (goto-char end)
+       (end-of-line)
+       (and (not (bolp))
+        (eq 0 (forward-line))
+        (eobp)
+        (insert ?\n))
+       (indent-according-to-mode)
+       (if (equal major-mode 'emacs-lisp-mode)
+       (insert ";; }}}")
+
+     (if (equal comment-end "")
+         (insert comment-start " }}}")
+       (insert comment-end "}}}")))
+       (newline-and-indent)
+       (goto-char start)
+       ))
+  )
+
 ;;; COMPANY
 (use-package company
   :ensure t
@@ -441,6 +516,11 @@ Follows the sequence: % m (regex), t, K."
         ("C-c e D" . denote-explore-barchart-degree)))
 (setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
 
+(use-package denote-org
+  :ensure t)
+
+(use-package denote-regexp
+  :ensure t)
 
 ;;; GIT
 (use-package undohist
@@ -1893,7 +1973,9 @@ See `org-capture-templates' for more information."
     ;;; Linux
 (setq ispell-local-dictionary-alist
     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-        ("es_ES" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)))
+        ("es_ES" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+        ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+        ))
 
 (setq ispell-program-name "hunspell")
 (setq ispell-local-dictionary "en_US")
@@ -1907,7 +1989,7 @@ See `org-capture-templates' for more information."
   (interactive)
   (if (string= ispell-current-dictionary "en_US")
       (progn
-        (setq ispell-current-dictionary "es_ES")
+        (setq ispell-current-dictionary "es_MX")
         (message "Switched to Spanish dictionary"))
     (progn
       (setq ispell-current-dictionary "en_US")
@@ -1916,25 +1998,15 @@ See `org-capture-templates' for more information."
 
 ;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
 
-;; (when (eq system-type 'gnu/linux)
-;;   (use-package jinx
-;;     :ensure t
-;;     :hook (text-mode . jinx-mode)
-;;     :bind (("M-;" . jinx-correct)
-;;            ("<f8>" . jinx-languages))))
-;; (add-hook 'text-mode-hook #'jinx-mode)
+(when (eq system-type 'gnu/linux)
+  (use-package jinx
+    :ensure t
+    :hook (text-mode . jinx-mode)
+    :bind (("M-;" . jinx-correct)
+           ("<f8>" . jinx-languages))))
+(add-hook 'text-mode-hook #'jinx-mode)
 
-(use-package jinx
-  :hook (text-mode . jinx-mode)
-  :bind (("M-;" . jinx-correct)
-         ("<f8>" . jinx-languages))
-  :custom
-  ;; Ruta a tus diccionarios
-  (jinx-dictionary-alist
-   '(("en_US" . "/usr/share/hunspell/en_US.aff")
-     ("es_ES" . "/usr/share/hunspell/es_ES.aff"))))
-;; Enable jinx only in certain modes
-(dolist (hook '(text-mode-hook prog-mode-hook conf-mode-hook))
+(dolist (hook '(text-mode-hook conf-mode-hook))
   (add-hook hook #'jinx-mode))
 
 ;;; PDF

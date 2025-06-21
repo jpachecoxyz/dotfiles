@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main_menu() {
+  echo -e "📦 Create New VM\n🚀 Launch Existing VM\n❌ Exit" | fzf --prompt="🖥️  VM Manager: " --height=10
+}
+
+create_vm() {
+  read -rp "Enter the name of the QCOW2 disk image (without extension): " disk_name
+  read -rp "Enter disk size (e.g., 10G): " disk_size
+
+  qcow2_file="${disk_name}.qcow2"
+  qemu-img create -f qcow2 "$qcow2_file" "$disk_size"
+  echo "✅ Created disk image: $qcow2_file"
+
+  echo "🔍 Searching for ISO files..."
+  iso_file=$(find /mnt /media "$HOME" -type f -iname "*.iso" 2>/dev/null | fzf --prompt="🎯 Select ISO: ")
+
+  if [[ -z "$iso_file" ]]; then
+    echo "❌ No ISO selected. Exiting."
+    exit 1
+  fi
+
+  echo "📀 Selected ISO: $iso_file"
+  launch_qemu "$qcow2_file" "$iso_file"
+}
+
+launch_existing_vm() {
+  echo "📁 Looking for .qcow2 in current directory..."
+  qcow2_file=$(find . -maxdepth 1 -type f -iname "*.qcow2" | fzf --prompt="💾 Select QCOW2 disk: ")
+
+  if [[ -z "$qcow2_file" ]]; then
+    echo "❌ No QCOW2 disk selected."
+    exit 1
+  fi
+
+  echo "📀 Looking for ISO in current directory..."
+  iso_file=$(find /mnt /media "$HOME" -type f -iname "*.iso" 2>/dev/null | fzf --prompt="🎯 Select ISO: ")
+
+  if [[ -z "$iso_file" ]]; then
+    echo "❌ No ISO selected."
+    exit 1
+  fi
+
+  launch_qemu "$qcow2_file" "$iso_file"
+}
+
+launch_qemu() {
+  qcow2_file="$1"
+  iso_file="$2"
+
+  echo "🚀 Launching QEMU with:"
+  echo "   Disk: $qcow2_file"
+  echo "   ISO : $iso_file"
+
+  qemu-system-x86_64 \
+    -enable-kvm \
+    -m 4096 \
+    -cpu host \
+    -boot d \
+    -cdrom "$iso_file" \
+    -drive file="$qcow2_file",format=qcow2 \
+    -vga virtio \
+    -nic user
+}
+
+# Entry point
+choice=$(main_menu)
+
+case "$choice" in
+  "📦 Create New VM") create_vm ;;
+  "🚀 Launch Existing VM") launch_existing_vm ;;
+  *) echo "👋 Exiting."; exit 0 ;;
+esac
