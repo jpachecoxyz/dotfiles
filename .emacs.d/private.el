@@ -388,7 +388,7 @@
 (setq denote-files-matching-regexp-history nil)
 (setq denote-history-completion-in-prompts nil)
 (setq denote-infer-keywords t)
-(setq denote-org-front-matter "# -*- jinx-languages: \"es_ES\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_MX\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
 (setq denote-query-links-display-buffer-action
       '((display-buffer-same-window)))
 (setq denote-link--prepare-links-format "%s\n")
@@ -923,6 +923,10 @@ Follows the sequence: % m (regex), t, K."
   :ensure t)
 
 ;; VERTICO
+
+(use-package compat
+  :ensure t)
+
 (use-package savehist
   :config
     (setq history-length 25)
@@ -1899,8 +1903,8 @@ See `org-capture-templates' for more information."
 (setq org-latex-listings 't)
 (setq TeX-engine 'xetex)
 
-(use-package auctex
-  :ensure t)
+;; (use-package auctex
+;;   :ensure t)
 
 (setq org-export-allow-bind-keywords t)
 
@@ -1928,9 +1932,9 @@ See `org-capture-templates' for more information."
         ))		;; color and level of transparency.
 
 ;;; TYPST
-(use-package ox-typst
-  :ensure t
-  :after ox)
+;; (use-package ox-typst
+;;   :ensure t
+;;   :after ox)
 
 (use-package typst-ts-mode
   :vc (:url "https://codeberg.org/meow_king/typst-ts-mode")
@@ -1973,7 +1977,6 @@ See `org-capture-templates' for more information."
     ;;; Linux
 (setq ispell-local-dictionary-alist
     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-        ("es_ES" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
         ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
         ))
 

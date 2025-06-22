@@ -7,13 +7,13 @@
 TOMB_DIR="$HOME/.personal/"
 KEY_FILE="$TOMB_DIR/personal.key"
 
-ACTION=$(echo "💀 Raise the dead (open)\n🪦 Rest in peace (close)\n🔮 Tomb Slam All" | fzf --prompt="Choose your action: ")
+ACTION=$(echo -e "💀 Raise the dead (open)\n🪦 Rest in peace (close)\n🔮 Tomb Slam All" | fzf --prompt="Choose your action: ")
 
 if [ "$ACTION" = "💀 Raise the dead (open)" ]; then
     TOMB_FILE=$(find "$TOMB_DIR" -type f -name "*.tomb" | fzf --prompt="Select a tomb to open: ")
     if [ -n "$TOMB_FILE" ]; then
         echo "🔓 Opening the crypt..."
-        tomb --sudo doas open "$TOMB_FILE" ~/public -k "$KEY_FILE"
+        tomb open "$TOMB_FILE" ~/public -k "$KEY_FILE"
     else
         echo "No tomb selected. Returning to the crypt."
     fi

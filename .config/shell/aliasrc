@@ -8,12 +8,11 @@
 
 # sudo not required for some system commands
 for command in mount umount su poweroff reboot zzz nixrb xbps-install xbps-remove; do
-	alias $command="doas $command"
+	alias $command="sudo $command"
 done; unset command
 
 # Verbosity and settings that you pretty much just always are going to want.
 alias \
-	sudo="doas" \
 	rb="reboot" \
 	cp="cp -iv" \
 	de="sudo nvim" \

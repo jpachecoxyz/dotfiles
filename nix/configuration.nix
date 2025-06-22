@@ -46,8 +46,8 @@ in
   # Configure console keymap
   console.keyMap = "uk";
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  # sound.enable = true;
+  # hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -61,7 +61,7 @@ in
 
   # Power button disable:
   services.logind.powerKey = "ignore";
-  services.logind.lidSwitch = "suspend";
+  services.logind.lidSwitch = "ignore";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.javier = {
@@ -104,9 +104,10 @@ in
 
   # Fonts
   fonts.packages = with pkgs; [
-    jetbrains-mono
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
     iosevka
-    nerdfonts
+    jetbrains-mono
     font-awesome
     ibm-plex
     noto-fonts-color-emoji
@@ -140,10 +141,11 @@ in
     cmake
 
     # fonts
-    jetbrains-mono
-    nerdfonts
-    font-awesome
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
     iosevka
+    jetbrains-mono
+    font-awesome
     ibm-plex
     noto-fonts-color-emoji
 

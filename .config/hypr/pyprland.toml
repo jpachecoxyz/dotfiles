@@ -16,7 +16,7 @@ plugins = [
 
 [scratchpads.term]
 animation = "fromBottom"
-command = "foot -a scratchpad -T Scratchpad"
+command = "foot -a scratchpad -T 'jpachecoxyz@scratchpad'"
 lazy = true
 size = "75% 50%"
 max_size = "1920px 100%"
@@ -45,7 +45,7 @@ engine = "fuzzel"
 command_start = "💀 "
 
 [shortcuts_menu.entries]
-"tombs" = "pypr toggle tomb && hyprctl dispatch bringactivetotop && $updateWaybar"
+"tombs" = "pypr toggle tomb"
 "mount" = "hypr-scratchpads fzmount"
 "clipboard" = [
     {name="entry", command="cliphist list", filter="s/\t.*//"},

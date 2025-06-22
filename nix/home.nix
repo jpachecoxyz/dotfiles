@@ -2,7 +2,7 @@
 #   ┃┣━┫┃┏┛┃┣╸ ┣┳┛   ╺━╸   ┣━┫┃ ┃┃┃┃┣╸  ┃┗┫┃┏╋┛
 # ┗━┛╹ ╹┗┛ ╹┗━╸╹┗╸         ╹ ╹┗━┛╹ ╹┗━╸╹╹ ╹╹╹ ╹
 
-{ inputs, config, pkgs, pkgs-unstable, lib, ... }:
+{ inputs, config, pkgs, pkgs-unstable, lib, overlays, ... }:
 
 let
   # Override ncmpcpp with the desired features
@@ -19,8 +19,8 @@ in
   
   imports = [ 
   # inputs.ags.homeManagerModules.default
-              inputs.textfox.homeManagerModules.default 
-            ];
+  # inputs.textfox.homeManagerModules.default 
+  ];
 
   # programs.ags = {
   #   enable = true;
@@ -31,31 +31,6 @@ in
   #     accountsservice
   #   ];
   # };
-
-  textfox = {
-      enable = true;
-      profile = "javier";
-      config = {
-        background = {
-          color = "#1e1e1e";
-        };
-        border = {
-          color = "#458588";
-          width = "2px";
-          transition = "1.0s ease";
-          radius = "3px";
-        };
-        displayHorizontalTabs = true;
-        font = { 
-          family = "Iosevka";
-          size = "15px";
-          accent = "#458588";
-        };
-        sidebery = {
-          margin = "1.0rem";
-        };
-      };
-  };
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -73,41 +48,37 @@ in
     pkgs.hypridle
     pkgs.hyprlock
     pkgs.pyprland
-    pkgs.swww
-    pkgs.ags
-    pkgs-unstable.gtksourceview
-    pkgs-unstable.accountsservice
-    pkgs.libdbusmenu-gtk3
+    # pkgs.swww
 
     # AGS
-    pkgs.dart-sass
-    pkgs.gnome.gvfs
-    pkgs.libgtop
-    pkgs.gobject-introspection
-    pkgs.cava
-    pkgs.bun
-    pkgs.fd
-    pkgs.hyprpicker
-    pkgs.wayshot
-    pkgs.gjs
-    # libastal.astal
-    # libastal.battery
-    # libastal.auth
-    # libastal.apps
-    # libastal.tray
+    # pkgs.ags
+    # pkgs-unstable.gtksourceview
+    # pkgs-unstable.accountsservice
+    # pkgs.libdbusmenu-gtk3
+    # pkgs.dart-sass
+    # pkgs.gnome.gvfs
+    # pkgs.libgtop
+    # pkgs.gobject-introspection
+    # pkgs.cava
+    # pkgs.bun
+    # pkgs.fd
+    # pkgs.hyprpicker
+    # pkgs.wayshot
+    # pkgs.gjs
 
     # Development
     # language servers
     pkgs.pyright
     pkgs.ruff
-    pkgs.rye
+    pkgs.uv
     pkgs.lua-language-server
     pkgs.hugo
-    pkgs.javascript-typescript-langserver
+    pkgs.typst
+    pkgs.tinymist
     pkgs.gcc
     pkgs.neovim
-    pkgs-unstable.emacs30
-    # pkgs.emacs-git
+    # pkgs-unstable.emacs30
+    pkgs.emacs-git
     pkgs-unstable.tdlib
     pkgs.python3
     pkgs.nodejs
@@ -120,14 +91,14 @@ in
     pkgs.ollama
 
     # Terminal tools
-    # pkgs-unstable.yazi    # File manager
-    pkgs.zellij           # Terminal multiplexer
     pkgs.lazygit          # git tui frontend
-    pkgs.gtk3-x11         # gtk-launcher
+    # pkgs-unstable.yazi    # File manager
+    # pkgs.zellij           # Terminal multiplexer
+    # pkgs.gtk3-x11         # gtk-launcher
 
     # Generic tools.
     pkgs.graphite-gtk-theme 
-    pkgs.breeze-icons
+    # pkgs.breeze-icons
     pkgs.bibata-cursors
     pkgs.brightnessctl
     pkgs.libnotify
@@ -137,7 +108,6 @@ in
     pkgs.grimblast
     pkgs.mako
     pkgs.foot
-    # pkgs.kitty
     pkgs.cron
     pkgs.tree
     pkgs.fzf
@@ -151,7 +121,6 @@ in
     pkgs.imagemagick
     pkgs.fastfetch
     pkgs.wf-recorder
-    # pkgs.tofi
     pkgs.fuzzel
 
     # Browser / web
@@ -161,22 +130,19 @@ in
     # pkgs.nyxt
 
     # multimedia
-    myNcmpcpp
+    # myNcmpcpp
     pkgs.pulseaudioFull
-    pkgs.mpd
-    pkgs.mpc-cli
+    # pkgs.mpd
+    # pkgs.mpc-cli
     pkgs.mpv
     pkgs.ytfzf
     pkgs.pulsemixer
     pkgs.spotdl
     pkgs.yt-dlp
-    pkgs.obs-studio
-    pkgs.telegram-desktop
-    pkgs.kdenlive
-    pkgs-unstable.gowall
+    # pkgs.obs-studio
 
     # graphics
-    pkgs.slurp
+    # pkgs.slurp
     pkgs.swappy
     pkgs.hyprshot
     pkgs.grim
@@ -192,12 +158,13 @@ in
     pkgs.p7zip
     pkgs.killall
     pkgs.htop
-    pkgs.btop
-    pkgs.ntfs3g
+    # pkgs.btop
     pkgs.fuse
 
     # latex and spell
+    # These packages are most for emacs to write documents.
     pkgs.emacsPackages.jinx
+    pkgs.emacsPackages.vterm
     pkgs.texlivePackages.xelatex-dev
     pkgs.hunspell
     pkgs.hunspellDicts.en_US
@@ -224,34 +191,6 @@ in
     
   };
 
-  # home.sessionVariables = {
-  #   XCURSOR_THEME = "Bibata-Modern-Classic";
-  #   XCURSOR_SIZE = "22"; # Adjust the size as needed
-  # };
-
-  # home.pointVerCursor = {
-  #   gtk.enable = true;
-  #   package = pkgs.bibata-cursors;
-  #   name = "Bibata-Modern-Classic";
-  #   size = 22;
-  #   };
-
-  # zsh
-  # programs.zsh = {
-  #   enable = true;
-  #   plugins = [
-  #     {
-  #       name = "zsh-syntax-highlighting";
-  #       src = pkgs.zsh-syntax-highlighting;
-  #     }
-  #     {
-  #       name = "zsh-autosuggestions";
-  #       src = pkgs.zsh-autosuggestions;
-  #     }
-  #   ];
-  #   dotDir = ".config/test";
-  # };
-
   # git config.
   programs.git = {
     enable = true;
@@ -271,14 +210,7 @@ in
     cursorTheme.size = 22;
     theme.package = pkgs.gruvbox-dark-gtk;
     theme.name = "gruvbox-dark";
-    # gtk3.extraConfig = {
-    #   Settings = ''
-    #     gtk-application-prefer-dark-theme=1
-    #   '';
-    # };
     iconTheme = {
-      # package = pkgs.gruvbox-dark-icons-gtk;
-      # name  = "gruvbox-dark-icons";
       package = pkgs.papirus-icon-theme;  # Use Papirus icon theme package
       name  = "Papirus";                  # Set the theme name to Papirus
     };
@@ -287,23 +219,13 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # emcas lastest version
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-  #     sha256 = "sha256:0sd2jlismvl07i9c9ks97d77370s3lnjglxsg96g3p7gz2l1nm7x";
-  #   }))
-  # ];
-
-  # Example of how to pin a version of a packagein the overlays, you must have the commit in the url:
-  # url = "https://github.com/nix-community/emacs-overlay/archive/<commit-or-tag>.tar.gz";
-  # Example:
-  # nixpkgs.overlays = [
-  #   (import (builtins.fetchTarball {
-  #     url = "https://github.com/nix-community/emacs-overlay/archive/d2f8eae4.tar.gz";  # Pinned commit
-  #     sha256 = "sha256:1wm92zn2z8y7kdcn0b91z7h63ydw3vxy6vbd9wzl1kpxx5m68dd8";
-  #   }))
-  # ];
+  # Emacs, lastest version 
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      sha256 = "sha256:076axz3jsvrsclwhha7xxd8nbr2yhjsazznh8frzv0yi5dg3ifx7";
+    }))
+  ];
 
   # Enable the Emacs daemon service
   services.emacs = {
@@ -317,8 +239,10 @@ in
     };
   };
 
-
   # Custom scripts:
+  # These content is not nesecary yet, I still manage my scripts using stow and 
+  # my personal dotfiles. I'm not fully migrate (and dont thing so) my scripts
+  # to nix.
 
   # This script auto-tangle a org file for some shell-scripts that requires a .desktop file.
   # Step 1: Create the actual script

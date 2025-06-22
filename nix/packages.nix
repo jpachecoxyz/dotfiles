@@ -39,6 +39,7 @@ with pkgs;
     neovim
     emacs30
     emacsPackages.jinx
+    emacsPackages.vterm
     enchant
     hunspell
     hunspellDicts.es_MX
