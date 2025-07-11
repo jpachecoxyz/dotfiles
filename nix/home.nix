@@ -16,10 +16,10 @@ let
 in
 
 {
-  
-  imports = [ 
+
+  imports = [
   # inputs.ags.homeManagerModules.default
-  # inputs.textfox.homeManagerModules.default 
+  # inputs.textfox.homeManagerModules.default
   ];
 
   # programs.ags = {
@@ -48,6 +48,7 @@ in
     pkgs.hypridle
     pkgs.hyprlock
     pkgs.pyprland
+    pkgs.qtile-unwrapped
     # pkgs.swww
 
     # AGS
@@ -97,7 +98,7 @@ in
     # pkgs.gtk3-x11         # gtk-launcher
 
     # Generic tools.
-    pkgs.graphite-gtk-theme 
+    pkgs.graphite-gtk-theme
     # pkgs.breeze-icons
     pkgs.bibata-cursors
     pkgs.brightnessctl
@@ -187,8 +188,8 @@ in
   ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
+  # DOING Startto migrate my dotfiles, currently using GNU/stow
   home.file = {
-    
   };
 
   # git config.
@@ -207,7 +208,7 @@ in
 
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Classic";
-    cursorTheme.size = 22;
+    cursorTheme.size = 20;
     theme.package = pkgs.gruvbox-dark-gtk;
     theme.name = "gruvbox-dark";
     iconTheme = {
@@ -219,7 +220,7 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Emacs, lastest version 
+  # Emacs, lastest version
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
@@ -240,7 +241,7 @@ in
   };
 
   # Custom scripts:
-  # These content is not nesecary yet, I still manage my scripts using stow and 
+  # These content is not nesecary yet, I still manage my scripts using stow and
   # my personal dotfiles. I'm not fully migrate (and dont thing so) my scripts
   # to nix.
 
