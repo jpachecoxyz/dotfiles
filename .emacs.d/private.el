@@ -349,9 +349,11 @@
 
 ;;; ORDERLESS
 (use-package orderless
+  :defer 1
   :ensure t
-  :custom
-  (setq completion-styles '(orderless)))
+  :config
+  (setq completion-styles '(orderless basic)
+        completion-category-overrides '((file (styles basic partial-completion)))))
 
 ;;; POSFRAME
 (use-package posframe
@@ -1604,12 +1606,14 @@ See `org-capture-templates' for more information."
 (defun open-specific-dired ()
   "Ask whether to open config, scripts, or nix config in Dired."
   (interactive)
-  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "docs"))))
+  (let ((choice (completing-read "Choose an option: " '("config" "scripts" "src" "docs"))))
     (cond
      ((string= choice "config")
       (fzf-find-file "~/.config/"))
      ((string= choice "scripts")
       (fzf-find-file "~/.local/bin/"))
+     ((string= choice "src")
+      (fzf-find-file "~/.local/src/"))
      ((string= choice "docs")
       (fzf-find-file "~/docs/org/"))
      (t
@@ -2113,6 +2117,15 @@ See `org-capture-templates' for more information."
     (select-window photon-main-window)))))
 
 (define-key vterm-mode-map (kbd "<normal-state> <escape>") 'photon-vterm-toggle)
+
+
+;; Enable the fill column indicator globally
+(setq-default fill-column 80) ;; Column 80
+(setq global-display-fill-column-indicator-mode t)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+(add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
+(set-face-attribute 'fill-column-indicator nil
+                    :background "#3E4451") ;; a subtle gray
 
 (provide 'private)
 ;;; private.el ends here

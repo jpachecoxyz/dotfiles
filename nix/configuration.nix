@@ -28,6 +28,9 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
+  # Trusted users 
+  nix.settings.trusted-users = [ "root" "javier" ];
+
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -99,6 +102,12 @@ in
     enable = true;
   };
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [ 
+      stdenv.cc.cc.lib
+      zlib
+    ];
+
   # users.defaultUserShell = pkgs.zsh;
   users.users.javier.shell = pkgs.zsh;
 
@@ -135,6 +144,7 @@ in
     git
     nix-init
     nix-search-cli
+    nix-index
     stow
     home-manager
     gnumake
@@ -207,11 +217,5 @@ in
     memoryPercent = 100;
     algorithm = "zstd";
   };
-
-  programs.nix-ld.enable = true;
-
-  programs.nix-ld.libraries = with pkgs; [
-
-  ];
 
 }

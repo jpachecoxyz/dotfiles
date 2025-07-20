@@ -6,5 +6,5 @@
 
 config_version: 2
 settings:
-  content.notifications.enabled:
-    https://web.telegram.org: true
+  statusbar.show:
+    global: always

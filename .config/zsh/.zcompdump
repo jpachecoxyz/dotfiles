@@ -1070,6 +1070,7 @@ _comps=(
 'pinfo' '_texinfo'
 'ping' '_ping'
 'ping6' '_ping'
+'pipx' '_pipx'
 'piuparts' '_piuparts'
 'pkg' '_pkg5'
 'pkg_add' '_bsd_pkg'
@@ -1528,7 +1529,6 @@ _comps=(
 'useradd' '_user_admin'
 'userdel' '_users'
 'usermod' '_user_admin'
-'uv' '_uv'
 'vacuumdb' '_postgresql'
 'val' '_sccs'
 'valgrind' '_valgrind'
@@ -1873,8 +1873,8 @@ bindkey '^[~' _bash_complete-word
 
 autoload -Uz _bat _cargo _eza _fastfetch _fd \
             _foot _footclient _fuzzel _home-manager _hugo \
-            _mako _makoctl _mpv _pass _pulseaudio \
-            _rg _ruff _tinymist _typst _uv \
+            _mako _makoctl _mpv _pass _pipx \
+            _pulseaudio _rg _ruff _tinymist _typst \
             _wl-copy _wl-paste _yt-dlp _zathura _a2ps \
             _a2utils _aap _abcde _absolute_command_paths _ack \
             _acpi _acpitool _acroread _adb _add-zle-hook-widget \

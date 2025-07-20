@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: python nix-shell environment
+# key: nxp
+# --
+
+{pkgs ? import <nixpkgs> {} }:
+
+pkgs.mkShell {
+
+  packages = [
+	pkgs.uv
+	pkgs.python${1:Python Version}
+	pkgs.stdenv.cc.cc
+  ];
+
+  env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+	pkgs.stdenv.cc.cc.lib
+	pkgs.zlib
+  ];
+}

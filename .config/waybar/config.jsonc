@@ -13,7 +13,7 @@
 	// "modules-right": ["network", "bluetooth", "memory", "battery", "backlight", "pulseaudio", "pulseaudio#microphone", "custom/recorder"],
 
 	"modules-left": ["hyprland/workspaces", "custom/window_state", "hyprland/submap"],
-	// "modules-center": ["hyprland/window"],
+	"modules-center": ["hyprland/window"],
 	"modules-right": ["network", "bluetooth", "battery", "backlight", "pulseaudio", "custom/weather", "clock", "custom/recorder"],
 
 	"hyprland/window": {

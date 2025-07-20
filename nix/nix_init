@@ -5,9 +5,9 @@
 # Project: My custom NixOS System.
 
 # Change directory to the nix directory inside the dotfiles repo
-cd ~/.dotfiles/nix
+# cd ~/.dotfiles/nix
 
-cp  /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix
+# cp  /etc/nixos/hardware-configuration.nix ./hardware-configuration.nix
 # Run the NixOS and Home Manager rebuild commands
 echo "Running NixOS and Home Manager switch..."
 sudo nixos-rebuild switch --flake . && home-manager switch --flake .

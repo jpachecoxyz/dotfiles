@@ -79,6 +79,7 @@ for i in $NIX_PROFILES; do
 done
 NIXPKGS_ALLOW_UNFREE=1
 NIX_CONFIG="experimental-features = nix-command flakes"
+LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
 # XDG_CURRENT_DESKTOP=wayland
 GDK_BACKEND=wayland
 CLUTTER_BACKEND=wayland

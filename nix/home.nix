@@ -10,7 +10,8 @@ let
     visualizerSupport = true;
     clockSupport = true;
   };
-  whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+  # whdd = pkgs.callPackage ../jp-nix/whdd/default.nix { };
+  # opencv-qt = pkgs.callPackage ../jp-nix/opencv-qt/default.nix { };
   libastal = inputs.astal.packages.${pkgs.system};
 
 in
@@ -71,7 +72,7 @@ in
     # language servers
     pkgs.pyright
     pkgs.ruff
-    pkgs.uv
+    # pkgs.uv
     pkgs.lua-language-server
     pkgs.hugo
     pkgs.typst
@@ -81,12 +82,13 @@ in
     # pkgs-unstable.emacs30
     pkgs.emacs-git
     pkgs-unstable.tdlib
-    pkgs.python3
+    # pkgs.python3
     pkgs.nodejs
     pkgs.pagefind
     pkgs.cargo
     pkgs.nil
     pkgs.direnv
+    # pkgs.devenv
 
     # AI Models
     pkgs.ollama
@@ -148,6 +150,9 @@ in
     pkgs.hyprshot
     pkgs.grim
 
+    # Design
+    pkgs.freecad-wayland
+
     # tools
     pkgs.poppler
     pkgs.mupdf
@@ -161,6 +166,10 @@ in
     pkgs.htop
     # pkgs.btop
     pkgs.fuse
+    pkgs.pipx
+    pkgs.cairo
+    pkgs.pkgconf
+    pkgs.gobject-introspection
 
     # latex and spell
     # These packages are most for emacs to write documents.
@@ -183,7 +192,9 @@ in
     pkgs.gnupg
 
     # Custom packages
-    whdd
+    # whdd
+    # opencv-qt
+    # hints
 
   ];
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -224,7 +235,7 @@ in
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "sha256:076axz3jsvrsclwhha7xxd8nbr2yhjsazznh8frzv0yi5dg3ifx7";
+      sha256 = "sha256:090h9qm8dqq3m7hq7ahc0fw8klzpc9c0xbkikl2ydb6z252my13c";
     }))
   ];
 

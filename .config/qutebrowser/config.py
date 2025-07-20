@@ -530,7 +530,7 @@ c.colors.webpage.bg = base00
 # font setting, it's replaced with the fonts listed here. If set to an
 # empty value, a system-specific monospace default is used.
 # Type: List of Font, or Font
-c.fonts.default_family = '"Jet Brains Mono"'
+c.fonts.default_family = '"Iosevka"'
 
 # Default font size to use. Whenever "default_size" is used in a font
 # setting, it's replaced with the size listed here. Valid values are
@@ -541,19 +541,19 @@ c.fonts.default_size = '12pt'
 
 # Font used in the completion widget.
 # Type: Font
-c.fonts.completion.entry = '12pt "Jet Brains Mono"'
+c.fonts.completion.entry = '12pt "Iosevka"'
 
 # Font used for the debugging console.
 # Type: Font
-c.fonts.debug_console = '12pt "Jet Brains Mono"'
+c.fonts.debug_console = '12pt "Iosevka"'
 
 # Font used for prompts.
 # Type: Font
-c.fonts.prompts = 'Je tBrains Mono'
+c.fonts.prompts = 'Iosevka'
 
 # Font used in the statusbar.
 # Type: Font
-c.fonts.statusbar = '11pt "Jet Brains Mono"'
+c.fonts.statusbar = '11pt "Iosevka"'
 
 # Bindings to use dmenu rather than qutebrowser's builtin search.
 #config.bind('o', 'spawn --userscript dmenu-open')
@@ -562,7 +562,7 @@ c.fonts.statusbar = '11pt "Jet Brains Mono"'
 # Bindings for normal mode
 #config.bind('M', 'hint links spawn mpv --fs {hint-url}')
 config.bind('Z', 'hint links spawn st -e yt-dlp {hint-url}')
-config.bind('M', 'hint links spawn nohup mpv --fs --cache=yes --demuxer-max-bytes=500M --demuxer-max-back-bytes=100M --save-position-on-quit=no -ytdl-format="bv*[height=720][ext=mp4][fps=30]+ba/b" {hint-url}')
+config.bind('M', 'hint links spawn nohup mpv --cache=yes --demuxer-max-bytes=500M --demuxer-max-back-bytes=100M --save-position-on-quit=no -ytdl-format="bv*[height=720][ext=mp4][fps=30]+ba/b" {hint-url}')
 config.bind('gp', 'hint images download')
 config.bind('xb', 'config-cycle statusbar.show always never')
 config.bind('xt', 'config-cycle tabs.show always never')
@@ -576,4 +576,3 @@ config.bind(',dr', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/
 config.bind(',gr', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/solarized-everything-css/css/gruvbox/gruvbox-all-sites.css ""')
 config.bind(',sd', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""')
 config.bind(',sl', 'config-cycle content.user_stylesheets ~/.config/qutebrowser/solarized-everything-css/css/solarized-light/solarized-light-all-sites.css ""')
-
