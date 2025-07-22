@@ -1,5 +1,6 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/javier/.local/src/dcmv
     - /home/javier/.dotfiles
     - /home/javier/docs
 startuppopupversion: 5

@@ -72,7 +72,7 @@ in
     # language servers
     pkgs.pyright
     pkgs.ruff
-    # pkgs.uv
+    pkgs.uv
     pkgs.lua-language-server
     pkgs.hugo
     pkgs.typst
