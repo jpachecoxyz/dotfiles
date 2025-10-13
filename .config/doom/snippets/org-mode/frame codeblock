@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: frame codeblock
+# key: afr
+# --
+
+#+ATTR_LATEX: :options frame=single$0

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: pregunta opcion multiple
+# key: qmo
+# --
+
+#+LATEX: \question[${1:puntos}]
+${2:Formula tu pregunta ...}
+- [ ] ${3: Opcion 1}
+- [ ] ${4: Opcion 2}
+- [ ] ${5: Opcion 3}
+- [ ] ${6: Opcion 4}
+$0

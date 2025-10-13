@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: org-todo-item
+# key: -t
+# --
+
+- [ ] $0

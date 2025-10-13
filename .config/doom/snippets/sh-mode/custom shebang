@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: custom shebang
+# key: sh
+# --
+#!/bin/sh
+
+# Created By: Javier Pacheco - javier@jpacheco.xyz
+# Created On: `(format-time-string "%Y-%m-%d")`
+# Project: ${1:Description of the script}
+
+${2:Your code starts here...}

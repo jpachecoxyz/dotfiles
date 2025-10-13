@@ -1,0 +1,26 @@
+# key: exam
+# name: exam
+# --
+#+TITLE: Examen - ${1:Nombre del examen}
+#+AUTHOR: Ing. Javier Pacheco
+#+DATE: ${2:Fecha}
+#+LaTeX_CLASS: exam
+#+OPTIONS: toc:nil date:nil title:nil num:nil author: t
+
+#+BEGIN_EXPORT latex
+\pagestyle{headandfoot}
+
+\firstpageheader{
+\textbf{$1 (\numpoints\ puntos)} \\\
+\vspace*{0.5cm}
+\textbf{Nombre:} \underline{\hspace{4in}}
+}{}{}
+
+\runningheader{$1}{}{Pagina \thepage\ de \numpages}
+\runningheadrule
+
+\firstpagefooter{}{}{}
+\runningfooter{}{}{}
+#+END_EXPORT
+
+$0

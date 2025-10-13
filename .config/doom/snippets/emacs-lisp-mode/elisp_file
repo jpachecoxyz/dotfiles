@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: elisp_file
+# key: EL
+# --
+;;; Code:
+;;; ${1:Name of the file}.el --- Javier Pacheco $1 configuration -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; my $1 custom configuration
+
+;;; Code:
+$0
+
+(provide '$1)
+
+;;;$1.el ends here

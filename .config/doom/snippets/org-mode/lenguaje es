@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: lenguaje es 
+# key: es_
+# --
+
+# -*- jinx-languages: "es_ES"; -*-
+$0

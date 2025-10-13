@@ -1,0 +1,8 @@
+# key: image_
+# name: hugo-post-image
+# --
+#+begin_center
+#+CAPTION: ${1:Caption}
+[[/posts/images/${2:Path to image}]]
+#+end_center
+$0

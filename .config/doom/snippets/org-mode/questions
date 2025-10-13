@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: questions
+# key: questions
+# --
+
+
+#+LaTeX: \begin{questions}
+$0
+#+LaTeX: \end{questions}

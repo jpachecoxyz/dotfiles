@@ -1,0 +1,471 @@
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+(with-current-buffer (get-buffer-create "*scratch*")
+(insert (format ";;; Commentary: My personal Doom emacs configuration.
+;;; mi-config.el --- Mi configuración personal de Doom Emacs -*- lexical-binding: t; -*-
+;;; Commentary:
+;;      ██╗██████╗  █████╗  ██████╗██╗  ██╗███████╗ ██████╗ ██████╗ ██╗  ██╗██╗   ██╗███████╗
+;;      ██║██╔══██╗██╔══██╗██╔════╝██║  ██║██╔════╝██╔════╝██╔═══██╗╚██╗██╔╝╚██╗ ██╔╝╚══███╔╝
+;;      ██║██████╔╝███████║██║     ███████║█████╗  ██║     ██║   ██║ ╚███╔╝  ╚████╔╝   ███╔╝
+;; ██   ██║██╔═══╝ ██╔══██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║ ██╔██╗   ╚██╔╝   ███╔╝
+;; ╚█████╔╝██║     ██║  ██║╚██████╗██║  ██║███████╗╚██████╗╚██████╔╝██╔╝ ██╗   ██║   ███████╗
+;;  ╚════╝ ╚═╝     ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+;;                                                                      jpachecoxyz.github.io
+;;
+;;  Loading time : %s
+"
+                (emacs-init-time)
+                (emacs-lisp-mode)
+                (number-to-string (length package-activated-list))))
+                (goto-char (point-max)))
+
+;; `load-theme' function. This is the default:
+(setq doom-theme 'doom-opera)
+
+;;; Load Utilities.el.
+(load! "utilities")
+
+;; Some functionality uses this to identify you, e.g. GPG configuration, email
+;; clients, file templates and snippets. It is optional.
+(setq user-full-name "Javier Pacheco"
+      user-mail-address "jpacheco@cock.li")
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type `relative)
+
+(remove-hook! '(text-mode-hook conf-mode-hook)
+              #'display-line-numbers-mode)
+
+;; Here are some additional functions/macros that will help you configure Doom.
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
+
+;; (setq initial-buffer-choice 'vterm)
+(setq confirm-kill-emacs nil)
+
+;; Transparency
+(set-frame-parameter (selected-frame) 'alpha '(94 . 95))
+(add-to-list 'default-frame-alist '(alpha . (94 . 95)))
+
+;; Maximized frame
+(toggle-frame-maximized)
+
+;; Blink cursor
+(blink-cursor-mode 1)
+
+;;hl-line
+(global-hl-line-mode 1)
+(set-face-attribute 'hl-line nil
+                    :extend t)           ;; que se extienda más allá del texto
+                    ;; :background "#3a3a3a")
+
+;; Desactivar preguntas por *cualquier* proceso vivo al salir
+(setq confirm-kill-processes nil)
+
+(setq-default fill-column 80) ;; Column 80
+(setq global-display-fill-column-indicator-mode nil)
+(add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+;; (add-hook 'org-mode-hook #'display-fill-column-indicator-mode)
+
+
+(use-package! rainbow-delimiters
+  :defer t
+  :hook ((prog-mode . rainbow-delimiters-mode)
+         (clojure-mode . rainbow-delimiters-mode)))
+
+(use-package! rainbow-mode
+  :hook ((org-mode . rainbow-mode)
+         (prog-mode . rainbow-mode)))
+
+(map! :leader :desc "Open my most used files" "ef" #'open-specific-dired)
+
+;; If you use `org' and don't want your org files in the default location below,
+;; change `org-directory'. It must be set before org loads!
+(setq org-directory "~/Documents/Emacs/org/")
+
+(setq doom-font (font-spec :family "JetBrainsMono NF" :size 15 :weight 'regular)
+     doom-variable-pitch-font (font-spec :family "JetBrainsMono NF" :size 15))
+
+(custom-theme-set-faces!
+'doom-opera
+'(org-document-title :bold t :underline nil)
+'(show-paren-match :bold t  :background "#1b1b1b")
+'(hl-line :extend t :background "#3a3a3a"))
+
+;;; Web jump
+(use-package! webjump
+  :defer t
+  :bind ("C-x /" . webjump)
+  :custom
+  (webjump-sites
+   '(("Google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
+     ("YouTube" . [simple-query "www.youtube.com/feed/subscriptions" "www.youtube.com/results?search_query=" ""])
+     ("ChatGPT" . [simple-query "https://chatgpt.com" "https://chatgpt.com/?q=" ""]))))
+
+;;; EMACS-JP-OLIVETTI
+;;
+(use-package emacs-jp-olivetti
+  ;; :if emacs-jp-enable-olivetti
+  :no-require t
+  :defer t
+  :init
+  (defvar emacs-jp-center-document-desired-width 120
+    "The desired width of a document centered in the window.")
+
+  (defun emacs-jp/center-document--adjust-margins ()
+    ;; Reset margins first before recalculating
+    (set-window-parameter nil 'min-margins nil)
+    (set-window-margins nil nil)
+
+    ;; Adjust margins if the mode is on
+    (when emacs-jp/center-document-mode
+      (let ((margin-width (max 0
+                               (truncate
+                                (/ (- (window-width)
+                                      emacs-jp-center-document-desired-width)
+                                   2.0)))))
+        (when (> margin-width 0)
+          (set-window-parameter nil 'min-margins '(0 . 0))
+          (set-window-margins nil margin-width margin-width)))))
+
+  (define-minor-mode emacs-jp/center-document-mode
+    "Toggle centered text layout in the current buffer."
+    :lighter " Centered"
+    :group 'editing
+    (if emacs-jp/center-document-mode
+        (add-hook 'window-configuration-change-hook #'emacs-jp/center-document--adjust-margins 'append 'local)
+      (remove-hook 'window-configuration-change-hook #'emacs-jp/center-document--adjust-margins 'local))
+    (emacs-jp/center-document--adjust-margins))
+
+
+  ;; (add-hook 'org-mode-hook #'emacs-jp/center-document-mode)
+  (add-hook 'gnus-group-mode-hook #'emacs-jp/center-document-mode)
+  (add-hook 'gnus-summary-mode-hook #'emacs-jp/center-document-mode)
+  (add-hook 'gnus-article-mode-hook #'emacs-jp/center-document-mode)
+
+  ;; (add-hook 'newsticker-treeview-list-mode-hook 'emacs-jp/timed-center-visual-fill-on)
+  ;; (add-hook 'newsticker-treeview-item-mode-hook 'emacs-jp/timed-center-visual-fill-on)
+
+  :bind ("<f1>" . #'emacs-jp/center-document-mode))
+
+;;; EMACS-JP-0x0
+(use-package emacs-jp-0x0
+  :no-require t
+  :defer t
+  :init
+  (defun emacs-jp/0x0-upload-text ()
+    (interactive)
+    (let* ((contents (if (use-region-p)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
+                       (buffer-string)))
+           (temp-file (make-temp-file "0x0" nil ".txt" contents)))
+      (message "Sending %s to 0x0.st..." temp-file)
+      (let ((url (string-trim-right
+                  (shell-command-to-string
+                   (format "curl -s -F'file=@%s' https://0x0.st" temp-file)))))
+        (message "The URL is %s" url)
+        (kill-new url)
+        (delete-file temp-file))))
+
+  (defun emacs-jp/0x0-upload-file (file-path)
+    (interactive "fSelect a file to upload: ")
+    (message "Sending %s to 0x0.st..." file-path)
+    (let ((url (string-trim-right
+                (shell-command-to-string
+                 (format "curl -s -F'file=@%s' https://0x0.st" (expand-file-name file-path))))))
+      (message "The URL is %s" url)
+      (kill-new url))))
+
+;;; DENOTE
+(use-package! denote
+  :hook (dired-mode . denote-dired-mode)
+  ;; Keybinds
+  :bind
+  (("C-c n n" . denote-create-note)
+   ("C-c n l" . denote-link-or-create)
+   ("C-c n L" . denote-add-links)
+   ("C-c n b" . denote-link-backlinks)
+   ("C-c n f" . #'jp:denote-dired-open)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n R" . denote-rename-file-using-front-matter)
+   ("C-c n q c" . denote-query-contents-link)
+   ("C-c n q f" . denote-query-filenames-link)
+   ("C-c n i i" . denote-insert-image)
+   (:map dired-mode-map
+         ("C-c C-d C-i" . denote-dired-link-marked-notes)
+         ("C-c C-d C-r" . denote-dired-rename-files)
+         ("C-c C-d C-f" . denote-dired-filter)
+         ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
+         ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
+(add-hook 'dired-mode-hook #'denote-dired-mode)
+
+(setq denote-directory (expand-file-name "~/Documents/Emacs/notes"))
+(setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+(setq denote-title-history nil)
+(setq denote-sort-keywords nil)
+(setq denote-files-matching-regexp-history nil)
+(setq denote-history-completion-in-prompts nil)
+(setq denote-infer-keywords t)
+(setq denote-org-front-matter "# -*- jinx-languages: \"es_MX\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n")
+(setq denote-query-links-display-buffer-action
+      '((display-buffer-same-window)))
+(setq denote-link--prepare-links-format "%s\n")
+
+(defun jp:denote-dired-open()
+  "Open `denote-directory` in Dired and filter only notes matching proper Denote filename pattern."
+  (interactive)
+  (dired denote-directory)
+  ;; (dired-mark-files-regexp "^[0-9]\\{8\\}T[0-9]\\{6\\}--[^=].*\\.org$")
+  ;; (dired-toggle-marks)
+  ;; (dired-do-kill-lines)
+  (let ((messages '(
+                    "🧠🌿 Mind garden pruned: only pure ideas are blooming."
+                    "🧠✨ Mind map refreshed: only clear branches remain."
+                    "🪴📝 Notes pruned: a clean path through your thoughts."
+                    "🔍🌟 Only well-formed thoughts sparkle here now."
+                    "📜🌱 Organized scrolls: the chaos fades, clarity grows."
+                    "🧩📚 Puzzle pieces placed: only true notes stay."
+                    "🌌✍️ Mental constellation aligned: shining ideas ahead."
+                    "🌿📖 Your knowledge forest breathes freely now."
+                    )))
+    (message "%s" (nth (random (length messages)) messages))))
+
+(defun my/denote-or-org-link ()
+  "Run `denote-find-link`. If nothing is inserted, show Org links in minibuffer."
+  (interactive)
+  (let ((before (buffer-substring-no-properties (point-min) (point-max))))
+    (call-interactively #'denote-find-link)
+    (run-at-time
+     "0.1 sec" nil
+     (lambda ()
+       (let ((after (buffer-substring-no-properties (point-min) (point-max))))
+         (when (string= before after)
+           (let ((links (my/org-collect-links)))
+             (if links
+                 (let ((chosen (completing-read "Org links: " links)))
+                   (when chosen
+                     (kill-new chosen)
+                     (message "Copied link to clipboard: %s" chosen)))
+               (message "No Denote or Org links found.")))))))))
+
+(defun my/org-collect-links ()
+  "Collect all Org-style links ([[...]]) in the current buffer."
+  (let (links)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward org-link-bracket-re nil t)
+        (push (match-string 0) links)))
+    (delete-dups links)))
+
+(defun denote-insert-image ()
+  "Prompt to select an image from ~/docs/notes/img/ and insert its absolute path as [[...]] link."
+  (interactive)
+  (let* ((img-dir (expand-file-name "~/Documents/Emacs/notes/img/"))
+         (filename (read-file-name "Select image: " img-dir nil t)))
+    (when (and filename (file-exists-p filename))
+      (insert (format "[[%s]]" (expand-file-name filename))))))
+
+(defun denote-dired-filter ()
+  "Mark files by regex, toggle marks, and kill selected files.
+Follows the sequence: % m (regex), t, K."
+  (interactive)
+  (unless (derived-mode-p 'dired-mode)
+    (user-error "Not in a Dired buffer"))
+  (message "Enter regex to mark files: ")
+  (call-interactively 'dired-mark-files-regexp) ; % m (user enters regex)
+  (dired-toggle-marks)                         ; t (toggle marks)
+  (dired-do-kill-lines))                       ; K (kill marked files)
+
+(defun denote-insert-pdf-link ()
+  "Insert a Denote-style Org link to a PDF file from ~/docs/pdf, prompting for a custom link title."
+  (interactive)
+  (let* ((pdf-dir (expand-file-name "~/Documents/Emacs/pdf"))
+         (pdf-files (directory-files-recursively pdf-dir "\\.pdf$"))
+         (chosen-file (completing-read "Choose a PDF: " pdf-files nil t))
+         (custom-title (read-string "Enter a link title: ")))
+    (insert (format "- [[file:%s][%s]]"
+                    (file-relative-name chosen-file)
+                    custom-title))))
+
+(use-package! denote-silo
+  ;; Bind these commands to key bindings of your choice.
+  :commands ( denote-silo-create-note
+              denote-silo-open-or-create
+              denote-silo-select-silo-then-command
+              denote-silo-dired
+              denote-silo-cd )
+  :config
+  ;; Add your silos to this list.  By default, it only includes the
+  ;; value of the variable `denote-directory'.
+  (setq denote-silo-directories
+        (list denote-directory
+              "~/Documents/Emacs/notes/inbox/")))
+
+(use-package! denote-sequence
+  :bind
+  ( :map global-map
+    ("C-c n s s" . denote-sequence-new-sibling)
+    ("C-c n s p" . denote-sequence-new-parent)
+    ("C-c n s f" . denote-sequence-find)
+    ("C-c n s l" . denote-sequence-link)
+    ("C-c n s d" . denote-sequence-dired)
+    ("C-c n s r" . denote-sequence-reparent)
+    ("C-c n s c" . denote-sequence-new-child))
+  :config
+  (setq denote-sequence-scheme 'numeric)
+  (setq denote-sequence-type-history nil))
+
+(use-package! denote-menu
+  :custom ((denote-menu-show-file-type nil)
+           (denote-menu-initial-regex "==[0-9]+--.*_meta.org"))
+  :bind
+  (("C-c n m" . denote-menu-list-notes)))
+
+(use-package! denote-explore
+  :bind* (("C-c e n" . denote-explore-network)
+        ("C-c e v" . denote-explore-network-regenerate)
+        ("C-c e D" . denote-explore-barchart-degree)))
+(setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
+
+;; (use-package ox-typst
+;;   :ensure t
+;;   :after ox)
+
+(use-package! typst-ts-mode
+  :custom
+  (typst-ts-watch-options "--open")
+  :config
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu))
+
+(use-package! treesit-auto
+  :ensure t
+  :custom (treesit-auto-install t)
+  :config
+  (global-treesit-auto-mode))
+
+(use-package! treesit-ispell
+  :ensure t
+  :defer t
+  :bind (("C-x C-s" . treesit-ispell-run-at-point)))
+
+(with-eval-after-load 'treesit
+  (setq treesit-font-lock-level 4))
+
+(use-package! page-break-lines
+  :config
+  (global-page-break-lines-mode))
+
+(setq ispell-hunspell-dict-paths-alist
+      '(("en_US" "~/.dotfiles/.emacs.d/lang/en_US.aff")
+        ("es_MX" "~/.dotfiles/.emacs.d/lang/es_MX.aff")))
+
+    ;;; Linux
+(setq ispell-local-dictionary-alist
+    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+        ("es_MX" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+        ))
+
+(setq ispell-program-name "hunspell")
+(setq ispell-local-dictionary "en_US")
+
+;; ;; Change betwen English and Spanish,
+;; ;; English is he default.
+(defvar ispell-current-dictionary "en_US")
+
+(defun toggle-ispell-dictionary ()
+  (interactive)
+  (if (string= ispell-current-dictionary "en_US")
+      (progn
+        (setq ispell-current-dictionary "es_MX")
+        (message "Switched to Spanish dictionary"))
+    (progn
+      (setq ispell-current-dictionary "en_US")
+      (message "Switched to English dictionary")))
+  (ispell-change-dictionary ispell-current-dictionary))
+
+;; (global-set-key (kbd "<f8>") 'toggle-ispell-dictionary)
+
+(use-package! jinx
+:hook (text-mode . jinx-mode)
+:bind (("M-;" . jinx-correct)
+        ("<f8>" . jinx-languages)))
+(add-hook 'text-mode-hook #'jinx-mode)
+
+(dolist (hook '(text-mode-hook conf-mode-hook))
+  (add-hook hook #'jinx-mode))
+
+(use-package! ox-hugo
+  :after ox)
+(setq org-hugo-base-dir "~/.local/src/jpachecoxyz.github.io/")
+(defun jp:create-hugo-post ()
+  "Create a new Hugo post buffer with metadata in Org format, unsaved."
+  (interactive)
+  (let* ((title (read-string "Post title: "))
+         (description (read-string "Post description: "))
+         (tags (read-string "Tags (separated by spaces): "))
+         (is-draft (y-or-n-p "Is this a draft? "))
+         (slug (replace-regexp-in-string " " "-" (downcase title)))
+         (file-name (concat slug ".org"))
+         (file-path (expand-file-name file-name "~/.local/src/jpachecoxyz.github.io/org/posts/"))
+         (date (format-time-string "%Y-%m-%d"))
+         (draft-string (if is-draft "true" "false"))) ;; <-- move the IF here!
+    (find-file file-path)
+    (insert (format "#+title: %s\n" title))
+    (insert (format "#+description: %s\n" description))
+    (insert (format "#+date: %s\n" date))
+    (insert (format "#+export_file_name: %s\n" slug))
+    (insert "#+hugo_base_dir: ~/.local/src/jpachecoxyz.github.io/\n")
+    (insert "#+hugo_section: posts\n")
+    (insert (format "#+hugo_tags: %s\n" tags))
+    (insert "#+hugo_custom_front_matter: toc true\n")
+    (insert "#+hugo_auto_set_lastmod: nil\n")
+    (insert (format "#+hugo_draft: %s\n" draft-string)) ;; <- use the precomputed value here
+    (goto-char (point-max))
+    (insert "\n") ;; Ensure a blank line before the cursor
+    (set-buffer-modified-p t)))
+
+(global-set-key (kbd "C-c n p") #'jp:create-hugo-post)
+
+(use-package! fzf
+  :config
+  (setq
+   fzf/args
+   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30 --preview 'batcat --style=numbers --color=always --line-range :500 {}' "
+
+   fzf/executable "fzf"
+   fzf/git-grep-args "-i --line-number %s"
+   ;; command used for `fzf-grep-*` functions
+   ;; example usage for ripgrep:
+   ;; fzf/grep-command "rg --no-heading -nH"
+   fzf/grep-command "grep -nrH"
+   ;; If nil, the fzf buffer will appear at the top of the window
+   fzf/position-bottom t
+   fzf/window-height 30))
+
+(use-package! mermaid-mode)
+
+(setq org-babel-mermaid-cli-path "/usr/local/bin/mmdc")
+;; (setenv "PUPPETEER_EXECUTABLE_PATH" "/usr/bin/chromium")
+
+(setq ob-mermaid-cli-path "mmdc")
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)
+      (scheme . t)
+      (c . t)))
