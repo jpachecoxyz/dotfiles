@@ -76,7 +76,8 @@
   (define-key org-mode-map (kbd "C-c C-x d") #'org-decrypt-entries))
 
 (map! :leader :desc "Open my most used files" "ef" #'open-specific-dired)
-(map! :leader :desc "Open the scratch buffer" "os" #'scratch-buffer)
+(map! :leader :desc "Open the scratch buffer" "os" #'toggle-scratch-buffer)
+(map! :leader :desc "Open the org buffer" "oo" #'toggle-org-buffer)
 (map! :leader :desc "Edit src block codes" "ec" #'my/org-edit-toggle)
 (map! :leader :desc "Pass consult" "op" #'+pass/consult)
 (map! :leader :desc "Dirvish" "o-" #'dirvish-side )
