@@ -34,7 +34,7 @@ add-zsh-hook precmd vcs_info
 
 # set up prompt
 NEWLINE=$'\n'
-PROMPT="${NEWLINE}%K{#2E3440}%F{#E5E9F0} %n@nixos %K{#3b4252} %~ %f%k ❯ " # nord theme
+PROMPT="${NEWLINE}%K{#2E3440}%F{#E5E9F0} %n@arch %K{#3b4252} %~ %f%k ❯ " # nord theme
 # PROMPT="${NEWLINE}%K{#3c3836}%F{#d5c4a1} %n@void %K{#504945} %~ %f%k ❯ " # warmer theme
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
@@ -119,6 +119,8 @@ bindkey -s '^a' 'bc -lq\n'
 
 bindkey -s '^S' 'void-sv.sh\n'
 
+bindkey -s '^r' 'rename.sh\n'
+
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
 bindkey '^[[P' delete-char
@@ -139,6 +141,8 @@ source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export PYENV_ROOT="$HOME/.pyenv"
 # [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 # eval "$(pyenv init - zsh)"
+export PATH=~/.local/bin:$PATH
+export PATH=~/.local/bin/scripts:$PATH
 
 # Developement
 eval "$(direnv hook zsh)"

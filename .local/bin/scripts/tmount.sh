@@ -13,16 +13,16 @@ if [ "$ACTION" = "💀 Raise the dead (open)" ]; then
     TOMB_FILE=$(find "$TOMB_DIR" -type f -name "*.tomb" | fzf --prompt="Select a tomb to open: ")
     if [ -n "$TOMB_FILE" ]; then
         echo "🔓 Opening the crypt..."
-        tomb open "$TOMB_FILE" ~/public -k "$KEY_FILE"
+        tomb open "$TOMB_FILE" ~/Public -k "$KEY_FILE"
     else
         echo "No tomb selected. Returning to the crypt."
     fi
 elif [ "$ACTION" = "🪦 Rest in peace (close)" ]; then
     echo "🔒 Sealing the tomb..."
-    tomb --sudo doas close
+    tomb close
 elif [ "$ACTION" = "🔮 Tomb Slam All" ]; then
     echo "🔒 Slamming all tombs shut..."
-    tomb --sudo doas slam all
+    tomb slam all
 else
     echo "No action selected. The spirits remain restless."
 fi

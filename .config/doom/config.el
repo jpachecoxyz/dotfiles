@@ -1,26 +1,5 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-(with-current-buffer (get-buffer-create "*scratch*")
-(insert (format ";;; Commentary: My personal Doom emacs configuration.
-;;; mi-config.el --- Mi configuración personal de Doom Emacs -*- lexical-binding: t; -*-
-;;; Commentary:
-;;      ██╗██████╗  █████╗  ██████╗██╗  ██╗███████╗ ██████╗ ██████╗ ██╗  ██╗██╗   ██╗███████╗
-;;      ██║██╔══██╗██╔══██╗██╔════╝██║  ██║██╔════╝██╔════╝██╔═══██╗╚██╗██╔╝╚██╗ ██╔╝╚══███╔╝
-;;      ██║██████╔╝███████║██║     ███████║█████╗  ██║     ██║   ██║ ╚███╔╝  ╚████╔╝   ███╔╝
-;; ██   ██║██╔═══╝ ██╔══██║██║     ██╔══██║██╔══╝  ██║     ██║   ██║ ██╔██╗   ╚██╔╝   ███╔╝
-;; ╚█████╔╝██║     ██║  ██║╚██████╗██║  ██║███████╗╚██████╗╚██████╔╝██╔╝ ██╗   ██║   ███████╗
-;;  ╚════╝ ╚═╝     ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝
-;;                                                                      jpachecoxyz.github.io
-;;
-;;  Loading time : %s
-"
-                (emacs-init-time)
-                (emacs-lisp-mode)
-                (number-to-string (length package-activated-list))))
-                (goto-char (point-max)))
-
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-opera)
+(setq doom-theme 'doom-tomorrow-night)
 
 ;;; Load Utilities.el.
 (load! "utilities")
@@ -28,7 +7,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "Javier Pacheco"
-      user-mail-address "jpacheco@cock.li")
+      user-mail-address "jpacheco@disroot.org")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -78,6 +57,30 @@
 ;; Desactivar preguntas por *cualquier* proceso vivo al salir
 (setq confirm-kill-processes nil)
 
+(require 'org-crypt)
+
+(setq epa-file-encrypt-to '("jpacheco@disroot.org"))
+(setq org-crypt-tag-matcher "crypt")
+(setq org-crypt-key "jpacheco@disroot.org")
+(setq org-tags-exclude-from-inheritance '("crypt"))
+(setq epa-pinentry-mode 'loopback)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook
+                      #'org-crypt-use-before-save-magic
+                      nil t)))
+
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c C-x e") #'org-encrypt-entries)
+  (define-key org-mode-map (kbd "C-c C-x d") #'org-decrypt-entries))
+
+(map! :leader :desc "Open my most used files" "ef" #'open-specific-dired)
+(map! :leader :desc "Open the scratch buffer" "os" #'scratch-buffer)
+(map! :leader :desc "Edit src block codes" "ec" #'my/org-edit-toggle)
+(map! :leader :desc "Pass consult" "op" #'+pass/consult)
+(map! :leader :desc "Dirvish" "o-" #'dirvish-side )
+
 (setq-default fill-column 80) ;; Column 80
 (setq global-display-fill-column-indicator-mode nil)
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
@@ -93,14 +96,69 @@
   :hook ((org-mode . rainbow-mode)
          (prog-mode . rainbow-mode)))
 
-(map! :leader :desc "Open my most used files" "ef" #'open-specific-dired)
+(use-package! rapid-mode
+  :mode (("\\.MOD\\'" . rapid-mode)
+         ("\\.sys\\'" . rapid-mode)))
+
+(add-to-list 'display-buffer-alist
+             '("\\*typst-ts-compilation\\*"
+               (display-buffer-no-window)))
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/Emacs/org/")
+(setq org-directory "~/Documents/Emacs/org/agenda")
 
-(setq doom-font (font-spec :family "JetBrainsMono NF" :size 15 :weight 'regular)
-     doom-variable-pitch-font (font-spec :family "JetBrainsMono NF" :size 15))
+(use-package! org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode)
+  :config
+  (setq org-auto-tangle-default t))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (lisp . t)
+   (c . t)
+   ))
+
+(defvar my/org-contacts-template "* %(org-contacts-template-name)
+   :PROPERTIES:
+   :EMAIL: %(org-contacts-template-email)
+   :PHONE: %^{Telefono}
+   :IGNORE:
+   :NOTE: %^{NOTA}
+   :BIRTHDAY: %^{Cumpleaños}
+   :END:" "Plantilla para org-contacts.")
+
+(setq org-default-notes-file '("~/Documents/Emacs/org/agenda/refill.org"))
+(global-set-key (kbd "C-c c") 'org-capture)      ;; use C-c c to start capture mode
+
+;; capture templates for: TODO tasks, Notes, appointments, meetings
+(setq org-templates-location-var (concat org-directory "agenda/refill.org"))
+
+(setq org-capture-templates
+      `(
+        ("s" "Scheduled Task" entry (file+headline "~/Documents/Emacs/org/agenda/refill.org" "Priority")
+         "** TODO [#A] %? %^G \n  SCHEDULED: %^t" :empty-lines 1)
+
+        ("d" "Deadline" entry (file+headline "~/Documents/Emacs/org/agenda/refill.org" "Deadline")
+         "** TODO %? %^G \n  DEADLINE: %^t" :empty-lines 1)
+
+        ("n" "Note" entry (file+headline "~/Documents/Emacs/org/agenda/refill.org" "Notes")
+         "** %? %^G\n" :empty-lines 1)
+
+		("c" "Add contact" entry (file+headline "~/Documents/Emacs/org/agenda/contacts.org" "Familia")
+		 my/org-contacts-template
+		 :empty-lines 1)
+		))
+
+;; Refile
+;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+;; C-c C-w for refile
+(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 1))))
+
+(setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 17 :weight 'regular)
+     doom-variable-pitch-font (font-spec :family "CaskaydiaMono Nerd Font" :size 17))
 
 (custom-theme-set-faces!
 'doom-opera
@@ -120,7 +178,7 @@
 
 ;;; EMACS-JP-OLIVETTI
 ;;
-(use-package emacs-jp-olivetti
+(use-package! emacs-jp-olivetti
   ;; :if emacs-jp-enable-olivetti
   :no-require t
   :defer t
@@ -155,9 +213,10 @@
 
 
   ;; (add-hook 'org-mode-hook #'emacs-jp/center-document-mode)
-  (add-hook 'gnus-group-mode-hook #'emacs-jp/center-document-mode)
-  (add-hook 'gnus-summary-mode-hook #'emacs-jp/center-document-mode)
-  (add-hook 'gnus-article-mode-hook #'emacs-jp/center-document-mode)
+  ;; (add-hook 'gnus-group-mode-hook #'emacs-jp/center-document-mode)
+  ;; (add-hook 'gnus-summary-mode-hook #'emacs-jp/center-document-mode)
+  ;; (add-hook 'gnus-article-mode-hook #'emacs-jp/center-document-mode)
+  ;; (add-hook 'org-social-ui-mode-hook #'emacs-jp/center-document-mode)
 
   ;; (add-hook 'newsticker-treeview-list-mode-hook 'emacs-jp/timed-center-visual-fill-on)
   ;; (add-hook 'newsticker-treeview-item-mode-hook 'emacs-jp/timed-center-visual-fill-on)
@@ -165,7 +224,7 @@
   :bind ("<f1>" . #'emacs-jp/center-document-mode))
 
 ;;; EMACS-JP-0x0
-(use-package emacs-jp-0x0
+(use-package! emacs-jp-0x0
   :no-require t
   :defer t
   :init
@@ -213,9 +272,12 @@
          ("C-c C-d C-f" . denote-dired-filter)
          ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
          ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
+
 (add-hook 'dired-mode-hook #'denote-dired-mode)
+(add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
 
 (setq denote-directory (expand-file-name "~/Documents/Emacs/notes"))
+(setq denote-dired-directories-include-subdirectories t)
 (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
 (setq denote-title-history nil)
 (setq denote-sort-keywords nil)
@@ -231,9 +293,12 @@
   "Open `denote-directory` in Dired and filter only notes matching proper Denote filename pattern."
   (interactive)
   (dired denote-directory)
-  ;; (dired-mark-files-regexp "^[0-9]\\{8\\}T[0-9]\\{6\\}--[^=].*\\.org$")
-  ;; (dired-toggle-marks)
-  ;; (dired-do-kill-lines)
+  ;; Disable diredfl only for this Denote Dired buffer
+  (when (fboundp 'diredfl-mode)
+    (diredfl-mode -1))
+
+  ;; Optional: mark buffer as Denote Dired (informational)
+  (denote-dired-mode t)
   (let ((messages '(
                     "🧠🌿 Mind garden pruned: only pure ideas are blooming."
                     "🧠✨ Mind map refreshed: only clear branches remain."
@@ -341,7 +406,7 @@ Follows the sequence: % m (regex), t, K."
   :bind* (("C-c e n" . denote-explore-network)
         ("C-c e v" . denote-explore-network-regenerate)
         ("C-c e D" . denote-explore-barchart-degree)))
-(setq denote-explore-network-d3-template "~/.emacs.d/explore.html")
+(setq denote-explore-network-d3-template "~/.dotfiles/.emacs.d/explore.html")
 
 ;; (use-package ox-typst
 ;;   :ensure t
@@ -412,7 +477,7 @@ Follows the sequence: % m (regex), t, K."
 
 (use-package! ox-hugo
   :after ox)
-(setq org-hugo-base-dir "~/.local/src/jpachecoxyz.github.io/")
+(setq org-hugo-base-dir "~/webdev/jpachecoxyz/")
 (defun jp:create-hugo-post ()
   "Create a new Hugo post buffer with metadata in Org format, unsaved."
   (interactive)
@@ -422,22 +487,21 @@ Follows the sequence: % m (regex), t, K."
          (is-draft (y-or-n-p "Is this a draft? "))
          (slug (replace-regexp-in-string " " "-" (downcase title)))
          (file-name (concat slug ".org"))
-         (file-path (expand-file-name file-name "~/.local/src/jpachecoxyz.github.io/org/posts/"))
+         (file-path (expand-file-name file-name "~/webdev/jpachecoxyz//org/posts/"))
          (date (format-time-string "%Y-%m-%d"))
-         (draft-string (if is-draft "true" "false"))) ;; <-- move the IF here!
+         (draft-string (if is-draft "true" "false")))
     (find-file file-path)
     (insert (format "#+title: %s\n" title))
     (insert (format "#+description: %s\n" description))
     (insert (format "#+date: %s\n" date))
     (insert (format "#+export_file_name: %s\n" slug))
-    (insert "#+hugo_base_dir: ~/.local/src/jpachecoxyz.github.io/\n")
+    (insert "#+hugo_base_dir: ~/webdev/jpachecoxyz/\n")
     (insert "#+hugo_section: posts\n")
     (insert (format "#+hugo_tags: %s\n" tags))
     (insert "#+hugo_custom_front_matter: toc true\n")
     (insert "#+hugo_auto_set_lastmod: nil\n")
-    (insert (format "#+hugo_draft: %s\n" draft-string)) ;; <- use the precomputed value here
-    (goto-char (point-max))
-    (insert "\n") ;; Ensure a blank line before the cursor
+    (insert (format "#+hugo_draft: %s\n" draft-string)) 
+    (goto-char (point-max)) (insert "\n") ;; Ensure a blank line before the cursor
     (set-buffer-modified-p t)))
 
 (global-set-key (kbd "C-c n p") #'jp:create-hugo-post)
@@ -446,7 +510,7 @@ Follows the sequence: % m (regex), t, K."
   :config
   (setq
    fzf/args
-   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30 --preview 'batcat --style=numbers --color=always --line-range :500 {}' "
+   "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30 --preview 'bat --style=numbers --color=always --line-range :500 {}' "
 
    fzf/executable "fzf"
    fzf/git-grep-args "-i --line-number %s"
@@ -469,3 +533,132 @@ Follows the sequence: % m (regex), t, K."
     '((mermaid . t)
       (scheme . t)
       (c . t)))
+
+(use-package! mu4e 
+  :config
+
+  ;; --- Mail sync ---
+  ;; refresca cada 10 minutos
+  (setq mu4e-update-interval (* 10 60))
+  (setq mu4e-get-mail-command "mbsync -a")
+
+  ;; Maildir raíz
+  (setq mu4e-maildir (expand-file-name "~/Mail"))
+
+  ;; --- auth-source / pass ---
+  (auth-source-pass-enable)
+  (setq auth-sources '(password-store))
+  (setq auth-source-debug nil)
+  (setq auth-source-do-cache nil)
+
+  ;; --- Composición ---
+  (setq mu4e-compose-dont-reply-to-self t)
+  (setq mu4e-compose-keep-self-cc nil)
+  (setq message-kill-buffer-on-exit t)
+
+  ;; Evita errores al mover correos
+  (setq mu4e-change-filenames-when-moving t)
+
+  ;; Envío de correo
+  ;; (setq message-send-mail-function 'smtpmail-send-it)
+  (setq sendmail-program "msmtp"
+      send-mail-function 'sendmail-send-it
+      message-send-mail-function 'sendmail-send-it)
+
+  ;; --- Visual ---
+  (setq mu4e-view-show-images t)
+  (setq mu4e-view-show-addresses t)
+
+  ;; Contextos
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-compose-context-policy 'ask)
+  (setq mu4e-confirm-quit nil)
+
+  ;; --- CONTEXTO DISROOT ---
+  (setq mu4e-contexts
+        (list
+         (make-mu4e-context
+          :name "Disroot"
+          :match-func
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/disroot"
+                               (mu4e-message-field msg :maildir))))
+          :vars
+          '((user-mail-address . "jpacheco@disroot.org")
+            (user-full-name    . "Javier Pacheco")
+
+            ;; SMTP (msmtp / smtpmail)
+            (smtpmail-smtp-server  . "smtp.disroot.org")
+            (smtpmail-smtp-service . 587)
+            (smtpmail-stream-type  . starttls)
+            (smtpmail-smtp-user    . "jpacheco@disroot.org")
+
+            ;; Carpetas
+            (mu4e-drafts-folder  . "/disroot/Drafts")
+            (mu4e-sent-folder    . "/disroot/Sent")
+            (mu4e-refile-folder  . "/disroot/Archive")
+            (mu4e-trash-folder   . "/disroot/Trash")
+
+            ;; Firma
+            (mu4e-compose-signature .
+             "Javier Pacheco\nhttps://jpachecoxyz.github.io")))))
+
+  ;; --- Fast Inbox ---
+  (setq m/mu4e-inbox-query
+        "(maildir:/disroot/INBOX) AND flag:unread")
+  
+ ;; ---  Shortcuts ---
+  (setq mu4e-maildir-shortcuts
+    '((:maildir "/disroot/INBOX"     :key ?i)
+      (:maildir "/disroot/Sent"      :key ?s)
+      (:maildir "/disroot/Trash"     :key ?t)
+      (:maildir "/disroot/Drafts"    :key ?d)))
+  
+  ;; --- Bookmarks
+  (setq mu4e-bookmarks
+  '((:name "Unread messages" :query "flag:unread AND NOT flag:trashed" :key ?i)
+      (:name "Today's messages" :query "date:today..now" :key ?t)
+      ;; (:name "The Boss" :query "from:stallman" :key ?s)
+      (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
+      (:name "Messages with images" :query "mime:image/*" :key ?p)))
+
+  (defun m/go-to-inbox ()
+    (interactive)
+    (mu4e-headers-search m/mu4e-inbox-query)))
+  ;; (mu4e t))
+
+(use-package! pdf-tools
+  :commands (pdf-loader-install)
+  :mode "\\.pdf\\'"
+  :bind (:map pdf-view-mode-map
+              ("j" . pdf-view-next-page-command)
+              ("k" . pdf-view-previous-page-command))
+  :init (pdf-loader-install)
+  :config (add-to-list 'revert-without-query ".pdf"))
+
+(add-hook 'pf-view-mode-hook (blink-cursor-mode -1))
+
+(defun my-evil-pdf-view-keybindings ()
+  (evil-define-key 'normal doc-view-mode-map
+    "j" 'pdf-view-next-page-command
+    "k" 'pdf-view-previous-page-command))
+
+(add-hook 'pdf-view-mode-hook 'my-evil-pdf-view-keybindings)
+
+(use-package! doc-view
+  :custom
+  (doc-view-resolution 200)
+  (doc-view-mupdf-use-svg t)
+  (large-file-warning-threshold (* 50 (expt 2 20)))
+  :bind
+  (:map doc-view-mode-map
+        ("j" . doc-view-next-page)
+        ("k" . doc-view-previous-page)))
+
+(defun my-evil-doc-view-keybindings ()
+  (evil-define-key 'normal doc-view-mode-map
+    "j" 'doc-view-next-page
+    "k" 'doc-view-previous-page))
+
+(add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)

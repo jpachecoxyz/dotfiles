@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# Script interactivo para crear un puente en Linux
+# Requiere: iproute2 y fzf
+
+# Verificar si fzf está instalado
+if ! command -v fzf &>/dev/null; then
+    echo "❌ fzf no está instalado. Instálalo o modifica el script para no usar fzf."
+    exit 1
+fi
+
+echo "🔎 Buscando interfaces disponibles..."
+sleep 1
+
+# Obtener interfaces físicas (excluyendo lo, bridges, docker, veth, etc)
+iface=$(ip -o link show | awk -F': ' '{print $2}' \
+    | grep -v -E "lo|br-|docker|veth|virbr" \
+    | fzf --prompt="Selecciona la interfaz a agregar al puente: ")
+
+if [ -z "$iface" ]; then
+    echo "❌ No seleccionaste ninguna interfaz."
+    exit 1
+fi
+
+echo "👉 Seleccionaste: $iface"
+echo ""
+
+read -rp "📛 Nombre que quieres para el puente (ej. br0): " brname
+brname=${brname:-br0}
+
+read -rp "🌐 IP que quieres asignar al puente (ej. 192.168.0.100/24): " ipaddr
+
+echo ""
+echo "⚙️ Configurando puente..."
+echo ""
+echo "ip link add name $brname type bridge"
+echo "ip link set dev $brname up"
+echo "ip link set $iface master $brname"
+echo "ip addr add $ipaddr dev $brname"
+echo ""
+read -rp "¿Deseas ejecutar estos comandos? (y/n): " confirm
+
+if [[ "$confirm" != "y" ]]; then
+    echo "Cancelado."
+    exit 0
+fi
+
+# Ejecutar comandos reales
+sudo ip link add name "$brname" type bridge
+sudo ip link set dev "$brname" up
+sudo ip link set "$iface" master "$brname"
+sudo ip addr add "$ipaddr" dev "$brname"
+
+echo ""
+echo "✅ Puente creado correctamente:"
+echo "   - Bridge: $brname"
+echo "   - Interfaz añadida: $iface"
+echo "   - IP: $ipaddr"
+echo ""
+
+ip addr show "$brname"

@@ -16,8 +16,10 @@ plugins = [
 
 [scratchpads.term]
 animation = "fromBottom"
-command = "foot -a scratchpad -T 'jpachecoxyz@scratchpad'"
+# command = "foot -a scratchpad -T 'jpachecoxyz@scratchpad'"
+command = "alacritty --class scratchpad"
 lazy = true
+class = "scratchpad"
 size = "75% 50%"
 max_size = "1920px 100%"
 position = "15% 25%"

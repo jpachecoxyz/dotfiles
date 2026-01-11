@@ -203,19 +203,17 @@ clipboard"
     (switch-to-buffer (get-buffer-create "*scratch*"))))
 
 (defun toggle-org-buffer ()
-  "Toggle the Org-scratch-buffer buffer"
+  "Toggle an Org scratch buffer."
   (interactive)
-  (if (equal (buffer-name (current-buffer)) "Org-scratch-buffer")
-      (if (one-window-p t)
-          (switch-to-buffer (other-buffer))
-        (delete-window))
-    (if (get-buffer "Org-scratch-buffer")
-        (if (get-buffer-window "Org-scratch-buffer")
-            (progn
-              (bury-buffer "Org-scratch-buffer")
-              (delete-window (get-buffer-window "Org-scratch-buffer")))
-          (switch-to-buffer "Org-scratch-buffer"))
-      (new-scratch-pad))))
+  (let ((name "*org-scratch*"))
+    (if (string= (buffer-name) name)
+        (bury-buffer)
+      (switch-to-buffer (get-buffer-create name))
+      (org-mode)
+      (when (= (buffer-size) 0)
+        (insert
+         "# This buffer is for text that is not saved.\n"
+         "# To create a file, visit it with `C-x C-f` and enter text in its buffer.\n\n")))))
 
 ;; Toggle *eshell* buffer.
 (defun toggle-eshell-buffer ()

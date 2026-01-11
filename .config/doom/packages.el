@@ -6,16 +6,23 @@
 
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-(package! page-break-lines)
+;; Notes
+;; diredfl must be disabled to have fontify faces in denote-dired-mode
+;; https://github.com/protesilaos/denote/issues/446
+(package! diredfl :disable t)
 (package! denote)
 (package! denote-menu)
+(package! denote-sequence)
 (package! denote-explore)
 (package! denote-org)
 (package! denote-regexp)
 (package! consult-denote
   :recipe (:host github
-                 :repo "protesilaos/consult-denote"))
+           :repo "protesilaos/consult-denote"))
+(package! page-break-lines)
+;; Spell
 (package! jinx)
+;; Programming
 (package! rainbow-delimiters)
 (package! rainbow-mode)
 (package! tree-sitter-langs)
@@ -24,10 +31,23 @@
 (package! typst-ts-mode
   :recipe (:host codeberg
            :repo "meow_king/typst-ts-mode"))
+(package! rapid-mode
+  :recipe (:host github
+           :repo "awbraunstein/rapid-mode"))
 (package! treesit-auto)
 (package! treesit-ispell)
 (package! mermaid-mode)
 (package! plantuml-mode)
+;; Org
+(package! org-auto-tangle)
+(package! org-contacts)
+;; (package! org-social)
+;; Email
+(package! mu4e-dashboard
+  :recipe (:host github
+           :repo "rougier/mu4e-dashboard"))
+;; PDF
+(package! pdf-tools)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

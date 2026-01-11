@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+
+ORG_FILE="$1"
+
+if [ -z "$ORG_FILE" ]; then
+    echo "❌ Usage: autotangle path/to/file.org"
+    exit 1
+fi
+
+if [ ! -f "$ORG_FILE" ]; then
+    echo "❌ File not found: $ORG_FILE"
+    exit 1
+fi
+
+emacs --batch \
+      --eval "(require 'org)" \
+      --eval "(require 'ob-tangle)" \
+      --eval "(org-babel-tangle-file \"$ORG_FILE\")"
+
+echo "✅ Tangled: $ORG_FILE"

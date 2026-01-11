@@ -30,7 +30,7 @@ if ! command -v fzf > /dev/null 2>&1; then
 fi
 
 # Select source format
-FORMAT=$(echo "vmdk\nraw\nvdi\nvhdx\nvpc\nqcow2" | fzf --prompt="Select source format: ")
+FORMAT=$(echo -e "vmdk\nraw\nvdi\nvhdx\nvpc\nqcow2" | fzf --prompt="Select source format: ")
 [ -z "$FORMAT" ] && echo "No format selected. Exiting." && exit 1
 
 # Select archive file
