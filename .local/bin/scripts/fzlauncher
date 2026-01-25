@@ -11,7 +11,7 @@ export TIME_STAMP="20241004.180308"
 
 PROG=$( basename "$0" )
 
-locations=( "$HOME/.local/share/applications" "$HOME/.nix-profile/share/applications/" )
+locations=( "$HOME/.local/share/applications" )
 
 # shellcheck disable=SC2016
 selected_app=$(

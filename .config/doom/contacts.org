@@ -4,28 +4,32 @@
 #+date: 9-12-2025
 #+description: My contacts.
 #+startup: showall
-#+TAGS: { personal(p) expert(e) vendor(v) }
-#+TAGS: { electronics(l) programming(c) robotics(r) plc(P) }
-#+TAGS: friend(f) client(c) supplier(s) crypt(x)
+#+TAGS: { personal(p) familia(F) amigo(a) }
+#+TAGS: { profesional(P) cliente(c) proveedor(v) }
+#+TAGS: { automotriz(A) diecasting(d) manufactura(m) }
+#+TAGS: { maquinados(M) moldes(O) herramentales(H) }
+#+TAGS: { servicios(S) mantenimiento(t) diseno(D) integracion(I) }
+#+TAGS: { plc(p) electrico(E) mecanica(M) hidraulica(H) robotica(R) }
+#+TAGS: { confiable(ok) recomendado(r) urgente(!) }
 
 * Personal
 ** Xiomara Marińo :personal:
 :PROPERTIES:
 :PHONE: 477-687-4948
 :EMAIL: ceidy-16@hotmail.com
+:BIRTHDAY: 1989-02-19
 :END:
 
 * Contacts
-** Ing. Juan Torres :expert:diecasting:idra:
+** Ing. Juan Torres :profesional:diecasting:servicios:recomendado:
 :PROPERTIES:
 :PHONE: 
 :EMAIL: 
+:NOTE: Especialista en maquinas de diecasting, hidraulica, hornos, maquinados y moldes.
 :END:
-Especialista en maquinas de diecasting, hidraulica, hornos, maquinados y moldes.
-
-** Ing. Edgar Rodriguez :electronics:supplier:
+** Ing. Edgar Rodriguez :integracion:recomendado:
 :PROPERTIES:
 :PHONE: 
 :EMAIL: 
+:NOTE: Especialista en control electrico, programacion plc, proveedor de componentes electronicos y electricos.
 :END:
-Especialista en control electrico, programacion plc, proveedor de componentes electronicos y electricos.

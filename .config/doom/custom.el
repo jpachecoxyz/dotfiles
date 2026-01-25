@@ -6,11 +6,11 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(color-theme-sanityinc-tomorrow company consult-denote consult-flycheck
-     denote-menu denote-org denote-refs denote-silo diminish ef-themes ellama
-     evil-goggles evil-nerd-commenter evil-numbers evil-surround jinx keycast
-     lorem-ipsum magit marginalia mermaid-mode mu4e-views orderless org-mime
-     org-tree-slide rainbow-mode typst-ts-mode uniline vertico-posframe
-     yasnippet-snippets))
+     denote-menu denote-org denote-refs denote-silo diminish ef-themes
+     elisp-format ellama evil-goggles evil-nerd-commenter evil-numbers
+     evil-surround jinx keycast lorem-ipsum magit marginalia mermaid-mode
+     mu4e-views orderless org-mime org-tree-slide rainbow-mode typst-ts-mode
+     uniline vertico-posframe yasnippet-snippets))
  '(safe-local-variable-values
    '((eval progn (setq-local org-hugo-base-dir "~/webdev/jpachecoxyz")
       (org-hugo-auto-export-mode 1))

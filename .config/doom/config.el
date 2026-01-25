@@ -1,7 +1,7 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-tomorrow-night)
 
-;;; Load Utilities.el.
+;; Load Utilities.el.
 (load! "utilities")
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
@@ -77,10 +77,12 @@
 
 (map! :leader :desc "Open my most used files" "ef" #'open-specific-dired)
 (map! :leader :desc "Open the scratch buffer" "os" #'toggle-scratch-buffer)
-(map! :leader :desc "Open the org buffer" "oo" #'toggle-org-buffer)
-(map! :leader :desc "Edit src block codes" "ec" #'my/org-edit-toggle)
+;; (map! :leader :desc "Open the org buffer" "oo" #'toggle-org-buffer)
 (map! :leader :desc "Pass consult" "op" #'+pass/consult)
-(map! :leader :desc "Dirvish" "o-" #'dirvish-side )
+(map! :leader :desc "Org agenda" "a" #'org-agenda)
+(map! :leader
+      :desc "Agenda weekly" "w"
+      (lambda () (interactive) (org-agenda nil "w")))
 
 (setq-default fill-column 80) ;; Column 80
 (setq global-display-fill-column-indicator-mode nil)
@@ -105,6 +107,23 @@
              '("\\*typst-ts-compilation\\*"
                (display-buffer-no-window)))
 
+(add-to-list 'display-buffer-alist
+             '("\\*Org Src.*\\*"
+               (display-buffer-in-side-window)
+               (side . right)
+               (slot . 0)
+               (window-width . 0.45)
+               (dedicated . t)))
+
+(setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 17 :weight 'regular)
+     doom-variable-pitch-font (font-spec :family "CaskaydiaMono Nerd Font" :size 17))
+
+(custom-theme-set-faces!
+'doom-opera
+'(org-document-title :bold t :underline nil)
+'(show-paren-match :bold t  :background "#1b1b1b")
+'(hl-line :extend t :background "#3a3a3a"))
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/Emacs/org/agenda")
@@ -117,55 +136,309 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '(
-   (lisp . t)
-   (c . t)
-   ))
+ '((lisp . t)
+   (c . t)))
 
-(defvar my/org-contacts-template "* %(org-contacts-template-name)
-   :PROPERTIES:
-   :EMAIL: %(org-contacts-template-email)
-   :PHONE: %^{Telefono}
-   :IGNORE:
-   :NOTE: %^{NOTA}
-   :BIRTHDAY: %^{Cumpleaños}
-   :END:" "Plantilla para org-contacts.")
+(setq org-hide-emphasis-markers t)
 
-(setq org-default-notes-file '("~/Documents/Emacs/org/agenda/refill.org"))
+(defvar jp/org-contact-template-personal
+  "** %^{Name}
+:PROPERTIES:
+:PHONE: %^{Phone: 123-456-7890}
+:EMAIL: %^{Email}
+:BIRTHDAY: %^{Birthday}t
+:END:"
+  "Org template for personal contacts.")
+
+(defvar jp/org-contact-template-company
+  "** %^{Company Name}
+:PROPERTIES:
+:MODEL: %^{Business Model|Supplier|Integrator|Service Provider|OEM}
+:LINE:  %^{Technical Line|Automation & Robotics|Industrial Maintenance|Utilities & HVAC|Tooling & Machining|Die Casting|Furnaces}
+:END:"
+  "Org template for companies contacts.")
+
+(defvar jp/org-contact-template-professional
+  "*** %^{Name}
+:PROPERTIES:
+:PHONE: %^{Phone: 123-456-7890}
+:EMAIL: %^{Email}
+:END:"
+  "Org template for professional contacts.")
+
+;; -------------------------
+;; Contacts file
+;; -------------------------
+(defvar jp/contacts-file "~/Documents/Emacs/org/agenda/contacts.org"
+  "Main contacts Org file.")
+
 (global-set-key (kbd "C-c c") 'org-capture)      ;; use C-c c to start capture mode
 
 ;; capture templates for: TODO tasks, Notes, appointments, meetings
-(setq org-templates-location-var (concat org-directory "agenda/refill.org"))
+(setq org-templates-location-var (concat org-directory "agenda/refile.org"))
+
+;; My personal contatcs.org file
+(defvar jp/contacts-file "~/Documents/Emacs/org/agenda/contacts.org"
+  "Main contacts Org file.")
+
+(defvar jp/org-refile-file
+  "~/Documents/Emacs/org/agenda/refile.org"
+  "Main refill Org file.")
+
+(defvar jp/org-capture-template-scheduled
+  "** [#A] %?
+SCHEDULED: %^t"
+  "Capture template for scheduled priority tasks.")
+
+(defvar jp/org-capture-template-deadline
+  "** %?
+DEADLINE: %^t"
+  "Capture template for deadline tasks.")
+
+(defvar jp/org-capture-template-note
+  "** %?"
+  "Capture template for notes.")
 
 (setq org-capture-templates
       `(
-        ("s" "Scheduled Task" entry (file+headline "~/Documents/Emacs/org/agenda/refill.org" "Priority")
-         "** TODO [#A] %? %^G \n  SCHEDULED: %^t" :empty-lines 1)
+        ("s" "Scheduled Task"
+         entry
+         (file+headline ,jp/org-refile-file "Priority")
+         ,jp/org-capture-template-scheduled
+         :empty-lines 1)
 
-        ("d" "Deadline" entry (file+headline "~/Documents/Emacs/org/agenda/refill.org" "Deadline")
-         "** TODO %? %^G \n  DEADLINE: %^t" :empty-lines 1)
+        ("d" "Deadline"
+         entry
+         (file+headline ,jp/org-refile-file "Deadline")
+         ,jp/org-capture-template-deadline
+         :empty-lines 1)
 
-        ("n" "Note" entry (file+headline "~/Documents/Emacs/org/agenda/refill.org" "Notes")
-         "** %? %^G\n" :empty-lines 1)
+        ("p" "Personal contact"
+         entry
+         (file+headline ,jp/contacts-file "Personal")
+         ,jp/org-contact-template-personal
+         :jump-to-captured nil)
 
-		("c" "Add contact" entry (file+headline "~/Documents/Emacs/org/agenda/contacts.org" "Familia")
-		 my/org-contacts-template
-		 :empty-lines 1)
-		))
+        ;; ---- CONTACTS DISPATCHER ----
+        ("P" "Professional Contacts")
+
+        ("Pc" "Company contact"
+         entry
+         (file+headline ,jp/contacts-file "Companies")
+         ,jp/org-contact-template-company
+         :jump-to-captured nil)
+
+        ("Pp" "Professional contact"
+         entry
+         (file+headline ,jp/org-refile-file "Contacts")
+         ,jp/org-contact-template-professional
+         :jump-to-captured nil)
+        ))
 
 ;; Refile
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 ;; C-c C-w for refile
-(setq org-refile-targets (quote ((org-agenda-files :maxlevel . 1))))
+(setq org-refile-targets
+      `((org-agenda-files :maxlevel . 2)
+        (,jp/contacts-file :maxlevel . 2)))
 
-(setq doom-font (font-spec :family "CaskaydiaMono Nerd Font" :size 17 :weight 'regular)
-     doom-variable-pitch-font (font-spec :family "CaskaydiaMono Nerd Font" :size 17))
+(setq org-tag-alist
+      '((:startgroup . "Context")
+        ("@home" . ?h)
+        ("@work" . ?w)
+        ("@personal" . ?p)
+        (:endgroup)
+        
+        (:startgroup . "Difficulty")
+        ("easy" . ?E)
+        ("medium" . ?M)
+        ("challenging" . ?C)
+        (:endgroup)
+        
+        ;; Activities
+        ("@planning" . ?n)
+        ("@programming" . ?P)
+        ("@writing" . ?W)
+        ("@email" . ?e)
+        ("@calls" . ?c)
+        ("@errands" . ?r)))
 
-(custom-theme-set-faces!
-'doom-opera
-'(org-document-title :bold t :underline nil)
-'(show-paren-match :bold t  :background "#1b1b1b")
-'(hl-line :extend t :background "#3a3a3a"))
+(setq org-agenda-custom-commands
+      `(
+        
+        ("w" "Main Agenda"
+        (
+        ;; ─────────────────────────────────────────────
+        ;; Main Agenda Overview (TODOs, NOT DOING)
+        ;; ─────────────────────────────────────────────
+        (tags-todo "+@home|@work"
+                ((org-agenda-span 'week)
+                (org-agenda-start-on-weekday 1)
+                (org-agenda-block-separator ?-)
+                (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if 'todo '("DOING" "DONE")))
+                (org-agenda-overriding-header "Main Agenda Overview")))
+
+        ;; ─────────────────────────────────────────────
+        ;; Tasks in DOING (estado DOING REAL)
+        ;; ─────────────────────────────────────────────
+        (todo "DOING"
+                ((org-agenda-span 'week)
+                (org-agenda-start-on-weekday 1)
+                (org-agenda-block-separator ?-)
+                (org-agenda-overriding-header "Tasks in DOING")))
+
+        ;; ─────────────────────────────────────────────
+        ;; Today's agenda
+        ;; ─────────────────────────────────────────────
+        (agenda ""
+                ((org-agenda-span 0)
+                (org-deadline-warning-days 0)
+                (org-scheduled-past-days 3)
+                (org-agenda-day-face-function
+                (lambda (_date) 'org-agenda-date))
+                (org-agenda-format-date "%A %-e %B %Y")
+                (org-agenda-block-separator ?-)
+                (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if '("DONE")))
+                (org-agenda-overriding-header "Today's agenda")))
+
+        ;; ─────────────────────────────────────────────
+        ;; Upcoming tasks (+14d) — solo SCHEDULED
+        ;; ─────────────────────────────────────────────
+        (agenda ""
+                ((org-agenda-time-grid nil)
+                (org-agenda-start-on-weekday nil)
+                (org-agenda-start-day "+6d")
+                (org-agenda-span 14)
+                (org-agenda-show-all-dates nil)
+                (org-deadline-warning-days 0)
+                (org-agenda-entry-types '(:scheduled))
+                (org-agenda-skip-function
+                '(org-agenda-skip-entry-if 'todo 'done))
+                (org-agenda-block-separator ?-)
+                (org-agenda-overriding-header
+                "Upcoming tasks (+14d)")))))
+ 
+        ("S" "Scheduled & Deadlines"
+         ((agenda ""
+                  ((org-agenda-overriding-header "📅 Scheduled & Deadlines")
+                   (org-agenda-span 14)
+                   (org-agenda-entry-types '(:scheduled :deadline))
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-skip-entry-if 'todo '("DONE" "CANCELLED"))
+                   (org-agenda-time-grid nil)
+                   (org-agenda-block-separator nil)))))
+ 
+        ("s" "Scheduled"
+         ((agenda ""
+                  ((org-agenda-overriding-header "🗓 Scheduled")
+                   (org-agenda-span 14)
+                   (org-agenda-entry-types '(:scheduled))
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-time-grid nil)
+                   (org-agenda-block-separator ?-)))))
+ 
+        ("d" "Deadlines"
+         ((agenda ""
+                  ((org-agenda-overriding-header "⏰ Deadlines")
+                   (org-agenda-span 14)
+                   (org-agenda-entry-types '(:deadline))
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-deadline-warning-days 14)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-block-separator ?-)))))
+
+        ("A" "All Tasks"
+        ((agenda ""
+            ((org-agenda-overriding-header "Completed Tasks\n")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+                 (org-agenda-block-separator ?-)
+            (org-agenda-span 'week)))
+
+        (agenda ""
+            ((org-agenda-overriding-header "Unfinished Scheduled Tasks\n")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                 (org-agenda-block-separator ?-)
+            (org-agenda-span 'week)))))
+
+        ("k" "Kanban Dashboard"
+         ((todo "TODO"
+                ((org-agenda-overriding-header "🟥 TODO")
+                 (org-agenda-block-separator ?-)
+                 (org-agenda-sorting-strategy '(priority-down effort-up))))
+
+          (todo "DOING"
+                ((org-agenda-overriding-header "🟨 DOING")
+                 (org-agenda-block-separator ?-)
+                 (org-agenda-sorting-strategy '(priority-down effort-up))))
+
+          (todo "DONE"
+                ((org-agenda-overriding-header "🟩 DONE")
+                 (org-agenda-block-separator ?-)
+                 (org-agenda-sorting-strategy '(priority-down effort-up))))))
+        
+        ("p" "Planning"
+        ((tags-todo "+planning+@home|@work"
+                ((org-agenda-overriding-header "Planning Tasks\n")))
+
+        (todo ".*" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refile.org"))
+                (org-agenda-overriding-header "Unprocessed refill.org Items")))))
+
+        ("i" "Important dates"
+        ((agenda ""
+                ((org-agenda-overriding-header "Important dates Agenda Overview\n")
+                (org-agenda-span 'year)
+                (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                (org-agenda-show-all-dates nil)
+                (org-agenda-block-separator ?-)
+                        (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if
+                                'notregexp
+                                (regexp-opt '("i-dates"))))))
+
+        (agenda ""
+                ((org-agenda-overriding-header "Upcoming Birthday's\n")
+                (org-agenda-span 'month)
+                (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                (org-agenda-start-day "01")
+                (org-agenda-show-all-dates nil)
+                (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
+                (org-agenda-block-separator ?-)
+                (org-agenda-skip-function
+                '(org-agenda-skip-entry-if
+                        'notregexp
+                        (regexp-opt '("birthday"))))))))
+
+        ("b" "Birthday Calendar dates"
+        ((agenda ""
+                ((org-agenda-overriding-header "Birthday Calendar dates\n")
+                (org-agenda-span 'year)
+                (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                (org-agenda-start-day "01")
+                (org-agenda-show-all-dates nil)
+                (org-agenda-block-separator ?-)
+                (org-agenda-skip-function
+                '(org-agenda-skip-entry-if
+                        'notregexp
+                        (regexp-opt '("birthday"))))))))
+		
+		))
+
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-window-setup 'current-window)
+(setq org-track-ordered-property-with-tag t)
+(setq org-log-done 'time)
+(setq org-agenda-start-with-log-mode t)
+
+;; Server Mode
+
+(use-package! server
+  :defer 1
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 ;;; Web jump
 (use-package! webjump
@@ -409,6 +682,13 @@ Follows the sequence: % m (regex), t, K."
         ("C-c e D" . denote-explore-barchart-degree)))
 (setq denote-explore-network-d3-template "~/.dotfiles/.emacs.d/explore.html")
 
+(use-package! tmr
+  :config
+  (define-key global-map (kbd "C-c t") #'tmr-prefix-map)
+  (setq tmr-sound-file "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"
+        tmr-notification-urgency 'normal
+        tmr-description-list 'tmr-description-history))
+
 ;; (use-package ox-typst
 ;;   :ensure t
 ;;   :after ox)
@@ -432,10 +712,6 @@ Follows the sequence: % m (regex), t, K."
 
 (with-eval-after-load 'treesit
   (setq treesit-font-lock-level 4))
-
-(use-package! page-break-lines
-  :config
-  (global-page-break-lines-mode))
 
 (setq ispell-hunspell-dict-paths-alist
       '(("en_US" "~/.dotfiles/.emacs.d/lang/en_US.aff")
@@ -663,3 +939,56 @@ Follows the sequence: % m (regex), t, K."
     "k" 'doc-view-previous-page))
 
 (add-hook 'doc-view-mode-hook 'my-evil-doc-view-keybindings)
+
+(use-package! nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :custom (nov-text-width 75))
+
+(use-package! hydra
+  :bind (("C-c g" . hydra-go-to-file/body)
+         ("C-c o" . hydra-org/body)
+         ("C-c w" . hydra-windows/body)))
+
+(use-package! major-mode-hydra
+  :after hydra)
+
+(pretty-hydra-define hydra-go-to-file
+  (:hint nil :color teal :quit-key "q" :title "Go To")
+  ("Agenda"
+   (("ac" (find-file "~/Documents/Emacs/org/agenda/contacts.org") "contacts")
+    ("aa" (find-file "~/Documents/Emacs/org/agenda/agenda.org") "agenda")
+    ("ar" (find-file "~/Documents/Emacs/org/agenda/refile.org") "refile")
+    ("aw" (find-file "~/Documents/Emacs/org/agenda/work.org") "work agenda"))
+   "Config"
+   (("ce" (find-file "~/.dotfiles/.config/doom/config.org") "doom emacs"))))
+
+(pretty-hydra-define hydra-org
+  (:hint nil :color teal :quit-key "q" :title "Org")
+  ("Action"
+   (("a" org-agenda "agenda")
+    ("c" org-capture "capture")
+    ("d" org-decrypt-entry "decrypt")
+    ("i" org-insert-link-global "insert-link")
+    ("j" org-capture-goto-last-stored "jump-capture")
+    ("k" org-cut-subtree "cut-subtree")
+    ("o" org-open-at-point-global "open-link")
+    ("r" org-refile "refile")
+    ("s" org-store-link "store-link")
+    ("t" org-show-todo-tree "todo-tree"))))
+
+(pretty-hydra-define hydra-windows
+  (:hint nil :foreign-keys warn :quit-key "q" :title "Windows")
+  ("Window"
+   (("b" balance-windows "balance")
+    ("c" centered-window-mode "center")
+    ("i" enlarge-window "heighten")
+    ("j" shrink-window-horizontally "narrow")
+    ("k" shrink-window "lower")
+    ("u" winner-undo "undo")
+    ("r" winner-redo "redo")
+    ("l" enlarge-window-horizontally "widen")
+    ("s" switch-window-then-swap-buffer "swap" :color teal))
+   "Zoom"
+   (("-" text-scale-decrease "out")
+    ("+" text-scale-increase "in")
+    ("=" (text-scale-increase 0) "reset"))))

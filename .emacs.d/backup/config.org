@@ -1573,7 +1573,7 @@ rainbow" :toggle t)
     ;;              `(org-agenda-skip-entry-if
     ;;                'notregexp ,(format "\\[#%s\\]" (char-to-string org-priority-highest))))
     ;;             (org-agenda-block-separator nil)
-    ;;             (org-agenda-overriding-header "Important Tasks\n")))
+    ;;             (org-agenda-overriding-header "Important Tasks\n")))
     (agenda "" ((org-agenda-span 0)
                 (org-deadline-warning-days 0)
                 (org-agenda-block-separator nil)
@@ -1651,7 +1651,7 @@ rainbow" :toggle t)
 		
 		("i" "Important dates"
 		 ((agenda ""
-				  ((org-agenda-overriding-header "Important dates Agenda Overview\n")
+				  ((org-agenda-overriding-header "Important dates Agenda Overview\n")
 				   (org-agenda-span 'year)
 				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
 				   (org-agenda-show-all-dates nil)
@@ -1661,7 +1661,7 @@ rainbow" :toggle t)
 					  (regexp-opt '("i-dates"))))))
 
 		  (agenda ""
-				  ((org-agenda-overriding-header "Upcoming Birthday's\n")
+				  ((org-agenda-overriding-header "Upcoming Birthday's\n")
 				   (org-agenda-span 'month)
 				   (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
 				   (org-agenda-start-day "01")

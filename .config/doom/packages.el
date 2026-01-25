@@ -9,19 +9,20 @@
 ;; Notes
 ;; diredfl must be disabled to have fontify faces in denote-dired-mode
 ;; https://github.com/protesilaos/denote/issues/446
-(package! diredfl :disable t)
+;; (package! diredfl :disable t)
 (package! denote)
 (package! denote-menu)
 (package! denote-sequence)
-(package! denote-explore)
 (package! denote-org)
 (package! denote-regexp)
 (package! consult-denote
   :recipe (:host github
            :repo "protesilaos/consult-denote"))
-(package! page-break-lines)
+(package! tmr)
+
 ;; Spell
 (package! jinx)
+
 ;; Programming
 (package! rainbow-delimiters)
 (package! rainbow-mode)
@@ -38,16 +39,23 @@
 (package! treesit-ispell)
 (package! mermaid-mode)
 (package! plantuml-mode)
+(package! all-the-icons)
+;; 
 ;; Org
 (package! org-auto-tangle)
 (package! org-contacts)
-;; (package! org-social)
+
 ;; Email
 (package! mu4e-dashboard
   :recipe (:host github
            :repo "rougier/mu4e-dashboard"))
-;; PDF
+;; PDF & EPUB
 (package! pdf-tools)
+(package! nov)
+
+;; Hydra
+(package! hydra)
+(package! major-mode-hydra)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
