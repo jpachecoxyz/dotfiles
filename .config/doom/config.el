@@ -80,9 +80,6 @@
 ;; (map! :leader :desc "Open the org buffer" "oo" #'toggle-org-buffer)
 (map! :leader :desc "Pass consult" "op" #'+pass/consult)
 (map! :leader :desc "Org agenda" "a" #'org-agenda)
-(map! :leader
-      :desc "Agenda weekly" "w"
-      (lambda () (interactive) (org-agenda nil "w")))
 
 (setq-default fill-column 80) ;; Column 80
 (setq global-display-fill-column-indicator-mode nil)
@@ -262,11 +259,22 @@ DEADLINE: %^t"
         ("@email" . ?e)
         ("@calls" . ?c)
         ("@errands" . ?r)))
+(setq org-agenda-tags-column 90)
+
+(map! :after evil-org-agenda
+      :map evil-org-agenda-mode-map
+      ;; Unbind the keys
+      :m "/" nil
+      :m "<tab>" nil
+      :m "<backtab>" nil
+
+      ;; Set the binds
+      :m "/" #'org-agenda-filter
+      :m "<tab>" #'org-agenda-next-item
+      :m "<backtab>" #'org-agenda-previous-item)
 
 (setq org-agenda-custom-commands
-      `(
-        
-        ("w" "Main Agenda"
+      `(("w" "Main Agenda"
         (
         ;; ─────────────────────────────────────────────
         ;; Main Agenda Overview (TODOs, NOT DOING)
@@ -288,19 +296,15 @@ DEADLINE: %^t"
                 (org-agenda-block-separator ?-)
                 (org-agenda-overriding-header "Tasks in DOING")))
 
+
         ;; ─────────────────────────────────────────────
         ;; Today's agenda
         ;; ─────────────────────────────────────────────
         (agenda ""
                 ((org-agenda-span 0)
-                (org-deadline-warning-days 0)
-                (org-scheduled-past-days 3)
-                (org-agenda-day-face-function
-                (lambda (_date) 'org-agenda-date))
-                (org-agenda-format-date "%A %-e %B %Y")
+                (org-agenda-start-day "0d")
+                (org-agenda-show-log nil)
                 (org-agenda-block-separator ?-)
-                (org-agenda-skip-function
-                        '(org-agenda-skip-entry-if '("DONE")))
                 (org-agenda-overriding-header "Today's agenda")))
 
         ;; ─────────────────────────────────────────────
@@ -309,11 +313,11 @@ DEADLINE: %^t"
         (agenda ""
                 ((org-agenda-time-grid nil)
                 (org-agenda-start-on-weekday nil)
-                (org-agenda-start-day "+6d")
+                ;; (org-agenda-start-day "+6d")
                 (org-agenda-span 14)
                 (org-agenda-show-all-dates nil)
                 (org-deadline-warning-days 0)
-                (org-agenda-entry-types '(:scheduled))
+                (org-agenda-entry-types '(:scheduled :deadline))
                 (org-agenda-skip-function
                 '(org-agenda-skip-entry-if 'todo 'done))
                 (org-agenda-block-separator ?-)
@@ -353,7 +357,7 @@ DEADLINE: %^t"
         ((agenda ""
             ((org-agenda-overriding-header "Completed Tasks\n")
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
-                 (org-agenda-block-separator ?-)
+            (org-agenda-block-separator ?-)
             (org-agenda-span 'week)))
 
         (agenda ""

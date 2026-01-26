@@ -157,9 +157,6 @@ This configuration allows me to encrypt text in org files adding the tag =crypt=
 ;; (map! :leader :desc "Open the org buffer" "oo" #'toggle-org-buffer)
 (map! :leader :desc "Pass consult" "op" #'+pass/consult)
 (map! :leader :desc "Org agenda" "a" #'org-agenda)
-(map! :leader
-      :desc "Agenda weekly" "w"
-      (lambda () (interactive) (org-agenda nil "w")))
 #+end_src
 
 ** Coding stuff
@@ -347,6 +344,7 @@ DEADLINE: %^t"
 #+end_src
 ** Org-Agenda.
 This are my tags alist to use in my personal agenda file:
+
 #+begin_src emacs-lisp
 (setq org-tag-alist
       '((:startgroup . "Context")
@@ -368,14 +366,30 @@ This are my tags alist to use in my personal agenda file:
         ("@email" . ?e)
         ("@calls" . ?c)
         ("@errands" . ?r)))
+(setq org-agenda-tags-column 90)
+#+end_src
+
+The code below, is for bind keys in org-agenda-mode, I realize that I need to unbind the key first, then bind the key to its new command.
+
+#+begin_src emacs-lisp
+(map! :after evil-org-agenda
+      :map evil-org-agenda-mode-map
+      ;; Unbind the keys
+      :m "/" nil
+      :m "<tab>" nil
+      :m "<backtab>" nil
+
+      ;; Set the binds
+      :m "/" #'org-agenda-filter
+      :m "<tab>" #'org-agenda-next-item
+      :m "<backtab>" #'org-agenda-previous-item)
 #+end_src
 
 This code modifies the main entry of the org agenda, and sets some variables.
+
 #+begin_src emacs-lisp 
 (setq org-agenda-custom-commands
-      `(
-        
-        ("w" "Main Agenda"
+      `(("w" "Main Agenda"
         (
         ;; ─────────────────────────────────────────────
         ;; Main Agenda Overview (TODOs, NOT DOING)
@@ -397,19 +411,15 @@ This code modifies the main entry of the org agenda, and sets some variables.
                 (org-agenda-block-separator ?-)
                 (org-agenda-overriding-header "Tasks in DOING")))
 
+
         ;; ─────────────────────────────────────────────
         ;; Today's agenda
         ;; ─────────────────────────────────────────────
         (agenda ""
                 ((org-agenda-span 0)
-                (org-deadline-warning-days 0)
-                (org-scheduled-past-days 3)
-                (org-agenda-day-face-function
-                (lambda (_date) 'org-agenda-date))
-                (org-agenda-format-date "%A %-e %B %Y")
+                (org-agenda-start-day "0d")
+                (org-agenda-show-log nil)
                 (org-agenda-block-separator ?-)
-                (org-agenda-skip-function
-                        '(org-agenda-skip-entry-if '("DONE")))
                 (org-agenda-overriding-header "Today's agenda")))
 
         ;; ─────────────────────────────────────────────
@@ -418,11 +428,11 @@ This code modifies the main entry of the org agenda, and sets some variables.
         (agenda ""
                 ((org-agenda-time-grid nil)
                 (org-agenda-start-on-weekday nil)
-                (org-agenda-start-day "+6d")
+                ;; (org-agenda-start-day "+6d")
                 (org-agenda-span 14)
                 (org-agenda-show-all-dates nil)
                 (org-deadline-warning-days 0)
-                (org-agenda-entry-types '(:scheduled))
+                (org-agenda-entry-types '(:scheduled :deadline))
                 (org-agenda-skip-function
                 '(org-agenda-skip-entry-if 'todo 'done))
                 (org-agenda-block-separator ?-)
@@ -462,7 +472,7 @@ This code modifies the main entry of the org agenda, and sets some variables.
         ((agenda ""
             ((org-agenda-overriding-header "Completed Tasks\n")
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
-                 (org-agenda-block-separator ?-)
+            (org-agenda-block-separator ?-)
             (org-agenda-span 'week)))
 
         (agenda ""
