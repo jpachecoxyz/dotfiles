@@ -138,6 +138,19 @@
 
 (setq org-hide-emphasis-markers t)
 
+(use-package! org-contacts
+  :config
+  ;; Archivo donde están tus contactos
+  (setq org-contacts-files
+        '("~/Documents/Emacs/org/agenda/contacts.org")))
+
+(setq org-contacts-matcher "EMAIL<>\"\"")
+
+(after! mu4e
+  ;; Usar org-contacts para autocompletado
+  (setq mu4e-compose-complete-addresses t
+        mu4e-compose-complete-only-personal t))
+
 (defvar jp/org-contact-template-personal
   "** %^{Name}
 :PROPERTIES:
@@ -239,6 +252,51 @@ DEADLINE: %^t"
       `((org-agenda-files :maxlevel . 2)
         (,jp/contacts-file :maxlevel . 2)))
 
+(setq org-agenda-tags-column 90)
+(setq org-agenda-time-grid '((weekly today require-timed)
+                              (800 1000 1200 1400 1600 1800 2000)
+                              "---" "┈┈┈┈┈┈┈┈┈┈┈┈┈"))
+;; (setq org-agenda-current-time-string "┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈ PRESENT❗")
+(setq org-agenda-current-time-string "←──────────── now")
+(setq org-agenda-timegrid-use-ampm t) ;; Show AM/PM time in the timegrid
+(setq org-agenda-block-separator ?─)
+(setq org-agenda-sticky nil)
+(setq org-agenda-compact-blocks nil)
+(setq org-log-done nil) ;;put a timestamp when a TODO is done
+(setq org-log-done-with-time nil)
+(setq org-agenda-start-with-log-mode nil)
+(setq org-agenda-log-mode-add-notes nil)
+(setq org-log-into-drawer t)
+(add-hook 'org-agenda-finalize-hook #'hl-todo-mode)
+(setq org-agenda-fontify-priorities 'cookies)
+(setq org-agenda-dim-blocked-tasks nil)
+(setq org-deadline-warning-days 30)
+(setq org-agenda-start-day nil)
+(setq org-agenda-window-setup 'switch-to-buffer-other-window)
+(setq org-agenda-skip-function-global
+          '(org-agenda-skip-entry-if 'todo 'done))
+(setq org-agenda-block-separator 9472)
+(setq org-agenda-span 'day) ;; default agenda view
+;; (setq org-priority-faces '((?A . (:foreground "red"))
+;;                            (?B . (:foreground "yellow"))
+;;                            (?C . (:foreground "green"))))
+
+(setq org-agenda-day-face-upper-bound 'highlight)
+(setq org-agenda-margin-separator " ")
+(run-with-idle-timer 10 t (lambda ()
+  (when (get-buffer "*Org Agenda*")
+    (with-current-buffer "*Org Agenda*"
+      (org-agenda-redo-all)))))
+
+(setq org-agenda-format-date
+      (lambda (date)
+        (concat
+         ;"\n"                                     ;; Espacio extra arriba
+         (propertize (make-string (window-width) ?─)
+                     'face 'shadow)               ;; Línea tenue (color gris)
+         "\n"                                     ;; Salto de línea
+         (org-agenda-format-date-aligned date)))) ;; El encabezado del día
+
 (setq org-tag-alist
       '((:startgroup . "Context")
         ("@home" . ?h)
@@ -259,7 +317,6 @@ DEADLINE: %^t"
         ("@email" . ?e)
         ("@calls" . ?c)
         ("@errands" . ?r)))
-(setq org-agenda-tags-column 90)
 
 (map! :after evil-org-agenda
       :map evil-org-agenda-mode-map
@@ -274,170 +331,140 @@ DEADLINE: %^t"
       :m "<backtab>" #'org-agenda-previous-item)
 
 (setq org-agenda-custom-commands
-      `(("w" "Main Agenda"
-        (
-        ;; ─────────────────────────────────────────────
-        ;; Main Agenda Overview (TODOs, NOT DOING)
-        ;; ─────────────────────────────────────────────
-        (tags-todo "+@home|@work"
-                ((org-agenda-span 'week)
-                (org-agenda-start-on-weekday 1)
-                (org-agenda-block-separator ?-)
-                (org-agenda-skip-function
-                        '(org-agenda-skip-entry-if 'todo '("DOING" "DONE")))
-                (org-agenda-overriding-header "Main Agenda Overview")))
+      `(
+        ;; 🧠 MAIN DASHBOARD
+        ("w" "🧠 Main"
+         (
+          ;; DOING
+          (todo "DOING"
+                ((org-agenda-overriding-header "🔴 DOING")
+                 (org-agenda-block-separator nil)))
 
-        ;; ─────────────────────────────────────────────
-        ;; Tasks in DOING (estado DOING REAL)
-        ;; ─────────────────────────────────────────────
-        (todo "DOING"
-                ((org-agenda-span 'week)
-                (org-agenda-start-on-weekday 1)
-                (org-agenda-block-separator ?-)
-                (org-agenda-overriding-header "Tasks in DOING")))
+          ;; TODAY
+          (agenda ""
+                  ((org-agenda-overriding-header "🔵 TODAY")
+                   (org-agenda-span 1)
+                   (org-deadline-warning-days 0)
+                   (org-agenda-block-separator nil)))
 
 
-        ;; ─────────────────────────────────────────────
-        ;; Today's agenda
-        ;; ─────────────────────────────────────────────
-        (agenda ""
-                ((org-agenda-span 0)
-                (org-agenda-start-day "0d")
-                (org-agenda-show-log nil)
-                (org-agenda-block-separator ?-)
-                (org-agenda-overriding-header "Today's agenda")))
+          ;; DEADLINES + SCHEDULED
+          (agenda ""
+                  ((org-agenda-overriding-header "⚪DEADLINES & SCHEDULED")
+                   (org-agenda-span 3)
+                   (org-agenda-start-day "+1d")
+                   (org-agenda-entry-types '(:deadline :scheduled))
+                   (org-agenda-show-all-dates nil)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-block-separator nil)))
+          
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ;; ;; TODO (backlog puro)                          ;;
+          ;; (todo "TODO"                                    ;;
+          ;;       ((org-agenda-overriding-header "📋 TODO") ;;
+          ;;        (org-agenda-todo-ignore-scheduled t)     ;;
+          ;;        (org-agenda-todo-ignore-deadlines t)     ;;
+          ;;        (org-agenda-block-separator nil)))       ;;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        ;; ─────────────────────────────────────────────
-        ;; Upcoming tasks (+14d) — solo SCHEDULED
-        ;; ─────────────────────────────────────────────
-        (agenda ""
-                ((org-agenda-time-grid nil)
-                (org-agenda-start-on-weekday nil)
-                ;; (org-agenda-start-day "+6d")
+          ))
+
+        ("d" "🛠 DOING"
+            ((todo "DOING"
+                    ((org-agenda-overriding-header "🛠 DOING")
+                    (org-agenda-block-separator ?-)))))
+        
+        ("s" "🗓 Scheduled"
+            ((agenda ""
+                ((org-agenda-overriding-header "🗓 Scheduled")
                 (org-agenda-span 14)
-                (org-agenda-show-all-dates nil)
-                (org-deadline-warning-days 0)
-                (org-agenda-entry-types '(:scheduled :deadline))
-                (org-agenda-skip-function
-                '(org-agenda-skip-entry-if 'todo 'done))
-                (org-agenda-block-separator ?-)
-                (org-agenda-overriding-header
-                "Upcoming tasks (+14d)")))))
- 
-        ("S" "Scheduled & Deadlines"
-         ((agenda ""
-                  ((org-agenda-overriding-header "📅 Scheduled & Deadlines")
-                   (org-agenda-span 14)
-                   (org-agenda-entry-types '(:scheduled :deadline))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-skip-entry-if 'todo '("DONE" "CANCELLED"))
-                   (org-agenda-time-grid nil)
-                   (org-agenda-block-separator nil)))))
- 
-        ("s" "Scheduled"
-         ((agenda ""
-                  ((org-agenda-overriding-header "🗓 Scheduled")
-                   (org-agenda-span 14)
-                   (org-agenda-entry-types '(:scheduled))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-time-grid nil)
-                   (org-agenda-block-separator ?-)))))
- 
-        ("d" "Deadlines"
-         ((agenda ""
-                  ((org-agenda-overriding-header "⏰ Deadlines")
-                   (org-agenda-span 14)
-                   (org-agenda-entry-types '(:deadline))
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-deadline-warning-days 14)
-                   (org-agenda-time-grid nil)
-                   (org-agenda-block-separator ?-)))))
+                (org-agenda-entry-types '(:scheduled))
+                (org-agenda-time-grid nil)
+                (org-agenda-block-separator ?-)))))
 
-        ("A" "All Tasks"
-        ((agenda ""
-            ((org-agenda-overriding-header "Completed Tasks\n")
-            (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
-            (org-agenda-block-separator ?-)
-            (org-agenda-span 'week)))
+        ("x" "🛎 Deadlines"
+            ((agenda ""
+                    ((org-agenda-overriding-header "🛎 Deadlines")
+                    (org-agenda-span 30)
+                    (org-agenda-entry-types '(:deadline))
+                    (org-deadline-warning-days 30)
+                    (org-agenda-time-grid nil)
+                    (org-agenda-block-separator ?-)))))
+        
 
-        (agenda ""
-            ((org-agenda-overriding-header "Unfinished Scheduled Tasks\n")
-            (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-block-separator ?-)
-            (org-agenda-span 'week)))))
+        ("D" "Today – Diecasting Cell"
+            ((agenda ""
+                        ((org-agenda-span 1)
+                        (org-agenda-start-day "today")
+                        (org-agenda-overriding-header "Today")
+                        (org-agenda-files '("~/Documents/Emacs/notes/20260130T184139--programa-de-mantenimiento-area-diecasting__trabajo_mantenimiento_diecasting.org"))
+                        ))
 
-        ("k" "Kanban Dashboard"
-         ((todo "TODO"
+            (agenda ""
+                    ((org-agenda-span 3)
+                    (org-agenda-start-day "+1d")
+                    (org-agenda-overriding-header "Upcoming Tasks")
+                    (org-agenda-files '("~/Documents/Emacs/notes/20260130T184139--programa-de-mantenimiento-area-diecasting__trabajo_mantenimiento_diecasting.org"))
+                    ))
+                ))
+
+        ("k" "📋 Kanban"
+         (
+          ;; TODO
+          (todo "TODO"
                 ((org-agenda-overriding-header "🟥 TODO")
-                 (org-agenda-block-separator ?-)
-                 (org-agenda-sorting-strategy '(priority-down effort-up))))
+                 (org-agenda-block-separator ?-)))
 
+          ;; DOING
           (todo "DOING"
                 ((org-agenda-overriding-header "🟨 DOING")
-                 (org-agenda-block-separator ?-)
-                 (org-agenda-sorting-strategy '(priority-down effort-up))))
+                 (org-agenda-block-separator ?-)))
 
-          (todo "DONE"
-                ((org-agenda-overriding-header "🟩 DONE")
-                 (org-agenda-block-separator ?-)
-                 (org-agenda-sorting-strategy '(priority-down effort-up))))))
-        
-        ("p" "Planning"
-        ((tags-todo "+planning+@home|@work"
-                ((org-agenda-overriding-header "Planning Tasks\n")))
+          ;; NEXT
+          (todo "NEXT"
+                ((org-agenda-overriding-header "🟫 NEXT")
+                 (org-agenda-block-separator ?-)))
 
-        (todo ".*" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refile.org"))
-                (org-agenda-overriding-header "Unprocessed refill.org Items")))))
+          ;; WAITING
+          (todo "WAITING"
+                ((org-agenda-overriding-header "🟦 WAITING")
+                 (org-agenda-block-separator ?-)))
 
-        ("i" "Important dates"
-        ((agenda ""
-                ((org-agenda-overriding-header "Important dates Agenda Overview\n")
-                (org-agenda-span 'year)
-                (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                (org-agenda-show-all-dates nil)
-                (org-agenda-block-separator ?-)
-                        (org-agenda-skip-function
-                        '(org-agenda-skip-entry-if
-                                'notregexp
-                                (regexp-opt '("i-dates"))))))
+          ;; PROJ
+          (todo "PROJ"
+                ((org-agenda-overriding-header "🟪 PROJ")
+                 (org-agenda-block-separator ?-)))
 
-        (agenda ""
-                ((org-agenda-overriding-header "Upcoming Birthday's\n")
-                (org-agenda-span 'month)
-                (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                (org-agenda-start-day "01")
-                (org-agenda-show-all-dates nil)
-                (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
-                (org-agenda-block-separator ?-)
-                (org-agenda-skip-function
-                '(org-agenda-skip-entry-if
-                        'notregexp
-                        (regexp-opt '("birthday"))))))))
+          ))))
 
-        ("b" "Birthday Calendar dates"
-        ((agenda ""
-                ((org-agenda-overriding-header "Birthday Calendar dates\n")
-                (org-agenda-span 'year)
-                (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                (org-agenda-start-day "01")
-                (org-agenda-show-all-dates nil)
-                (org-agenda-block-separator ?-)
-                (org-agenda-skip-function
-                '(org-agenda-skip-entry-if
-                        'notregexp
-                        (regexp-opt '("birthday"))))))))
-		
-		))
+(defun jp/org-eval-diecast-agenda ()
+  "Evalúa únicamente el bloque de agenda del archivo diecasting."
+  (interactive)
+  (with-current-buffer
+      (find-file-noselect
+       "~/Documents/Emacs/notes/20260130T184139--programa-de-mantenimiento-area-diecasting__trabajo_mantenimiento_diecasting.org")
+    (org-babel-goto-named-src-block "diecast-agenda")
+    (org-babel-execute-src-block)))
 
-(setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-skip-scheduled-if-done t)
-(setq org-agenda-window-setup 'current-window)
-(setq org-track-ordered-property-with-tag t)
-(setq org-log-done 'time)
-(setq org-agenda-start-with-log-mode t)
+
+(defun jp/org-eval-custom-agenda ()
+  "Evalúa únicamente el bloque de agenda del archivo de agenda personal."
+  (interactive)
+  (with-current-buffer
+      (find-file-noselect
+       "~/.config/doom/config.org")
+    (org-babel-goto-named-src-block "custom-agenda")
+    (org-babel-execute-src-block)))
+
+(map! :leader
+      :desc "Load Diecasting agenda"
+      "m o" #'jp/org-eval-diecast-agenda)
+
+(map! :leader
+      :desc "Load custom agenda"
+      "m p" #'jp/org-eval-custom-agenda)
 
 ;; Server Mode
-
 (use-package! server
   :defer 1
   :config
@@ -678,7 +705,7 @@ Follows the sequence: % m (regex), t, K."
   :custom ((denote-menu-show-file-type nil)
            (denote-menu-initial-regex "==[0-9]+--.*_meta.org"))
   :bind
-  (("C-c n m" . denote-menu-list-notes)))
+  (("C-c n M" . denote-menu-list-notes)))
 
 (use-package! denote-explore
   :bind* (("C-c e n" . denote-explore-network)
@@ -822,6 +849,8 @@ Follows the sequence: % m (regex), t, K."
   ;; refresca cada 10 minutos
   (setq mu4e-update-interval (* 10 60))
   (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-contacts-file "~/Documents/Emacs/org/agenda/contacts.org" )
+  (setq mu4e-org-contacts-file "~/Documents/Emacs/org/agenda/contacts.org")
 
   ;; Maildir raíz
   (setq mu4e-maildir (expand-file-name "~/Mail"))
@@ -851,40 +880,34 @@ Follows the sequence: % m (regex), t, K."
   (setq mu4e-view-show-addresses t)
 
   ;; Contextos
-  (setq mu4e-context-policy 'pick-first)
-  (setq mu4e-compose-context-policy 'ask)
-  (setq mu4e-confirm-quit nil)
+  ;; (setq mu4e-context-policy nil)
+  ;; (setq mu4e-compose-context-policy nil)
+  ;; (setq mu4e-confirm-quit nil)
 
-  ;; --- CONTEXTO DISROOT ---
-  (setq mu4e-contexts
-        (list
-         (make-mu4e-context
-          :name "Disroot"
-          :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/disroot"
-                               (mu4e-message-field msg :maildir))))
-          :vars
-          '((user-mail-address . "jpacheco@disroot.org")
-            (user-full-name    . "Javier Pacheco")
+  ;; Identidad
+  (setq user-mail-address "jpacheco@disroot.org"
+        user-full-name    "Javier Pacheco")
 
-            ;; SMTP (msmtp / smtpmail)
-            (smtpmail-smtp-server  . "smtp.disroot.org")
-            (smtpmail-smtp-service . 587)
-            (smtpmail-stream-type  . starttls)
-            (smtpmail-smtp-user    . "jpacheco@disroot.org")
+   ;; SMTP (msmtp / smtpmail)
+   (setq smtpmail-smtp-server  "disroot.org"
+         smtpmail-smtp-service 587
+         smtpmail-stream-type  'starttls
+         smtpmail-smtp-user    "jpacheco@disroot.org")
 
-            ;; Carpetas
-            (mu4e-drafts-folder  . "/disroot/Drafts")
-            (mu4e-sent-folder    . "/disroot/Sent")
-            (mu4e-refile-folder  . "/disroot/Archive")
-            (mu4e-trash-folder   . "/disroot/Trash")
+        ;; Carpetas mu4e
+   (setq mu4e-maildir             "/disroot"
+        mu4e-drafts-folder       "/disroot/Drafts"
+        mu4e-sent-folder         "/disroot/Sent"
+        mu4e-refile-folder       "/disroot/Archive"
+        mu4e-trash-folder        "/disroot/Trash")
 
-            ;; Firma
-            (mu4e-compose-signature .
-             "Javier Pacheco\nhttps://jpachecoxyz.github.io")))))
+        ;; Firma
+   (setq mu4e-compose-signature
+        "Javier Pacheco\nhttps://jpachecoxyz.github.io")
 
+   ;; Opcional pero recomendado
+   (setq mu4e-compose-signature-auto-include t)
+ 
   ;; --- Fast Inbox ---
   (setq m/mu4e-inbox-query
         "(maildir:/disroot/INBOX) AND flag:unread")
@@ -908,6 +931,8 @@ Follows the sequence: % m (regex), t, K."
     (interactive)
     (mu4e-headers-search m/mu4e-inbox-query)))
   ;; (mu4e t))
+
+(global-set-key (kbd "C-c n m") 'mu4e-compose-new)
 
 (use-package! pdf-tools
   :commands (pdf-loader-install)

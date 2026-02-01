@@ -10,7 +10,9 @@
 ;; diredfl must be disabled to have fontify faces in denote-dired-mode
 ;; https://github.com/protesilaos/denote/issues/446
 ;; (package! diredfl :disable t)
-(package! denote)
+(package! denote
+  :recipe (:host github
+           :repo "protesilaos/denote"))
 (package! denote-menu)
 (package! denote-sequence)
 (package! denote-org)
@@ -18,6 +20,9 @@
 (package! consult-denote
   :recipe (:host github
            :repo "protesilaos/consult-denote"))
+(package! denote-merge
+  :recipe (:host github
+           :repo "protesilaos/denote-merge"))
 (package! tmr)
 
 ;; Spell
@@ -49,6 +54,10 @@
 (package! mu4e-dashboard
   :recipe (:host github
            :repo "rougier/mu4e-dashboard"))
+
+;; (package! mu4e-contacts
+;;   :recipe (:host gitlab
+;;                  :repo "voidyourwarranty/mu4e-contacts"))
 ;; PDF & EPUB
 (package! pdf-tools)
 (package! nov)
