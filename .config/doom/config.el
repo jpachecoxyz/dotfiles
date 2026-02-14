@@ -142,14 +142,17 @@
   :config
   ;; Archivo donde están tus contactos
   (setq org-contacts-files
+        ;; '("~/sample.org")))
         '("~/Documents/Emacs/org/agenda/contacts.org")))
 
-(setq org-contacts-matcher "EMAIL<>\"\"")
+;; (setq org-contacts-matcher "EMAIL<>\"\"")
 
+;; (after! mu4e
+;;   ;; Usar org-contacts para autocompletado
+;;   (setq mu4e-compose-complete-addresses t
+;;         mu4e-compose-complete-only-personal t))
 (after! mu4e
-  ;; Usar org-contacts para autocompletado
-  (setq mu4e-compose-complete-addresses t
-        mu4e-compose-complete-only-personal t))
+  (require 'org-contacts))
 
 (defvar jp/org-contact-template-personal
   "** %^{Name}
@@ -903,7 +906,7 @@ Follows the sequence: % m (regex), t, K."
 
         ;; Firma
    (setq mu4e-compose-signature
-        "Javier Pacheco\nhttps://jpachecoxyz.github.io")
+        "\nJavier Pacheco\n\nhttps://jpachecoxyz.github.io")
 
    ;; Opcional pero recomendado
    (setq mu4e-compose-signature-auto-include t)
@@ -932,6 +935,7 @@ Follows the sequence: % m (regex), t, K."
     (mu4e-headers-search m/mu4e-inbox-query)))
   ;; (mu4e t))
 
+(require 'org-contacts)
 (global-set-key (kbd "C-c n m") 'mu4e-compose-new)
 
 (use-package! pdf-tools

@@ -51,13 +51,7 @@
 (package! org-contacts)
 
 ;; Email
-(package! mu4e-dashboard
-  :recipe (:host github
-           :repo "rougier/mu4e-dashboard"))
-
-;; (package! mu4e-contacts
-;;   :recipe (:host gitlab
-;;                  :repo "voidyourwarranty/mu4e-contacts"))
+ 
 ;; PDF & EPUB
 (package! pdf-tools)
 (package! nov)
