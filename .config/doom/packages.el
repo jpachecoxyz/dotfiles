@@ -9,10 +9,8 @@
 ;; Notes
 ;; diredfl must be disabled to have fontify faces in denote-dired-mode
 ;; https://github.com/protesilaos/denote/issues/446
-;; (package! diredfl :disable t)
-(package! denote
-  :recipe (:host github
-           :repo "protesilaos/denote"))
+(package! diredfl :disable t)
+(package! denote)
 (package! denote-menu)
 (package! denote-sequence)
 (package! denote-org)
@@ -24,6 +22,7 @@
   :recipe (:host github
            :repo "protesilaos/denote-merge"))
 (package! tmr)
+(package! fontaine)
 
 ;; Spell
 (package! jinx)
@@ -55,10 +54,6 @@
 ;; PDF & EPUB
 (package! pdf-tools)
 (package! nov)
-
-;; Hydra
-(package! hydra)
-(package! major-mode-hydra)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if hyprctl clients | grep -q "class: Emacs"; then
+    hyprctl dispatch focuswindow class:Emacs
+else
+    emacsclient -c -a "" &
+fi

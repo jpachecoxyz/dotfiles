@@ -568,7 +568,8 @@ DEADLINE: %^t"
    ("C-c n l" . denote-link-or-create)
    ("C-c n L" . denote-add-links)
    ("C-c n b" . denote-link-backlinks)
-   ("C-c n f" . #'jp:denote-dired-open)
+   ;; ("C-c n f" . consult-denote-find)
+   ("C-c n f" . jp/denote-dired)
    ("C-c n r" . denote-rename-file)
    ("C-c n R" . denote-rename-file-using-front-matter)
    ("C-c n q c" . denote-query-contents-link)
@@ -581,11 +582,8 @@ DEADLINE: %^t"
          ("C-c C-d C-k" . denote-dired-rename-marked-files-with-keywords)
          ("C-c C-d C-R" . denote-dired-rename-marked-files-using-front-matter))))
 
-(add-hook 'dired-mode-hook #'denote-dired-mode)
-(add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
-
 (setq denote-directory (expand-file-name "~/Documents/Emacs/notes"))
-(setq denote-dired-directories-include-subdirectories t)
+(setq denote-dired-directories-include-subdirectories nil)
 (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
 (setq denote-title-history nil)
 (setq denote-sort-keywords nil)
@@ -597,27 +595,10 @@ DEADLINE: %^t"
       '((display-buffer-same-window)))
 (setq denote-link--prepare-links-format "%s\n")
 
-(defun jp:denote-dired-open()
-  "Open `denote-directory` in Dired and filter only notes matching proper Denote filename pattern."
+(defun jp/denote-dired ()
+  "Open my Denote notes directory."
   (interactive)
-  (dired denote-directory)
-  ;; Disable diredfl only for this Denote Dired buffer
-  (when (fboundp 'diredfl-mode)
-    (diredfl-mode -1))
-
-  ;; Optional: mark buffer as Denote Dired (informational)
-  (denote-dired-mode t)
-  (let ((messages '(
-                    "🧠🌿 Mind garden pruned: only pure ideas are blooming."
-                    "🧠✨ Mind map refreshed: only clear branches remain."
-                    "🪴📝 Notes pruned: a clean path through your thoughts."
-                    "🔍🌟 Only well-formed thoughts sparkle here now."
-                    "📜🌱 Organized scrolls: the chaos fades, clarity grows."
-                    "🧩📚 Puzzle pieces placed: only true notes stay."
-                    "🌌✍️ Mental constellation aligned: shining ideas ahead."
-                    "🌿📖 Your knowledge forest breathes freely now."
-                    )))
-    (message "%s" (nth (random (length messages)) messages))))
+  (dired "~/Documents/Emacs/notes/"))
 
 (defun my/denote-or-org-link ()
   "Run `denote-find-link`. If nothing is inserted, show Org links in minibuffer."
@@ -704,6 +685,74 @@ Follows the sequence: % m (regex), t, K."
   (setq denote-sequence-scheme 'numeric)
   (setq denote-sequence-type-history nil))
 
+;; (require 'denote-sequence)
+;; (defun denote-sequence-dired (&optional prefix depth)
+;;   "Produce a Dired listing of all sequence notes.
+;; Sort sequences from smallest to largest.
+
+;; With optional PREFIX string, show only files whose sequence matches it.
+
+;; With optional DEPTH as a number, limit the list to files whose sequence
+;; is that many levels deep.  For example, 1=1=2 is three levels deep.
+
+;; For a more specialised case, see `denote-sequence-find-relatives-dired'."
+;;   (interactive (denote-sequence--get-interactive-for-prefix-and-depth))
+;;   (let* ((roots (seq-filter #'file-directory-p (denote-directories)))
+;;          (single-dir-p (null (cdr roots)))
+;;          (files-fn
+;;           (lambda ()
+;;             (let* ((files (if (and prefix (not (string-blank-p prefix)))
+;;                               (denote-sequence-get-all-files-with-prefix prefix)
+;;                             (denote-sequence-get-all-files)))
+;;                    (files (if depth
+;;                               (denote-sequence-get-all-files-with-max-depth depth files)
+;;                             files))
+;;                    ;; 🔥 Normalizar a rutas absolutas
+;;                    (files (mapcar #'expand-file-name files))
+;;                    ;; 🔥 Mantener solo archivos existentes
+;;                    (files (seq-filter #'file-exists-p files))
+;;                    ;; 🔥 Ordenar después de normalizar
+;;                    (files (denote-sequence-sort-files files)))
+;;               ;; 🔥 Convertir a relativos solo si es single-dir
+;;               (if single-dir-p
+;;                   (mapcar (lambda (f)
+;;                             (file-relative-name f (car roots)))
+;;                           files)
+;;                 files)))))
+;;     (unless roots
+;;       (user-error "No valid Denote directories found"))
+;;     (dlet ((ls-lisp-use-insert-directory-program
+;;             (progn (require 'ls-lisp) nil)))
+;;       (if-let* ((directory (if single-dir-p
+;;                                (car roots)
+;;                              (denote-directories-get-common-root))))
+;;           (progn
+;;             (unless (file-directory-p directory)
+;;               (user-error "Denote root is not a valid directory: %s" directory))
+;;             (if-let* ((files (funcall files-fn))
+;;                       (buffer-name
+;;                        (denote-format-buffer-name
+;;                         (format-message
+;;                          "prefix `%s'; depth `%s'"
+;;                          (or prefix "ALL")
+;;                          (or depth "ALL"))
+;;                         :is-special-buffer))
+;;                       (dired-buffer (dired (cons directory files))))
+;;                 (with-current-buffer dired-buffer
+;;                   (rename-buffer buffer-name :unique)
+;;                   (setq-local revert-buffer-function
+;;                               (lambda (&rest _)
+;;                                 (dlet ((ls-lisp-use-insert-directory-program
+;;                                         (progn (require 'ls-lisp) nil)))
+;;                                   (if-let* ((files (funcall files-fn)))
+;;                                       (progn
+;;                                         (setq-local dired-directory
+;;                                                     (cons directory files))
+;;                                         (dired-revert))
+;;                                     (denote-dired-empty-mode))))))
+;;               (message "No matching files")))
+;;         (user-error "Unable to determine Denote root directory")))))
+
 (use-package! denote-menu
   :custom ((denote-menu-show-file-type nil)
            (denote-menu-initial-regex "==[0-9]+--.*_meta.org"))
@@ -786,8 +835,8 @@ Follows the sequence: % m (regex), t, K."
 (dolist (hook '(text-mode-hook conf-mode-hook))
   (add-hook hook #'jinx-mode))
 
-(use-package! ox-hugo
-  :after ox)
+;; (use-package! ox-hugo
+;;   :after ox)
 (setq org-hugo-base-dir "~/webdev/jpachecoxyz/")
 (defun jp:create-hugo-post ()
   "Create a new Hugo post buffer with metadata in Org format, unsaved."
@@ -976,52 +1025,3 @@ Follows the sequence: % m (regex), t, K."
 (use-package! nov
   :mode ("\\.epub\\'" . nov-mode)
   :custom (nov-text-width 75))
-
-(use-package! hydra
-  :bind (("C-c g" . hydra-go-to-file/body)
-         ("C-c o" . hydra-org/body)
-         ("C-c w" . hydra-windows/body)))
-
-(use-package! major-mode-hydra
-  :after hydra)
-
-(pretty-hydra-define hydra-go-to-file
-  (:hint nil :color teal :quit-key "q" :title "Go To")
-  ("Agenda"
-   (("ac" (find-file "~/Documents/Emacs/org/agenda/contacts.org") "contacts")
-    ("aa" (find-file "~/Documents/Emacs/org/agenda/agenda.org") "agenda")
-    ("ar" (find-file "~/Documents/Emacs/org/agenda/refile.org") "refile")
-    ("aw" (find-file "~/Documents/Emacs/org/agenda/work.org") "work agenda"))
-   "Config"
-   (("ce" (find-file "~/.dotfiles/.config/doom/config.org") "doom emacs"))))
-
-(pretty-hydra-define hydra-org
-  (:hint nil :color teal :quit-key "q" :title "Org")
-  ("Action"
-   (("a" org-agenda "agenda")
-    ("c" org-capture "capture")
-    ("d" org-decrypt-entry "decrypt")
-    ("i" org-insert-link-global "insert-link")
-    ("j" org-capture-goto-last-stored "jump-capture")
-    ("k" org-cut-subtree "cut-subtree")
-    ("o" org-open-at-point-global "open-link")
-    ("r" org-refile "refile")
-    ("s" org-store-link "store-link")
-    ("t" org-show-todo-tree "todo-tree"))))
-
-(pretty-hydra-define hydra-windows
-  (:hint nil :foreign-keys warn :quit-key "q" :title "Windows")
-  ("Window"
-   (("b" balance-windows "balance")
-    ("c" centered-window-mode "center")
-    ("i" enlarge-window "heighten")
-    ("j" shrink-window-horizontally "narrow")
-    ("k" shrink-window "lower")
-    ("u" winner-undo "undo")
-    ("r" winner-redo "redo")
-    ("l" enlarge-window-horizontally "widen")
-    ("s" switch-window-then-swap-buffer "swap" :color teal))
-   "Zoom"
-   (("-" text-scale-decrease "out")
-    ("+" text-scale-increase "in")
-    ("=" (text-scale-increase 0) "reset"))))
