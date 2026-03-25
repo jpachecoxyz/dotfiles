@@ -76,7 +76,9 @@
 
   (jp-emacs-keybind global-map
     "C-c l" #'org-store-link
-    "C-c o" #'org-open-at-point-global)
+    "C-c o" #'org-open-at-point-global
+    "C-<return>" #'+org/insert-item-below
+    "C-S-<return>" #'+org/insert-item-above)
 
   (with-eval-after-load 'org
     (jp-emacs-keybind org-mode-map
@@ -112,6 +114,50 @@
     ;; My custom extras, which I use for the agenda and a few other Org features.
     (require 'jp-org)
     (require 'org-tempo)
+
+    (jp-emacs-configure
+    (jp-emacs-install ox-hugo)
+
+    (require 'ox-hugo)
+    (with-eval-after-load 'ox
+        (require 'ox-hugo)))
+
+    (jp-emacs-configure
+    (setq org-hugo-base-dir "~/webdev/jpachecoxyz/")
+
+    (defun jp/create-hugo-post ()
+        "Create a new Hugo post with metadata."
+        (interactive)
+        (let* ((title (read-string "Post title: "))
+            (description (read-string "Post description: "))
+            (tags (read-string "Tags (separated by spaces): "))
+            (is-draft (y-or-n-p "Is this a draft? "))
+            (slug (replace-regexp-in-string " " "-" (downcase title)))
+            (file-name (concat slug ".org"))
+            (file-path (expand-file-name
+                        file-name
+                        "~/webdev/jpachecoxyz/org/posts/"))
+            (date (format-time-string "%Y-%m-%d"))
+            (draft-string (if is-draft "true" "false")))
+
+        (find-file file-path)
+
+        (insert (format "#+title: %s\n" title))
+        (insert (format "#+description: %s\n" description))
+        (insert (format "#+date: %s\n" date))
+        (insert (format "#+export_file_name: %s\n" slug))
+        (insert "#+hugo_base_dir: ~/webdev/jpachecoxyz/\n")
+        (insert "#+hugo_section: posts\n")
+        (insert (format "#+hugo_tags: %s\n" tags))
+        (insert "#+hugo_custom_front_matter: toc true\n")
+        (insert "#+hugo_auto_set_lastmod: nil\n")
+        (insert (format "#+hugo_draft: %s\n" draft-string))
+
+        (goto-char (point-max))
+        (insert "\n")
+        (set-buffer-modified-p t)))
+
+    (global-set-key (kbd "C-c n p") #'jp/create-hugo-post))
 
 ;;;; general settings
     (setq org-link-frame-setup '((file . find-file)))

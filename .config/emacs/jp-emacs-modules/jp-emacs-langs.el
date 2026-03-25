@@ -296,6 +296,7 @@ retroactively follow that order."
 ;;;; Denote Sequence notes or folgezettel (denote-sequence)
 (jp-emacs-configure
   (jp-emacs-install denote-sequence)
+  (require 'denote-sequence)
   (jp-emacs-keybind global-map
     "C-c n s s" #'denote-sequence
     "C-c n s f" #'denote-sequence-find
@@ -306,72 +307,72 @@ retroactively follow that order."
   (setq denote-sequence-scheme 'alphanumeric))
 
 
-(defun denote-sequence-dired (&optional prefix depth)
-  "Produce a Dired listing of all sequence notes.
-Sort sequences from smallest to largest.
-
-With optional PREFIX string, show only files whose sequence matches it.
-
-With optional DEPTH as a number, limit the list to files whose sequence
-is that many levels deep.  For example, 1=1=2 is three levels deep.
-
-For a more specialised case, see `denote-sequence-find-relatives-dired'."
-  (interactive (denote-sequence--get-interactive-for-prefix-and-depth))
-  (let* ((roots (seq-filter #'file-directory-p (denote-directories)))
-         (single-dir-p (null (cdr roots)))
-         (files-fn
-          (lambda ()
-            (let* ((files (if (and prefix (not (string-blank-p prefix)))
-                              (denote-sequence-get-all-files-with-prefix prefix)
-                            (denote-sequence-get-all-files)))
-                   (files (if depth
-                              (denote-sequence-get-all-files-with-max-depth depth files)
-                            files))
-                   ;; 🔥 Normalizar a rutas absolutas
-                   (files (mapcar #'expand-file-name files))
-                   ;; 🔥 Mantener solo archivos existentes
-                   (files (seq-filter #'file-exists-p files))
-                   ;; 🔥 Ordenar después de normalizar
-                   (files (denote-sequence-sort-files files)))
-              ;; 🔥 Convertir a relativos solo si es single-dir
-              (if single-dir-p
-                  (mapcar (lambda (f)
-                            (file-relative-name f (car roots)))
-                          files)
-                files)))))
-    (unless roots
-      (user-error "No valid Denote directories found"))
-    (dlet ((ls-lisp-use-insert-directory-program
-            (progn (require 'ls-lisp) nil)))
-      (if-let* ((directory (if single-dir-p
-                               (car roots)
-                             (denote-directories-get-common-root))))
-          (progn
-            (unless (file-directory-p directory)
-              (user-error "Denote root is not a valid directory: %s" directory))
-            (if-let* ((files (funcall files-fn))
-                      (buffer-name
-                       (denote-format-buffer-name
-                        (format-message
-                         "prefix `%s'; depth `%s'"
-                         (or prefix "ALL")
-                         (or depth "ALL"))
-                        :is-special-buffer))
-                      (dired-buffer (dired (cons directory files))))
-                (with-current-buffer dired-buffer
-                  (rename-buffer buffer-name :unique)
-                  (setq-local revert-buffer-function
-                              (lambda (&rest _)
-                                (dlet ((ls-lisp-use-insert-directory-program
-                                        (progn (require 'ls-lisp) nil)))
-                                  (if-let* ((files (funcall files-fn)))
-                                      (progn
-                                        (setq-local dired-directory
-                                                    (cons directory files))
-                                        (dired-revert))
-                                    (denote-dired-empty-mode))))))
-              (message "No matching files")))
-        (user-error "Unable to determine Denote root directory")))))
+;; (defun denote-sequence-dired (&optional prefix depth)
+;;   "Produce a Dired listing of all sequence notes.
+;; Sort sequences from smallest to largest.
+;; 
+;; With optional PREFIX string, show only files whose sequence matches it.
+;; 
+;; With optional DEPTH as a number, limit the list to files whose sequence
+;; is that many levels deep.  For example, 1=1=2 is three levels deep.
+;; 
+;; For a more specialised case, see `denote-sequence-find-relatives-dired'."
+;;   (interactive (denote-sequence--get-interactive-for-prefix-and-depth))
+;;   (let* ((roots (seq-filter #'file-directory-p (denote-directories)))
+;;          (single-dir-p (null (cdr roots)))
+;;          (files-fn
+;;           (lambda ()
+;;             (let* ((files (if (and prefix (not (string-blank-p prefix)))
+;;                               (denote-sequence-get-all-files-with-prefix prefix)
+;;                             (denote-sequence-get-all-files)))
+;;                    (files (if depth
+;;                               (denote-sequence-get-all-files-with-max-depth depth files)
+;;                             files))
+;;                    ;; 🔥 Normalizar a rutas absolutas
+;;                    (files (mapcar #'expand-file-name files))
+;;                    ;; 🔥 Mantener solo archivos existentes
+;;                    (files (seq-filter #'file-exists-p files))
+;;                    ;; 🔥 Ordenar después de normalizar
+;;                    (files (denote-sequence-sort-files files)))
+;;               ;; 🔥 Convertir a relativos solo si es single-dir
+;;               (if single-dir-p
+;;                   (mapcar (lambda (f)
+;;                             (file-relative-name f (car roots)))
+;;                           files)
+;;                 files)))))
+;;     (unless roots
+;;       (user-error "No valid Denote directories found"))
+;;     (dlet ((ls-lisp-use-insert-directory-program
+;;             (progn (require 'ls-lisp) nil)))
+;;       (if-let* ((directory (if single-dir-p
+;;                                (car roots)
+;;                              (denote-directories-get-common-root))))
+;;           (progn
+;;             (unless (file-directory-p directory)
+;;               (user-error "Denote root is not a valid directory: %s" directory))
+;;             (if-let* ((files (funcall files-fn))
+;;                       (buffer-name
+;;                        (denote-format-buffer-name
+;;                         (format-message
+;;                          "prefix `%s'; depth `%s'"
+;;                          (or prefix "ALL")
+;;                          (or depth "ALL"))
+;;                         :is-special-buffer))
+;;                       (dired-buffer (dired (cons directory files))))
+;;                 (with-current-buffer dired-buffer
+;;                   (rename-buffer buffer-name :unique)
+;;                   (setq-local revert-buffer-function
+;;                               (lambda (&rest _)
+;;                                 (dlet ((ls-lisp-use-insert-directory-program
+;;                                         (progn (require 'ls-lisp) nil)))
+;;                                   (if-let* ((files (funcall files-fn)))
+;;                                       (progn
+;;                                         (setq-local dired-directory
+;;                                                     (cons directory files))
+;;                                         (dired-revert))
+;;                                     (denote-dired-empty-mode))))))
+;;               (message "No matching files")))
+;;         (user-error "Unable to determine Denote root directory")))))
 
 ;;;; Denote Markdown extras (denote-markdown)
 (jp-emacs-configure

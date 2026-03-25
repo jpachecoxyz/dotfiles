@@ -1,8 +1,6 @@
 ;;; jp-emacs-0x0.el --- Upload to 0x0.st -*- lexical-binding: t; -*-
 
 (jp-emacs-configure
-  :defer t
-  :init
 
   (defun jp/0x0-upload-text ()
     "Upload region or buffer contents to https://0x0.st."

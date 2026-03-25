@@ -1,5 +1,7 @@
 ;;; jp-emacs-post-custom.el --- Post configuration -*- lexical-binding: t; -*-
 
+(load-theme 'ef-melissa-dark)
+
 (jp-emacs-configure
 
   ;;========================

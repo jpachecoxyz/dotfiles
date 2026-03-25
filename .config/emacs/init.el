@@ -394,9 +394,8 @@ making an abbreviation to a function."
  (require 'jp-emacs-evil)
  (require 'jp-emacs-general)
  (require 'jp-emacs-0x0)
- (require 'jp-emacs-hugo)
  (require 'jp-emacs-treesitter)
- (load-theme 'ef-melissa-dark)
+ (require 'jp-emacs-utils)
 
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load.  The file must exist at
