@@ -146,8 +146,6 @@ These include the packages `marginalia', `consult', `corfu',
     spacious-padding
     standard-themes
     substitute
-    sxhkdrc-mode
-    theme-buffet
     tmr)
   "List of symbols representing the packages I develop/maintain.")
 

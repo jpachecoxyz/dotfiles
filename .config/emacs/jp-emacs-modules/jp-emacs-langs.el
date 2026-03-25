@@ -226,6 +226,18 @@
   (jp-emacs-install denote)
   (add-hook 'text-mode-hook #'denote-fontify-links-mode)
   (add-hook 'dired-mode-hook #'denote-dired-mode)
+  (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+  (setq denote-title-history nil)
+  (setq denote-sort-keywords nil)
+  (setq denote-file-type 'org)
+  (setq denote-files-matching-regexp-history nil)
+  (setq denote-history-completion-in-prompts nil)
+  (setq denote-infer-keywords t)
+  (setq denote-org-front-matter "# -*- jinx-languages: \"es_MX\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
+  (setq denote-query-links-display-buffer-action
+      '((display-buffer-same-window)))
+  (setq denote-link--prepare-links-format "%s\n")
+
 
   (jp-emacs-keybind global-map
     "C-c n n" #'denote
