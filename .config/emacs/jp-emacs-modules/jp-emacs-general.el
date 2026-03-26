@@ -61,7 +61,7 @@
 
   (user/leader-keys
     "." '(find-file :wk "Find file")
-    "TAB TAB" '(comment-line :wk "Comment lines")
+    ;; "TAB TAB" '(comment-line :wk "Comment lines")
     "u" '(universal-argument :wk "Universal argument"))
 
   (evil-define-key '(normal visual) 'global

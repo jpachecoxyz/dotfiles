@@ -95,14 +95,6 @@
 (jp-emacs-configure
   (jp-emacs-install csv-mode))
 
-;;; SXHKDRC mode (one of my many packages)
-(jp-emacs-configure
-  (jp-emacs-install sxhkdrc-mode)
-  ;; By default, it only applies to the sxhkdrc file, but I have other
-  ;; relevant entries as well.  I separate my keys into different
-  ;; modules and load only what I need.
-  (add-to-list 'auto-mode-alist '("sxhkdrc_.*" . sxhkdrc-mode)))
-
 ;;; Flyspell and jp-spell.el (spell check)
 (jp-emacs-configure
   (jp-emacs-autoload
@@ -229,11 +221,17 @@
   (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
   (setq denote-title-history nil)
   (setq denote-sort-keywords nil)
-  (setq denote-file-type 'org)
   (setq denote-files-matching-regexp-history nil)
   (setq denote-history-completion-in-prompts nil)
   (setq denote-infer-keywords t)
-  (setq denote-org-front-matter "# -*- jinx-languages: \"es_MX\"; -*-\n#+title: %s\n#+date: %s\n#+filetags: %s\n#+identifier: %s\n#+author: Ing. Javier Pacheco\n#+startup: showall\n\n")
+  (setq denote-org-front-matter
+        "# -*- jinx-languages: \"es_MX\"; -*-
+#+title: %s
+#+date: %s
+#+filetags: %s
+#+identifier: %s
+#+author: Ing. Javier Pacheco
+#+startup: showall\n\n\n")
   (setq denote-query-links-display-buffer-action
       '((display-buffer-same-window)))
   (setq denote-link--prepare-links-format "%s\n")
@@ -262,7 +260,7 @@
 
   (with-eval-after-load 'denote
     (setq denote-directory (expand-file-name "~/Documents/Emacs/notes/"))
-    (setq denote-file-type 'text) ; Org is the default file type
+    (setq denote-file-type 'org) ; Org is the default file type
 
     (setq denote-known-keywords '("emacs" "philosophy" "politics"))
     (setq denote-infer-keywords t)
@@ -275,11 +273,6 @@
     (setq denote-rename-buffer-format "%D")
 
     (denote-rename-buffer-mode 1)
-
-    ;; ;; EXPERIMENT 2025-04-25: This is not the default order, though
-    ;; ;; Denote supports any order for its file name components.
-    ;; (setq denote-file-name-components-order '(identifier signature keywords title))
-
     (defun jp/denote-rename-all-to-reorder-components ()
       "Call `denote-dired-rename-files' without any prompts.
 In other words, preserve the value of each Denote file name component.
@@ -319,101 +312,76 @@ retroactively follow that order."
   (setq denote-sequence-scheme 'alphanumeric))
 
 
-;; (defun denote-sequence-dired (&optional prefix depth)
-;;   "Produce a Dired listing of all sequence notes.
-;; Sort sequences from smallest to largest.
-;; 
-;; With optional PREFIX string, show only files whose sequence matches it.
-;; 
-;; With optional DEPTH as a number, limit the list to files whose sequence
-;; is that many levels deep.  For example, 1=1=2 is three levels deep.
-;; 
-;; For a more specialised case, see `denote-sequence-find-relatives-dired'."
-;;   (interactive (denote-sequence--get-interactive-for-prefix-and-depth))
-;;   (let* ((roots (seq-filter #'file-directory-p (denote-directories)))
-;;          (single-dir-p (null (cdr roots)))
-;;          (files-fn
-;;           (lambda ()
-;;             (let* ((files (if (and prefix (not (string-blank-p prefix)))
-;;                               (denote-sequence-get-all-files-with-prefix prefix)
-;;                             (denote-sequence-get-all-files)))
-;;                    (files (if depth
-;;                               (denote-sequence-get-all-files-with-max-depth depth files)
-;;                             files))
-;;                    ;; 🔥 Normalizar a rutas absolutas
-;;                    (files (mapcar #'expand-file-name files))
-;;                    ;; 🔥 Mantener solo archivos existentes
-;;                    (files (seq-filter #'file-exists-p files))
-;;                    ;; 🔥 Ordenar después de normalizar
-;;                    (files (denote-sequence-sort-files files)))
-;;               ;; 🔥 Convertir a relativos solo si es single-dir
-;;               (if single-dir-p
-;;                   (mapcar (lambda (f)
-;;                             (file-relative-name f (car roots)))
-;;                           files)
-;;                 files)))))
-;;     (unless roots
-;;       (user-error "No valid Denote directories found"))
-;;     (dlet ((ls-lisp-use-insert-directory-program
-;;             (progn (require 'ls-lisp) nil)))
-;;       (if-let* ((directory (if single-dir-p
-;;                                (car roots)
-;;                              (denote-directories-get-common-root))))
-;;           (progn
-;;             (unless (file-directory-p directory)
-;;               (user-error "Denote root is not a valid directory: %s" directory))
-;;             (if-let* ((files (funcall files-fn))
-;;                       (buffer-name
-;;                        (denote-format-buffer-name
-;;                         (format-message
-;;                          "prefix `%s'; depth `%s'"
-;;                          (or prefix "ALL")
-;;                          (or depth "ALL"))
-;;                         :is-special-buffer))
-;;                       (dired-buffer (dired (cons directory files))))
-;;                 (with-current-buffer dired-buffer
-;;                   (rename-buffer buffer-name :unique)
-;;                   (setq-local revert-buffer-function
-;;                               (lambda (&rest _)
-;;                                 (dlet ((ls-lisp-use-insert-directory-program
-;;                                         (progn (require 'ls-lisp) nil)))
-;;                                   (if-let* ((files (funcall files-fn)))
-;;                                       (progn
-;;                                         (setq-local dired-directory
-;;                                                     (cons directory files))
-;;                                         (dired-revert))
-;;                                     (denote-dired-empty-mode))))))
-;;               (message "No matching files")))
-;;         (user-error "Unable to determine Denote root directory")))))
+(defun denote-sequence-dired (&optional prefix depth)
+  "Produce a Dired listing of all sequence notes.
+Sort sequences from smallest to largest.
+
+With optional PREFIX string, show only files whose sequence matches it.
+
+With optional DEPTH as a number, limit the list to files whose sequence
+is that many levels deep.  For example, 1=1=2 is three levels deep.
+
+For a more specialised case, see `denote-sequence-find-relatives-dired'."
+  (interactive (denote-sequence--get-interactive-for-prefix-and-depth))
+  (let* ((roots (seq-filter #'file-directory-p (denote-directories)))
+         (single-dir-p (null (cdr roots)))
+         (files-fn
+          (lambda ()
+            (let* ((files (if (and prefix (not (string-blank-p prefix)))
+                              (denote-sequence-get-all-files-with-prefix prefix)
+                            (denote-sequence-get-all-files)))
+                   (files (if depth
+                              (denote-sequence-get-all-files-with-max-depth depth files)
+                            files))
+                   ;; 🔥 Normalizar a rutas absolutas
+                   (files (mapcar #'expand-file-name files))
+                   ;; 🔥 Mantener solo archivos existentes
+                   (files (seq-filter #'file-exists-p files))
+                   ;; 🔥 Ordenar después de normalizar
+                   (files (denote-sequence-sort-files files)))
+              ;; 🔥 Convertir a relativos solo si es single-dir
+              (if single-dir-p
+                  (mapcar (lambda (f)
+                            (file-relative-name f (car roots)))
+                          files)
+                files)))))
+    (unless roots
+      (user-error "No valid Denote directories found"))
+    (dlet ((ls-lisp-use-insert-directory-program
+            (progn (require 'ls-lisp) nil)))
+      (if-let* ((directory (if single-dir-p
+                               (car roots)
+                             (denote-directories-get-common-root))))
+          (progn
+            (unless (file-directory-p directory)
+              (user-error "Denote root is not a valid directory: %s" directory))
+            (if-let* ((files (funcall files-fn))
+                      (buffer-name
+                       (denote-format-buffer-name
+                        (format-message
+                         "prefix `%s'; depth `%s'"
+                         (or prefix "ALL")
+                         (or depth "ALL"))
+                        :is-special-buffer))
+                      (dired-buffer (dired (cons directory files))))
+                (with-current-buffer dired-buffer
+                  (rename-buffer buffer-name :unique)
+                  (setq-local revert-buffer-function
+                              (lambda (&rest _)
+                                (dlet ((ls-lisp-use-insert-directory-program
+                                        (progn (require 'ls-lisp) nil)))
+                                  (if-let* ((files (funcall files-fn)))
+                                      (progn
+                                        (setq-local dired-directory
+                                                    (cons directory files))
+                                        (dired-revert))
+                                    (denote-dired-empty-mode))))))
+              (message "No matching files")))
+        (user-error "Unable to determine Denote root directory")))))
 
 ;;;; Denote Markdown extras (denote-markdown)
 (jp-emacs-configure
   (jp-emacs-install denote-markdown))
-
-;;;; Denote Journal extras (denote-journal)
-(jp-emacs-configure
-  (jp-emacs-install denote-journal)
-
-  (add-hook 'calendar-mode-hook #'denote-journal-calendar-mode)
-
-  (defun jp/denote-journal-new-or-existing-entry ()
-    "EXPERIMENTAL Like `denote-journal-new-or-existing-entry' but with no front matter."
-    (interactive)
-    (cl-letf (((symbol-function #'denote--format-front-matter) (lambda (&rest _) ""))
-              (denote-file-type 'text)
-              (denote-journal-title-format ""))
-      (let* ((internal-date (current-time))
-             (files (denote-journal--entry-today internal-date)))
-        (if files
-            (find-file (denote-journal-select-file-prompt files))
-          (call-interactively 'denote-journal-new-entry)))))
-
-  (define-key global-map (kbd "C-c n j") #'jp/denote-journal-new-or-existing-entry)
-
-  (with-eval-after-load 'denote
-    (setq denote-journal-directory (expand-file-name "journal" denote-directory))
-    (setq denote-journal-keyword "journal")
-    (setq denote-journal-title-format 'day-date-month-year)))
 
 ;;;; Denote Silo extras (denote-silo)
 (jp-emacs-configure
