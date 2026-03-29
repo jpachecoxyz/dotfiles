@@ -28,9 +28,10 @@
           (agenda-structure . (variable-pitch light 1.9))
           (t . (variable-pitch 1.1))))
 
-  (if (jp-emacs-gnome-prefers-dark-p)
-      (modus-themes-load-random 'dark)
-    (modus-themes-load-random 'light)))
+  ;; (if (jp-emacs-gnome-prefers-dark-p)
+  ;;     (modus-themes-load-random 'dark)
+  ;;   (modus-themes-load-random 'light)))
+  (load-theme 'ef-owl))
 
 (jp-emacs-comment
   (:eval nil)

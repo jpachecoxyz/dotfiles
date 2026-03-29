@@ -642,4 +642,58 @@ The command supports previewing the currently selected theme."
                (mapcar (lambda (x) (list (car x) (cadr x) 'my/goto-file-buffer))
                        my/goto-file-buffer-alist))])))
 
+;;; Presentation-mode
+
+(defvar jp-presentation-mode nil
+  "Non-nil when presentation mode is active.")
+
+(defun jp-toggle-presentation-mode ()
+  "Toggle presentation mode."
+  (interactive)
+  (if jp-presentation-mode
+      (progn
+        ;; Disable presentation
+        (logos-focus-mode -1)
+        (fontaine-set-preset 'medium)
+        (widen)
+        (setq jp-presentation-mode nil)
+        (message "Presentation mode disabled"))
+    ;; Enable presentation
+    (logos-narrow-dwim)
+    (fontaine-set-preset 'jumbo)
+    (logos-focus-mode 1)
+    (setq jp-presentation-mode t)
+    (message "Presentation mode enabled")))
+
+;;; Rainbow-parens:
+(defun jp-simple-rainbow-delimiters ()
+"Apply simple rainbow coloring to parentheses, brackets, and braces in the current buffer.
+Opening and closing delimiters will have matching colors."
+(interactive)
+(let ((colors '(font-lock-keyword-face
+                font-lock-type-face
+                font-lock-function-name-face
+                font-lock-variable-name-face
+                font-lock-constant-face
+                font-lock-builtin-face
+                font-lock-string-face
+                )))
+    (font-lock-add-keywords
+    nil
+    `((,(rx (or "(" ")" "[" "]" "{" "}"))
+        (0 (let* ((char (char-after (match-beginning 0)))
+                (depth (save-excursion
+                            ;; Move to the correct position based on opening/closing delimiter
+                            (if (member char '(?\) ?\] ?\}))
+                                (progn
+                                (backward-char) ;; Move to the opening delimiter
+                                (car (syntax-ppss)))
+                            (car (syntax-ppss)))))
+                (face (nth (mod depth ,(length colors)) ',colors)))
+            (list 'face face)))))))
+(font-lock-flush)
+(font-lock-ensure))
+
+(add-hook 'prog-mode-hook #'jp-simple-rainbow-delimiters)
+
 (provide 'utilities)

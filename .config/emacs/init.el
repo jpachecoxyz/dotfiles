@@ -1,3 +1,4 @@
+
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load: search below for the files
 ;; jp-emacs-pre-custom.el and jp-emacs-post-custom.el
@@ -12,7 +13,7 @@ jp-emacs-pre-custom.el.  This file must be in the same
 directory as the init.el."
   :group 'file)
 
-(defcustom jp-emacs-load-theme-family 'modus
+(defcustom jp-emacs-load-theme-family 'ef
  "Set of themes to load.
 Valid values are the symbols `doric', `ef', `modus', and `standard',
 which reference the `doric-themes', `ef-themes', `modus-themes', and
@@ -81,12 +82,27 @@ These include the packages `marginalia', `consult', `corfu',
 
 (setq initial-buffer-choice t)
 (setq initial-major-mode 'lisp-interaction-mode)
+
+(defvar kiss-quotes
+  '("Simplicity is the ultimate sophistication."
+    "Everything should be made as simple as possible, but not simpler."
+    "The best code is no code at all."
+    "If you can't explain it simply, you don't understand it well enough."
+    "Deleted code is debugged code."
+    "KISS: Keep It Simple, Stupid.")
+  "A list of KISS-themed quotes.")
+
 (setq initial-scratch-message
-      (format ";; This is `%s'.  Type `%s' to evaluate and print results.\n\n"
-              'lisp-interaction-mode
-              (propertize
-               (substitute-command-keys "\\<lisp-interaction-mode-map>\\[eval-print-last-sexp]")
-               'face 'help-key-binding)))
+      (let ((chosen-quote (nth (random (length kiss-quotes)) kiss-quotes)))
+        (concat
+         ;; Part 1: Your original introduction
+         (format ";; This is `%s'. Type `%s' to evaluate and print results.\n\n"
+                 'lisp-interaction-mode
+                 (propertize
+                  (substitute-command-keys "\\<lisp-interaction-mode-map>\\[eval-print-last-sexp]")
+                  'face 'help-key-binding))
+         ;; Part 2: The empty line and the quote
+         (format ";; %s\n\n" chosen-quote))))
 
 (mapc
  (lambda (string)
@@ -385,6 +401,7 @@ making an abbreviation to a function."
  (require 'jp-emacs-git)
  (require 'jp-emacs-org)
  (require 'jp-emacs-langs)
+ (require 'jp-emacs-spell)
  (require 'jp-emacs-mu4e)
 ;; (require 'jp-emacs-web)
  (require 'jp-emacs-which-key)

@@ -1159,26 +1159,25 @@ major mode.")
 ;; FIXME 2026-01-10: Why is this not working in Org tables?  The
 ;; properties are applied but the face is not displayed.
 (defun jp-simple-hex-fontify (limit)
-  "Fontify the # of a hexadecimal RGB colour up to LIMIT."
-  (when-let* ((found (re-search-forward "\\(#\\)\\([a-fA-F0-9]\\{6\\}\\)" limit t))
-              (color (match-string-no-properties 0))
-              (beg (match-beginning 1))
-              (end (match-end 1))
-              (face (list :background color :foreground color :inverse-video t)))
-    (add-text-properties beg end (list 'face face 'font-lock-face face 'display "######"))
-    found))
+  "Colorea el código hexadecimal completo hasta LIMIT."
+  (when (re-search-forward "#\\([a-fA-F0-9]\\{6\\}\\)" limit t)
+    (let* ((beg (match-beginning 0)) ;; Inicio en el '#'
+           (end (match-end 0))       ;; Fin tras el sexto dígito
+           (color (match-string-no-properties 0))
+           ;; Usamos :foreground "white" para que el texto sea legible sobre el fondo
+           (face (list :background color :foreground "white")))
+      (add-text-properties beg end (list 'face face 'font-lock-face face))
+      t)))
 
 (defun jp-simple-hex-unfontify ()
-  "Fontify the # of a hexadecimal RGB colour up to LIMIT."
+  "Limpia las propiedades de visualización en todo el buffer."
+  (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while-let ((found (re-search-forward "\\(#\\)\\([a-fA-F0-9]\\{6\\}\\)" nil t))
-                (color (match-string-no-properties 0))
-                (beg (match-beginning 1))
-                (end (match-end 1))
-                (face (list :background color :foreground color :inverse-video t)))
-      (put-text-property beg end 'display "#")
-      found)))
+    (while (re-search-forward "#\\([a-fA-F0-9]\\{6\\}\\)" nil t)
+      ;; Eliminamos las propiedades de color y cualquier rastro de 'display
+      (remove-text-properties (match-beginning 0) (match-end 0) 
+                              '(face nil font-lock-face nil display nil)))))
 
 (defvar jp-simple-hex-color-keywords
   '((jp-simple-hex-fontify))

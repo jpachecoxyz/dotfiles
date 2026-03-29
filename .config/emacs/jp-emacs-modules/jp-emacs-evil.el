@@ -28,8 +28,16 @@
 (jp-emacs-configure
   (jp-emacs-install evil-surround))
 
+(jp-emacs-configure
+  (jp-emacs-install evil-goggles)
+  (with-eval-after-load 'evil
+    (require 'evil-goggles)
+        (evil-goggles-mode 1))
+  (setq evil-goggles-pulse t)
+  (evil-goggles-use-diff-faces))
+
 (with-eval-after-load 'evil
-  (add-to-list 'evil-collection-mode-list 'help)
+  ;; (add-to-list 'evil-collection-mode-list 'help)
   (evil-collection-init)
 
   (global-evil-surround-mode 1)
@@ -42,5 +50,11 @@
   (define-key evil-motion-state-map (kbd "SPC") nil)
   (define-key evil-motion-state-map (kbd "RET") nil)
   (define-key evil-motion-state-map (kbd "TAB") nil))
+
+ ;; Dired vim-like navigation
+(with-eval-after-load 'dired
+(evil-define-key 'normal dired-mode-map
+    (kbd "h") #'dired-up-directory
+    (kbd "l") #'dired-find-file))
 
 (provide 'jp-emacs-evil)

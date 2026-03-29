@@ -288,4 +288,136 @@
   (setq git-commit-style-convention-checks '(non-empty-second-line))
   (setq git-commit-major-mode #'text-mode))
 
+;;; Git gutter (simple experimental)
+(jp-emacs-configure
+
+  (require 'cl-lib)
+
+  (defvar emacs-solo-enable-buffer-gutter t)
+
+  (defun jp/git-gutter-goto-next-hunk ()
+    "Jump cursor to the closest next hunk."
+    (interactive)
+    (let* ((current-line (line-number-at-pos))
+           (line-numbers (mapcar #'car git-gutter-diff-info))
+           (sorted-line-numbers (sort line-numbers #'<))
+           (next-line-number
+            (if (not (member current-line sorted-line-numbers))
+                (cl-find-if (lambda (line) (> line current-line)) sorted-line-numbers)
+              (let ((last-line nil))
+                (cl-loop for line in sorted-line-numbers
+                         when (and (> line current-line)
+                                   (or (not last-line)
+                                       (/= line (1+ last-line))))
+                         return line
+                         do (setq last-line line))))))
+
+      (when next-line-number
+        (goto-char (point-min))
+        (forward-line (1- next-line-number)))))
+
+  (defun jp/git-gutter-goto-previous-hunk ()
+    "Jump cursor to the closest previous hunk."
+    (interactive)
+    (let* ((current-line (line-number-at-pos))
+           (line-numbers (mapcar #'car git-gutter-diff-info))
+           (sorted-line-numbers (sort line-numbers #'<))
+           (previous-line-number
+            (if (not (member current-line sorted-line-numbers))
+                (cl-find-if (lambda (line) (< line current-line))
+                            (reverse sorted-line-numbers))
+              (let ((previous-line nil))
+                (dolist (line sorted-line-numbers)
+                  (when (and (< line current-line)
+                             (not (member (1- line) line-numbers)))
+                    (setq previous-line line)))
+                previous-line))))
+
+      (when previous-line-number
+        (goto-char (point-min))
+        (forward-line (1- previous-line-number)))))
+
+  (defun jp/git-gutter-process-git-diff ()
+    "Process git diff and return changed lines."
+    (setq-local result '())
+    (let* ((file-path (buffer-file-name))
+           (grep-command "rg -Po")
+           (output
+            (shell-command-to-string
+             (format
+              "git diff --unified=0 %s | %s '^@@ -[0-9]+(,[0-9]+)? \\+\\K[0-9]+(,[0-9]+)?(?= @@)'"
+              file-path
+              grep-command))))
+
+      (setq-local lines (split-string output "\n"))
+
+      (dolist (line lines)
+        (cond
+         ((string-match "\\(^[0-9]+\\),\\([0-9]+\\)\\(?:,0\\)?$" line)
+          (let ((num (string-to-number (match-string 1 line)))
+                (count (string-to-number (match-string 2 line))))
+            (if (= count 0)
+                (add-to-list 'result (cons (+ 1 num) "deleted"))
+              (dotimes (i count)
+                (add-to-list 'result (cons (+ num i) "changed"))))))
+
+         ((string-match "\\(^[0-9]+\\)$" line)
+          (add-to-list 'result (cons (string-to-number line) "added")))))
+
+      (setq-local git-gutter-diff-info result)
+      result))
+
+  (defun jp/git-gutter-add-mark (&rest _)
+    "Display git gutter marks."
+    (set-window-margins (selected-window) 2 0)
+
+    (remove-overlays (point-min) (point-max)
+                     'jp--git-gutter-overlay t)
+
+    (let ((lines-status (or (jp/git-gutter-process-git-diff) '())))
+      (save-excursion
+        (dolist (line-status lines-status)
+          (let ((line-num (car line-status))
+                (status (cdr line-status)))
+            (goto-char (point-min))
+            (forward-line (1- line-num))
+
+            (let ((overlay (make-overlay (point-at-bol) (point-at-bol))))
+              (overlay-put overlay 'jp--git-gutter-overlay t)
+              (overlay-put overlay 'before-string
+                           (propertize " "
+                                       'display
+                                       `((margin left-margin)
+                                         ,(propertize
+                                           (pcase status
+                                             ("added" "+")
+                                             ("changed" "~")
+                                             ("deleted" "_"))
+                                           'face '(:foreground "gray")))))))))))
+
+  (defun jp/git-gutter-on ()
+    (interactive)
+    (jp/git-gutter-add-mark)
+    (add-hook 'find-file-hook #'jp/git-gutter-add-mark)
+    (add-hook 'after-save-hook #'jp/git-gutter-add-mark))
+
+  (defun jp/git-gutter-off ()
+    (interactive)
+    (remove-overlays (point-min) (point-max)
+                     'jp--git-gutter-overlay t)
+    (remove-hook 'find-file-hook #'jp/git-gutter-add-mark)
+    (remove-hook 'after-save-hook #'jp/git-gutter-add-mark))
+
+  ;; Keybindings
+  (keymap-global-set "M-9" #'jp/git-gutter-goto-previous-hunk)
+  (keymap-global-set "M-0" #'jp/git-gutter-goto-next-hunk)
+
+  (keymap-global-set "C-c g p" #'jp/git-gutter-goto-previous-hunk)
+  (keymap-global-set "C-c g n" #'jp/git-gutter-goto-next-hunk)
+  (keymap-global-set "C-c g g" #'jp/git-gutter-on)
+  (keymap-global-set "C-c g r" #'jp/git-gutter-off)
+
+  (when emacs-solo-enable-buffer-gutter
+    (add-hook 'after-init-hook #'jp/git-gutter-on)))
+
 (provide 'jp-emacs-git)

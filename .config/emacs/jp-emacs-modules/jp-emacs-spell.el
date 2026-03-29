@@ -1,7 +1,3 @@
-;;; jp-emacs-post-custom.el --- Post configuration -*- lexical-binding: t; -*-
-
-(load-theme 'ef-melissa-dark)
-
 (jp-emacs-configure
 
   ;;========================
@@ -49,4 +45,4 @@
   (global-set-key (kbd "M-;") #'jinx-correct)
   (global-set-key (kbd "<f8>") #'jinx-languages))
 
-(provide 'jp-emacs-post-custom)
+(provide 'jp-emacs-spell)

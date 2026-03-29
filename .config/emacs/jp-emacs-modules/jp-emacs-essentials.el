@@ -27,7 +27,9 @@
   ;; Keys I unbind here are either to avoid accidents or to bind them
 
   (jp-emacs-keybind global-map
-    "<f2>" #'keycast-mode-line-mode
+    "<f2>" #'toggle-input-method
+    "C-<f2>" #'keycast-mode-line-mode
+    "C-<f9>" #'jp-toggle-presentation-mode
     "<insert>" #'nil
     "<menu>" #'nil
     "C-x C-d" #'nil ; never use it
@@ -517,15 +519,15 @@
             ("^\\[[1-9][0-9]*\\]" . font-lock-constant-face)))))
 
 ;;; Show battery status on the mode line with `display-battery-mode'
-(when jp-laptop-p
-  (jp-emacs-configure
-    (require 'battery)
-    (setq battery-mode-line-format
-          (cond
-           ((eq battery-status-function #'battery-linux-proc-acpi)
-	        "⏻%b%p%%,%d°C ")
-	       (battery-status-function
-	        "⏻%b%p%% ")))
-    (display-battery-mode 1)))
+;; (when jp-laptop-p
+;;   (jp-emacs-configure
+;;     (require 'battery)
+;;     (setq battery-mode-line-format
+;;           (cond
+;;            ((eq battery-status-function #'battery-linux-proc-acpi)
+;; 	        "⏻%b%p%%,%d°C ")
+;; 	       (battery-status-function
+;; 	        "🔌%b%p%% ")))
+;;     (display-battery-mode -1)))
 
 (provide 'jp-emacs-essentials)
