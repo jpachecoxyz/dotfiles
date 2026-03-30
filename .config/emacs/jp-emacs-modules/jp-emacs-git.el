@@ -293,8 +293,6 @@
 
   (require 'cl-lib)
 
-  (defvar emacs-solo-enable-buffer-gutter t)
-
   (defun jp/git-gutter-goto-next-hunk ()
     "Jump cursor to the closest next hunk."
     (interactive)
@@ -412,12 +410,14 @@
   (keymap-global-set "M-9" #'jp/git-gutter-goto-previous-hunk)
   (keymap-global-set "M-0" #'jp/git-gutter-goto-next-hunk)
 
-  (keymap-global-set "C-c g p" #'jp/git-gutter-goto-previous-hunk)
-  (keymap-global-set "C-c g n" #'jp/git-gutter-goto-next-hunk)
-  (keymap-global-set "C-c g g" #'jp/git-gutter-on)
-  (keymap-global-set "C-c g r" #'jp/git-gutter-off)
+  (defvar-keymap jp-git-gutter-prefix
+  :doc "Git gutter commands."
+  "p" #'jp/git-gutter-goto-previous-hunk
+  "n" #'jp/git-gutter-goto-next-hunk
+  "g" #'jp/git-gutter-on
+  "r" #'jp/git-gutter-off)
 
-  (when emacs-solo-enable-buffer-gutter
-    (add-hook 'after-init-hook #'jp/git-gutter-on)))
+  (keymap-global-set "C-c g" jp-git-gutter-prefix)
+  )
 
 (provide 'jp-emacs-git)

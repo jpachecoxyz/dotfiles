@@ -1,7 +1,7 @@
 (jp-emacs-configure
   (setq tab-bar-new-button-show nil)
   (setq tab-bar-close-button-show nil)
-  (setq tab-bar-show 1)
+  (setq tab-bar-show -1)
 
   (advice-add #'window--delete :after #'jp-common-clear-minibuffer-message))
 
