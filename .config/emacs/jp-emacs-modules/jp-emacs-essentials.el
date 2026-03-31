@@ -28,7 +28,7 @@
 
   (jp-emacs-keybind global-map
     "<f2>" #'toggle-input-method
-    "C-<f2>" #'keycast-mode-line-mode
+    "S-<f2>" #'keycast-mode-line-mode
     "C-<f9>" #'jp-toggle-presentation-mode
     "<insert>" #'nil
     "<menu>" #'nil
