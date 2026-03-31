@@ -109,23 +109,23 @@
     "C-M-$" #'jp-spell-change-dictionary
     "M-i" #'jp-spell-spell-dwim ; override `tab-to-tab-stop
     "C-M-i" #'jp-spell-change-dictionary) ; override `complete-symbol'
-
+  
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-;") nil)
     (define-key flyspell-mouse-map (kbd "<mouse-3>") #'flyspell-correct-word)
     (define-key ctl-x-x-map (kbd "s") #'flyspell-mode) ; C-x x s
-
+  
     (setq flyspell-issue-message-flag nil)
     (setq flyspell-issue-welcome-flag nil)
     (setq ispell-program-name "aspell")
     (setq ispell-dictionary "en_GB")
-
+  
     (setq jp-spell-dictionaries
           '(("EN English" . "en")
             ("EL Ελληνικά" . "el")
             ("FR Français" . "fr")
             ("ES Espanõl" . "es")))
-
+  
     ;; Also check jp-spell.el for what I am doing with
     ;; `jp-spell-ispell-display-buffer'.  Then refer to the
     ;; `display-buffer-alist' for the relevant entry.

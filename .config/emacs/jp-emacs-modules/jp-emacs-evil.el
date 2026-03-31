@@ -4,9 +4,14 @@
   (jp-emacs-install evil)
   (evil-mode 1))
 
+  (defun jp/org-tab-dwim ()
+    (interactive)
+      (or (yas-expand)
+        (org-cycle)))
+
   (with-eval-after-load 'org
     (evil-define-key '(normal insert) org-mode-map
-        (kbd "TAB") #'org-cycle
+        (kbd "TAB") #'jp/org-tab-dwim
         (kbd "<backtab>") #'org-shifttab))
 
   (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.

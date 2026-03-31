@@ -409,6 +409,7 @@ making an abbreviation to a function."
  (require 'jp-emacs-evil)
  (require 'jp-emacs-general)
  (require 'jp-emacs-0x0)
+ (require 'jp-emacs-yasnippets)
  (require 'jp-emacs-treesitter)
  (require 'jp-emacs-utils)
 
