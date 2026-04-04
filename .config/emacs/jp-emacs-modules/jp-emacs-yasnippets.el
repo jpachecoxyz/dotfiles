@@ -11,7 +11,7 @@
   (require 'yasnippet)
 
   ;; Enable globally
-  (yas-global-mode 1) 
+  (yas-global-mode 1)
 
   ;; Enable yasnippet automatically
   (add-hook 'prog-mode-hook #'yas-minor-mode)
@@ -24,5 +24,9 @@
      (setq-local yas/trigger-key [tab])
      (define-key yas-keymap [tab] #'yas-next-field-or-maybe-expand))))
 
+(jp-emacs-configure
+  (with-eval-after-load 'yasnippet
+    (define-key yas-keymap (kbd "TAB") #'yas-next-field)
+    (define-key yas-keymap (kbd "<tab>") #'yas-next-field)))
 
 (provide 'jp-emacs-yasnippets)

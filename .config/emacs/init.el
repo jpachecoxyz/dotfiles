@@ -412,6 +412,7 @@ making an abbreviation to a function."
  (require 'jp-emacs-yasnippets)
  (require 'jp-emacs-treesitter)
  (require 'jp-emacs-eglot)
+ ;; (require 'jp-emacs-lsp)
  (require 'jp-emacs-utils)
 
 ;; For those who use my dotfiles and need an easy way to write their

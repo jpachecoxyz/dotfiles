@@ -20,20 +20,26 @@
   '(:gopls (:hints (:parameterNames t))))
 
  ;; setup function
- (defun jp/eglot-setup ()
-   "Setup eglot except for Emacs Lisp."
-   (unless (eq major-mode 'emacs-lisp-mode)
-     (eglot-ensure)))
+    (defun jp/eglot-setup ()
+    "Enable Eglot in programming modes except Emacs Lisp."
+    (unless (derived-mode-p 'emacs-lisp-mode)
+        (eglot-ensure)))
+
+    ;; Add lsp servers to eglot
+    (with-eval-after-load 'eglot
+    ;; Bash LSP, Starts 'bash-language-server' with 'start' argument.
+    ;; Example: $ bash-language-server start
+        (add-to-list 'eglot-server-programs
+                    '(sh-mode "bash-language-server" "start"))
+
+        ;; Python LSP
+        (add-to-list 'eglot-server-programs
+                    '(python-mode "pylsp")))
+
 
  ;; hooks
- (add-hook 'prog-mode-hook #'jp/eglot-setup)
- (add-hook 'typst-ts-mode-hook #'jp/eglot-setup)
-
- ;; extra servers
- (with-eval-after-load 'eglot
-   (add-to-list
-    'eglot-server-programs
-    '((ruby-mode ruby-ts-mode) "ruby-lsp")))
+    (add-hook 'prog-mode-hook #'jp/eglot-setup)
+    (add-hook 'shell-mode-hook #'eglot-ensure)
 
  ;; keybindings
  (with-eval-after-load 'eglot
@@ -42,4 +48,14 @@
    (define-key eglot-mode-map (kbd "C-c l r") #'eglot-rename)
    (define-key eglot-mode-map (kbd "C-c l f") #'eglot-format)))
 
+;;; Python
+;; by default, the function 'python-mode is associated with
+;; the package python.el. The following changes that to python-mode.el:
+(autoload 'python-mode "python-mode" "Python Mode." t)
+
+;; open py files with python-mode
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+
+;; sets python interpreter mode to be python-mode
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
 (provide 'jp-emacs-eglot)

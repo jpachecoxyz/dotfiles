@@ -1,3 +1,4 @@
+
 ;;; General minibuffer settings
 (jp-emacs-configure
 ;;;; Completion styles
@@ -251,7 +252,9 @@
   (jp-emacs-configure
     (jp-emacs-install corfu)
 
+    (setq corfu-auto t)
     (setq corfu-preview-current nil)
+    (setq corfu-auto-delay 0)
     (setq corfu-min-width 20)
 
     (setq corfu-popupinfo-delay '(1.25 . 0.5))
