@@ -470,7 +470,7 @@
                     (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
                     (org-agenda-start-day "01")
                     (org-agenda-show-all-dates nil)
-                    (org-agenda-files '("~/Documents/Emascs/org/agenda/bdays.org"))
+                    (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
                     (org-agenda-skip-function
                         '(org-agenda-skip-entry-if
                         'notregexp
@@ -483,6 +483,7 @@
                     (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
                     (org-agenda-start-day "01")
                     (org-agenda-show-all-dates nil)
+                    (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
                     (org-agenda-skip-function
                         '(org-agenda-skip-entry-if
                         'notregexp
