@@ -246,18 +246,17 @@
   (remove-hook 'save-some-buffers-functions #'abbrev--possibly-save))
 
 ;;; Corfu (in-buffer completion popup)
-(when (and (eq jp-emacs-completion-ui 'vertico)
-           jp-emacs-completion-extras
-           jp-display-graphic-p)
-  (jp-emacs-configure
+;; (when (and (eq jp-emacs-completion-ui 'vertico)
+;;            jp-emacs-completion-extras
+;;            jp-display-graphic-p)
+(jp-emacs-configure
     (jp-emacs-install corfu)
 
     (setq corfu-auto t)
     (setq corfu-preview-current nil)
-    (setq corfu-auto-delay 0)
     (setq corfu-min-width 20)
 
-    (setq corfu-popupinfo-delay '(1.25 . 0.5))
+    (setq corfu-popupinfo-delay '(1.25 . 0.1))
     (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
 
     (global-corfu-mode 1)
@@ -268,8 +267,8 @@
 
     ;; Sort by input history (no need to modify `corfu-sort-function').
     (with-eval-after-load 'savehist
-      (corfu-history-mode 1)
-      (add-to-list 'savehist-additional-variables 'corfu-history))))
+        (corfu-history-mode 1)
+        (add-to-list 'savehist-additional-variables 'corfu-history)))
 
 (jp-emacs-comment
   (jp-emacs-configure

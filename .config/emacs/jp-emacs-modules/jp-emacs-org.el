@@ -414,20 +414,82 @@
 
     ;; Check the variable `jp-org-custom-daily-agenda' in jp-org.el
     (setq org-agenda-custom-commands
-          `(("A" "Daily agenda and top priority tasks"
-             ,jp-org-custom-daily-agenda
-             ((org-agenda-fontify-priorities nil)
-              (org-agenda-dim-blocked-tasks nil)))
-            ("P" "Plain text daily agenda and top priorities"
-             ,jp-org-custom-daily-agenda
-             ((org-agenda-with-colors nil)
-              (org-agenda-prefix-format "%t %s")
-              (org-agenda-current-time-string ,(car (last org-agenda-time-grid)))
-              (org-agenda-fontify-priorities nil)
-              (org-agenda-remove-tags t))
-             ("agenda.txt"))
-            ("p" "Prot Asks"
-             ,jp-org-custom-jp-asks-agenda)))
+          `(("a" "Daily agenda and top priority tasks"
+            ,jp-org-custom-daily-agenda
+            ((org-agenda-fontify-priorities nil)
+            (org-agenda-dim-blocked-tasks nil)))
+
+            ;; ("p" "Personal Agenda"
+            ;;  ,custom-daily-agenda
+            ;;  ((org-agenda-files '("~/public/org/agenda/personal.org"
+            ;;                    "~/public/org/agenda/training.org"))
+            ;;   (org-agenda-fontify-priorities nil)
+            ;;   (org-agenda-dim-blocked-tasks nil)))
+
+            ("w" "Weekly Review"
+            ((agenda ""
+                    ((org-agenda-overriding-header "Completed Tasks")
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+                    (org-agenda-span 'week)))
+
+            (agenda ""
+                    ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                    (org-agenda-span 'week)))))
+
+            ("W" "Work Agenda"
+            ,jp-org-custom-daily-agenda
+            ((org-agenda-files '("~/Documents/Emacs/org/agenda/work.org")
+                                (org-agenda-fontify-priorities nil)
+                                (org-agenda-dim-blocked-tasks nil))))
+
+            ("p" "Planning"
+            ((tags-todo "+planning+@home|@work"
+                        ((org-agenda-overriding-header "Planning Tasks")))
+
+            (tags-todo "-{.*}"
+                        ((org-agenda-overriding-header "Untagged Tasks")))
+
+            (todo ".*" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refill.org"))
+                        (org-agenda-overriding-header "Unprocessed refill.org Items")))))
+
+            ("i" "Important dates"
+            ((agenda ""
+                    ((org-agenda-overriding-header "Important dates Agenda Overview\n")
+                    (org-agenda-span 'year)
+                    (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                    (org-agenda-show-all-dates nil)
+                    (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if
+                        'notregexp
+                        (regexp-opt '("i-dates"))))))
+
+            (agenda ""
+                    ((org-agenda-overriding-header "Upcoming Birthday's\n")
+                    (org-agenda-span 'month)
+                    (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                    (org-agenda-start-day "01")
+                    (org-agenda-show-all-dates nil)
+                    (org-agenda-files '("~/Documents/Emascs/org/agenda/bdays.org"))
+                    (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if
+                        'notregexp
+                        (regexp-opt '("birthday"))))))))
+
+            ("b" "Birthday Calendar dates"
+            ((agenda ""
+                    ((org-agenda-overriding-header "Birthday Calendar dates\n")
+                    (org-agenda-span 'year)
+                    (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                    (org-agenda-start-day "01")
+                    (org-agenda-show-all-dates nil)
+                    (org-agenda-skip-function
+                        '(org-agenda-skip-entry-if
+                        'notregexp
+                        (regexp-opt '("birthday"))))))))
+
+
+            ))
 
 ;;;;; Basic agenda setup
     (setq org-default-notes-file (make-temp-file "emacs-org-notes-")) ; send it to oblivion
