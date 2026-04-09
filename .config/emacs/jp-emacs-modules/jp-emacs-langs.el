@@ -216,6 +216,11 @@
 ;; private setup for those, as I need to test everything is in order.
 (jp-emacs-configure
   (jp-emacs-install denote)
+  
+    (defun jp-denote-dired ()
+    (interactive)
+    (denote-sort-dired "\\.org$" 'identifier t nil))
+
   (add-hook 'text-mode-hook #'denote-fontify-links-mode)
   (add-hook 'dired-mode-hook #'denote-dired-mode)
   (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
@@ -240,7 +245,7 @@
   (jp-emacs-keybind global-map
     "C-c n n" #'denote
     "C-c n N" #'denote-type
-    "C-c n d" #'denote-dired
+    "C-c n d" #'jp-denote-dired
     "C-c n g" #'denote-grep
     "C-c n r" #'denote-rename-file)
 

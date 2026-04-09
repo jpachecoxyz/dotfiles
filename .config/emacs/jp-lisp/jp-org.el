@@ -385,22 +385,6 @@ continue, per `org-agenda-skip-function'."
                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done)))))
   "Custom agenda for use in `org-agenda-custom-commands'.")
 
-(defun jp-org-custom-agenda-jp-asks-get-date ()
-  "Return the timestamp of the current heading or nil.
-For use in `jp-org-custom-jp-asks-agenda'."
-  (when-let* ((timestamp (or (org-entry-get nil "DEADLINE") (org-entry-get nil "SCHEDULED")))
-              (time (jp-org--timestamp-to-time timestamp)))
-    (format-time-string "%10A	%e %10B %6R" time)))
-
-(defvar jp-org-custom-jp-asks-agenda
-  '((tags-todo "protasks"
-               ((org-agenda-overriding-header "Prot Asks\n")
-                (org-agenda-prefix-format '((tags . "%(jp-org-custom-agenda-jp-asks-get-date)	")))
-                (org-agenda-sorting-strategy '(deadline-up))
-                (org-agenda-remove-tags t)
-                (org-agenda-block-separator nil))))
-  "Custom agenda for use in `org-agenda-custom-commands'.")
-
 (defun jp-org-agenda-set-outline ()
   "Set `outline-regexp' for my Org agenda buffers."
   (when (derived-mode-p 'org-agenda-mode)
@@ -548,58 +532,6 @@ from the heading text instead of a UUID."
         (error "No CUSTOM_ID for the current entry"))
     (user-error "You are not in the right file")))
 
-;;;; Org and Diary integration
-
-(defun jp-org-diary--get-file (ics-file)
-  "Return diary file path that reuses the name of ICS-FILE.
-The path is relative to the `diary-file'."
-  (unless (file-exists-p diary-file)
-    (error "The `diary-file' does not exist"))
-  (let* ((directory (file-name-directory diary-file))
-         (ics-name (file-name-sans-extension (file-name-nondirectory ics-file)))
-         (diary-name (format "%s%s-%s-diary.txt" directory (format-time-string "%Y-%m-%d") ics-name)))
-    (when-let* ((buffer (get-file-buffer diary-name)))
-      (with-current-buffer buffer
-        (erase-buffer)))
-    (when (file-exists-p diary-name)
-      (delete-file diary-name))
-    diary-name))
-
-(defun jp-org-diary-include-file (diary-file-to-include)
-  "Include DIARY-FILE-TO-INCLUDE in the `diary-file'."
-  (unless (file-exists-p diary-file)
-    (error "The `diary-file' does not exist"))
-  (with-current-buffer (find-file-noselect diary-file)
-    (let ((include-directive (format "#include %S" diary-file-to-include)))
-      (save-excursion
-        (goto-char (point-min))
-        (while (re-search-forward (format "^%s.*" include-directive) nil t)
-          (delete-region (match-beginning 0) (match-end 0)))
-        (goto-char (point-max))
-        (insert "\n")
-        (insert include-directive)
-        (insert "\n")
-        (save-buffer)))))
-
-;;;###autoload
-(defun jp-org-diary-import-ics (ics-file diary-file-to-include)
-  "Import ICS-FILE to DIARY-FILE."
-  (interactive
-   (let ((ics-file (read-file-name "Which ICS file? ")))
-     (list
-      ics-file
-      (jp-org-diary--get-file ics-file))))
-  (save-window-excursion
-    (icalendar-import-file ics-file diary-file-to-include))
-  (let ((diary-file-propertized (propertize diary-file-to-include 'face 'success))
-        (main-diary-file-propertized (propertize diary-file 'face 'warning)))
-    (when (yes-or-no-p (format
-                        "Imported `%s' as `%s'\nINCLUDE IT in `%s'?"
-                        (propertize ics-file 'face 'error)
-                        diary-file-propertized
-                        main-diary-file-propertized))
-      (jp-org-diary-include-file diary-file-to-include)
-      (message "Appended `%s' to `%s'" diary-file-propertized main-diary-file-propertized))))
 
 (provide 'jp-org)
 ;;; jp-org.el ends here

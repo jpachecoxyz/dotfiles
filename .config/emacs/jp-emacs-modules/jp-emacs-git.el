@@ -424,6 +424,14 @@ Marks lines as added, deleted, or changed."
   "g" #'jp/git-gutter-on
   "r" #'jp/git-gutter-off)
 
+  (defvar-keymap jp-git-gutter-prefix
+    :doc "Git gutter commands."
+    "p" #'jp/git-gutter-goto-previous-hunk
+    "n" #'jp/git-gutter-goto-next-hunk
+    "g" #'jp/git-gutter-on
+    "G" #'jp/git-gutter-off)
+
+  (keymap-global-set "C-c g" jp-git-gutter-prefix)
   (add-hook 'after-init-hook #'jp/git-gutter-on))
 
 (provide 'jp-emacs-git)

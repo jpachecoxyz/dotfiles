@@ -400,12 +400,12 @@
     "C-c a" (lambda ()
               "Call Org agenda with `jp-org-custom-daily-agenda' configuration."
               (interactive)
-              (org-agenda nil "A")))
+              (org-agenda nil "a")))
 
   (with-eval-after-load 'org-agenda
     (jp-emacs-keybind org-agenda-mode-map
-      "n" #'org-agenda-next-item
-      "p" #'org-agenda-previous-item)
+      "<tab>" #'org-agenda-next-item
+      "<backtab>" #'org-agenda-previous-item)
 
 ;;;;; Custom agenda blocks
 
@@ -421,27 +421,27 @@
 
             ;; ("p" "Personal Agenda"
             ;;  ,custom-daily-agenda
-            ;;  ((org-agenda-files '("~/public/org/agenda/personal.org"
+             ;; ((org-agenda-files '("~/public/org/agenda/personal.org"
             ;;                    "~/public/org/agenda/training.org"))
             ;;   (org-agenda-fontify-priorities nil)
             ;;   (org-agenda-dim-blocked-tasks nil)))
 
-            ("w" "Weekly Review"
-            ((agenda ""
-                    ((org-agenda-overriding-header "Completed Tasks")
-                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
-                    (org-agenda-span 'week)))
-
-            (agenda ""
-                    ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
-                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                    (org-agenda-span 'week)))))
-
-            ("W" "Work Agenda"
-            ,jp-org-custom-daily-agenda
-            ((org-agenda-files '("~/Documents/Emacs/org/agenda/work.org")
-                                (org-agenda-fontify-priorities nil)
-                                (org-agenda-dim-blocked-tasks nil))))
+            ;; ("w" "Weekly Review"
+            ;; ((agenda ""
+            ;;         ((org-agenda-overriding-header "Completed Tasks")
+            ;;         (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+            ;;         (org-agenda-span 'week)))
+            ;; 
+            ;; (agenda ""
+            ;;         ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+            ;;         (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+            ;;         (org-agenda-span 'week)))))
+            ;; 
+            ;; ("W" "Work Agenda"
+            ;; ,jp-org-custom-daily-agenda
+            ;; ((org-agenda-files '("~/Documents/Emacs/org/agenda/work.org")
+            ;;                     (org-agenda-fontify-priorities nil)
+            ;;                     (org-agenda-dim-blocked-tasks nil))))
 
             ("p" "Planning"
             ((tags-todo "+planning+@home|@work"
@@ -450,12 +450,12 @@
             (tags-todo "-{.*}"
                         ((org-agenda-overriding-header "Untagged Tasks")))
 
-            (todo ".*" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refill.org"))
+            (todo ".*" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refile.org"))
                         (org-agenda-overriding-header "Unprocessed refill.org Items")))))
 
             ("i" "Important dates"
             ((agenda ""
-                    ((org-agenda-overriding-header "Important dates Agenda Overview\n")
+                    ((org-agenda-overriding-header "Important dates Agenda Overview")
                     (org-agenda-span 'year)
                     (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
                     (org-agenda-show-all-dates nil)
@@ -465,7 +465,7 @@
                         (regexp-opt '("i-dates"))))))
 
             (agenda ""
-                    ((org-agenda-overriding-header "Upcoming Birthday's\n")
+                    ((org-agenda-overriding-header "Upcoming Birthday's")
                     (org-agenda-span 'month)
                     (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
                     (org-agenda-start-day "01")
@@ -478,7 +478,7 @@
 
             ("b" "Birthday Calendar dates"
             ((agenda ""
-                    ((org-agenda-overriding-header "Birthday Calendar dates\n")
+                    ((org-agenda-overriding-header "Birthday Calendar dates")
                     (org-agenda-span 'year)
                     (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
                     (org-agenda-start-day "01")
@@ -488,13 +488,11 @@
                         '(org-agenda-skip-entry-if
                         'notregexp
                         (regexp-opt '("birthday"))))))))
-
-
             ))
 
 ;;;;; Basic agenda setup
     (setq org-default-notes-file (make-temp-file "emacs-org-notes-")) ; send it to oblivion
-    (setq org-agenda-files (list org-directory))
+    (setq org-agenda-files '("~/Documents/Emacs/org/agenda/"))
     (setq org-agenda-span 'week)
     (setq org-agenda-start-on-weekday 1)  ; Monday
     (setq org-agenda-confirm-kill t)
@@ -536,15 +534,6 @@
 ;;;;; Agenda marks
     (setq org-agenda-bulk-mark-char "#")
     (setq org-agenda-persistent-marks nil)
-
-;;;;; Agenda diary entries
-    (setq org-agenda-insert-diary-strategy 'date-tree)
-    (setq org-agenda-insert-diary-extract-time nil)
-    (setq org-agenda-include-diary nil)
-    ;; I do not want the diary, but there is no way to disable it
-    ;; altogether.  This creates a diary file in the /tmp directory.
-    (setq diary-file (make-temp-file "emacs-diary-"))
-    (setq org-agenda-diary-file 'diary-file) ; TODO 2023-05-20: review Org diary substitute
 
 ;;;;; Agenda follow mode
     (setq org-agenda-start-with-follow-mode nil)
