@@ -365,29 +365,12 @@
                ,(concat "* TODO %^{Title}%?\n" without-time)
                :empty-lines-after 1)
               ("t" "Task to do" entry
-               (file+headline "tasks.org" "All tasks")
-               ,(concat "* TODO %^{Title} %^g\n" without-time)
+               (file+headline "~/Documents/Emacs/org/agenda/refile.org" "All tasks")
+               ,(concat "* TODO %^{Title} \n" without-time)
                :empty-lines-after 1)
-              ("w" "Wishlist" entry
-               (file+olp "tasks.org" "All tasks" "Wishlist")
-               ,(concat "* %^{Title} %^g\n" without-time)
-               :empty-lines-after 1)
-              ("·" "") ; HACK to get a divider
+              ;; ("·" "") ; HACK to get a divider
               ("a" "Appointment" entry
-               (file+headline "tasks.org" "Appointments")
-               ,(concat "* TODO %^{Title}\n" with-time)
-               :empty-lines-after 1)
-              ("c" "Coaching appointment" entry
-               (file "coach.org")
-               ,(concat "* TODO %^{Person and description}\n" with-time)
-               :prepend t
-               :empty-lines 1)
-              ("p" "Prot Asks" entry
-               (file+headline "tasks.org" "Prot Asks")
-               ,(concat "* TODO %^{Title}\n" with-time)
-               :empty-lines-after 1)
-              ("v" "Video call" entry
-               (file+headline "tasks.org" "Video calls")
+               (file+headline "~/Documents/Emacs/org/agenda/refile.org" "Appointments")
                ,(concat "* TODO %^{Title}\n" with-time)
                :empty-lines-after 1))))))
 
@@ -444,14 +427,14 @@
             ;;                     (org-agenda-dim-blocked-tasks nil))))
 
             ("p" "Planning"
-            ((tags-todo "+planning+@home|@work"
+            ((tags-todo "+planning+{@home|@work}"
                         ((org-agenda-overriding-header "Planning Tasks")))
 
             (tags-todo "-{.*}"
-                        ((org-agenda-overriding-header "Untagged Tasks")))
+                        ((org-agenda-overriding-header "Unprocessed Tasks")))))
 
-            (todo ".*" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refile.org"))
-                        (org-agenda-overriding-header "Unprocessed refill.org Items")))))
+            ;; (todo "-{.*}" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refile.org"))
+            ;;             (org-agenda-overriding-header "Unprocessed Items")))))
 
             ("i" "Important dates"
             ((agenda ""
