@@ -634,4 +634,12 @@
     (setq org-agenda-auto-exclude-function nil)
     (setq org-agenda-bulk-custom-functions nil)))
 
+;;; Page break lines
+
+(jp-emacs-configure
+  (jp-emacs-install page-break-lines)
+
+  (add-hook 'org-mode-hook #'page-break-lines-mode))
+
+
 (provide 'jp-emacs-org)
