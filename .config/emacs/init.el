@@ -1,4 +1,3 @@
-
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load: search below for the files
 ;; jp-emacs-pre-custom.el and jp-emacs-post-custom.el
@@ -390,6 +389,11 @@ making an abbreviation to a function."
    "dark"
    (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
 
+(defcustom jp-emacs-enable-transparency t
+  "Enable transparency utilities."
+  :type 'boolean
+  :group 'jp-emacs)
+
  (require 'jp-emacs-theme)
  (require 'jp-emacs-essentials)
  (require 'jp-emacs-ef-themes)
@@ -403,7 +407,7 @@ making an abbreviation to a function."
  (require 'jp-emacs-langs)
  (require 'jp-emacs-spell)
  (require 'jp-emacs-mu4e)
-;; (require 'jp-emacs-web)
+ (require 'jp-emacs-web)
  (require 'jp-emacs-which-key)
  (require 'jp-emacs-icons)
  (require 'jp-emacs-evil)
@@ -412,7 +416,6 @@ making an abbreviation to a function."
  (require 'jp-emacs-yasnippets)
  (require 'jp-emacs-treesitter)
  (require 'jp-emacs-eglot)
- ;; (require 'jp-emacs-lsp)
  (require 'jp-emacs-utils)
 
 ;; For those who use my dotfiles and need an easy way to write their

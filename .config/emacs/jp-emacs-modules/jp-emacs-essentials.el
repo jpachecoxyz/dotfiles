@@ -30,6 +30,7 @@
     "<f2>" #'toggle-input-method
     "S-<f2>" #'keycast-mode-line-mode
     "C-<f9>" #'jp-toggle-presentation-mode
+    "<f8>" #'jp/toggle-transparency
     "<insert>" #'nil
     "<menu>" #'nil
     "C-x C-d" #'nil ; never use it
@@ -111,7 +112,7 @@
   (add-hook 'emacs-lisp-mode-hook #'jp/simple-hex-highlight)
 
   (define-key ctl-x-x-map (kbd "c") #'jp-simple-hex-color-mode) ; C-x x c
-
+  
   (jp-emacs-keybind jp-simple-override-mode-map
     "C-a" #'jp-simple-duplicate-line-or-region ; "again" mnemonic, overrides `move-beginning-of-line'
     "C-d" #'jp-simple-delete-line ; overrides `delete-char'
@@ -529,5 +530,66 @@
 ;; 	       (battery-status-function
 ;; 	        "🔌%b%p%% ")))
 ;;     (display-battery-mode -1)))
+
+;;; JP-EMACS-CONFIGURE-TRANSPARENCY
+;;
+;; Transparency utilities
+;;
+
+(when jp-emacs-enable-transparency
+
+  (defun jp/clear-terminal-background-color (&optional frame)
+    "Unset background color in terminal mode, including line numbers."
+    (interactive)
+    (or frame (setq frame (selected-frame)))
+    (unless (display-graphic-p frame)
+      (send-string-to-terminal
+       (format "\033]11;[90]%s\033\\"
+               (face-attribute 'default :background)))
+      (set-face-background 'default "unspecified-bg" frame)
+      (set-face-background 'line-number "unspecified-bg" frame)
+      (set-face-background 'line-number-current-line "unspecified-bg" frame)))
+
+  (defun jp/set-transparency (&optional frame)
+    "Apply transparency to FRAME or all frames."
+    (interactive)
+
+    ;; Terminal transparency fix
+    (unless (display-graphic-p frame)
+      (add-hook 'window-setup-hook #'jp/clear-terminal-background-color)
+      (add-hook 'ef-themes-post-load-hook #'jp/clear-terminal-background-color))
+
+    (if frame
+        (progn
+          (when (eq system-type 'darwin)
+            (set-frame-parameter frame 'alpha '(90 90)))
+          (set-frame-parameter frame 'alpha-background 85))
+
+      (dolist (frm (frame-list))
+        (when (eq system-type 'darwin)
+          (set-frame-parameter frm 'alpha '(90 90)))
+        (set-frame-parameter frm 'alpha-background 85))))
+
+  (defun jp/unset-transparency ()
+    "Disable frame transparency."
+    (interactive)
+    (when (eq system-type 'darwin)
+      (set-frame-parameter (selected-frame) 'alpha '(100 100)))
+    (dolist (frame (frame-list))
+      (set-frame-parameter frame 'alpha-background 100)))
+
+    (defun jp/toggle-transparency ()
+    "Toggle frame transparency."
+    (interactive)
+    (setq jp-emacs-enable-transparency (not jp-emacs-enable-transparency))
+    (if jp-emacs-enable-transparency
+        (progn
+            (jp/set-transparency)
+            (message "Transparency enabled"))
+        (jp/unset-transparency)
+        (message "Transparency disabled")))
+  ;; Hooks
+  (add-hook 'after-init-hook #'jp/set-transparency)
+  (add-hook 'after-make-frame-functions #'jp/set-transparency))
 
 (provide 'jp-emacs-essentials)

@@ -45,13 +45,11 @@
 ;;;; Increase padding of windows/frames
 ;; Yet another one of my packages:
 ;; <https://protesilaos.com/codelog/2023-06-03-emacs-spacious-padding/>.
-(when jp-display-graphic-p
+;; (when jp-display-graphic-p
   (jp-emacs-configure
     (jp-emacs-install spacious-padding)
 
     (spacious-padding-mode 1)
-
-    (define-key global-map (kbd "<f8>") #'spacious-padding-mode)
 
     (setq spacious-padding-widths
           `( :internal-border-width 15
@@ -75,7 +73,8 @@
              :header-line-inactive spacious-padding-line-inactive))
 
     (when (< emacs-major-version 29)
-      (setq x-underline-at-descent-line (when spacious-padding-subtle-frame-lines t)))))
+      (setq x-underline-at-descent-line (when spacious-padding-subtle-frame-lines t))))
+;; )
 
 ;;;; Fontaine (font configurations)
 ;; Read the manual: <https://protesilaos.com/emacs/fontaine>

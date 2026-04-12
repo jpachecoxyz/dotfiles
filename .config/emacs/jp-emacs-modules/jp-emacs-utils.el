@@ -165,19 +165,30 @@ CUSTOM_ID of the entry is returned."
       (org-id-store-link))))
 
 (defun jp/org-toggle-emphasis-markers (&optional arg)
-  "Toggle emphasis markers and display a message."
+  "Toggle visibility of Org emphasis markers."
   (interactive "p")
-  (let ((markers org-hide-emphasis-markers)
-        (msg ""))
-    (when markers
-      (setq-local org-hide-emphasis-markers nil)
-      (setq msg "Emphasis markers are now visible."))
-    (unless markers
-      (setq-local org-hide-emphasis-markers t)
-      (setq msg "Emphasis markers are now hidden."))
-    (message "%s" msg)
-    (when arg
-      (font-lock-fontify-buffer))))
+  (setq-local org-hide-emphasis-markers
+              (not org-hide-emphasis-markers))
+  (message "Emphasis markers are now %s."
+           (if org-hide-emphasis-markers "hidden" "visible"))
+  (when arg
+    (font-lock-fontify-buffer)))
+
+(defun jp/org-hide-emphasis-markers (&optional arg)
+  "Hide Org emphasis markers."
+  (interactive "p")
+  (setq-local org-hide-emphasis-markers t)
+  (message "Emphasis markers are now hidden.")
+  (when arg
+    (font-lock-fontify-buffer)))
+
+(defun jp/org-show-emphasis-markers (&optional arg)
+  "Show Org emphasis markers."
+  (interactive "p")
+  (setq-local org-hide-emphasis-markers nil)
+  (message "Emphasis markers are now visible.")
+  (when arg
+    (font-lock-fontify-buffer)))
 
 (defun export-org-email ()
   "Export the current email org buffer and copy it to the
@@ -643,7 +654,6 @@ The command supports previewing the currently selected theme."
                        my/goto-file-buffer-alist))])))
 
 ;;; Presentation-mode
-
 (defvar jp-presentation-mode nil
   "Non-nil when presentation mode is active.")
 
@@ -657,13 +667,15 @@ The command supports previewing the currently selected theme."
         (fontaine-set-preset 'medium)
         (widen)
         (setq jp-presentation-mode nil)
-        (message "Presentation mode disabled"))
+        (message "Presentation mode disabled")
+        (jp/org-show-emphasis-markers))
     ;; Enable presentation
     (logos-narrow-dwim)
     (fontaine-set-preset 'jumbo)
     (logos-focus-mode 1)
     (setq jp-presentation-mode t)
-    (message "Presentation mode enabled")))
+    (message "Presentation mode enabled"))
+    (jp/org-hide-emphasis-markers))
 
 ;;; Rainbow-parens:
 (defun jp-simple-rainbow-delimiters ()

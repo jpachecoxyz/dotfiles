@@ -400,6 +400,9 @@
           `(("a" "Daily agenda and top priority tasks"
             ,jp-org-custom-daily-agenda
             ((org-agenda-fontify-priorities nil)
+             (org-agenda-files '("~/Documents/Emacs/org/agenda/agenda.org"
+                                 "~/Documents/Emacs/org/agenda/bdays.org"
+                                 "~/Documents/Emacs/org/agenda/important_dates.org"))
             (org-agenda-dim-blocked-tasks nil)))
 
             ;; ("p" "Personal Agenda"

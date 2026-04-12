@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: elisp header
+# key: elhead
+# --
+
+;;; `(file-name-nondirectory (or (buffer-file-name) "archivo.el"))` --- ${1:Descripción corta} -*- lexical-binding: t; -*-
+
+;; Copyright (C) `(format-time-string "%Y")` Javier Pacheco
+
+;; Author: Javier Pacheco <javier@jpacheco.xyz>
+;; Maintainer: Javier Pacheco <javier@jpacheco.xyz>
+;; Created: `(format-time-string "%Y-%m-%d")`
+;; Version: 0.1
+;; Package-Requires: ()
+;; Keywords: ${2:tools}
+;; Homepage: https://github.com/jpachecoxyz/`(file-name-base (or (buffer-file-name) "archivo"))`
+
+;;; Commentary:
+
+${3:Descripción del paquete}
+
+;;; Code:
+
+
+$0
+
+
+(provide '`(file-name-base (or (buffer-file-name) "archivo"))`)
+
+;;; `(file-name-nondirectory (or (buffer-file-name) "archivo.el"))` ends here

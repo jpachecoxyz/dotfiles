@@ -422,7 +422,7 @@ Without numeric prefix argument N, operate on the current line."
       (progn
         (auto-fill-mode -1)
         (visual-line-mode 1))
-    (auto-fill-mode 1)
+    (auto-fill-mode -1)
     (visual-line-mode -1)))
 
 ;;;; Commands for text insertion or manipulation

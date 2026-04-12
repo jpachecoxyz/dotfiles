@@ -42,7 +42,7 @@
   (dolist (hook '(text-mode-hook conf-mode-hook))
     (add-hook hook #'jinx-mode))
 
-  (global-set-key (kbd "M-;") #'jinx-correct)
-  (global-set-key (kbd "<f8>") #'jinx-languages))
+  (global-set-key (kbd "M-;") #'jinx-correct))
+  ;; (global-set-key (kbd "<f8>") #'jinx-languages))
 
 (provide 'jp-emacs-spell)

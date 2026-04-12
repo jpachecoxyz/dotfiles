@@ -135,9 +135,9 @@
 
     (setq rcirc-prompt "%t> ") ; Read the docs or use (customize-set-variable 'rcirc-prompt "%t> ")
 
-    (setq rcirc-default-nick "protesilaos"
-          rcirc-default-user-name "protesilaos"
-          rcirc-default-full-name "Protesilaos Stavrou")
+    (setq rcirc-default-nick "jpachecoxyz"
+          rcirc-default-user-name "jpachecoxyz"
+          rcirc-default-full-name "Javier Pacheco")
 
     ;; ;; NOTE 2021-11-28: demo from the days of EmacsConf 2021.  I don't
     ;; ;; actually need this.
