@@ -190,6 +190,9 @@ CUSTOM_ID of the entry is returned."
   (when arg
     (font-lock-fontify-buffer)))
 
+
+(add-hook 'org-mode-hook #'jp/org-hide-emphasis-markers)
+
 (defun export-org-email ()
   "Export the current email org buffer and copy it to the
 clipboard"
