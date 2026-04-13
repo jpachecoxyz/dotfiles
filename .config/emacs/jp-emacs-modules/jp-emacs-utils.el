@@ -178,7 +178,7 @@ CUSTOM_ID of the entry is returned."
   "Hide Org emphasis markers."
   (interactive "p")
   (setq-local org-hide-emphasis-markers t)
-  (message "Emphasis markers are now hidden.")
+  ;; (message "Emphasis markers are now hidden.")
   (when arg
     (font-lock-fontify-buffer)))
 
@@ -186,10 +186,9 @@ CUSTOM_ID of the entry is returned."
   "Show Org emphasis markers."
   (interactive "p")
   (setq-local org-hide-emphasis-markers nil)
-  (message "Emphasis markers are now visible.")
+  ;; (message "Emphasis markers are now visible.")
   (when arg
     (font-lock-fontify-buffer)))
-
 
 (add-hook 'org-mode-hook #'jp/org-hide-emphasis-markers)
 
