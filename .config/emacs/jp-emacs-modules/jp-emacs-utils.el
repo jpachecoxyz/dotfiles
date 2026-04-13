@@ -667,15 +667,13 @@ The command supports previewing the currently selected theme."
         (fontaine-set-preset 'medium)
         (widen)
         (setq jp-presentation-mode nil)
-        (message "Presentation mode disabled")
-        (jp/org-show-emphasis-markers))
+        (message "Presentation mode disabled"))
     ;; Enable presentation
     (logos-narrow-dwim)
     (fontaine-set-preset 'jumbo)
     (logos-focus-mode 1)
     (setq jp-presentation-mode t)
-    (message "Presentation mode enabled"))
-    (jp/org-hide-emphasis-markers))
+    (message "Presentation mode enabled")))
 
 ;;; Rainbow-parens:
 (defun jp-simple-rainbow-delimiters ()

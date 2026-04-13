@@ -118,7 +118,7 @@
     ;;
     ;;     (setq elfeed-feeds FEEDS)
     (unless (bound-and-true-p elfeed-feeds)
-      (load (expand-file-name "~/feeds.el.gpg") :no-error :no-message))
+      (load (expand-file-name "~/.config/emacs/feeds.el.gpg") :no-error :no-message))
     ;; Make entries tagged as "personal" use the `bold-italic' face.
     ;; This way I can quickly notice my own entries in the listing.
     (add-to-list 'elfeed-search-face-alist '(personal bold-italic))))
