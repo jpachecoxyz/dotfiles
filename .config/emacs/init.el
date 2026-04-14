@@ -411,6 +411,7 @@ making an abbreviation to a function."
  (require 'jp-emacs-which-key)
  (require 'jp-emacs-icons)
  (require 'jp-emacs-evil)
+ ;; (require 'jp-emacs-meow)
  (require 'jp-emacs-general)
  (require 'jp-emacs-0x0)
  (require 'jp-emacs-yasnippets)

@@ -1,3 +1,4 @@
+
 ;;; Calendar
 (jp-emacs-configure
   (with-eval-after-load 'calendar
@@ -270,8 +271,8 @@
 (jp-emacs-configure
   (with-eval-after-load 'org
     (setq org-tag-alist nil)
-    (setq org-auto-align-tags nil)
-    (setq org-tags-column 0)))
+    (setq org-auto-align-tags t)
+    (setq org-tags-column -90)))
 
 ;;;; log
 (jp-emacs-configure

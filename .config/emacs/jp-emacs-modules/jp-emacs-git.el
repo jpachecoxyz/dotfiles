@@ -286,7 +286,8 @@
   ;; always in check.  When I exceed the limit, it is for a good
   ;; reason.
   (setq git-commit-style-convention-checks '(non-empty-second-line))
-  (setq git-commit-major-mode #'text-mode))
+  (setq git-commit-major-mode #'text-mode)
+  (add-hook 'git-commit-mode-hook 'evil-insert))
 
 ;;; Git gutter (simple experimental)
 (jp-emacs-configure

@@ -1,0 +1,14 @@
+#+title: My RSS Feeds
+#+author: Ing. Javier Pacheco
+#+startup: showall
+#+date: 2026-04-13 Mon
+
+
+* RSS Feeds                                                                       :elfeed:
+** Emacs
+*** Protesilaos
+**** https://protesilaos.com/codelog.xml                              :prot:code:
+**** https://protesilaos.com/news.xml                                 :prot:news:
+
+** God's Section:
+*** https://stallman.org/rss/rss.xml                               :RichardStallman:
