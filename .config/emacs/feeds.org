@@ -11,4 +11,4 @@
 **** https://protesilaos.com/news.xml                                 :prot:news:
 
 ** God's Section:
-*** https://stallman.org/rss/rss.xml                               :RichardStallman:
+*** https://stallman.org/rss/rss.xml                                           :god:
