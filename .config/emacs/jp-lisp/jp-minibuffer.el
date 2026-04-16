@@ -1,10 +1,10 @@
 ;;; jp-minibuffer.el --- Extensions for the minibuffer and completions -*- lexical-binding: t -*-
 
-;; Copyright (C) 2025-2026  Protesilaos Stavrou
+;; Copyright (C) 2025-2026  Javier Pacheco
 
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://protesilaos.com/emacs/dotemacs
+;; Author: Javier Pacheco <jpacheco@disroot.org>
+;; Maintainer: Javier Pacheco <info@protesilaos.com>
+;; URL: https://jpachecoxyz.github.io
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "30.1"))
 
@@ -26,7 +26,7 @@
 ;;; Commentary:
 ;;
 ;; Extensions for the minibuffer and completions, intended for my
-;; Emacs setup: <https://protesilaos.com/emacs/dotemacs/>.
+;; Emacs setup: <https://jpachecoxyz.github.io>.
 
 ;;; Code:
 

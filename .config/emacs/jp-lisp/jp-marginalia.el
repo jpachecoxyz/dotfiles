@@ -1,9 +1,9 @@
 ;;; jp-marginalia.el --- Code for my custom mode line -*- lexical-binding: t -*-
 
-;; Copyright (C) 2023-2026  Protesilaos Stavrou
+;; Copyright (C) 2023-2026  Javier Pacheco
 
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://protesilaos.com/emacs/dotemacs
+;; Author: Javier Pacheco <jpacheco@disroot.org>
+;; URL: https://jpachecoxyz.github.io
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "30.1"))
 

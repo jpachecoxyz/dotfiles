@@ -1,9 +1,9 @@
 ;;; jp-orderless.el --- Extensions for Orderless -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020-2026  Protesilaos Stavrou
+;; Copyright (C) 2020-2026  Javier Pacheco
 
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://protesilaos.com/emacs/dotemacs
+;; Author: Javier Pacheco <jpacheco@disroot.org>
+;; URL: https://jpachecoxyz.github.io
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "30.1"))
 
@@ -25,7 +25,7 @@
 ;;; Commentary:
 ;;
 ;; Extensions for the Orderless completion style for use in my Emacs
-;; setup: <https://protesilaos.com/emacs/dotemacs/>.
+;; setup: <https://jpachecoxyz.github.io>.
 ;;
 ;; Remember that every piece of Elisp that I write is for my own
 ;; educational and recreational purposes.  I am not a programmer and I

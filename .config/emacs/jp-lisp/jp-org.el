@@ -3,7 +3,7 @@
 ;;; Commentary:
 ;;
 ;; This covers my tweaks for Org that are meant for use in my
-;; Emacs setup: https://protesilaos.com/emacs/dotemacs.
+;; Emacs setup: https://jpachecoxyz.github.io.
 
 ;;; Code:
 
@@ -525,7 +525,7 @@ from the heading text instead of a UUID."
   (if (and (derived-mode-p 'org-mode)
            (string-match-p "jp-emacs\\.org\\'" buffer-file-name))
       (if-let* ((id (org-entry-get (point) "CUSTOM_ID"))
-                (url (concat "https://protesilaos.com/emacs/dotemacs#" id)))
+                (url (concat "https://jpachecoxyz.github.io#" id)))
           (progn
             (kill-new url)
             (message "Copied %s" (propertize url 'face 'success)))

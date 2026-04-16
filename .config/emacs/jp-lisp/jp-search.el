@@ -1,9 +1,9 @@
 ;;; jp-search.el --- Extensions to isearch, replace, grep for my dotemacs -*- lexical-binding: t -*-
 
-;; Copyright (C) 2020-2026  Protesilaos Stavrou
+;; Copyright (C) 2020-2026  Javier Pacheco
 
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://protesilaos.com/emacs/dotemacs
+;; Author: Javier Pacheco <jpacheco@disroot.org>
+;; URL: https://jpachecoxyz.github.io
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "30.1"))
 
@@ -25,7 +25,7 @@
 ;;; Commentary:
 ;;
 ;; This covers my isearch.el, replace.el, and grep.el extensions, for
-;; use in my Emacs setup: <https://protesilaos.com/emacs/dotemacs>.
+;; use in my Emacs setup: <https://jpachecoxyz.github.io>.
 
 ;;; Code:
 

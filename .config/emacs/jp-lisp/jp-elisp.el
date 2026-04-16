@@ -1,9 +1,9 @@
 ;;; jp-elisp.el --- Emacs Lisp extras for my dotemacs -*- lexical-binding: t -*-
 
-;; Copyright (C) 2025-2026  Protesilaos Stavrou
+;; Copyright (C) 2025-2026  Javier Pacheco
 
-;; Author: Protesilaos Stavrou <info@protesilaos.com>
-;; URL: https://protesilaos.com/emacs/dotemacs
+;; Author: Javier Pacheco <jpacheco@disroot.org>
+;; URL: https://jpachecoxyz.github.io
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "30.1"))
 
@@ -25,7 +25,7 @@
 ;;; Commentary:
 ;;
 ;; Extensions for Emacs Lisp, intended for use in my Emacs setup:
-;; https://protesilaos.com/emacs/dotemacs.
+;; https://jpachecoxyz.github.io.
 
 ;;; Code:
 
