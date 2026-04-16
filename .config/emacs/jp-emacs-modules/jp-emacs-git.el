@@ -435,4 +435,7 @@ Marks lines as added, deleted, or changed."
   (keymap-global-set "C-c g" jp-git-gutter-prefix)
   (add-hook 'after-init-hook #'jp/git-gutter-on))
 
+;; When commit start in insert mode
+(add-hook 'git-commit-mode-hook #'evil-insert-state)
+
 (provide 'jp-emacs-git)

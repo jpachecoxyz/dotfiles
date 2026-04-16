@@ -708,4 +708,15 @@ Opening and closing delimiters will have matching colors."
 
 (add-hook 'prog-mode-hook #'jp-simple-rainbow-delimiters)
 
+(defun jp-toggle-vterm ()
+  "Toggle vterm buffer."
+  (interactive)
+  (if (derived-mode-p 'vterm-mode)
+      (previous-buffer)
+    (let ((buf (get-buffer "*vterm*")))
+      (if buf
+          (switch-to-buffer buf)
+        (vterm)))))
+
+
 (provide 'utilities)

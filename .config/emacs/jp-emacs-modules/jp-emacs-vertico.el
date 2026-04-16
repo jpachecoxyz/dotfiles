@@ -22,43 +22,8 @@
 
   (vertico-mode 1))
 
-;;; Custom tweaks for vertico (jp-vertico.el)
-(jp-emacs-configure
-  (require 'jp-vertico)
-  (setq vertico-multiform-commands
-        `(("consult-\\(.*\\)?\\(find\\|grep\\|ripgrep\\)" ,@jp-vertico-multiform-maximal)))
-  (setq vertico-multiform-categories
-        `(;; Maximal
-          (embark-keybinding ,@jp-vertico-multiform-maximal)
-          (multi-category ,@jp-vertico-multiform-maximal)
-          (consult-location ,@jp-vertico-multiform-maximal)
-          (imenu ,@jp-vertico-multiform-maximal)
-          (theme ,@jp-vertico-multiform-maximal)
-          (unicode-name ,@jp-vertico-multiform-maximal)
-          ;; Minimal
-          (file ,@jp-vertico-multiform-minimal
-                (vertico-sort-function . vertico-sort-directories-first))
-          (t ,@jp-vertico-multiform-minimal)))
-
-  (vertico-multiform-mode 1)
-
   (jp-emacs-keybind vertico-map
-    "<left>" #'backward-char
-    "<right>" #'forward-char
-    "C-M-n" #'vertico-next-group
-    "C-M-p" #'vertico-previous-group
-    "TAB" #'jp-vertico-private-complete
-    "DEL" #'vertico-directory-delete-char
-    "M-DEL" #'vertico-directory-delete-word
-    "M-," #'vertico-quick-insert
-    "M-." #'vertico-quick-exit)
-  (jp-emacs-keybind vertico-multiform-map
-    "RET" #'jp-vertico-private-exit
-    "<return>" #'jp-vertico-private-exit
-    "C-n" #'jp-vertico-private-next
-    "<down>" #'jp-vertico-private-next
-    "C-p" #'jp-vertico-private-previous
-    "<up>" #'jp-vertico-private-previous
-    "C-l" #'vertico-multiform-vertical))
+    "TAB" #'vertico-next
+    "<backtab>" #'vertico-previous)
 
 (provide 'jp-emacs-vertico)

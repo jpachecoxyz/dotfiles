@@ -172,7 +172,7 @@
   "o" '(:ignore t :wk "Open")
   "o -" '(dired-jump :wk "Jump to dired")
   "o f" '(make-frame :wk "New frame")
-  "o t" '(vterm-toggle :wk "Toggle terminal")
+  "o t" '(jp-toggle-vterm :wk "Toggle terminal")
   "o s" '(toggle-scratch-buffer :wk "Toggle scratch")
   "o e" '(toggle-org-buffer :wk "Toggle org"))
 

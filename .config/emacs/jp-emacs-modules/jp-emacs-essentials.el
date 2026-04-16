@@ -27,6 +27,7 @@
   ;; Keys I unbind here are either to avoid accidents or to bind them
 
   (jp-emacs-keybind global-map
+    "<f1>" #'jp-toggle-vterm
     "<f2>" #'toggle-input-method
     "S-<f2>" #'keycast-mode-line-mode
     "C-<f9>" #'jp-toggle-presentation-mode
@@ -478,7 +479,7 @@
 (jp-emacs-configure
   (jp-emacs-autoload (jp-shell jp-shell-mode) "jp-shell")
 
-  (define-key global-map (kbd "<f1>") #'jp-shell) ; I don't use F1 for help commands
+  (define-key global-map (kbd "<f1>") #'jp-toggle-vterm) ; I don't use F1 for help commands
 
   (with-eval-after-load 'jp-shell
     (add-hook 'shell-mode-hook #'jp-shell-mode)
