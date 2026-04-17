@@ -118,7 +118,7 @@
            (body-function . jp-window-select-fit-size))
           (jp-window-shell-or-term-p
            (display-buffer-reuse-mode-window display-buffer-at-bottom)
-           (mode . (shell-mode eshell-mode comint-mode))
+           (mode . (shell-mode eshell-mode comint-mode vterm-mode))
            (inhibit-switch-frame . t)
            (body-function . jp-window-select-fit-size))
           ("\\*\\(Calendar\\|Bookmark Annotation\\|ert\\).*"

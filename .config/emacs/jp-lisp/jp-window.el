@@ -104,7 +104,7 @@ use in `display-buffer-alist'."
     (with-current-buffer buffer
       ;; REVIEW 2022-07-14: Is this robust?
       (and (not (derived-mode-p 'message-mode 'text-mode))
-           (derived-mode-p 'eshell-mode 'shell-mode 'comint-mode 'fundamental-mode)))))
+           (derived-mode-p 'eshell-mode 'shell-mode 'vterm-mode 'comint-mode 'fundamental-mode)))))
 
 (defun jp-window-remove-dedicated (&rest _)
   "Remove dedicated window parameter.

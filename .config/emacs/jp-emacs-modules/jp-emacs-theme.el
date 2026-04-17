@@ -93,31 +93,31 @@
   (setq fontaine-presets
         '((small
         :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "CaskaydiaMono Nerd Font"
+        :fixed-pitch-family "IBM Plex Mono"
         :variable-pitch-family "Aporetic Serif Mono"
         :default-height 80)
 
         (regular
         :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "CaskaydiaMono Nerd Font"
+        :fixed-pitch-family "IBM Plex Mono"
         :variable-pitch-family "Aporetic Serif Mono"
         :default-height 120)
 
         (medium
         :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "CaskaydiaMono Nerd Font"
+        :fixed-pitch-family "IBM Plex Mono"
         :variable-pitch-family "Aporetic Serif Mono"
         :default-height 145)
 
         (large
         :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "CaskaydiaMono Nerd Font"
+        :fixed-pitch-family "IBM Plex Mono"
         :variable-pitch-family "Aporetic Serif Mono"
         :default-height 160)
 
         (presentation
         :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "CaskaydiaMono Nerd Font"
+        :fixed-pitch-family "IBM Plex Mono"
         :variable-pitch-family "Aporetic Serif Mono"
         :default-height 180)
 

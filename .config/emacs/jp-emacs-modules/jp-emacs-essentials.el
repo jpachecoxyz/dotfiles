@@ -27,7 +27,7 @@
   ;; Keys I unbind here are either to avoid accidents or to bind them
 
   (jp-emacs-keybind global-map
-    "<f1>" #'jp-toggle-vterm
+    "<f1>" #'vterm-toggle
     "<f2>" #'toggle-input-method
     "S-<f2>" #'keycast-mode-line-mode
     "C-<f9>" #'jp-toggle-presentation-mode
@@ -477,66 +477,32 @@
 
 ;;; Standard Unix Shell (M-x shell)
 (jp-emacs-configure
-  (jp-emacs-autoload (jp-shell jp-shell-mode) "jp-shell")
+  (jp-emacs-install vterm)
+  (jp-emacs-install vterm-toggle)
 
-  (define-key global-map (kbd "<f1>") #'jp-toggle-vterm) ; I don't use F1 for help commands
+  ;; Global toggle
+  (define-key global-map (kbd "<f1>") #'vterm-toggle)
 
-  (with-eval-after-load 'jp-shell
-    (add-hook 'shell-mode-hook #'jp-shell-mode)
+  (with-eval-after-load 'vterm
+    ;; Allow F1 toggle inside vterm
+    (define-key vterm-mode-map (kbd "<f1>") #'vterm-toggle)
 
-    (jp-emacs-keybind shell-mode-map
-      "C-c C-k" #'comint-clear-buffer
-      "C-c C-w" #'comint-write-output)
+    ;; Start in insert state if using evil
+    (add-hook 'vterm-mode-hook
+              (lambda ()
+                (evil-insert-state))))
 
-    ;; Check my .bashrc which handles `comint-terminfo-terminal':
-    ;;
-    ;; # Default pager.  The check for the terminal is useful for Emacs with
-    ;; # M-x shell (which is how I usually interact with bash these days).
-    ;; #
-    ;; # The COLORTERM is documented in (info "(emacs) General Variables").
-    ;; # I found the reference to `dumb-emacs-ansi' in (info "(emacs)
-    ;; # Connection Variables").
-    ;; if [ "$TERM" = "dumb" ] && [ "$INSIDE_EMACS" ] || [ "$TERM" = "dumb-emacs-ansi" ] && [ "$INSIDE_EMACS" ]
-    ;; then
-    ;;     export PAGER="cat"
-    ;;     alias less="cat"
-    ;;     export TERM=dumb-emacs-ansi
-    ;;     export COLORTERM=1
-    ;; else
-    ;;     # Quit once you try to scroll past the end of the file.
-    ;;     export PAGER="less --quit-at-eof"
-    ;; fi
-    (setq shell-command-prompt-show-cwd t) ; Emacs 27.1
-    (setq shell-input-autoexpand 'input)
-    (setq shell-highlight-undef-enable t) ; Emacs 29.1
-    (setq shell-has-auto-cd nil) ; Emacs 29.1
-    (setq shell-get-old-input-include-continuation-lines t) ; Emacs 30.1
-    (setq shell-kill-buffer-on-exit t) ; Emacs 29.1
-    (setq shell-completion-fignore '("~" "#" "%"))
-    (setq tramp-default-remote-shell "/bin/bash")
+  (with-eval-after-load 'vterm
+    ;; Kill buffer when closing terminal
+    (setq vterm-kill-buffer-on-exit t))
 
-    (setq shell-font-lock-keywords
-          '(("[ \t]\\([+-][^ \t\n]+\\)" 1 font-lock-builtin-face)
-            ("^[^ \t\n]+:.*" . font-lock-string-face)
-            ("^\\[[1-9][0-9]*\\]" . font-lock-constant-face)))))
+  (with-eval-after-load 'vterm-toggle
+    (setq vterm-toggle-use-dedicated-buffer t)
+    (setq vterm-toggle-fullscreen-p nil)
+    (setq vterm-toggle-reset-window-configuration-after-exit nil)
+    (setq vterm-toggle-display-action nil)))
 
-;;; Show battery status on the mode line with `display-battery-mode'
-;; (when jp-laptop-p
-;;   (jp-emacs-configure
-;;     (require 'battery)
-;;     (setq battery-mode-line-format
-;;           (cond
-;;            ((eq battery-status-function #'battery-linux-proc-acpi)
-;; 	        "⏻%b%p%%,%d°C ")
-;; 	       (battery-status-function
-;; 	        "🔌%b%p%% ")))
-;;     (display-battery-mode -1)))
-
-;;; JP-EMACS-CONFIGURE-TRANSPARENCY
-;;
-;; Transparency utilities
-;;
-
+;;; jp-emacs-configure-transparency
 (when jp-emacs-enable-transparency
 
   (defun jp/clear-terminal-background-color (&optional frame)

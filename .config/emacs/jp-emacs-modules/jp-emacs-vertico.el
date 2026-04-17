@@ -22,8 +22,8 @@
 
   (vertico-mode 1))
 
-  (jp-emacs-keybind vertico-map
-    "TAB" #'vertico-next
-    "<backtab>" #'vertico-previous)
+  ;; (jp-emacs-keybind vertico-map
+  ;;   "TAB" #'vertico-next
+  ;;   "<backtab>" #'vertico-previous)
 
 (provide 'jp-emacs-vertico)
