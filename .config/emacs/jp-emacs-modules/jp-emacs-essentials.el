@@ -21,8 +21,12 @@
   (setq save-interprogram-paste-before-kill t)
   (setq scroll-error-top-bottom t)
   (setq tramp-connection-timeout (* 60 10)) ; seconds
-  (setq trusted-content '("~/Git/Projects/" "~/Coach/")) ; Emacs 30
+  (setq trusted-content '("~/Documents/Emacs/" "~/.dotfiles")) ; Emacs 30
   (setq truncate-partial-width-windows nil)
+  (setq pixel-scroll-precision-mode t)
+  (setq pixel-scroll-precision-use-momentum nil)
+  (setq scroll-conservatively 8)
+  (setq scroll-margin 5)
 
   ;; Keys I unbind here are either to avoid accidents or to bind them
 

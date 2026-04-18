@@ -33,14 +33,6 @@
 (jp-emacs-configure
   (jp-emacs-install evil-surround))
 
-(jp-emacs-configure
-  (jp-emacs-install evil-goggles)
-  (with-eval-after-load 'evil
-    (require 'evil-goggles)
-        (evil-goggles-mode 1))
-  (setq evil-goggles-pulse t)
-  (evil-goggles-use-diff-faces))
-
 (with-eval-after-load 'evil
   ;; (add-to-list 'evil-collection-mode-list 'help)
   (evil-collection-init)

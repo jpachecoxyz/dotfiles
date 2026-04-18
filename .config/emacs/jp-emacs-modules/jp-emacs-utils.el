@@ -108,12 +108,6 @@
       (insert (concat (number-to-string (1+ i)) ". "))
       (forward-line))))
 
-(defun meain/evil-yank-advice (orig-fn beg end &rest args)
-  (pulse-momentary-highlight-region beg end 'mode-line-active)
-  (apply orig-fn beg end args))
-(advice-add 'evil-yank :around 'meain/evil-yank-advice)
-
-
 ;;;; org-id
 (declare-function org-id-add-location "org")
 (declare-function org-with-point-at "org")
