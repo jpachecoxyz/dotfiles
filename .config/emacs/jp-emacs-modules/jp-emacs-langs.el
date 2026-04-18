@@ -199,21 +199,9 @@
   (setq dictionary-create-buttons nil)
   (setq dictionary-use-single-buffer t))
 
-;;; aLtCaPs
-;; Read the manual: <https://protesilaos.com/emacs/altcaps>.
-(jp-emacs-configure
-  (jp-emacs-install altcaps)
-  (define-key global-map (kbd "C-x C-a") #'altcaps-dwim)
-  ;; Force letter casing for certain characters (for legibility).
-  (setq altcaps-force-character-casing
-        '(;; Greek theta
-          (?θ . downcase))))
-
 ;;; Denote (simple note-taking and file-naming)
 
-;; Read the manual: <https://protesilaos.com/emacs/denote>.  This does
-;; not include all the useful features of Denote.  I have a separate
-;; private setup for those, as I need to test everything is in order.
+;; Read the manual: <https://protesilaos.com/emacs/denote>.
 (jp-emacs-configure
   (jp-emacs-install denote)
   
@@ -223,24 +211,6 @@
 
   (add-hook 'text-mode-hook #'denote-fontify-links-mode)
   (add-hook 'dired-mode-hook #'denote-dired-mode)
-  (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
-  (setq denote-title-history nil)
-  (setq denote-sort-keywords nil)
-  (setq denote-files-matching-regexp-history nil)
-  (setq denote-history-completion-in-prompts nil)
-  (setq denote-infer-keywords t)
-  (setq denote-org-front-matter
-        "# -*- jinx-languages: \"es_MX\"; -*-
-#+title: %s
-#+date: %s
-#+filetags: %s
-#+identifier: %s
-#+author: Ing. Javier Pacheco
-#+startup: showall\n\n\n")
-  (setq denote-query-links-display-buffer-action
-      '((display-buffer-same-window)))
-  (setq denote-link--prepare-links-format "%s\n")
-
 
   (jp-emacs-keybind global-map
     "C-c n n" #'denote
@@ -267,9 +237,24 @@
     (setq denote-directory (expand-file-name "~/Documents/Emacs/notes/"))
     (setq denote-file-type 'org) ; Org is the default file type
 
-    (setq denote-known-keywords '("emacs" "philosophy" "politics"))
+    (setq denote-title-history nil)
+    (setq denote-sort-keywords nil)
+    (setq denote-known-keywords '("estudio" "trabajo" "emacs" "linux"))
+    (setq denote-files-matching-regexp-history nil)
+    (setq denote-history-completion-in-prompts nil)
     (setq denote-infer-keywords t)
-    (setq denote-sort-keywords t)
+    (setq denote-org-front-matter
+        "# -*- jinx-languages: \"es_MX\"; -*-
+#+title: %s
+#+date: %s
+#+filetags: %s
+#+identifier: %s
+#+author: Ing. Javier Pacheco
+#+startup: showall\n\n\n")
+  (setq denote-query-links-display-buffer-action
+      '((display-buffer-same-window)))
+  (setq denote-link--prepare-links-format "%s\n")
+
     (setq denote-excluded-directories-regexp nil)
     (setq denote-date-format nil)
     (setq denote-rename-confirmations nil) ; CAREFUL with this if you are not familiar with Denote!
@@ -290,7 +275,6 @@ retroactively follow that order."
         (call-interactively 'denote-dired-rename-files)))))
 
 ;;;; Integrate Consult with Denote
-
 (when jp-emacs-completion-extras
   (jp-emacs-configure
     (jp-emacs-install consult-denote)
@@ -315,7 +299,6 @@ retroactively follow that order."
     "C-c n s r" #'denote-sequence-reparent
     "C-c n s c" #'denote-sequence-convert)
   (setq denote-sequence-scheme 'alphanumeric))
-
 
 (defun denote-sequence-dired (&optional prefix depth)
   "Produce a Dired listing of all sequence notes.
@@ -383,18 +366,6 @@ For a more specialised case, see `denote-sequence-find-relatives-dired'."
                                     (denote-dired-empty-mode))))))
               (message "No matching files")))
         (user-error "Unable to determine Denote root directory")))))
-
-;;;; Denote Markdown extras (denote-markdown)
-(jp-emacs-configure
-  (jp-emacs-install denote-markdown))
-
-;;;; Denote Silo extras (denote-silo)
-(jp-emacs-configure
-  (jp-emacs-install denote-silo)
-  (with-eval-after-load 'denote
-    (setq denote-silo-directories
-          (append (denote-directories)
-                  (list "~/Documents/books/" "~/Documents/denote-test-silo/")))))
 
 ;;; Custom extensions for "focus mode" (logos.el)
 ;; Read the manual: <https://protesilaos.com/emacs/logos>.

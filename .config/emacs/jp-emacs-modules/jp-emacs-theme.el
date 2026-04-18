@@ -106,7 +106,7 @@
       tab-bar-new-tab
       tab-bar-switch-to-next-tab
        tab-bar-switch-to-prev-tab))
-
+  
   (customize-set-variable
    'pulsar-pulse-region-functions
        '(backward-kill-paragraph
