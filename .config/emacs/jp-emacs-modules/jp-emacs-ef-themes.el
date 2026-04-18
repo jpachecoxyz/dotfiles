@@ -31,7 +31,7 @@
   ;; (if (jp-emacs-gnome-prefers-dark-p)
   ;;     (modus-themes-load-random 'dark)
   ;;   (modus-themes-load-random 'light)))
-  (load-theme 'ef-owl))
+  (load-theme 'ef-dream))
 
 (jp-emacs-comment
   (:eval nil)

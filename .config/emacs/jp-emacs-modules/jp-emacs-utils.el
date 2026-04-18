@@ -308,14 +308,25 @@ clipboard"
 (add-hook 'org-checkbox-statistics-hook #'ct/org-summary-checkbox-cookie)
 
 (defun new-scratch-pad ()
-  "Create a new org-mode buffer for random stuff."
+  "Create a new org-mode buffer for random stuff with metadata."
   (interactive)
-  (progn
-	(let ((buffer (generate-new-buffer "Org-scratch-buffer")))
-      (switch-to-buffer buffer)
-      (setq buffer-offer-save t)
-      (org-mode)
-      (olivetti-mode t))))
+  (let ((buffer (generate-new-buffer "Org-scratch-buffer")))
+    (switch-to-buffer buffer)
+    (setq buffer-offer-save t)
+    (org-mode)
+    (olivetti-mode -1)
+
+    ;; Insert metadata
+    (insert "#+title: Org Buffer\n")
+    (insert "#+author: Javier Pacheco\n")
+    (insert "#+email: jpacheco@disroot.org\n")
+    (insert (format "#+date: %s\n\n\n" (format-time-string "%Y-%m-%d %H:%M")))
+  ;; Move cursor to end and enter insert mode
+    (goto-char (point-max))
+    (when (fboundp 'evil-insert-state)
+      (evil-insert-state))
+
+    ))
 
 ;; Toggle *scratch* buffer.
 (defun toggle-scratch-buffer ()

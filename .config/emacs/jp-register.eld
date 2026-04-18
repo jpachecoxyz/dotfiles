@@ -4,7 +4,7 @@
          101 120 105 116 return escape])
  (97) (113)
  (48
-  . #("(defun jp-window-shell-or-term-p (buffer &rest _)\n  \"Check if BUFFER is a shell or terminal.\nThis is a predicate function for `buffer-match-p', intended for\nuse in `display-buffer-alist'.\"\n  (when (string-match-p \"\\\\*.*\\\\(e?shell\\\\|v?term\\\\).*\" (buffer-name (get-buffer buffer)))\n    (with-current-buffer buffer\n      ;; REVIEW 2022-07-14: Is this robust?\n      (and (not (derived-mode-p 'message-mode 'text-mode))\n           (derived-mode-p 'eshell-mode 'shell-mode 'comint-mode 'fundamental-mode)))))\n"
+  . #("(defun new-scratch-pad ()\n  \"Create a new org-mode buffer for random stuff.\"\n  (interactive)\n  (progn\n	(let ((buffer (generate-new-buffer \"Org-scratch-buffer\")))\n      (switch-to-buffer buffer)\n      (setq buffer-offer-save t)\n      (org-mode)\n      (olivetti-mode -1))))\n"
       0 1
       (yank-handler (evil-yank-line-handler nil t) face
                     font-lock-type-face fontified t)
@@ -12,180 +12,124 @@
       (yank-handler (evil-yank-line-handler nil t) face
                     font-lock-keyword-face fontified t)
       6 7 (yank-handler (evil-yank-line-handler nil t) fontified t) 7
-      32
+      22
       (yank-handler (evil-yank-line-handler nil t) face
                     font-lock-function-name-face fontified t)
-      32 33 (yank-handler (evil-yank-line-handler nil t) fontified t)
-      33 34
+      22 23 (yank-handler (evil-yank-line-handler nil t) fontified t)
+      23 24
       (yank-handler (evil-yank-line-handler nil t) face
                     font-lock-function-name-face fontified t)
-      34 41 (yank-handler (evil-yank-line-handler nil t) fontified t)
-      41 46
+      24 25
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-function-name-face fontified t)
+      25 28 (yank-handler (evil-yank-line-handler nil t) fontified t)
+      28 76
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-doc-face fontified t)
+      76 79 (yank-handler (evil-yank-line-handler nil t) fontified t)
+      79 80
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-function-name-face fontified t)
+      80 91
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-keyword-face fontified t)
+      91 92
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-function-name-face fontified t)
+      92 95 (yank-handler (evil-yank-line-handler nil t) fontified t)
+      95 96
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-function-name-face fontified t)
+      96 101
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-keyword-face fontified t)
+      101 103
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 103
+      104
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-variable-name-face fontified t)
+      104 107
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-keyword-face fontified t)
+      107 108
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 108
+      109
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      109 110
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-builtin-face fontified t)
+      110 117
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 117
+      118
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-string-face fontified t)
+      118 138
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 138
+      158
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-string-face fontified t)
+      158 159
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-string-face fontified t)
+      159 160
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-builtin-face fontified t)
+      160 161
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      161 168
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 168
+      169
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      169 192
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 192
+      193
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      193 200
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 200
+      201
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      201 205
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-keyword-face fontified t)
+      205 225
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 225
+      226
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      226 233
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 233
+      234
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      234 242
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 242
+      243
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      243 244
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 244
+      250 (yank-handler (evil-yank-line-handler nil t) fontified t)
+      250 251
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      251 267
+      (yank-handler (evil-yank-line-handler nil t) fontified t) 267
+      268
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-constant-face fontified t)
+      268 269
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-variable-name-face fontified t)
+      269 270
+      (yank-handler (evil-yank-line-handler nil t) face
+                    font-lock-function-name-face fontified t)
+      270 271
       (yank-handler (evil-yank-line-handler nil t) face
                     font-lock-type-face fontified t)
-      46 48 (yank-handler (evil-yank-line-handler nil t) fontified t)
-      48 49
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-function-name-face fontified t)
-      49 52 (yank-handler (evil-yank-line-handler nil t) fontified t)
-      52 127
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-doc-face fontified t)
-      127 141
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-constant-face font-lock-doc-face)
-                    fontified t)
-      141 165
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-doc-face fontified t)
-      165 185
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-constant-face font-lock-doc-face)
-                    fontified t)
-      185 188
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-doc-face fontified t)
-      188 191
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 191
-      192
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-function-name-face fontified t)
-      192 196
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-keyword-face fontified t)
-      196 197
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 197
-      198
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-variable-name-face fontified t)
-      198 213
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 213
-      219
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-string-face fontified t)
-      219 221
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-regexp-grouping-backslash
-                     font-lock-string-face)
-                    fontified t)
-      221 222
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-regexp-grouping-construct
-                     font-lock-string-face)
-                    fontified t)
-      222 229
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-string-face fontified t)
-      229 231
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-regexp-grouping-backslash
-                     font-lock-string-face)
-                    fontified t)
-      231 232
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-regexp-grouping-construct
-                     font-lock-string-face)
-                    fontified t)
-      232 238
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-string-face fontified t)
-      238 240
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-regexp-grouping-backslash
-                     font-lock-string-face)
-                    fontified t)
-      240 241
-      (yank-handler (evil-yank-line-handler nil t) face
-                    (font-lock-regexp-grouping-construct
-                     font-lock-string-face)
-                    fontified t)
-      241 244
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-string-face fontified t)
-      244 245
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 245
-      246
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-constant-face fontified t)
-      246 258
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 258
-      259
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-builtin-face fontified t)
-      259 276
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 276
-      277
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-builtin-face fontified t)
-      277 278
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-constant-face fontified t)
-      278 279
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-variable-name-face fontified t)
-      279 284
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 284
-      285
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-variable-name-face fontified t)
-      285 304
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-keyword-face fontified t)
-      304 318
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 318
-      321
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-comment-delimiter-face fontified t)
-      321 356
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-comment-face fontified t)
-      356 362
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 362
-      363
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-constant-face fontified t)
-      363 366
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-keyword-face fontified t)
-      366 367
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 367
-      368
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-builtin-face fontified t)
-      368 372
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 372
-      373
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-string-face fontified t)
-      373 412
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 412
-      413
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-string-face fontified t)
-      413 414
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-builtin-face fontified t)
-      414 426
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 426
-      427
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-builtin-face fontified t)
-      427 497
-      (yank-handler (evil-yank-line-handler nil t) fontified t) 497
-      498
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-builtin-face fontified t)
-      498 499
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-constant-face fontified t)
-      499 500
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-variable-name-face fontified t)
-      500 501
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-function-name-face fontified t)
-      501 502
-      (yank-handler (evil-yank-line-handler nil t) face
-                    font-lock-type-face fontified t)
-      502 503
+      271 272
       (yank-handler (evil-yank-line-handler nil t) fontified t))))
