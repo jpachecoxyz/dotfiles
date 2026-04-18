@@ -723,5 +723,15 @@ Opening and closing delimiters will have matching colors."
           (switch-to-buffer buf)
         (vterm)))))
 
+(jp-emacs-configure
+  (jp-emacs-keybind global-map
+    "C-x /" #'webjump)
+  (setq browse-url-browser-function #'browse-url-xdg-open)
+  (setq webjump-sites
+   '(("Google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
+     ("YouTube" . [simple-query "www.youtube.com/feed/subscriptions" "www.youtube.com/results?search_query=" ""])
+     ("ChatGPT" . [simple-query "https://chatgpt.com" "https://chatgpt.com/?q=" ""])
+    ("(λ jpachecoxyz)" . "https://jpachecoxyz.github.io")
+     )))
 
 (provide 'utilities)
