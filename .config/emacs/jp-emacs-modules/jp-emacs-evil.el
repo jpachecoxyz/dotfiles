@@ -14,6 +14,10 @@
         (kbd "TAB") #'jp/org-tab-dwim
         (kbd "<backtab>") #'org-shifttab))
 
+  (with-eval-after-load 'evil
+    (evil-define-key '(normal insert) lisp-interaction-mode-map
+        (kbd "C-j") #'jp-elisp-eval-and-print-last-sexp))
+
   (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
   (setq evil-vsplit-window-right t)
