@@ -56,6 +56,7 @@
       evil-delete-char
       evil-delete-line
       evil-delete-marks
+      evil-undo
       evil-window-up
       evil-window-new
       evil-window-top

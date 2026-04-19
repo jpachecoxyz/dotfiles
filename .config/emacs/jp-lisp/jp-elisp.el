@@ -37,16 +37,29 @@ the `kill-ring' and set the mark to where point was before inserting the
 return value."
   (declare (interactive-only t))
   (interactive)
-  (if-let* ((string (thing-at-point 'sexp :no-properties))
-            (_ (not (string-prefix-p ";" string)))
-            (expression (read string)))
-      (let ((return-value (eval expression)))
-        (kill-new (format "%S" return-value))
-        (message "Copied: `%S'" return-value)
-        (push-mark (point))
-        (insert (format "\n%S\n" return-value))
-        (string-insert-rectangle (+ (mark) 1) (- (point) 1) ";; => "))
-    (user-error "No expression at point")))
+  (let* ((state (syntax-ppss))
+         ;; Find the start of the outermost list.
+         ;; If not inside a list, fall back to the symbol/sexp under point.
+         (start-pos (if (nth 9 state)
+                        (car (nth 9 state))
+                      (car (bounds-of-thing-at-point 'sexp))))
+         form result end-pos)
+    
+    (unless start-pos
+      (user-error "No expression found around point"))
+    
+    ;; save-excursion ensures your cursor stays exactly at the `|` position
+    (save-excursion
+      (goto-char start-pos)
+      ;; `read` parses the expression and automatically moves point to its end
+      (setq form (read (current-buffer)))
+      ;; Evaluate the parsed expression
+      (setq result (eval form lexical-binding))
+      (setq end-pos (point))
+      
+      ;; Insert the result at the end of the expression
+      (goto-char end-pos)
+      (insert (format "\n;; => %S" result)))))
 
 (defvar-keymap jp-elisp-macroexpand-mode-map
   :doc "Key map for `jp-elisp-macroexpand-mode'."
