@@ -24,9 +24,6 @@
   (setq trusted-content '("~/Documents/Emacs/" "~/.dotfiles")) ; Emacs 30
   (setq truncate-partial-width-windows nil)
   (setq pixel-scroll-precision-mode t)
-  (setq pixel-scroll-precision-use-momentum nil)
-  (setq scroll-conservatively 8)
-  (setq scroll-margin 5)
 
   ;; Keys I unbind here are either to avoid accidents or to bind them
 
@@ -256,9 +253,11 @@
 
   ;; Scrolling behaviour
   (setq scroll-preserve-screen-position t
-        scroll-conservatively 1 ; affects `scroll-step'
-        scroll-margin 0
-        next-screen-context-lines 0))
+        scroll-conservatively 8 ; affects `scroll-step'
+        scroll-margin 5
+        next-screen-context-lines 0
+        pixel-scroll-precision-use-momentum nil
+        ))
 
 ;;;; Repeatable key chords (repeat-mode)
 (jp-emacs-configure

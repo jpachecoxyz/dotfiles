@@ -16,41 +16,18 @@
         modus-themes-italic-constructs t
         modus-themes-to-rotate nil ; defaults to the return value of `modus-themes-get-themes'
         modus-themes-headings ; read the manual's entry of the doc string
-        '((0 . (variable-pitch light 1.0))
+        '((0 . (variable-pitch light 1.8))
           (1 . (variable-pitch light 1.0))
           (2 . (variable-pitch regular 1.0))
           (3 . (variable-pitch regular 1.0))
           (4 . (variable-pitch regular 1.0))
-          (5 . (variable-pitch 1.4)) ; absence of weight means `bold'
-          (6 . (variable-pitch 1.3))
-          (7 . (variable-pitch 1.2))
+          (5 . (variable-pitch 1.0)) ; absence of weight means `bold'
+          (6 . (variable-pitch 1.0))
+          (7 . (variable-pitch 1.0))
           (agenda-date . (semilight 1.0))
           (agenda-structure . (variable-pitch light 1.0))
           (t . (variable-pitch 1.0))))
 
-  ;; (if (jp-emacs-gnome-prefers-dark-p)
-  ;;     (modus-themes-load-random 'dark)
-  ;;   (modus-themes-load-random 'light)))
   (load-theme 'ef-dream))
-
-(jp-emacs-comment
-  (:eval nil)
-
-  (add-to-list 'load-path "~/Git/Projects/modus-themes/")
-  (add-to-list 'load-path "~/Git/Projects/ef-themes/")
-
-  (require 'modus-themes)
-  (require 'ef-themes)
-
-  (ef-themes-take-over-modus-themes-mode 1)
-
-  (jp-emacs-keybind global-map
-    "<f5>" #'modus-themes-rotate
-    "C-<f5>" #'modus-themes-select
-    "M-<f5>" #'modus-themes-load-random)
-
-  (if (jp-emacs-gnome-prefers-dark-p)
-      (modus-themes-load-random 'dark)
-    (modus-themes-load-random 'light)))
 
   (provide 'jp-emacs-ef-themes)
