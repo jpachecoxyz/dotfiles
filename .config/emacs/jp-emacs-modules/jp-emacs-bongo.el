@@ -256,30 +256,45 @@ Also see `jp-emacs-bongo-playlist-insert-playlist-file'."
         (save-buffer)
         (kill-buffer))))
 
-  :hook ((dired-mode-hook . jp-emacs-bongo-dired-library-enable)
-         (wdired-mode-hook . jp-emacs-bongo-dired-library-disable))
-  :bind (("<C-XF86AudioPlay>" . bongo-pause/resume)
-         ("<C-XF86AudioNext>" . bongo-next)
-         ("<C-XF86AudioPrev>" . bongo-previous)
-         ("<M-XF86AudioPlay>" . bongo-show)
-         ("<S-XF86AudioNext>" . bongo-seek-forward-10)
-         ("<S-XF86AudioPrev>" . bongo-seek-backward-10)
-         :map bongo-playlist-mode-map
-         ("n" . bongo-next-object)
-         ("p" . bongo-previous-object)
-         ("M-n" . jp-emacs-bongo-paylist-section-next)
-         ("M-p" . jp-emacs-bongo-paylist-section-previous)
-         ("M-h" . jp-emacs-bongo-playlist-mark-section)
-         ("M-d" . jp-emacs-bongo-playlist-kill-section)
-         ("g" . jp-emacs-bongo-playlist-reset)
-         ("D" . jp-emacs-bongo-playlist-terminate)
-         ("r" . jp-emacs-bongo-playlist-random-toggle)
-         ("R" . bongo-rename-line)
-         ("j" . bongo-dired-line)       ; Jump to dir of file at point
-         ("J" . dired-jump)             ; Jump to library buffer
-         ("i" . jp-emacs-bongo-playlist-insert-playlist-file)
-         ("I" . bongo-insert-special)
-         :map bongo-dired-library-mode-map
-         ("<C-return>" . jp-emacs-bongo-dired-insert)
-         ("C-c SPC" . jp-emacs-bongo-dired-insert)
-         ("C-c +" . jp-emacs-bongo-dired-make-playlist-file)))
+(jp-emacs-configure
+  (jp-emacs-install bongo)
+
+  ;; Hooks
+  (add-hook 'dired-mode-hook #'jp-emacs-bongo-dired-library-enable)
+  (add-hook 'wdired-mode-hook #'jp-emacs-bongo-dired-library-disable)
+
+  ;; Global keys
+  (jp-emacs-keybind global-map
+    "<C-XF86AudioPlay>" #'bongo-pause/resume
+    "<C-XF86AudioNext>" #'bongo-next
+    "<C-XF86AudioPrev>" #'bongo-previous
+    "<M-XF86AudioPlay>" #'bongo-show
+    "<S-XF86AudioNext>" #'bongo-seek-forward-10
+    "<S-XF86AudioPrev>" #'bongo-seek-backward-10)
+
+  (with-eval-after-load 'bongo
+
+    ;; Playlist mode
+    (jp-emacs-keybind bongo-playlist-mode-map
+      "n" #'bongo-next-object
+      "p" #'bongo-previous-object
+      "M-n" #'jp-emacs-bongo-paylist-section-next
+      "M-p" #'jp-emacs-bongo-paylist-section-previous
+      "M-h" #'jp-emacs-bongo-playlist-mark-section
+      "M-d" #'jp-emacs-bongo-playlist-kill-section
+      "g" #'jp-emacs-bongo-playlist-reset
+      "D" #'jp-emacs-bongo-playlist-terminate
+      "r" #'jp-emacs-bongo-playlist-random-toggle
+      "R" #'bongo-rename-line
+      "j" #'bongo-dired-line
+      "J" #'dired-jump
+      "i" #'jp-emacs-bongo-playlist-insert-playlist-file
+      "I" #'bongo-insert-special)
+
+    ;; Dired library mode
+    (jp-emacs-keybind bongo-dired-library-mode-map
+      "<C-return>" #'jp-emacs-bongo-dired-insert
+      "C-c SPC" #'jp-emacs-bongo-dired-insert
+      "C-c +" #'jp-emacs-bongo-dired-make-playlist-file))))
+
+(provide 'jp-emacs-bongo)

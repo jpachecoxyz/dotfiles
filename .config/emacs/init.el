@@ -411,12 +411,12 @@ making an abbreviation to a function."
  (require 'jp-emacs-which-key)
  (require 'jp-emacs-icons)
  (require 'jp-emacs-evil)
- (require 'jp-emacs-bongo)
  (require 'jp-emacs-general)
  (require 'jp-emacs-0x0)
  (require 'jp-emacs-yasnippets)
  (require 'jp-emacs-treesitter)
  (require 'jp-emacs-eglot)
+ (require 'jp-emacs-bongo)
  (require 'jp-emacs-utils)
 
 ;; For those who use my dotfiles and need an easy way to write their
