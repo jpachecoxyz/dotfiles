@@ -265,12 +265,12 @@ Also see `jp-emacs-bongo-playlist-insert-playlist-file'."
 
   ;; Global keys
   (jp-emacs-keybind global-map
-    "<C-XF86AudioPlay>" #'bongo-pause/resume
-    "<C-XF86AudioNext>" #'bongo-next
-    "<C-XF86AudioPrev>" #'bongo-previous
-    "<M-XF86AudioPlay>" #'bongo-show
-    "<S-XF86AudioNext>" #'bongo-seek-forward-10
-    "<S-XF86AudioPrev>" #'bongo-seek-backward-10)
+    "<AudioPlay>" #'bongo-pause/resume
+    "<AudioNext>" #'bongo-next
+    "<AudioPrev>" #'bongo-previous
+    "<M-AudioPlay>" #'bongo-show
+    "<S-AudioNext>" #'bongo-seek-forward-10
+    "<S-AudioPrev>" #'bongo-seek-backward-10)
 
   (with-eval-after-load 'bongo
 

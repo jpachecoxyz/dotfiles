@@ -245,10 +245,6 @@
   ;; do I want it.
   (remove-hook 'save-some-buffers-functions #'abbrev--possibly-save))
 
-;;; Corfu (in-buffer completion popup)
-;; (when (and (eq jp-emacs-completion-ui 'vertico)
-;;            jp-emacs-completion-extras
-;;            jp-display-graphic-p)
 (jp-emacs-configure
     (jp-emacs-install corfu)
 

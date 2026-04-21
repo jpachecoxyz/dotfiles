@@ -126,22 +126,6 @@
   (with-eval-after-load 'pulsar
     (add-hook 'fontaine-set-preset-hook #'pulsar-pulse-line)))
 
-;;;; Show Font (preview fonts)
-;; Read the manual: <https://protesilaos.com/emacs/show-font>
-(when jp-display-graphic-p
-  (jp-emacs-configure
-    (jp-emacs-install show-font)
-
-    (setq show-font-display-buffer-action-alist '(display-buffer-full-frame))
-
-    (jp-emacs-keybind global-map
-      "C-c S s" #'show-font-select-preview
-      "C-c S l" #'show-font-tabulated)))
-
-;;;;; `variable-pitch-mode' setup
-(jp-emacs-configure
-  (define-key ctl-x-x-map (kbd "v") #'variable-pitch-mode)
-
   (defun jp/enable-variable-pitch ()
     (unless (derived-mode-p 'mhtml-mode 'nxml-mode 'yaml-mode)
       (when (bound-and-true-p modus-themes-mixed-fonts)

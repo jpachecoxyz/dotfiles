@@ -383,41 +383,43 @@ making an abbreviation to a function."
 (defvar jp-display-graphic-p (display-graphic-p)
   "When non-nil, the display is graphical.")
 
-(defun jp-emacs-gnome-prefers-dark-p ()
-  "Return non-nil if GNOME color-scheme is set to dark."
-  (string-match-p
-   "dark"
-   (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
+;; (defun jp-emacs-gnome-prefers-dark-p ()
+;;   "Return non-nil if GNOME color-scheme is set to dark."
+;;   (string-match-p
+;;    "dark"
+;;    (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
 
 (defcustom jp-emacs-enable-transparency t
   "Enable transparency utilities."
   :type 'boolean
   :group 'jp-emacs)
 
- (require 'jp-emacs-theme)
- (require 'jp-emacs-essentials)
- (require 'jp-emacs-ef-themes)
- (require 'jp-emacs-modeline)
- (require 'jp-emacs-completion)
- (require 'jp-emacs-search)
- (require 'jp-emacs-dired)
- (require 'jp-emacs-window)
- (require 'jp-emacs-git)
- (require 'jp-emacs-org)
- (require 'jp-emacs-langs)
- (require 'jp-emacs-spell)
- (require 'jp-emacs-mu4e)
- (require 'jp-emacs-web)
- (require 'jp-emacs-which-key)
- (require 'jp-emacs-icons)
- (require 'jp-emacs-evil)
- (require 'jp-emacs-general)
- (require 'jp-emacs-0x0)
- (require 'jp-emacs-yasnippets)
- (require 'jp-emacs-treesitter)
- (require 'jp-emacs-eglot)
- (require 'jp-emacs-bongo)
- (require 'jp-emacs-utils)
+(require 'jp-emacs-theme)
+(require 'jp-emacs-essentials)
+(require 'jp-emacs-ef-themes)
+(require 'jp-emacs-modeline)
+(require 'jp-emacs-completion)
+(require 'jp-emacs-search)
+(require 'jp-emacs-dired)
+(require 'jp-emacs-window)
+(require 'jp-emacs-git)
+(require 'jp-emacs-org)
+(require 'jp-emacs-langs)
+(when (not (eq system-type 'windows-nt))
+   (require 'jp-emacs-spell))
+(when (not (eq system-type 'windows-nt))
+   (require 'jp-emacs-mu4e))
+(require 'jp-emacs-web)
+(require 'jp-emacs-which-key)
+(require 'jp-emacs-icons)
+(require 'jp-emacs-evil)
+(require 'jp-emacs-general)
+(require 'jp-emacs-0x0)
+(require 'jp-emacs-yasnippets)
+(require 'jp-emacs-treesitter)
+(require 'jp-emacs-eglot)
+(require 'jp-emacs-bongo)
+(require 'jp-emacs-utils)
 
 ;; For those who use my dotfiles and need an easy way to write their
 ;; own extras on top of what I already load.  The file must exist at
