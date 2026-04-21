@@ -2,6 +2,7 @@
 ;; Simple ollama integration
 
 (jp-emacs-configure
+  (jp-emacs-install ellama)
 
  (defun jp/ollama-run-model ()
    "Run `ollama list`, select a model and open it in ansi-term."

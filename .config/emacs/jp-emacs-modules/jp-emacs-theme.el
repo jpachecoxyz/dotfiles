@@ -145,7 +145,7 @@
   (jp-emacs-keybind global-map
     "C-x C-=" #'global-text-scale-adjust
     "C-x C-+" #'global-text-scale-adjust
-    "C-x C-0" #'global-text-scale-adjust))
+    "C-x C-0" #'global-text-scale-adjust)
 (global-visual-line-mode 1)
 
 (provide 'jp-emacs-theme)
