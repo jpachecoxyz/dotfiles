@@ -8,12 +8,20 @@
 .config/obs-studio/
 .config/GIMP/
 .config/systemd/
+.config/emacs/.lsp-session-v1
+.config/emacs/elfeed/
 
 # local
 .local/share/
-!.local/share/fonts/
+.local/share/fonts/
 .local/src/
 .local/state/
+.local/bin/codex
+.local/bin/copilot
+.local/bin/gemini
+.local/bin/opencode
+.local/bin/pi
+.local/bin/playwright-cli
 
 # emacs
 .emacs.d/.cache
