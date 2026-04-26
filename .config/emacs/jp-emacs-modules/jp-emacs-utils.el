@@ -1,4 +1,4 @@
-;;; javier_pacheco utilities.el --- Some usefull utulities  -*- lexical-binding: t; -*-
+;;; javier_pacheco jp-emacs-utils.el --- Some usefull utulities  -*- lexical-binding: t; -*-
 (defun +org--insert-item (direction)
   (let ((context (org-element-lineage
                   (org-element-context)
@@ -728,10 +728,55 @@ Opening and closing delimiters will have matching colors."
     "C-x /" #'webjump)
   (setq browse-url-browser-function #'browse-url-xdg-open)
   (setq webjump-sites
-   '(("Google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
-     ("YouTube" . [simple-query "www.youtube.com/feed/subscriptions" "www.youtube.com/results?search_query=" ""])
-     ("ChatGPT" . [simple-query "https://chatgpt.com" "https://chatgpt.com/?q=" ""])
-    ("(λ jpachecoxyz)" . "https://jpachecoxyz.github.io")
-     )))
+        '(("Google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
+          ("YouTube" . [simple-query "www.youtube.com/feed/subscriptions" "www.youtube.com/results?search_query=" ""])
+          ("ChatGPT" . [simple-query "https://chatgpt.com" "https://chatgpt.com/?q=" ""])
+          ("(λ jpachecoxyz)" . "https://jpachecoxyz.github.io")
+          )))
 
-(provide 'utilities)
+(jp-emacs-configure
+  (jp-emacs-install fzf)
+  (setq fzf/args
+        "--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#282828 --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00 --color=prompt:#458588,spinner:#af5fff,pointer:#af5fff,header:#87afaf --color=gutter:-1,border:#262626,label:#aeaeae,query:#d9d9d9 --border='bold' --border-label='' --preview-window='border-bold' --prompt='❯❯ ' --marker='*' --pointer='->' --separator='─' --scrollbar='│' --layout='reverse-list' --info='right' --height 30"
+
+        fzf/executable "fzf"
+        fzf/git-grep-args "-i --line-number %s"
+        ;; command used for `fzf-grep-*` functions
+        ;; example usage for ripgrep:
+        ;; fzf/grep-command "rg --no-heading -nH"
+        fzf/grep-command "grep -nrH"
+        ;; If nil, the fzf buffer will appear at the top of the window
+        fzf/position-bottom t
+        fzf/window-height 30)
+
+  ;; Skip the prompt for delete the buffer.
+  (defun my/always-kill-buffer-with-process ()
+    "Override to always kill buffer with a running process without prompt." t)
+
+  (advice-add 'process-kill-buffer-query-function :override #'my/always-kill-buffer-with-process)
+
+  (defun fzf-find-file (&optional directory)
+    "Find a file using fzf. Optionally start from DIRECTORY."
+    (interactive "DDirectory: ")  ;; Prompt for directory if not passed
+    (let ((d (or directory default-directory)))
+      ;; Change the current directory to the specified one
+      (let ((default-directory (expand-file-name d)))
+        ;; Start fzf in the specified directory
+        (fzf default-directory))
+      ;; Bind ESC to quit the fzf buffer and close the window
+      (with-current-buffer "*fzf*"
+        (local-set-key (kbd "<escape>") 'fzf-quit))))
+
+  (defun fzf-quit ()
+    "Quit the fzf process, clean up the buffer, and close the window."
+    (interactive)
+    (let ((buffer (get-buffer "*fzf*"))
+          (window (get-buffer-window "*fzf*")))
+      (when buffer
+        ;; Kill the buffer
+        (kill-buffer buffer))
+      (when window
+        ;; Delete the window where fzf was opened
+        (delete-window window)))))
+
+(provide 'jp-emacs-utils)

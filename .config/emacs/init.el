@@ -1,7 +1,3 @@
-;; For those who use my dotfiles and need an easy way to write their
-;; own extras on top of what I already load: search below for the files
-;; jp-emacs-pre-custom.el and jp-emacs-post-custom.el
-
 (eval-when-compile
   (require 'cl-lib))
 
@@ -128,9 +124,6 @@ These include the packages `marginalia', `consult', `corfu',
 	("gnu-elpa-devel" . 2)
         ("nongnu" . 1)))
 
-;; NOTE 2023-08-21: I build Emacs from source, so I always get the
-;; latest version of built-in packages.  However, this is a good
-;; solution to set to non-nil if I ever switch to a stable release.
 (setq package-install-upgrade-built-in nil)
 
 (defvar jp-emacs-my-packages
@@ -164,7 +157,6 @@ These include the packages `marginalia', `consult', `corfu',
     tmr)
   "List of symbols representing the packages I develop/maintain.")
 
-;; Also read: <https://protesilaos.com/codelog/2022-05-13-emacs-elpa-devel/>
 (setq package-pinned-packages
       (mapcar
        (lambda (package)
@@ -321,8 +313,7 @@ DEFINITIONS is a sequence of string and command pairs."
                 `(define-key map (kbd ,key) ,command))))
           (cl-mapcar #'cons keys commands)))))
 
-;; Sample of `jp-emacs-keybind'
-
+;;; Sample of `jp-emacs-keybind'
 ;; (jp-emacs-keybind global-map
 ;;   "C-z" nil
 ;;   "C-x b" #'switch-to-buffer
@@ -372,22 +363,12 @@ making an abbreviation to a function."
      ((error user-error quit)
       (message "Failed to configure package starting with `%S' because of `%S'" (car ',body) (cdr err)))))
 
-;; For those who use my dotfiles and need an easy way to write their
-;; own extras on top of what I already load.  The file must exist at
-;; ~/.emacs.d/jp-emacs-pre-custom.el
-;;
 ;; The purpose of this file is for the user to define their
 ;; preferences BEFORE loading any of the modules.
 (load (locate-user-emacs-file "jp-emacs-pre-custom.el") :no-error :no-message)
 
 (defvar jp-display-graphic-p (display-graphic-p)
   "When non-nil, the display is graphical.")
-
-;; (defun jp-emacs-gnome-prefers-dark-p ()
-;;   "Return non-nil if GNOME color-scheme is set to dark."
-;;   (string-match-p
-;;    "dark"
-;;    (shell-command-to-string "gsettings get org.gnome.desktop.interface color-scheme")))
 
 (defcustom jp-emacs-enable-transparency t
   "Enable transparency utilities."
@@ -417,14 +398,10 @@ making an abbreviation to a function."
 (require 'jp-emacs-0x0)
 (require 'jp-emacs-yasnippets)
 (require 'jp-emacs-treesitter)
-(require 'jp-emacs-eglot)
+(require 'jp-emacs-code)
 (require 'jp-emacs-bongo)
 (require 'jp-emacs-utils)
 
-;; For those who use my dotfiles and need an easy way to write their
-;; own extras on top of what I already load.  The file must exist at
-;; ~/.emacs.d/jp-emacs-post-custom.el
-;;
 ;; The purpose of the "post customisations" is to evaluate arbitrary
 ;; code AFTER loading all my configurations.
 (load (locate-user-emacs-file "jp-emacs-post-custom.el") :no-error :no-message)

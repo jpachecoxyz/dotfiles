@@ -83,69 +83,69 @@
   ;; The font family is my design: <https://github.com/protesilaos/aporetic>.
   (setq fontaine-presets
         '((small
-        :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "IBM Plex Mono"
-        :variable-pitch-family "Aporetic Serif Mono"
-        :default-height 80)
+           :default-family "Aporetic Serif Mono"
+           :fixed-pitch-family "IBM Plex Mono"
+           :variable-pitch-family "Aporetic Serif Mono"
+           :default-height 80)
 
-        (regular
-        :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "IBM Plex Mono"
-        :variable-pitch-family "Aporetic Serif Mono"
-        :default-height 120)
+          (regular
+           :default-family "Aporetic Serif Mono"
+           :fixed-pitch-family "IBM Plex Mono"
+           :variable-pitch-family "Aporetic Serif Mono"
+           :default-height 120)
 
-        (medium
-        :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "IBM Plex Mono"
-        :variable-pitch-family "Aporetic Serif Mono"
-        :default-height 145)
+          (medium
+           :default-family "Aporetic Serif Mono"
+           :fixed-pitch-family "IBM Plex Mono"
+           :variable-pitch-family "Aporetic Serif Mono"
+           :default-height 145)
 
-        (large
-        :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "IBM Plex Mono"
-        :variable-pitch-family "Aporetic Serif Mono"
-        :default-height 160)
+          (large
+           :default-family "Aporetic Serif Mono"
+           :fixed-pitch-family "IBM Plex Mono"
+           :variable-pitch-family "Aporetic Serif Mono"
+           :default-height 160)
 
-        (presentation
-        :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "IBM Plex Mono"
-        :variable-pitch-family "Aporetic Serif Mono"
-        :default-height 180)
+          (presentation
+           :default-family "Aporetic Serif Mono"
+           :fixed-pitch-family "IBM Plex Mono"
+           :variable-pitch-family "Aporetic Serif Mono"
+           :default-height 180)
 
-        (jumbo
-        :inherit medium
-        :default-height 260)
+          (jumbo
+           :inherit medium
+           :default-height 260)
 
-        (t
-        :default-family "Aporetic Serif Mono"
-        :fixed-pitch-family "CaskaydiaMono Nerd Font"
-        :variable-pitch-family "Aporetic Serif Mono")))
+          (t
+           :default-family "Aporetic Serif Mono"
+           :fixed-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "Aporetic Serif Mono")))
 
   (fontaine-set-preset (or (fontaine-restore-latest-preset) 'regular))
 
   (with-eval-after-load 'pulsar
     (add-hook 'fontaine-set-preset-hook #'pulsar-pulse-line)))
 
-  (defun jp/enable-variable-pitch ()
-    (unless (derived-mode-p 'mhtml-mode 'nxml-mode 'yaml-mode)
-      (when (bound-and-true-p modus-themes-mixed-fonts)
-        (variable-pitch-mode 1))))
+(defun jp/enable-variable-pitch ()
+  (unless (derived-mode-p 'mhtml-mode 'nxml-mode 'yaml-mode)
+    (when (bound-and-true-p modus-themes-mixed-fonts)
+      (variable-pitch-mode 1))))
 
-  ;; NOTE 2022-11-20: This may not cover every case, though it works
-  ;; fine in my workflow.  I am still undecided by EWW.
-  (jp-emacs-hook
-    (text-mode-hook notmuch-show-mode-hook elfeed-show-mode-hook)
-    jp/enable-variable-pitch)
+;; NOTE 2022-11-20: This may not cover every case, though it works
+;; fine in my workflow.  I am still undecided by EWW.
+(jp-emacs-hook
+  (text-mode-hook notmuch-show-mode-hook elfeed-show-mode-hook)
+  jp/enable-variable-pitch)
 ;;;;; Resize keys with global effect
 
-  ;; Emacs 29 introduces commands that resize the font across all
-  ;; buffers (including the minibuffer), which is what I want, as
-  ;; opposed to doing it only in the current buffer.  The keys are the
-  ;; same as the defaults.
-  (jp-emacs-keybind global-map
-    "C-x C-=" #'global-text-scale-adjust
-    "C-x C-+" #'global-text-scale-adjust
-    "C-x C-0" #'global-text-scale-adjust)
+;; Emacs 29 introduces commands that resize the font across all
+;; buffers (including the minibuffer), which is what I want, as
+;; opposed to doing it only in the current buffer.  The keys are the
+;; same as the defaults.
+(jp-emacs-keybind global-map
+  "C-x C-=" #'global-text-scale-adjust
+  "C-x C-+" #'global-text-scale-adjust
+  "C-x C-0" #'global-text-scale-adjust)
 (global-visual-line-mode 1)
 
 (provide 'jp-emacs-theme)

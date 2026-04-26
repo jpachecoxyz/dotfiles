@@ -27,6 +27,7 @@
 (jp-emacs-configure
   (with-eval-after-load 'yasnippet
     (define-key yas-keymap (kbd "TAB") #'yas-next-field)
-    (define-key yas-keymap (kbd "<tab>") #'yas-next-field)))
+    (define-key yas-keymap (kbd "<tab>") #'yas-next-field))
+  (advice-remove 'yas--auto-fill 'org-auto-fill-function))
 
 (provide 'jp-emacs-yasnippets)

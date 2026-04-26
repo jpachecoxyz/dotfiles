@@ -206,6 +206,9 @@
 ;;;; `org-indent-mode' and initial folding
 (jp-emacs-configure
   (add-hook 'org-mode-hook #'org-indent-mode)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (setq-local auto-fill-function nil)))
   (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq org-adapt-indentation nil) ; No, non, nein, όχι to literal indentation!
   (setq org-indent-indentation-per-level 4)
@@ -390,6 +393,7 @@
     (jp-emacs-keybind org-agenda-mode-map
       "<tab>" #'org-agenda-next-item
       "<backtab>" #'org-agenda-previous-item)
+  (add-hook 'org-agenda-finalize-hook 'org-save-all-org-buffers)
 
 ;;;;; Custom agenda blocks
 

@@ -532,13 +532,13 @@
     (if frame
         (progn
           (when (eq system-type 'darwin)
-            (set-frame-parameter frame 'alpha '(90 90)))
-          (set-frame-parameter frame 'alpha-background 85))
+            (set-frame-parameter frame 'alpha '(40 40)))
+          (set-frame-parameter frame 'alpha-background 45))
 
       (dolist (frm (frame-list))
         (when (eq system-type 'darwin)
-          (set-frame-parameter frm 'alpha '(90 90)))
-        (set-frame-parameter frm 'alpha-background 85))))
+          (set-frame-parameter frm 'alpha '(40 40)))
+        (set-frame-parameter frm 'alpha-background 45))))
 
   (defun jp/unset-transparency ()
     "Disable frame transparency."
@@ -548,16 +548,16 @@
     (dolist (frame (frame-list))
       (set-frame-parameter frame 'alpha-background 100)))
 
-    (defun jp/toggle-transparency ()
+  (defun jp/toggle-transparency ()
     "Toggle frame transparency."
     (interactive)
     (setq jp-emacs-enable-transparency (not jp-emacs-enable-transparency))
     (if jp-emacs-enable-transparency
         (progn
-            (jp/set-transparency)
-            (message "Transparency enabled"))
-        (jp/unset-transparency)
-        (message "Transparency disabled")))
+          (jp/set-transparency)
+          (message "Transparency enabled"))
+      (jp/unset-transparency)
+      (message "Transparency disabled")))
   ;; Hooks
   (add-hook 'after-init-hook #'jp/set-transparency)
   (add-hook 'after-make-frame-functions #'jp/set-transparency))

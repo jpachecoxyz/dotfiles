@@ -28,6 +28,6 @@
           (agenda-structure . (variable-pitch light 1.0))
           (t . (variable-pitch 1.0))))
 
-  (load-theme 'ef-dream))
+  (load-theme 'ef-owl))
 
   (provide 'jp-emacs-ef-themes)

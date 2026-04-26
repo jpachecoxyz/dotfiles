@@ -11,6 +11,5 @@
 **** https://protesilaos.com/news.xml                                 :prot:news:
 
 ** God's Section:
-*** [[https://stallman.org/rss/rss.xml][Richard Stallman]]                                                           :god:
 *** [[https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA][Lukesmithxyz]]                                                      :LukeSmith:yt:
 *** [[https://lukesmith.xyz/rss.xml][LukeSmith Blog]]                                                  :LukeSmith:blog:

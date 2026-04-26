@@ -18,7 +18,7 @@
     (evil-define-key '(normal insert) lisp-interaction-mode-map
         (kbd "C-j") #'jp-elisp-eval-and-print-last-sexp))
 
-  (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
+  ;; (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
   (setq evil-vsplit-window-right t)
   (setq evil-split-window-below t)
@@ -26,7 +26,8 @@
   (setq evil-undo-system 'undo-redo) 
 
 (jp-emacs-configure
-  (jp-emacs-install evil-collection))
+  (jp-emacs-install evil-collection)
+  (evil-collection-init))
 
 (jp-emacs-configure
   (jp-emacs-install evil-nerd-commenter))
@@ -54,7 +55,7 @@
 
  ;; Dired vim-like navigation
 (with-eval-after-load 'dired
-(evil-define-key 'normal dired-mode-map
+  (evil-define-key 'normal dired-mode-map
     (kbd "h") #'dired-up-directory
     (kbd "l") #'dired-find-file))
 
