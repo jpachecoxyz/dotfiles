@@ -89,7 +89,10 @@
 ;;;; Keybindings
   (jp-emacs-keybind global-map
     "C-c m" #'mu4e
-    "C-x m" #'mu4e-compose-new))
+    "C-x m" #'mu4e-compose-new)
+
+;;;; Modeline
+  (setq mu4e-modeline-support nil))
 
 ;;; Mu4e Alert
 (jp-emacs-configure
@@ -121,6 +124,8 @@
 
   ;; Backend de autocompletado
   (setq mu4e-compose-complete-addresses-function #'mu4e--compose-complete-handler)
-  (add-to-list 'completion-at-point-functions #'org-contacts-message-complete-function))
+  (add-to-list 'completion-at-point-functions #'org-contacts-message-complete-function)
+
+  (mu4e-update-index))
 
 (provide 'jp-emacs-mu4e)
