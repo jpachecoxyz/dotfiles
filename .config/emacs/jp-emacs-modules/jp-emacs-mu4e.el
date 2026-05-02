@@ -10,9 +10,10 @@
 ;;;; Maildir
   (setq mu4e-maildir (expand-file-name "~/Mail"))
 
-;;;; Contacts
   (setq mu4e-contacts-file "~/Documents/Emacs/org/agenda/contacts.org")
-  (setq mu4e-org-contacts-file "~/Documents/Emacs/org/agenda/contacts.org")
+
+  ;; Autocompletado para org-contacts file
+  (setq mu4e-compose-complete-addresses nil)
 
 ;;;; Identity
   (setq user-mail-address "jpacheco@disroot.org"
@@ -47,12 +48,6 @@
         mu4e-sent-folder    "/disroot/Sent"
         mu4e-refile-folder  "/disroot/Archive"
         mu4e-trash-folder   "/disroot/Trash")
-
-;;;; Signature
-  (setq mu4e-compose-signature
-        "\nIng. Javier Pacheco\nhttps://jpachecoxyz.github.io")
-
-  (setq mu4e-compose-signature-auto-include t)
 
 ;;;; Inbox query
   (setq m/mu4e-inbox-query
@@ -112,29 +107,20 @@
   (setq mu4e-update-interval 300) ;; 5 minutos
   (mu4e-alert-enable-mode-line-display))
 
+;;; Org-contacts
 (jp-emacs-configure
   (jp-emacs-install org-contacts)
-(require 'org-contacts)
+  (require 'org-contacts)
 
-(setq org-contacts-files '("~/Documents/Emacs/org/agenda/contacts.org"))
+  (setq org-contacts-files '("~/Documents/Emacs/org/agenda/contacts.org"))
 
-(setq mu4e-org-contacts-file  "~/Documents/Emacs/org/agenda/contacts.org")
-(add-to-list 'mu4e-headers-actions
-             '("org-contact-add" . mu4e-action-add-org-contact) t)
-(add-to-list 'mu4e-view-actions
-             '("org-contact-add" . mu4e-action-add-org-contact) t)
+  (add-to-list 'mu4e-headers-actions
+               '("org-contact-add" . mu4e-action-add-org-contact) t)
+  (add-to-list 'mu4e-view-actions
+               '("org-contact-add" . mu4e-action-add-org-contact) t)
 
-;; Usar org-contacts en mu4e
-(setq mu4e-compose-complete-addresses t)
-(setq mu4e-compose-complete-only-personal nil)
-
-;; Backend de autocompletado
-(setq mu4e-compose-complete-addresses-function #'mu4e--compose-complete-handler))
-
-;;; Consult-mu
-(jp-emacs-configure
-  (jp-emacs-install consult-mu
-                    "https://github.com/armindarvish/consult-mu"
-                    "develop"))
+  ;; Backend de autocompletado
+  (setq mu4e-compose-complete-addresses-function #'mu4e--compose-complete-handler)
+  (add-to-list 'completion-at-point-functions #'org-contacts-message-complete-function))
 
 (provide 'jp-emacs-mu4e)

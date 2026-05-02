@@ -910,4 +910,29 @@ clipboard"
                 (org-todo-if-needed "DOING"))))))))
 (add-hook 'org-checkbox-statistics-hook #'ct/org-summary-checkbox-cookie)
 
+;;; Org-msg
+(jp-emacs-configure
+  (jp-emacs-install org-msg)
+  (setq mail-user-agent 'mu4e-user-agent)
+  (require 'org-msg)
+  (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil \\n:t"
+	    org-msg-startup "hidestars indent inlineimages"
+	    org-msg-greeting-fmt "\nHello%s,\n\n"
+	    ;; org-msg-recipient-names '(("jeremy.compostella@gmail.com" . "Jérémy"))
+	    org-msg-greeting-name-limit 3
+	    org-msg-default-alternatives '((new		. (text html))
+				                       (reply-to-html	. (text html))
+				                       (reply-to-text	. (text)))
+	    org-msg-convert-citation t
+	    org-msg-signature "
+
+Regards,
+
+ #+begin_signature
+ --
+ *Ing. Javier Pacheco*
+ /\"The best way to predict the future is to invent it.\"/
+ https://jpachecoxyz.github.io
+ #+end_signature")
+  (org-msg-mode))
 (provide 'jp-emacs-org)

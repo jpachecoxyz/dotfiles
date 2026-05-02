@@ -135,7 +135,10 @@
            (display-buffer-below-selected)
            (window-height . fit-window-to-buffer))
           ;; same window
-
+          
+          ;; Org-msg / mu4e compose
+          ((derived-mode . org-msg-edit-mode)
+           (display-buffer-same-window))
           ;; NOTE 2023-02-17: `man' does not fully obey the
           ;; `display-buffer-alist'.  It works for new frames and for
           ;; `display-buffer-below-selected', but otherwise is
