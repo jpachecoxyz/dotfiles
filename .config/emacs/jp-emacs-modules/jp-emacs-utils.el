@@ -1,306 +1,4 @@
 ;;; javier_pacheco jp-emacs-utils.el --- Some usefull utulities  -*- lexical-binding: t; -*-
-(defun +org--insert-item (direction)
-  (let ((context (org-element-lineage
-                  (org-element-context)
-                  '(table table-row headline inlinetask item plain-list)
-                  t)))
-    (pcase (org-element-type context)
-      ;; Add a new list item (carrying over checkboxes if necessary)
-      ((or `item `plain-list)
-       (let ((orig-point (point)))
-         ;; Position determines where org-insert-todo-heading and `org-insert-item'
-         ;; insert the new list item.
-         (if (eq direction 'above)
-             (org-beginning-of-item)
-           (end-of-line))
-         (let* ((ctx-item? (eq 'item (org-element-type context)))
-                (ctx-cb (org-element-property :contents-begin context))
-                ;; Hack to handle edge case where the point is at the
-                ;; beginning of the first item
-                (beginning-of-list? (and (not ctx-item?)
-                                         (= ctx-cb orig-point)))
-                (item-context (if beginning-of-list?
-                                  (org-element-context)
-                                context))
-                ;; Horrible hack to handle edge case where the
-                ;; line of the bullet is empty
-                (ictx-cb (org-element-property :contents-begin item-context))
-                (empty? (and (eq direction 'below)
-                             ;; in case contents-begin is nil, or contents-begin
-                             ;; equals the position end of the line, the item is
-                             ;; empty
-                             (or (not ictx-cb)
-                                 (= ictx-cb
-                                    (1+ (point))))))
-                (pre-insert-point (point)))
-           ;; Insert dummy content, so that `org-insert-item'
-           ;; inserts content below this item
-           (when empty?
-             (insert " "))
-           (org-insert-item (org-element-property :checkbox context))
-           ;; Remove dummy content
-           (when empty?
-             (delete-region pre-insert-point (1+ pre-insert-point))))))
-      ;; Add a new table row
-      ((or `table `table-row)
-       (pcase direction
-         ('below (save-excursion (org-table-insert-row t))
-                 (org-table-next-row))
-         ('above (save-excursion (org-shiftmetadown))
-                 (+org/table-previous-row))))
-
-      ;; Otherwise, add a new heading, carrying over any todo state, if
-      ;; necessary.
-      (_
-       (let ((level (or (org-current-level) 1)))
-         ;; I intentionally avoid `org-insert-heading' and the like because they
-         ;; impose unpredictable whitespace rules depending on the cursor
-         ;; position. It's simpler to express this command's responsibility at a
-         ;; lower level than work around all the quirks in org's API.
-         (pcase direction
-           (`below
-            (let (org-insert-heading-respect-content)
-              (goto-char (line-end-position))
-              (org-end-of-subtree)
-              (insert "\n" (make-string level ?*) " ")))
-           (`above
-            (org-back-to-heading)
-            (insert (make-string level ?*) " ")
-            (save-excursion (insert "\n"))))
-         (run-hooks 'org-insert-heading-hook)
-         (when-let* ((todo-keyword (org-element-property :todo-keyword context))
-                     (todo-type    (org-element-property :todo-type context)))
-           (org-todo
-            (cond ((eq todo-type 'done)
-                   ;; Doesn't make sense to create more "DONE" headings
-                   (car (+org-get-todo-keywords-for todo-keyword)))
-                  (todo-keyword)
-                  ('todo)))))))
-
-    (when (org-invisible-p)
-      (org-show-hidden-entry))
-    (when (and (bound-and-true-p evil-local-mode)
-               (not (evil-emacs-state-p)))
-      (evil-insert 1))))
-
-;;;###autoload
-(defun +org/insert-item-below (count)
-  "Inserts a new heading, table cell or item below the current one."
-  (interactive "p")
-  (dotimes (_ count) (+org--insert-item 'below)))
-
-;;;###autoload
-(defun +org/insert-item-above (count)
-  "Inserts a new heading, table cell or item above the current one."
-  (interactive "p")
-  (dotimes (_ count) (+org--insert-item 'above)))
-
-
-(defun org-make-olist (arg)
-  (interactive "P")
-  (let ((n (or arg 1)))
-    (when (region-active-p)
-      (setq n (count-lines (region-beginning)
-                           (region-end)))
-      (goto-char (region-beginning)))
-    (dotimes (i n)
-      (beginning-of-line)
-      (insert (concat (number-to-string (1+ i)) ". "))
-      (forward-line))))
-
-;;;; org-id
-(declare-function org-id-add-location "org")
-(declare-function org-with-point-at "org")
-(declare-function org-entry-get "org")
-(declare-function org-id-new "org")
-(declare-function org-entry-put "org")
- 
-;; Copied from this article (with minor tweaks from my side):
-;; https://writequit.org/articles/emacs-org-mode-generate-ids.html.
-(defun jp/org--id-get (&optional pom create prefix)
-  "Get the CUSTOM_ID property of the entry at point-or-marker POM.
-If POM is nil, refer to the entry at point.  If the entry does
-not have an CUSTOM_ID, the function returns nil.  However, when
-CREATE is non nil, create a CUSTOM_ID if none is present already.
-PREFIX will be passed through to `org-id-new'.  In any case, the
-CUSTOM_ID of the entry is returned."
-  (org-with-point-at pom
-    (let ((id (org-entry-get nil "CUSTOM_ID")))
-      (cond
-       ((and id (stringp id) (string-match \\S- id))
-        id)
-       (create
-        (setq id (org-id-new (concat prefix "h")))
-        (org-entry-put pom "CUSTOM_ID" id)
-        (org-id-add-location id (format "%s" (buffer-file-name (buffer-base-buffer))))
-        id)))))
- 
-(declare-function org-map-entries "org")
- 
-;;;###autoload
-(defun jp/org-id-headlines ()
-  "Add missing CUSTOM_ID to all headlines in current file."
-  (interactive)
-  (org-map-entries
-   (lambda () (jp/org--id-get (point) t))))
-
-;;;###autoload
-(defun jp/org-id-headline ()
-  "Add missing CUSTOM_ID to headline at point."
-  (interactive)
-  (jp/org--id-get (point) t))
-
-(defun jp/org-id-store-link-for-headers ()
-  "Run `org-id-store-link' for each header in the current buffer."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward org-heading-regexp nil t)
-      (org-id-store-link))))
-
-(defun jp/org-toggle-emphasis-markers (&optional arg)
-  "Toggle visibility of Org emphasis markers."
-  (interactive "p")
-  (setq-local org-hide-emphasis-markers
-              (not org-hide-emphasis-markers))
-  (message "Emphasis markers are now %s."
-           (if org-hide-emphasis-markers "hidden" "visible"))
-  (when arg
-    (font-lock-fontify-buffer)))
-
-(defun jp/org-hide-emphasis-markers (&optional arg)
-  "Hide Org emphasis markers."
-  (interactive "p")
-  (setq-local org-hide-emphasis-markers t)
-  ;; (message "Emphasis markers are now hidden.")
-  (when arg
-    (font-lock-fontify-buffer)))
-
-(defun jp/org-show-emphasis-markers (&optional arg)
-  "Show Org emphasis markers."
-  (interactive "p")
-  (setq-local org-hide-emphasis-markers nil)
-  ;; (message "Emphasis markers are now visible.")
-  (when arg
-    (font-lock-fontify-buffer)))
-
-(add-hook 'org-mode-hook #'jp/org-hide-emphasis-markers)
-
-(defun export-org-email ()
-  "Export the current email org buffer and copy it to the
-clipboard"
-  (interactive)
-  (let ((org-export-show-temporary-export-buffer nil)
-        (org-html-head (org-email-html-head)))
-    (org-html-export-as-html)
-    (with-current-buffer "*Org HTML Export*"
-      (kill-new (buffer-string)))
-    (message "HTML copied to clipboard")))
-(global-set-key (kbd "C-c C-x C-e") 'export-org-email)
-
-(defun org-email-html-head ()
-  "Create the header with CSS for use with email"
-  (concat
-   "<style type=\"text/css\">\n"
-   "<!--/*--><![CDATA[/*><!--*/\n"
-   (with-temp-buffer
-     (insert-file-contents
-      "~/.emacs.d/src/css/org2outlook.css")
-     (buffer-string))
-   "/*]]>*/-->\n"
-   "</style>\n"))
-
-(defvar report-file "~/Desktop/report.org"
-  "Path to the Org-mode file to store the failure/solution report.")
-
-(defun report-failure-solution ()
-  "Prompt for machine number, failure, solution, and repair time. Append to an Org-mode report file."
-  (interactive)
-  (let ((continue-loop t))
-    (catch 'exit
-      (while continue-loop
-        (let* ((machine-number (read-string "Enter machine number (or 'exit' to finish): "))
-               (lowercase-machine (downcase machine-number)))
-          (when (equal lowercase-machine "exit")
-            (message "Exiting failure/solution report.")
-            (setq continue-loop nil)
-            (throw 'exit nil))
-
-          (let* ((failure (read-string "Enter failure: "))
-                 (solution (read-string "Enter solution: "))
-                 (repair-time (read-string "Enter repair time (e.g., 2 hours): "))
-                 (marker (concat "Machine " machine-number)))
-
-            (with-temp-buffer
-              (insert-file-contents report-file)
-              (goto-char (point-min))
-
-              (if (re-search-forward marker nil t)
-                  (progn
-                    (goto-char (line-end-position))
-                    (insert "\n*** Failure: " failure "\n")
-                    (insert "    - Solution: " solution "\n")
-                    (insert "    - Repair Time: " repair-time "\n"))
-                (goto-char (point-max))
-                (insert "\n* " marker "\n")
-                (insert "** Failure: " failure "\n")
-                (insert "   - Solution: " solution "\n")
-                (insert "   - Repair Time: " repair-time "\n"))
-
-              (write-region (point-min) (point-max) report-file nil 'append))))))))
-
-(global-set-key (kbd "C-c <f12>") 'report-failure-solution)
-
-(defun org-todo-if-needed (state)
-  "Change header state to STATE unless the current item is in STATE already."
-  (unless (string-equal (org-get-todo-state) state)
-    (org-todo state)))
-
-(defun ct/org-summary-todo-cookie (n-done n-not-done)
-  "Switch header state to DONE when all subentries are DONE, to TODO when none are DONE, and to DOING otherwise"
-  (let (org-log-done org-log-states)   ; turn off logging
-    (org-todo-if-needed (cond ((= n-done 0)
-                               "TODO")
-                              ((= n-not-done 0)
-                               "DONE")
-                              (t
-                               "DOING")))))
-(add-hook 'org-after-todo-statistics-hook #'ct/org-summary-todo-cookie)
-
-(defun ct/org-summary-checkbox-cookie ()
-  "Switch header state to DONE when all checkboxes are ticked, to TODO when none are ticked, and to DOING otherwise"
-  (let (beg end)
-    (unless (not (org-get-todo-state))
-      (save-excursion
-        (org-back-to-heading t)
-        (setq beg (point))
-        (end-of-line)
-        (setq end (point))
-        (goto-char beg)
-        ;; Regex group 1: %-based cookie
-        ;; Regex group 2 and 3: x/y cookie
-        (if (re-search-forward "\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]"
-                               end t)
-            (if (match-end 1)
-                ;; [xx%] cookie support
-                (cond ((equal (match-string 1) "100%")
-                       (org-todo-if-needed "DONE"))
-                      ((equal (match-string 1) "0%")
-                       (org-todo-if-needed "TODO"))
-                      (t
-                       (org-todo-if-needed "DOING")))
-              ;; [x/y] cookie support
-              (if (> (match-end 2) (match-beginning 2)) ; = if not empty
-                  (cond ((equal (match-string 2) (match-string 3))
-                         (org-todo-if-needed "DONE"))
-                        ((or (equal (string-trim (match-string 2)) "")
-                             (equal (match-string 2) "0"))
-                         (org-todo-if-needed "TODO"))
-                        (t
-                         (org-todo-if-needed "DOING")))
-                (org-todo-if-needed "DOING"))))))))
-(add-hook 'org-checkbox-statistics-hook #'ct/org-summary-checkbox-cookie)
-
 (defun new-scratch-pad ()
   "Create a new org-mode buffer for random stuff with metadata."
   (interactive)
@@ -312,10 +10,10 @@ clipboard"
 
     ;; Insert metadata
     (insert "#+title: Org Buffer\n")
-    (insert "#+author: Javier Pacheco\n")
+    (insert "#+author: Ing. Javier Pacheco\n")
     (insert "#+email: jpacheco@disroot.org\n")
     (insert (format "#+date: %s\n\n\n" (format-time-string "%Y-%m-%d %H:%M")))
-  ;; Move cursor to end and enter insert mode
+    ;; Move cursor to end and enter insert mode
     (goto-char (point-max))
     (when (fboundp 'evil-insert-state)
       (evil-insert-state))
@@ -421,67 +119,6 @@ If already in the buffer, bury it. Otherwise, switch to it or launch Eshell."
          (t (message "No documentation found for symbol at point: %s" symbol)))
       (message "No symbol at point"))))
 
-(defun custom-jp-themes (&optional theme-dir)
-  "Return a list of custom themes from a specified directory.
-Search the directory for files named FOO-theme.el, and return a list of FOO symbols,
-excluding the 'default' theme and any internal themes.
-
-If THEME-DIR is nil, it defaults to `~/.emacs.d/lisp/jp-themes/'."
-  (let ((suffix "-theme\\.el\\'")
-        (directory (or theme-dir "~/.emacs.d/lisp/jp-themes/"))
-        themes)
-    ;; Ensure the directory exists
-    (when (file-directory-p directory)
-      ;; Iterate over all theme files in the directory
-      (dolist (file (directory-files directory nil suffix))
-        (let ((theme (intern (substring file 0 (string-match-p suffix file)))))
-          ;; Add to the list if it's valid, and exclude Emacs built-in "default" theme
-          (and (not (eq theme 'default))  ;; Ensure "default" is excluded
-             (not (memq theme themes))  ;; Avoid duplicates
-             (push theme themes)))))
-    (nreverse themes)))
-
-(defcustom fz-themes nil
-  "List of themes (symbols or regexps) to be presented for selection.
-nil shows all `custom-available-themes'."
-  :type '(repeat (choice symbol regexp)))
-
-(defun fz-theme (theme)
-  "Disable current themes and enable THEME from `fz-themes`.
-
-The command supports previewing the currently selected theme."
-  (interactive
-   (list
-    (let* ((regexp (consult--regexp-filter
-                    (mapcar (lambda (x) (if (stringp x) x (format "\\`%s\\'" x)))
-                            fz-themes)))
-           (avail-themes (seq-filter
-                          (lambda (x) (string-match-p regexp (symbol-name x)))
-                          (custom-jp-themes)))  ;; Only use themes from custom-jp-themes
-           (saved-theme (car custom-enabled-themes)))
-      (consult--read
-       (mapcar #'symbol-name avail-themes)
-       :prompt "Theme: "
-       :require-match t
-       :category 'theme
-       :history 'consult--theme-history
-       :lookup (lambda (selected &rest _)
-                 (setq selected (and selected (intern-soft selected)))
-                 (or (and selected (car (memq selected avail-themes)))
-                    saved-theme))
-       :state (lambda (action theme)
-                (pcase action
-                  ('return (fz-theme (or theme saved-theme)))
-                  ((and 'preview (guard theme)) (fz-theme theme))))
-       :default (symbol-name (or saved-theme 'default))))))
-  (when (eq theme 'default) (setq theme nil))
-  (unless (eq theme (car custom-enabled-themes))
-    (mapc #'disable-theme custom-enabled-themes)
-    (when theme
-      (if (custom-theme-p theme)
-          (enable-theme theme)
-        (load-theme theme :no-confirm)))))
-
 ;; Open files in the lisp folder
 (require 'find-lisp)
 (defun open-lisp-and-org-files ()
@@ -497,7 +134,7 @@ The command supports previewing the currently selected theme."
 (defun open-org-files ()
   "Open a Lisp or Org file from my docs directory, including subfolders."
   (interactive)
-  (let* ((directory "~/docs/org")
+  (let* ((directory "~/Documents/Emacs/org")
          (org-files (find-lisp-find-files directory ".*\\.org$"))
          (all-files (append org-files))
          (file (completing-read "Select file: " all-files nil t)))
@@ -778,5 +415,10 @@ Opening and closing delimiters will have matching colors."
       (when window
         ;; Delete the window where fzf was opened
         (delete-window window)))))
+
+(jp-emacs-configure
+  (jp-emacs-install pdf-tools)
+  (require 'pdf-tools)
+  (pdf-loader-install))
 
 (provide 'jp-emacs-utils)

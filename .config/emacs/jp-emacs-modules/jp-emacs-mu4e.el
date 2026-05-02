@@ -50,7 +50,7 @@
 
 ;;;; Signature
   (setq mu4e-compose-signature
-        "\nIng. Javier Pacheco\n\nhttps://jpachecoxyz.github.io")
+        "\nIng. Javier Pacheco\nhttps://jpachecoxyz.github.io")
 
   (setq mu4e-compose-signature-auto-include t)
 
@@ -94,9 +94,7 @@
 ;;;; Keybindings
   (jp-emacs-keybind global-map
     "C-c m" #'mu4e
-    "C-x m" #'mu4e-compose-new)
-
-)
+    "C-x m" #'mu4e-compose-new))
 
 ;;; Mu4e Alert
 (jp-emacs-configure
@@ -113,4 +111,30 @@
   ;; actualizar correo automáticamente
   (setq mu4e-update-interval 300) ;; 5 minutos
   (mu4e-alert-enable-mode-line-display))
+
+(jp-emacs-configure
+  (jp-emacs-install org-contacts)
+(require 'org-contacts)
+
+(setq org-contacts-files '("~/Documents/Emacs/org/agenda/contacts.org"))
+
+(setq mu4e-org-contacts-file  "~/Documents/Emacs/org/agenda/contacts.org")
+(add-to-list 'mu4e-headers-actions
+             '("org-contact-add" . mu4e-action-add-org-contact) t)
+(add-to-list 'mu4e-view-actions
+             '("org-contact-add" . mu4e-action-add-org-contact) t)
+
+;; Usar org-contacts en mu4e
+(setq mu4e-compose-complete-addresses t)
+(setq mu4e-compose-complete-only-personal nil)
+
+;; Backend de autocompletado
+(setq mu4e-compose-complete-addresses-function #'mu4e--compose-complete-handler))
+
+;;; Consult-mu
+(jp-emacs-configure
+  (jp-emacs-install consult-mu
+                    "https://github.com/armindarvish/consult-mu"
+                    "develop"))
+
 (provide 'jp-emacs-mu4e)

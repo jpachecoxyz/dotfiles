@@ -9,15 +9,15 @@
 ;;; Account settings
 (jp-emacs-configure
   (with-eval-after-load 'jp-common
-    (let ((prv (jp-common-auth-get-field "prv-gandi" :user))
-          (pub (jp-common-auth-get-field "pub-gandi" :user))
-          (inf (jp-common-auth-get-field "inf-gandi" :user))
-          (box (jp-common-auth-get-field "jp-gandi" :user)))
+    (let ((prv (jp-common-auth-get-field "jpacheco" :user))
+          (pub (jp-common-auth-get-field "jpacheco" :user))
+          (inf (jp-common-auth-get-field "jpacheco" :user))
+          (box (jp-common-auth-get-field "jpacheco" :user)))
       (setq notmuch-identities
             (mapcar (lambda (str)
                       (format "%s <%s>" user-full-name str))
                     (list prv pub inf box))
-            notmuch-fcc-dirs `((".*" . "gandi/Sent"))))))
+            notmuch-fcc-dirs `((".*" . "disroot/Sent"))))))
 
 ;;;; General UI
 (jp-emacs-configure

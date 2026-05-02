@@ -643,11 +643,271 @@
     (setq org-agenda-bulk-custom-functions nil)))
 
 ;;; Page break lines
-
 (jp-emacs-configure
   (jp-emacs-install page-break-lines)
 
   (add-hook 'org-mode-hook #'page-break-lines-mode))
 
+;;; Custom org tweaks
+(defun +org--insert-item (direction)
+  (let ((context (org-element-lineage
+                  (org-element-context)
+                  '(table table-row headline inlinetask item plain-list)
+                  t)))
+    (pcase (org-element-type context)
+      ;; Add a new list item (carrying over checkboxes if necessary)
+      ((or `item `plain-list)
+       (let ((orig-point (point)))
+         ;; Position determines where org-insert-todo-heading and `org-insert-item'
+         ;; insert the new list item.
+         (if (eq direction 'above)
+             (org-beginning-of-item)
+           (end-of-line))
+         (let* ((ctx-item? (eq 'item (org-element-type context)))
+                (ctx-cb (org-element-property :contents-begin context))
+                ;; Hack to handle edge case where the point is at the
+                ;; beginning of the first item
+                (beginning-of-list? (and (not ctx-item?)
+                                         (= ctx-cb orig-point)))
+                (item-context (if beginning-of-list?
+                                  (org-element-context)
+                                context))
+                ;; Horrible hack to handle edge case where the
+                ;; line of the bullet is empty
+                (ictx-cb (org-element-property :contents-begin item-context))
+                (empty? (and (eq direction 'below)
+                             ;; in case contents-begin is nil, or contents-begin
+                             ;; equals the position end of the line, the item is
+                             ;; empty
+                             (or (not ictx-cb)
+                                 (= ictx-cb
+                                    (1+ (point))))))
+                (pre-insert-point (point)))
+           ;; Insert dummy content, so that `org-insert-item'
+           ;; inserts content below this item
+           (when empty?
+             (insert " "))
+           (org-insert-item (org-element-property :checkbox context))
+           ;; Remove dummy content
+           (when empty?
+             (delete-region pre-insert-point (1+ pre-insert-point))))))
+      ;; Add a new table row
+      ((or `table `table-row)
+       (pcase direction
+         ('below (save-excursion (org-table-insert-row t))
+                 (org-table-next-row))
+         ('above (save-excursion (org-shiftmetadown))
+                 (+org/table-previous-row))))
+
+      ;; Otherwise, add a new heading, carrying over any todo state, if
+      ;; necessary.
+      (_
+       (let ((level (or (org-current-level) 1)))
+         ;; I intentionally avoid `org-insert-heading' and the like because they
+         ;; impose unpredictable whitespace rules depending on the cursor
+         ;; position. It's simpler to express this command's responsibility at a
+         ;; lower level than work around all the quirks in org's API.
+         (pcase direction
+           (`below
+            (let (org-insert-heading-respect-content)
+              (goto-char (line-end-position))
+              (org-end-of-subtree)
+              (insert "\n" (make-string level ?*) " ")))
+           (`above
+            (org-back-to-heading)
+            (insert (make-string level ?*) " ")
+            (save-excursion (insert "\n"))))
+         (run-hooks 'org-insert-heading-hook)
+         (when-let* ((todo-keyword (org-element-property :todo-keyword context))
+                     (todo-type    (org-element-property :todo-type context)))
+           (org-todo
+            (cond ((eq todo-type 'done)
+                   ;; Doesn't make sense to create more "DONE" headings
+                   (car (+org-get-todo-keywords-for todo-keyword)))
+                  (todo-keyword)
+                  ('todo)))))))
+
+    (when (org-invisible-p)
+      (org-show-hidden-entry))
+    (when (and (bound-and-true-p evil-local-mode)
+               (not (evil-emacs-state-p)))
+      (evil-insert 1))))
+
+;;;###autoload
+(defun +org/insert-item-below (count)
+  "Inserts a new heading, table cell or item below the current one."
+  (interactive "p")
+  (dotimes (_ count) (+org--insert-item 'below)))
+
+;;;###autoload
+(defun +org/insert-item-above (count)
+  "Inserts a new heading, table cell or item above the current one."
+  (interactive "p")
+  (dotimes (_ count) (+org--insert-item 'above)))
+
+
+(defun org-make-olist (arg)
+  (interactive "P")
+  (let ((n (or arg 1)))
+    (when (region-active-p)
+      (setq n (count-lines (region-beginning)
+                           (region-end)))
+      (goto-char (region-beginning)))
+    (dotimes (i n)
+      (beginning-of-line)
+      (insert (concat (number-to-string (1+ i)) ". "))
+      (forward-line))))
+
+;;;; org-id
+(declare-function org-id-add-location "org")
+(declare-function org-with-point-at "org")
+(declare-function org-entry-get "org")
+(declare-function org-id-new "org")
+(declare-function org-entry-put "org")
+
+;; Copied from this article (with minor tweaks from my side):
+;; https://writequit.org/articles/emacs-org-mode-generate-ids.html.
+(defun jp/org--id-get (&optional pom create prefix)
+  "Get the CUSTOM_ID property of the entry at point-or-marker POM.
+If POM is nil, refer to the entry at point.  If the entry does
+not have an CUSTOM_ID, the function returns nil.  However, when
+CREATE is non nil, create a CUSTOM_ID if none is present already.
+PREFIX will be passed through to `org-id-new'.  In any case, the
+CUSTOM_ID of the entry is returned."
+  (org-with-point-at pom
+    (let ((id (org-entry-get nil "CUSTOM_ID")))
+      (cond
+       ((and id (stringp id) (string-match \\S- id))
+        id)
+       (create
+        (setq id (org-id-new (concat prefix "h")))
+        (org-entry-put pom "CUSTOM_ID" id)
+        (org-id-add-location id (format "%s" (buffer-file-name (buffer-base-buffer))))
+        id)))))
+
+(declare-function org-map-entries "org")
+
+;;;###autoload
+(defun jp/org-id-headlines ()
+  "Add missing CUSTOM_ID to all headlines in current file."
+  (interactive)
+  (org-map-entries
+   (lambda () (jp/org--id-get (point) t))))
+
+;;;###autoload
+(defun jp/org-id-headline ()
+  "Add missing CUSTOM_ID to headline at point."
+  (interactive)
+  (jp/org--id-get (point) t))
+
+(defun jp/org-id-store-link-for-headers ()
+  "Run `org-id-store-link' for each header in the current buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward org-heading-regexp nil t)
+      (org-id-store-link))))
+
+(defun jp/org-toggle-emphasis-markers (&optional arg)
+  "Toggle visibility of Org emphasis markers."
+  (interactive "p")
+  (setq-local org-hide-emphasis-markers
+              (not org-hide-emphasis-markers))
+  (message "Emphasis markers are now %s."
+           (if org-hide-emphasis-markers "hidden" "visible"))
+  (when arg
+    (font-lock-fontify-buffer)))
+
+(defun jp/org-hide-emphasis-markers (&optional arg)
+  "Hide Org emphasis markers."
+  (interactive "p")
+  (setq-local org-hide-emphasis-markers t)
+  ;; (message "Emphasis markers are now hidden.")
+  (when arg
+    (font-lock-fontify-buffer)))
+
+(defun jp/org-show-emphasis-markers (&optional arg)
+  "Show Org emphasis markers."
+  (interactive "p")
+  (setq-local org-hide-emphasis-markers nil)
+  ;; (message "Emphasis markers are now visible.")
+  (when arg
+    (font-lock-fontify-buffer)))
+
+(add-hook 'org-mode-hook #'jp/org-hide-emphasis-markers)
+
+(defun export-org-email ()
+  "Export the current email org buffer and copy it to the
+clipboard"
+  (interactive)
+  (let ((org-export-show-temporary-export-buffer nil)
+        (org-html-head (org-email-html-head)))
+    (org-html-export-as-html)
+    (with-current-buffer "*Org HTML Export*"
+      (kill-new (buffer-string)))
+    (message "HTML copied to clipboard")))
+(global-set-key (kbd "C-c C-x C-e") 'export-org-email)
+
+(defun org-email-html-head ()
+  "Create the header with CSS for use with email"
+  (concat
+   "<style type=\"text/css\">\n"
+   "<!--/*--><![CDATA[/*><!--*/\n"
+   (with-temp-buffer
+     (insert-file-contents
+      "~/.emacs.d/src/css/org2outlook.css")
+     (buffer-string))
+   "/*]]>*/-->\n"
+   "</style>\n"))
+
+(defun org-todo-if-needed (state)
+  "Change header state to STATE unless the current item is in STATE already."
+  (unless (string-equal (org-get-todo-state) state)
+    (org-todo state)))
+
+(defun ct/org-summary-todo-cookie (n-done n-not-done)
+  "Switch header state to DONE when all subentries are DONE, to TODO when none are DONE, and to DOING otherwise"
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo-if-needed (cond ((= n-done 0)
+                               "TODO")
+                              ((= n-not-done 0)
+                               "DONE")
+                              (t
+                               "DOING")))))
+(add-hook 'org-after-todo-statistics-hook #'ct/org-summary-todo-cookie)
+
+(defun ct/org-summary-checkbox-cookie ()
+  "Switch header state to DONE when all checkboxes are ticked, to TODO when none are ticked, and to DOING otherwise"
+  (let (beg end)
+    (unless (not (org-get-todo-state))
+      (save-excursion
+        (org-back-to-heading t)
+        (setq beg (point))
+        (end-of-line)
+        (setq end (point))
+        (goto-char beg)
+        ;; Regex group 1: %-based cookie
+        ;; Regex group 2 and 3: x/y cookie
+        (if (re-search-forward "\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]"
+                               end t)
+            (if (match-end 1)
+                ;; [xx%] cookie support
+                (cond ((equal (match-string 1) "100%")
+                       (org-todo-if-needed "DONE"))
+                      ((equal (match-string 1) "0%")
+                       (org-todo-if-needed "TODO"))
+                      (t
+                       (org-todo-if-needed "DOING")))
+              ;; [x/y] cookie support
+              (if (> (match-end 2) (match-beginning 2)) ; = if not empty
+                  (cond ((equal (match-string 2) (match-string 3))
+                         (org-todo-if-needed "DONE"))
+                        ((or (equal (string-trim (match-string 2)) "")
+                             (equal (match-string 2) "0"))
+                         (org-todo-if-needed "TODO"))
+                        (t
+                         (org-todo-if-needed "DOING")))
+                (org-todo-if-needed "DOING"))))))))
+(add-hook 'org-checkbox-statistics-hook #'ct/org-summary-checkbox-cookie)
 
 (provide 'jp-emacs-org)
