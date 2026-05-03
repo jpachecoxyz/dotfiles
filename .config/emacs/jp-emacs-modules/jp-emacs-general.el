@@ -172,6 +172,7 @@
   "o" '(:ignore t :wk "Open")
   "o -" '(dired-jump :wk "Jump to dired")
   "o f" '(make-frame :wk "New frame")
+  "o i" '(jp/mu4e-go-to-inbox :wk "Open Mail INBOX")
   "o t" '(jp-toggle-vterm :wk "Toggle terminal")
   "o s" '(toggle-scratch-buffer :wk "Toggle scratch")
   "o e" '(toggle-org-buffer :wk "Toggle org"))

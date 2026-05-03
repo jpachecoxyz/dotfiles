@@ -54,7 +54,6 @@
         "(maildir:/disroot/INBOX) AND flag:unread")
 
 ;;;; Shortcuts
-
   (setq mu4e-maildir-shortcuts
         '((:maildir "/disroot/INBOX"  :key ?i)
           (:maildir "/disroot/Sent"   :key ?s)
@@ -62,7 +61,6 @@
           (:maildir "/disroot/Drafts" :key ?d)))
 
 ;;;; Bookmarks
-
   (setq mu4e-bookmarks
         '((:name "Unread messages"
                  :query "flag:unread AND NOT flag:trashed"
@@ -92,7 +90,10 @@
     "C-x m" #'mu4e-compose-new)
 
 ;;;; Modeline
-  (setq mu4e-modeline-support nil))
+  (setq mu4e-modeline-support nil)
+
+;;;; General settings
+  (setq mu4e-confirm-quit nil))
 
 ;;; Mu4e Alert
 (jp-emacs-configure
