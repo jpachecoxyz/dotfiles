@@ -5,8 +5,6 @@
   (let ((buffer (generate-new-buffer "Org-scratch-buffer")))
     (switch-to-buffer buffer)
     (setq buffer-offer-save t)
-    (org-mode)
-    (olivetti-mode -1)
 
     ;; Insert metadata
     (insert "#+title: Org Buffer\n")
@@ -16,7 +14,9 @@
     ;; Move cursor to end and enter insert mode
     (goto-char (point-max))
     (when (fboundp 'evil-insert-state)
-      (evil-insert-state))))
+      (evil-insert-state)
+      (org-mode)
+      )))
 
 ;; Toggle *scratch* buffer.
 (defun toggle-scratch-buffer ()
