@@ -84,6 +84,12 @@
     (interactive)
     (mu4e-headers-search m/mu4e-inbox-query))
 
+  (defun jp/mu4e-direct-inbox ()
+    "Abrir el Inbox de Disroot directamente en la ventana actual."
+    (interactive)
+    ;; Esta función salta directamente a los encabezados con el query de tu inbox
+    (mu4e-headers-search "maildir:/disroot/INBOX"))
+
 ;;;; Keybindings
   (jp-emacs-keybind global-map
     "C-c m" #'mu4e

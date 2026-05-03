@@ -1,61 +1,51 @@
 #!/usr/bin/env bash
 
-# Script interactivo para crear un puente en Linux
+# Script para crear Puente + TAP para Virtualización Industrial
 # Requiere: iproute2 y fzf
 
-# Verificar si fzf está instalado
 if ! command -v fzf &>/dev/null; then
-    echo "❌ fzf no está instalado. Instálalo o modifica el script para no usar fzf."
+    echo "❌ fzf no está instalado."
     exit 1
 fi
 
-echo "🔎 Buscando interfaces disponibles..."
-sleep 1
-
-# Obtener interfaces físicas (excluyendo lo, bridges, docker, veth, etc)
+echo "🔎 Buscando interfaces físicas..."
 iface=$(ip -o link show | awk -F': ' '{print $2}' \
-    | grep -v -E "lo|br-|docker|veth|virbr" \
-    | fzf --prompt="Selecciona la interfaz a agregar al puente: ")
+    | grep -v -E "lo|br-|docker|veth|virbr|tap" \
+    | fzf --prompt="Selecciona la interfaz física (Ethernet): ")
 
-if [ -z "$iface" ]; then
-    echo "❌ No seleccionaste ninguna interfaz."
-    exit 1
-fi
+if [ -z "$iface" ]; then exit 1; fi
 
-echo "👉 Seleccionaste: $iface"
-echo ""
-
-read -rp "📛 Nombre que quieres para el puente (ej. br0): " brname
+read -rp "📛 Nombre del puente (br0): " brname
 brname=${brname:-br0}
 
-read -rp "🌐 IP que quieres asignar al puente (ej. 192.168.0.100/24): " ipaddr
+read -rp "🌐 IP estática para el puente (ej. 192.168.0.10/24): " ipaddr
+if [ -z "$ipaddr" ]; then echo "❌ Necesitas una IP para el PLC"; exit 1; fi
 
-echo ""
-echo "⚙️ Configurando puente..."
-echo ""
-echo "ip link add name $brname type bridge"
-echo "ip link set dev $brname up"
-echo "ip link set $iface master $brname"
-echo "ip addr add $ipaddr dev $brname"
-echo ""
-read -rp "¿Deseas ejecutar estos comandos? (y/n): " confirm
+echo "⚙️ Configurando Bridge y TAP..."
 
-if [[ "$confirm" != "y" ]]; then
-    echo "Cancelado."
-    exit 0
-fi
-
-# Ejecutar comandos reales
+# Comandos de ejecución
 sudo ip link add name "$brname" type bridge
 sudo ip link set dev "$brname" up
-sudo ip link set "$iface" master "$brname"
+
+# Limpiar IP de la interfaz física y subirla al puente
+sudo ip addr flush dev "$iface"
+sudo ip link set dev "$iface" master "$brname"
+sudo ip link set dev "$iface" up
+
+# Asignar IP al puente (Esta será la IP de tu Linux)
 sudo ip addr add "$ipaddr" dev "$brname"
 
-echo ""
-echo "✅ Puente creado correctamente:"
-echo "   - Bridge: $brname"
-echo "   - Interfaz añadida: $iface"
-echo "   - IP: $ipaddr"
-echo ""
+# CREAR TAP PARA QEMU
+# Esto permite que la VM se conecte al puente
+sudo ip tuntap add dev tap0 mode tap user $USER
+sudo ip link set tap0 master "$brname"
+sudo ip link set tap0 up
 
-ip addr show "$brname"
+echo "✅ ¡Configuración lista!"
+echo "----------------------------------------"
+echo "🖥️  Host Linux (Bridge $brname): $ipaddr"
+echo "🔌 Interfaz Física: $iface"
+echo "🤖 Interfaz para QEMU: tap0"
+echo "----------------------------------------"
+echo "👉 En tu comando QEMU añade:"
+echo "   -netdev tap,id=n1,ifname=tap0,script=no,downscript=no -device virtio-net-pci,netdev=n1"

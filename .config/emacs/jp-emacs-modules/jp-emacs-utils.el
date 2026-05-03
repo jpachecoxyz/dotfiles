@@ -16,9 +16,7 @@
     ;; Move cursor to end and enter insert mode
     (goto-char (point-max))
     (when (fboundp 'evil-insert-state)
-      (evil-insert-state))
-
-    ))
+      (evil-insert-state))))
 
 ;; Toggle *scratch* buffer.
 (defun toggle-scratch-buffer ()
