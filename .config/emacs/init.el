@@ -130,6 +130,7 @@ These include the packages `marginalia', `consult', `corfu',
   '(agitate
     altcaps
     beframe
+    buffer-to-pdf
     consult-denote
     cursory
     denote

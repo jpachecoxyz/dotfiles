@@ -171,9 +171,9 @@ that and instead tries to complete against dictionary entries."
   (remove-hook 'notmuch-show-hook #'notmuch-show-turn-on-visual-line-mode)
   (remove-hook 'notmuch-search-hook #'notmuch-hl-line-mode) ; Check my `lin' package
 
-  (jp-emacs-keybind global-map
-    "C-c m" #'notmuch
-    "C-x m" #'notmuch-mua-new-mail) ; override `compose-mail'
+  ;; (jp-emacs-keybind global-map
+  ;;   "C-c m" #'notmuch
+  ;;   "C-x m" #'notmuch-mua-new-mail) ; override `compose-mail'
 
   (with-eval-after-load 'notmuch
     (jp-emacs-keybind notmuch-search-mode-map ; I normally don't use the tree view, otherwise check `notmuch-tree-mode-map'

@@ -108,6 +108,20 @@
 
   ;; actualizar correo automáticamente
   (setq mu4e-update-interval 300) ;; 5 minutos
+  (mu4e-alert-enable-mode-line-display)
+
+  ;; 1. Define la consulta para los mensajes no leídos (solo INBOX)
+  (setq mu4e-alert-interesting-query "flag:unread AND maildir:/disroot/INBOX")
+
+  ;; 2. Personaliza el formato de la mode-line
+  ;; Usamos el icono de la bandeja de entrada y el formato que pediste
+  (setq mu4e-alert-modeline-formatter
+        (lambda (count)
+          (if (> count 0)
+              "📥"   ; Solo el icono si hay 1 o más
+            "")))     ; Nada si está vacío
+
+  ;; 3. Asegúrate de que el refresco sea constante
   (mu4e-alert-enable-mode-line-display))
 
 ;;; Org-contacts
@@ -127,5 +141,10 @@
   (add-to-list 'completion-at-point-functions #'org-contacts-message-complete-function)
 
   (mu4e-update-index))
+
+(jp-emacs-configure
+  (mu4e-modeline-mode 1)
+  ;; Si quieres que solo te avise de los correos en el INBOX:
+  (setq mu4e-modeline-unread-items-query "flag:unread AND maildir:/disroot/INBOX"))
 
 (provide 'jp-emacs-mu4e)

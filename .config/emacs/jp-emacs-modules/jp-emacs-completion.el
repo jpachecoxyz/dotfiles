@@ -159,11 +159,12 @@
 
   (jp-emacs-abbrev global-abbrev-table
     "xzy"   "https://jpachecoxyz.github.io"
+    "jpm"	"jpacheco@disroot.org"
     "megit"   "https://github.com/jpachecoxyz"
     "mehub"   "https://github.com/jpachecoxyz"
     "meclone" "git@github.com/jpachecoxyz/"
     ";web"   "https://protesilaos.com"
-    ";git"   "https://jpachecoxyz.github.io"
+    ";web"   "https://jpachecoxyz.github.io"
     ";hub"   "https://github.com/jpachecoxyz"
     ";clone" "git@github.com/jpachecoxyz/")
 
