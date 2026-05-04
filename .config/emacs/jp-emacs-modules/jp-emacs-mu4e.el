@@ -145,13 +145,11 @@
 
   ;; Backend de autocompletado
   (setq mu4e-compose-complete-addresses-function #'mu4e--compose-complete-handler)
-  (add-to-list 'completion-at-point-functions #'org-contacts-message-complete-function)
+  (add-to-list 'completion-at-point-functions #'org-contacts-message-complete-function))
 
-  (mu4e-update-index))
-
-(jp-emacs-configure
-  (mu4e-modeline-mode 1)
-  ;; Si quieres que solo te avise de los correos en el INBOX:
-  (setq mu4e-modeline-unread-items-query "flag:unread AND maildir:/disroot/INBOX"))
+  (jp-emacs-configure
+    (mu4e-modeline-mode 1)
+    ;; Si quieres que solo te avise de los correos en el INBOX:
+    (setq mu4e-modeline-unread-items-query "flag:unread AND maildir:/disroot/INBOX"))
 
 (provide 'jp-emacs-mu4e)

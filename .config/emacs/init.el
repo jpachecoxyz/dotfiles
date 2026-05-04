@@ -371,7 +371,7 @@ making an abbreviation to a function."
 (defvar jp-display-graphic-p (display-graphic-p)
   "When non-nil, the display is graphical.")
 
-(defcustom jp-emacs-enable-transparency t
+(defcustom jp-emacs-enable-transparency nil
   "Enable transparency utilities."
   :type 'boolean
   :group 'jp-emacs)
