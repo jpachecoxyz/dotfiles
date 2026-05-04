@@ -457,6 +457,16 @@
 
   (jp-emacs-install pass))
 
+
+;;; Backup files
+(jp-emacs-configure
+  (jp-emacs-install no-littering)
+
+  ;; no-littering doesn't set this by default so we must place
+  ;; auto save files in the same path as it uses for sessions
+  (setq auto-save-file-name-transforms
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
+
 ;;; Generic interface for shells or REPLs (comint)
 (jp-emacs-configure
   ;; Support for OS-specific escape sequences such as what `ls

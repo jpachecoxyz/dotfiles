@@ -417,4 +417,10 @@ For a more specialised case, see `denote-sequence-find-relatives-dired'."
 
     (add-hook 'logos-page-motion-hook #'jp/logos-recenter-top)))
 
+(jp-emacs-configure
+  (jp-emacs-install buffer-to-pdf "https://github.com/protesilaos/buffer-to-pdf")
+  ;; Configure `buffer-to-pdf-directory' to specify where PDF files are stored.
+  ;; This is the default value:
+  (setq buffer-to-pdf-directory (expand-file-name "/tmp/pdf")))
+
 (provide 'jp-emacs-langs)

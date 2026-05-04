@@ -121,7 +121,7 @@ These include the packages `marginalia', `consult', `corfu',
 (setq package-archive-priorities
       '(("gnu-elpa" . 4)
         ("melpa" . 3)
-	("gnu-elpa-devel" . 2)
+	    ("gnu-elpa-devel" . 2)
         ("nongnu" . 1)))
 
 (setq package-install-upgrade-built-in nil)

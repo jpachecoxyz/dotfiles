@@ -7,5 +7,5 @@ qemu-system-x86_64 --enable-kvm -m 8G -smp 8 -cpu host -M q35 \
   -rtc base=localtime \
   -device qemu-xhci,id=usb-bus \
   -device usb-host,bus=usb-bus.0,vendorid=0x1f75,productid=0x0917 \
-  -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
-  -device virtio-net-pci,netdev=net0
+  -net nic -net bridge,br=br0 \
+  -netdev user,id=net0 -device e1000,netdev=net0
