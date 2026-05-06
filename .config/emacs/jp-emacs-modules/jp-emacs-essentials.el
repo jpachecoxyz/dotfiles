@@ -1,3 +1,12 @@
+;;; Emacs auto-update packages
+(jp-emacs-configure
+  (jp-emacs-install auto-package-update)
+  (setq auto-package-update-interval 7
+        auto-package-update-prompt-before-update t
+        auto-package-update-hide-results t
+        auto-package-update-at-time "09:00")
+  (auto-package-update-maybe))
+
 ;;; Essential configurations
 (jp-emacs-configure
 
@@ -33,6 +42,7 @@
     "S-<f2>" #'keycast-mode-line-mode
     "C-<f9>" #'jp-toggle-presentation-mode
     "<f8>" #'jp/toggle-transparency
+    "<f12>" #'jp-emacs-toggle-calendar
     "<insert>" #'nil
     "<menu>" #'nil
     "C-x C-d" #'nil ; never use it
@@ -570,5 +580,13 @@
 ;; Hooks
 ;; (add-hook 'after-init-hook #'jp/set-transparency)
 ;; (add-hook 'after-make-frame-functions #'jp/set-transparency)
+
+(defun jp-emacs-toggle-calendar ()
+  "Si el calendario está visible, cierra su ventana. De lo contrario, lo abre."
+  (interactive)
+  (let ((calendar-window (get-buffer-window "*Calendar*")))
+    (if calendar-window
+        (delete-window calendar-window)
+      (calendar))))
 
 (provide 'jp-emacs-essentials)
