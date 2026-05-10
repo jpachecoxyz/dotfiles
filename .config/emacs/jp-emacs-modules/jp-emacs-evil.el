@@ -59,6 +59,11 @@
     (kbd "h")  #'dired-up-directory
     (kbd "l")  #'dired-find-file
     (kbd "gg") #'evil-goto-first-line
-    (kbd "G")  #'evil-goto-line))
+    (kbd "G")  #'evil-goto-line
+    (kbd "g d") (lambda () (interactive) (dired "~/.dotfiles/"))
+    (kbd "g e") (lambda () (interactive) (dired "~/Documents/Emacs/"))
+    (kbd "g c") (lambda () (interactive) (dired "~/.config"))
+    (kbd "g s") (lambda () (interactive) (dired "~/.local/src/"))
+    ))
 
 (provide 'jp-emacs-evil)
