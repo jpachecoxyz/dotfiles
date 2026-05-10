@@ -124,10 +124,22 @@ Also see `jp-register-use-dwim'."
   :type 'file)
 
 (defun jp-register-store ()
-  "Write `register-alist' to `jp-register-save-file'."
+  "Escribe `register-alist' al archivo, ignorando objetos complejos."
   (with-temp-file jp-register-save-file
     (insert ";; Auto-generated file: DO NOT EDIT -*- mode: emacs-lisp -*-\n")
-    (pp register-alist (current-buffer))))
+    (let ((printable-alist 
+           (cl-remove-if-not
+            (lambda (reg)
+              (let ((val (cdr reg)))
+                ;; Filtro estricto: solo guardamos lo que es seguro
+                (or (stringp val)       ;; Texto copiado
+                    (numberp val)       ;; Números
+                    (and (vectorp val)  ;; Tu función de archivo + posición
+                         (eq (aref val 0) 'file-with-point))
+                    ;; Opcional: registrar posiciones simples de archivos nativos
+                    (and (consp val) (eq (car val) 'file)))))
+            register-alist)))
+      (pp printable-alist (current-buffer)))))
 
 (defun jp-register-load ()
   "Read `jp-register-save-file' and return its contents."
