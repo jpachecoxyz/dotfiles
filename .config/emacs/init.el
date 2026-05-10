@@ -399,6 +399,7 @@ making an abbreviation to a function."
 (require 'jp-emacs-code)
 (require 'jp-emacs-bongo)
 (require 'jp-emacs-utils)
+(require 'jp-emacs-yasnippets)
 
 ;; The purpose of the "post customisations" is to evaluate arbitrary
 ;; code AFTER loading all my configurations.
