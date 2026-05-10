@@ -60,6 +60,9 @@
         `(;; no window
           ("\\`\\*Async Shell Command\\*\\'"
            (display-buffer-no-window))
+          ("\\*typst-ts-compilation\\*"
+           (display-buffer-no-window)
+           (allow-no-window . t))
           ("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
            (display-buffer-no-window)
            (allow-no-window . t))

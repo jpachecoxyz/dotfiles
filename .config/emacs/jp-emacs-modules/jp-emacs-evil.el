@@ -53,10 +53,12 @@
   (define-key evil-motion-state-map (kbd "RET") nil)
   (define-key evil-motion-state-map (kbd "TAB") nil))
 
- ;; Dired vim-like navigation
+;; Dired vim-like navigation
 (with-eval-after-load 'dired
   (evil-define-key 'normal dired-mode-map
-    (kbd "h") #'dired-up-directory
-    (kbd "l") #'dired-find-file))
+    (kbd "h")  #'dired-up-directory
+    (kbd "l")  #'dired-find-file
+    (kbd "gg") #'evil-goto-first-line
+    (kbd "G")  #'evil-goto-line))
 
 (provide 'jp-emacs-evil)

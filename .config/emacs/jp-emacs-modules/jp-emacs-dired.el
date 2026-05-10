@@ -4,6 +4,9 @@
   (setq dired-recursive-deletes 'always)
   (setq delete-by-moving-to-trash t))
 
+;;; kill dired buffers when open a file.
+(setq dired-kill-when-opening-new-dired-buffer 1)
+
 (setq dired-listing-switches "-AGFhlv --group-directories-first --time-style=long-iso")
 
 (setq dired-dwim-target t)

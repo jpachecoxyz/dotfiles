@@ -39,12 +39,22 @@
 
     ;; Python LSP
     (add-to-list 'eglot-server-programs
-                 '(python-mode "pylsp")))
+                 '(python-mode "pylsp"))
+
+    ;;; Typst LSP
+    (add-to-list 'eglot-server-programs
+                 `((typst-ts-mode) .
+                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
+                                          "tinymist"
+                                          "typst-lsp"))))
+
+    )
 
 
   ;; hooks
   (add-hook 'prog-mode-hook #'jp/eglot-setup)
   (add-hook 'shell-mode-hook #'eglot-ensure)
+  (add-hook 'typst-ts-mode-hook #'eglot-ensure)
 
   ;; keybindings
   (with-eval-after-load 'eglot
@@ -63,4 +73,16 @@
 
 ;; sets python interpreter mode to be python-mode
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
+
+;;; Typst-mode
+(jp-emacs-configure
+  (jp-emacs-install typst-ts-mode "https://codeberg.org/meow_king/typst-ts-mode")
+
+  (setq typst-ts-watch-options "--open")
+
+  ;; Esperamos a que el modo cargue para definir sus teclas
+  (with-eval-after-load 'typst-ts-mode
+    (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)))
+
+
 (provide 'jp-emacs-code)
