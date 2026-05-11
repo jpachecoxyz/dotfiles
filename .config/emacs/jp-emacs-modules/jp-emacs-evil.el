@@ -60,6 +60,7 @@
     (kbd "l")  #'dired-find-file
     (kbd "gg") #'evil-goto-first-line
     (kbd "G")  #'evil-goto-line
+    (kbd "g h") (lambda () (interactive) (dired "~/"))
     (kbd "g d") (lambda () (interactive) (dired "~/.dotfiles/"))
     (kbd "g e") (lambda () (interactive) (dired "~/Documents/Emacs/"))
     (kbd "g c") (lambda () (interactive) (dired "~/.config"))
