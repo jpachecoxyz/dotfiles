@@ -379,6 +379,7 @@ making an abbreviation to a function."
 (require 'jp-emacs-theme)
 (require 'jp-emacs-essentials)
 (require 'jp-emacs-ef-themes)
+(require 'jp-emacs-evil)
 (require 'jp-emacs-modeline)
 (require 'jp-emacs-completion)
 (require 'jp-emacs-search)

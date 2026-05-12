@@ -32,8 +32,7 @@
 
   ;; Add lsp servers to eglot
   (with-eval-after-load 'eglot
-    ;; Bash LSP, Starts 'bash-language-server' with 'start' argument.
-    ;; Example: $ bash-language-server start
+    ;; Bash LSP
     (add-to-list 'eglot-server-programs
                  '(sh-mode "bash-language-server" "start"))
 
@@ -41,13 +40,13 @@
     (add-to-list 'eglot-server-programs
                  '(python-mode "pylsp"))
 
-    ;;; Typst LSP
+    ;; Lua LSP
     (add-to-list 'eglot-server-programs
-                 `((typst-ts-mode) .
-                   ,(eglot-alternatives `(,typst-ts-lsp-download-path
-                                          "tinymist"
-                                          "typst-lsp"))))
+                 '(lua-mode "lua-language-server"))
 
+    ;; Typst LSP
+    (add-to-list 'eglot-server-programs
+                 '(typst-ts-mode "tinymist"))
     )
 
 
@@ -84,5 +83,8 @@
   (with-eval-after-load 'typst-ts-mode
     (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-tmenu)))
 
+;;; Lua 
+(jp-emacs-configure
+  (jp-emacs-install lua-mode))
 
 (provide 'jp-emacs-code)
