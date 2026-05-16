@@ -9,7 +9,6 @@
                 '("%e"
                   (:eval (when (bound-and-true-p evil-mode)
                            evil-mode-line-tag))
-                  jp-modeline-kbd-macro
                   jp-modeline-narrow
                   jp-modeline-buffer-status
                   jp-modeline-window-dedicated-status
@@ -33,6 +32,7 @@
                   jp-modeline-notmuch-indicator
                   "  "
                   jp-modeline-misc-info
+                  jp-modeline-kbd-macro
                   ))
 
   (when jp-emacs-load-theme-family

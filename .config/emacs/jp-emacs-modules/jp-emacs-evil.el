@@ -4,26 +4,26 @@
   (jp-emacs-install evil)
   (evil-mode 1))
 
-  (defun jp/org-tab-dwim ()
-    (interactive)
-      (or (yas-expand)
-        (org-cycle)))
+(defun jp/org-tab-dwim ()
+  (interactive)
+  (or (yas-expand)
+      (org-cycle)))
 
-  (with-eval-after-load 'org
-    (evil-define-key '(normal insert) org-mode-map
-        (kbd "TAB") #'jp/org-tab-dwim
-        (kbd "<backtab>") #'org-shifttab))
+(with-eval-after-load 'org
+  (evil-define-key '(normal insert) org-mode-map
+    (kbd "TAB") #'jp/org-tab-dwim
+    (kbd "<backtab>") #'org-shifttab))
 
-  (with-eval-after-load 'evil
-    (evil-define-key '(normal insert) lisp-interaction-mode-map
-        (kbd "C-j") #'jp-elisp-eval-and-print-last-sexp))
+(with-eval-after-load 'evil
+  (evil-define-key '(normal insert) lisp-interaction-mode-map
+    (kbd "C-j") #'jp-elisp-eval-and-print-last-sexp))
 
-  ;; (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
-  (setq evil-mode-line-format nil)
-  (setq evil-undo-system 'undo-redo) 
+;; (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
+(setq evil-vsplit-window-right t)
+(setq evil-split-window-below t)
+(setq evil-mode-line-format nil)
+(setq evil-undo-system 'undo-redo) 
 
 (jp-emacs-configure
   (jp-emacs-install evil-collection)

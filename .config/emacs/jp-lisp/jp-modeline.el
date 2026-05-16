@@ -243,9 +243,16 @@ Also see `jp-modeline-string-abbreviate'."
 (defvar-local jp-modeline-kbd-macro
     '(:eval
       (when (and (mode-line-window-selected-p) defining-kbd-macro)
-        (propertize " KMacro " 'face 'jp-modeline-indicator-blue-bg)))
-  "Mode line construct displaying `mode-line-defining-kbd-macro'.
-Specific to the current window's mode line.")
+        (let ((evil-reg (and (bound-and-true-p evil-mode)
+                             (cond (evil-this-macro evil-this-macro)
+                                   ((and (boundp 'evil-macro-register) evil-macro-register) evil-macro-register)
+                                   (t (let ((vec evil-macro-recording-vector))
+                                        (and vec (> (length vec) 0) (aref vec 0))))))))
+          (let ((macro-name (if (characterp evil-reg)
+                                (format " @%c " evil-reg)))) ; Únicamente muestra @q, @l, @f...
+            (propertize macro-name 'face 'jp-modeline-indicator-red-bg)))))
+  "Mode line construct displaying the macro recording status.
+Minimalist style showing only the target register.")
 
 ;;;; Narrow indicator
 
