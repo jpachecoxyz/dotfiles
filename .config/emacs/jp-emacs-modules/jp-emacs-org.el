@@ -50,6 +50,7 @@
                                  (lisp . t)
                                  (sql . t)
                                  (dot . t)
+                                 (lua . t)
                                  (plantuml . t)
                                  (emacs-lisp . t)))
 

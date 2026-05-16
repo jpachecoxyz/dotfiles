@@ -395,7 +395,6 @@ making an abbreviation to a function."
 (require 'jp-emacs-web)
 (require 'jp-emacs-which-key)
 (require 'jp-emacs-icons)
-(require 'jp-emacs-evil)
 (require 'jp-emacs-general)
 (require 'jp-emacs-code)
 (require 'jp-emacs-bongo)

@@ -65,7 +65,23 @@
     (kbd "g d") (lambda () (interactive) (dired "~/.dotfiles/"))
     (kbd "g e") (lambda () (interactive) (dired "~/Documents/Emacs/"))
     (kbd "g c") (lambda () (interactive) (dired "~/.config"))
+    (kbd "g f") (lambda () (interactive) (dired "~/.dotfiles/.config/emacs/"))
     (kbd "g s") (lambda () (interactive) (dired "~/.local/src/"))
+    (kbd "g t") (lambda () (interactive) (dired "~/.local/share/Trash"))
     ))
+
+
+(setq evil-normal-state-tag   (propertize "[N]" )
+      evil-emacs-state-tag    (propertize "[E]" )
+      evil-insert-state-tag   (propertize "[I]" )
+      evil-motion-state-tag   (propertize "[M]" )
+      evil-visual-state-tag   (propertize "[V]" )
+      evil-replace-state-tag   (propertize "[R]" )
+      evil-operator-state-tag (propertize "[O]" ))
+
+(setq evil-insert-state-message nil
+      evil-visual-state-message nil
+      evil-replace-state-message nil
+      evil-motion-state-message nil)
 
 (provide 'jp-emacs-evil)

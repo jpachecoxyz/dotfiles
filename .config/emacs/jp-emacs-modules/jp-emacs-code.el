@@ -47,6 +47,7 @@
     ;; Typst LSP
     (add-to-list 'eglot-server-programs
                  '(typst-ts-mode "tinymist"))
+
     )
 
 
