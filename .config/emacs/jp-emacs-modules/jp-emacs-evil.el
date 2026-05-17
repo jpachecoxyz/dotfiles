@@ -1,4 +1,4 @@
-;;; Evil-mode
+;;; Evil-model
 
 (jp-emacs-configure
   (jp-emacs-install evil)
@@ -70,14 +70,13 @@
     (kbd "g t") (lambda () (interactive) (dired "~/.local/share/Trash"))
     ))
 
-
-(setq evil-normal-state-tag   (propertize "[N]" )
-      evil-emacs-state-tag    (propertize "[E]" )
-      evil-insert-state-tag   (propertize "[I]" )
-      evil-motion-state-tag   (propertize "[M]" )
-      evil-visual-state-tag   (propertize "[V]" )
-      evil-replace-state-tag   (propertize "[R]" )
-      evil-operator-state-tag (propertize "[O]" ))
+(setq evil-normal-state-tag   (propertize " Normal " 'face 'jp-modeline-indicator-cyan-bg)
+      evil-insert-state-tag   (propertize " Insert " 'face 'jp-modeline-indicator-yellow-bg)
+      evil-visual-state-tag   (propertize " Visual " 'face 'jp-modeline-indicator-red-bg)
+      evil-motion-state-tag   (propertize " Motion " 'face 'jp-modeline-indicator-cyan-bg)
+      evil-replace-state-tag  (propertize " Replace " 'face 'jp-modeline-indicator-green-bg)
+      evil-emacs-state-tag    (propertize " Emacs " 'face 'jp-modeline-indicator-magenta-bg)
+      evil-operator-state-tag (propertize " Operator " 'face 'jp-modeline-indicator-blue-bg))
 
 (setq evil-insert-state-message nil
       evil-visual-state-message nil

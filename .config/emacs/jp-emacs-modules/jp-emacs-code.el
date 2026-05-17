@@ -48,6 +48,9 @@
     (add-to-list 'eglot-server-programs
                  '(typst-ts-mode "tinymist"))
 
+    ;; Typst LSP
+    (add-to-list 'eglot-server-programs
+                 '(arduino-mode "arduino-language-server"))
     )
 
 
@@ -87,5 +90,9 @@
 ;;; Lua 
 (jp-emacs-configure
   (jp-emacs-install lua-mode))
+
+;;; Arduino
+(jp-emacs-configure
+  (jp-emacs-install arduino-mode))
 
 (provide 'jp-emacs-code)
