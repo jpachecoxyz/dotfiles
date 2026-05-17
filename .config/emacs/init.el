@@ -400,6 +400,8 @@ making an abbreviation to a function."
 (require 'jp-emacs-bongo)
 (require 'jp-emacs-utils)
 (require 'jp-emacs-yasnippets)
+(when (not (eq system-type 'windows-nt))
+  (require 'jp-emacs-telega))
 
 ;; The purpose of the "post customisations" is to evaluate arbitrary
 ;; code AFTER loading all my configurations.
