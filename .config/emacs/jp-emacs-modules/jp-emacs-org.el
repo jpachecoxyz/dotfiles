@@ -926,4 +926,58 @@ Regards,
 
 (jp-emacs-configure
   (jp-emacs-install kanban))
+
+;;; Org-notify
+(jp-emacs-configure
+  (jp-emacs-install org-notify)
+  (require 'org-notify)
+
+  (defun my/org-notify-telegram-action-with-chat (notif-plist)
+    (let* ((heading  (or (plist-get notif-plist :heading) "Tarea pendiente"))
+           (deadline (plist-get notif-plist :deadline))
+           (sched    (plist-get notif-plist :scheduled))
+           (file     (file-name-nondirectory
+                      (or (plist-get notif-plist :file) "~/Documents/Emacs/org/agenda/agenda.org")))
+           (marker   (plist-get notif-plist :marker))
+           (chat-id
+            (when marker
+              (org-with-point-at marker
+                (let ((limit (save-excursion (outline-next-heading) (point))))
+                  (when (re-search-forward
+                         "^[[:space:]]*:TELEGRAM_ID:[[:space:]]+\\(-?[0-9]+\\)" limit t)
+                    (string-to-number (match-string-no-properties 1)))))))
+           (msg (concat
+                 "📅 *Tarea pendiente*\n\n"
+                 (format "• *Tarea:* %s\n" heading)
+                 (when deadline
+                   (format "• *Fecha límite:* %s\n"
+                           (format-time-string "%d/%m %H:%M" deadline)))
+                 (when sched
+                   (format "• *Programada:* %s\n"
+                           (format-time-string "%d/%m %H:%M" sched)))
+                 (format "• *Archivo:* %s" file))))
+      (message "[tg] chat-id=%s heading=%s" chat-id heading)
+      (when (and chat-id (featurep 'telega) (telega-server-live-p))
+        (run-at-time 0 nil
+                     `(lambda ()
+                        (condition-case err
+                            (progn
+                              (telega--sendMessage
+                               (telega-chat-get ,chat-id)
+                               (list :@type "inputMessageText"
+                                     :text (telega-string-fmt-text ,msg))
+                               nil nil)
+                              (message "[tg] OK"))
+                          (error
+                           (message "[tg] ERROR: %s"
+                                    (error-message-string err)))))))))
+  ;; Registrar nueva regla que use la acción con destinatario variable
+  (org-notify-add 'telegram-tasks-to-chat
+                  '(:time "1m"
+                          :period "1m"
+                          :duration 10
+                          :actions (my/org-notify-telegram-action-with-chat -notify/window -sound)))
+
+  (org-notify-start))
+
 (provide 'jp-emacs-org)
