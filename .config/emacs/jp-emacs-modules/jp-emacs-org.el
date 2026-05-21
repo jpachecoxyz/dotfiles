@@ -932,6 +932,15 @@ Regards,
   (jp-emacs-install org-notify)
   (require 'org-notify)
 
+  ;; --- ACCIÓN sound ---
+  (defun org-notify-action-sound (_msg)
+    (when (and org-notify-sound org-notify-sound-file)
+      (start-process "org-notify-sound" nil
+                     org-notify-sound org-notify-sound-file)))
+
+  (setq org-notify-sound (executable-find "paplay"))
+  (setq org-notify-sound-file "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
+
   (defun my/org-notify-telegram-action-with-chat (notif-plist)
     (let* ((heading  (or (plist-get notif-plist :heading) "Tarea pendiente"))
            (deadline (plist-get notif-plist :deadline))
