@@ -209,7 +209,7 @@
   (setq org-reverse-note-order nil)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "MAYBE(m)" "|" "CANCELLED(c@)" "DONE(d!)")))
+        '((sequence "TODO(t)" "DOING(D)" "|" "CANCELLED(c@)" "DONE(d!)")))
 
   (defface jp/org-todo-alternative
     '((t :inherit (italic org-todo)))
@@ -377,7 +377,7 @@
     (jp-emacs-keybind org-agenda-mode-map
       "<tab>" #'org-agenda-next-item
       "<backtab>" #'org-agenda-previous-item)
-  (add-hook 'org-agenda-finalize-hook 'org-save-all-org-buffers)
+    (add-hook 'org-agenda-finalize-hook 'org-save-all-org-buffers)
 
 ;;;;; Custom agenda blocks
 
@@ -387,16 +387,16 @@
     ;; Check the variable `jp-org-custom-daily-agenda' in jp-org.el
     (setq org-agenda-custom-commands
           `(("a" "Daily agenda and top priority tasks"
-            ,jp-org-custom-daily-agenda
-            ((org-agenda-fontify-priorities nil)
-             (org-agenda-files '("~/Documents/Emacs/org/agenda/agenda.org"
-                                 "~/Documents/Emacs/org/agenda/bdays.org"
-                                 "~/Documents/Emacs/org/agenda/important_dates.org"))
-            (org-agenda-dim-blocked-tasks nil)))
+             ,jp-org-custom-daily-agenda
+             ((org-agenda-fontify-priorities nil)
+              (org-agenda-files '("~/Documents/Emacs/org/agenda/agenda.org"
+                                  "~/Documents/Emacs/org/agenda/bdays.org"
+                                  "~/Documents/Emacs/org/agenda/important_dates.org"))
+              (org-agenda-dim-blocked-tasks nil)))
 
             ;; ("p" "Personal Agenda"
             ;;  ,custom-daily-agenda
-             ;; ((org-agenda-files '("~/public/org/agenda/personal.org"
+            ;; ((org-agenda-files '("~/public/org/agenda/personal.org"
             ;;                    "~/public/org/agenda/training.org"))
             ;;   (org-agenda-fontify-priorities nil)
             ;;   (org-agenda-dim-blocked-tasks nil)))
@@ -419,50 +419,50 @@
             ;;                     (org-agenda-dim-blocked-tasks nil))))
 
             ("p" "Planning"
-            ((tags-todo "+planning+{@home|@work}"
-                        ((org-agenda-overriding-header "Planning Tasks")))
+             ((tags-todo "+planning+{@home|@work}"
+                         ((org-agenda-overriding-header "Planning Tasks")))
 
-            (tags-todo "-{.*}"
-                        ((org-agenda-overriding-header "Unprocessed Tasks")))))
+              (tags-todo "-{.*}"
+                         ((org-agenda-overriding-header "Unprocessed Tasks")))))
 
             ;; (todo "-{.*}" ((org-agenda-files '("~/Documents/Emacs/org/agenda/refile.org"))
             ;;             (org-agenda-overriding-header "Unprocessed Items")))))
 
             ("i" "Important dates"
-            ((agenda ""
-                    ((org-agenda-overriding-header "Important dates Agenda Overview")
-                    (org-agenda-span 'year)
-                    (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                    (org-agenda-show-all-dates nil)
-                    (org-agenda-skip-function
+             ((agenda ""
+                      ((org-agenda-overriding-header "Important dates Agenda Overview")
+                       (org-agenda-span 'year)
+                       (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                       (org-agenda-show-all-dates nil)
+                       (org-agenda-skip-function
                         '(org-agenda-skip-entry-if
-                        'notregexp
-                        (regexp-opt '("i-dates"))))))
+                          'notregexp
+                          (regexp-opt '("i-dates"))))))
 
-            (agenda ""
-                    ((org-agenda-overriding-header "Upcoming Birthday's")
-                    (org-agenda-span 'month)
-                    (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                    (org-agenda-start-day "01")
-                    (org-agenda-show-all-dates nil)
-                    (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
-                    (org-agenda-skip-function
+              (agenda ""
+                      ((org-agenda-overriding-header "Upcoming Birthday's")
+                       (org-agenda-span 'month)
+                       (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                       (org-agenda-start-day "01")
+                       (org-agenda-show-all-dates nil)
+                       (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
+                       (org-agenda-skip-function
                         '(org-agenda-skip-entry-if
-                        'notregexp
-                        (regexp-opt '("birthday"))))))))
+                          'notregexp
+                          (regexp-opt '("birthday"))))))))
 
             ("b" "Birthday Calendar dates"
-            ((agenda ""
-                    ((org-agenda-overriding-header "Birthday Calendar dates")
-                    (org-agenda-span 'year)
-                    (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
-                    (org-agenda-start-day "01")
-                    (org-agenda-show-all-dates nil)
-                    (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
-                    (org-agenda-skip-function
+             ((agenda ""
+                      ((org-agenda-overriding-header "Birthday Calendar dates")
+                       (org-agenda-span 'year)
+                       (org-agenda-start-on-weekday 0) ;; Start the week on Sunday
+                       (org-agenda-start-day "01")
+                       (org-agenda-show-all-dates nil)
+                       (org-agenda-files '("~/Documents/Emacs/org/agenda/bdays.org"))
+                       (org-agenda-skip-function
                         '(org-agenda-skip-entry-if
-                        'notregexp
-                        (regexp-opt '("birthday"))))))))
+                          'notregexp
+                          (regexp-opt '("birthday"))))))))
             ))
 
 ;;;;; Basic agenda setup
@@ -624,7 +624,64 @@
     (setq org-agenda-columns-compute-summary-properties t)
     (setq org-agenda-columns-add-appointments-to-effort-sum nil)
     (setq org-agenda-auto-exclude-function nil)
-    (setq org-agenda-bulk-custom-functions nil)))
+    (setq org-agenda-bulk-custom-functions nil))
+
+;;;;; Auto update TODO states:
+  ;; Important: Need to have [/] or [%]`
+  ;; Example:
+  ;; * TODO Important activity [/]
+  ;; - [ ] Task 1
+  ;; - [ ] Task 2
+  
+  (defun org-todo-if-needed (state)
+    "Change header state to STATE unless the current item is in STATE already."
+    (unless (string-equal (org-get-todo-state) state)
+      (org-todo state)))
+
+  (defun jp/org-summary-todo-cookie (n-done n-not-done)
+    "Switch header state to DONE when all subentries are DONE, to TODO when none are DONE, and to DOING otherwise"
+    (let (org-log-done org-log-states)   ; turn off logging
+      (org-todo-if-needed (cond ((= n-done 0)
+                                 "TODO")
+                                ((= n-not-done 0)
+                                 "DONE")
+                                (t
+                                 "DOING")))))
+  (add-hook 'org-after-todo-statistics-hook #'jp/org-summary-todo-cookie)
+
+  (defun jp/org-summary-checkbox-cookie ()
+    "Switch header state to DONE when all checkboxes are ticked, to TODO when none are ticked, and to DOING otherwise"
+    (let (beg end)
+      (unless (not (org-get-todo-state))
+        (save-excursion
+          (org-back-to-heading t)
+          (setq beg (point))
+          (end-of-line)
+          (setq end (point))
+          (goto-char beg)
+          ;; Regex group 1: %-based cookie
+          ;; Regex group 2 and 3: x/y cookie
+          (if (re-search-forward "\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]"
+                                 end t)
+              (if (match-end 1)
+                  ;; [xx%] cookie support
+                  (cond ((equal (match-string 1) "100%")
+                         (org-todo-if-needed "DONE"))
+                        ((equal (match-string 1) "0%")
+                         (org-todo-if-needed "TODO"))
+                        (t
+                         (org-todo-if-needed "DOING")))
+                ;; [x/y] cookie support
+                (if (> (match-end 2) (match-beginning 2)) ; = if not empty
+                    (cond ((equal (match-string 2) (match-string 3))
+                           (org-todo-if-needed "DONE"))
+                          ((or (equal (string-trim (match-string 2)) "")
+                               (equal (match-string 2) "0"))
+                           (org-todo-if-needed "TODO"))
+                          (t
+                           (org-todo-if-needed "DOING")))
+                  (org-todo-if-needed "DOING"))))))))
+  (add-hook 'org-checkbox-statistics-hook #'jp/org-summary-checkbox-cookie))
 
 ;;; Page break lines
 (jp-emacs-configure
@@ -944,7 +1001,7 @@ Regards,
   (defun my/org-notify-telegram-action-with-chat (notif-plist)
     (let* ((heading  (or (plist-get notif-plist :heading) "Tarea pendiente"))
            (deadline (plist-get notif-plist :deadline))
-           (sched    (plist-get notif-plist :scheduled))
+           (sched (plist-get notif-plist :scheduled))
            (file     (file-name-nondirectory
                       (or (plist-get notif-plist :file) "~/Documents/Emacs/org/agenda/agenda.org")))
            (marker   (plist-get notif-plist :marker))

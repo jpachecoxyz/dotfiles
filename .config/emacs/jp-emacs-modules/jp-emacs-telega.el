@@ -1,6 +1,7 @@
 (jp-emacs-configure
   (jp-emacs-install telega)
-  
+
+  (require 'telega)
   (setq telega-chat-input-markups '("org" "markdown2" nil))
   
   (setq telega-completing-read-function #'completing-read)
