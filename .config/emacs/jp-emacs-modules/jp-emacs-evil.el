@@ -55,20 +55,29 @@
 
 ;; Dired vim-like navigation
 (with-eval-after-load 'dired
-  (evil-define-key 'normal dired-mode-map
-    (kbd "h")  #'dired-up-directory
-    (kbd "l")  #'dired-find-file
-    (kbd "gg") #'evil-goto-first-line
-    (kbd "G")  #'evil-goto-line
-    (kbd "~") (lambda () (interactive) (dired "~/"))
-    (kbd "g h") (lambda () (interactive) (dired "~/"))
-    (kbd "g d") (lambda () (interactive) (dired "~/.dotfiles/"))
-    (kbd "g e") (lambda () (interactive) (dired "~/Documents/Emacs/"))
-    (kbd "g c") (lambda () (interactive) (dired "~/.config"))
-    (kbd "g f") (lambda () (interactive) (dired "~/.dotfiles/.config/emacs/"))
-    (kbd "g s") (lambda () (interactive) (dired "~/.local/src/"))
-    (kbd "g t") (lambda () (interactive) (dired "~/.local/share/Trash"))
-    ))
+  (let ((dired-shortcuts
+         '(("h" jp/dired-goto-home         "~/"                       "Open Home directory")
+           ("c" jp/dired-goto-config       "~/.config"                "Open .config directory")
+           ("d" jp/dired-goto-dotfiles     "~/.dotfiles/"             "Open dotfiles directory")
+           ("f" jp/dired-goto-emacs-config "~/.dotfiles/.config/emacs/" "Open Emacs config directory")
+           ("e" jp/dired-goto-documents    "~/Documents/Emacs/"       "Open Documents Emacs directory")
+           ("s" jp/dired-goto-src          "~/.local/src/"            "Open local src directory")
+           ("t" jp/dired-goto-trash        "~/.local/share/Trash"     "Open Trash directory"))))
+
+    (dolist (item dired-shortcuts)
+      (let ((key  (nth 0 item))
+            (func (nth 1 item))
+            (path (nth 2 item))
+            (desc (nth 3 item)))
+        
+        ;; Define the function and the docstring, basically the structure of the command
+        (defalias func
+          (lambda () (interactive) (dired path))
+          desc)
+        
+        ;; Assign the keybind, in my case it'll be the key 'g' key.
+        (evil-define-key 'normal dired-mode-map
+          (kbd (concat "g " key)) func)))))
 
 (setq evil-normal-state-tag   (propertize " Normal " 'face 'jp-modeline-indicator-cyan-bg)
       evil-insert-state-tag   (propertize " Insert " 'face 'jp-modeline-indicator-yellow-bg)

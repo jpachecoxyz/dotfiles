@@ -1,5 +1,5 @@
-(eval-when-compile
-  (require 'cl-lib))
+;; (eval-when-compile
+;;   (require 'cl-lib))
 
 (defgroup jp-emacs nil
   "User options for my dotemacs.
@@ -371,11 +371,14 @@ making an abbreviation to a function."
 (defvar jp-display-graphic-p (display-graphic-p)
   "When non-nil, the display is graphical.")
 
-(defcustom jp-emacs-enable-transparency nil
-  "Enable transparency utilities."
+(defcustom jp-emacs-enable-transparency t
+  "Non-nil means to enable transparency support for the Emacs frame.
+Setting this to nil forces a solid background, disabling any
+transparency functions. Settings are in jp-emacs-modules/jp-emacs-essentials.el" 
   :type 'boolean
   :group 'jp-emacs)
 
+;; Load modules
 (require 'jp-emacs-theme)
 (require 'jp-emacs-essentials)
 (require 'jp-emacs-ef-themes)
@@ -397,7 +400,6 @@ making an abbreviation to a function."
 (require 'jp-emacs-icons)
 (require 'jp-emacs-general)
 (require 'jp-emacs-code)
-(require 'jp-emacs-bongo)
 (require 'jp-emacs-utils)
 (require 'jp-emacs-yasnippets)
 (when (not (eq system-type 'windows-nt))
