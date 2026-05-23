@@ -53,32 +53,6 @@
   (define-key evil-motion-state-map (kbd "RET") nil)
   (define-key evil-motion-state-map (kbd "TAB") nil))
 
-;; Dired vim-like navigation
-(with-eval-after-load 'dired
-  (let ((dired-shortcuts
-         '(("h" jp/dired-goto-home         "~/"                       "Open Home directory")
-           ("c" jp/dired-goto-config       "~/.config"                "Open .config directory")
-           ("d" jp/dired-goto-dotfiles     "~/.dotfiles/"             "Open dotfiles directory")
-           ("f" jp/dired-goto-emacs-config "~/.dotfiles/.config/emacs/" "Open Emacs config directory")
-           ("e" jp/dired-goto-documents    "~/Documents/Emacs/"       "Open Documents Emacs directory")
-           ("s" jp/dired-goto-src          "~/.local/src/"            "Open local src directory")
-           ("t" jp/dired-goto-trash        "~/.local/share/Trash"     "Open Trash directory"))))
-
-    (dolist (item dired-shortcuts)
-      (let ((key  (nth 0 item))
-            (func (nth 1 item))
-            (path (nth 2 item))
-            (desc (nth 3 item)))
-        
-        ;; Define the function and the docstring, basically the structure of the command
-        (defalias func
-          (lambda () (interactive) (dired path))
-          desc)
-        
-        ;; Assign the keybind, in my case it'll be the key 'g' key.
-        (evil-define-key 'normal dired-mode-map
-          (kbd (concat "g " key)) func)))))
-
 (setq evil-normal-state-tag   (propertize " Normal " 'face 'jp-modeline-indicator-cyan-bg)
       evil-insert-state-tag   (propertize " Insert " 'face 'jp-modeline-indicator-yellow-bg)
       evil-visual-state-tag   (propertize " Visual " 'face 'jp-modeline-indicator-red-bg)

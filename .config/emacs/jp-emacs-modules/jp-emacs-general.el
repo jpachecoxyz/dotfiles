@@ -148,6 +148,22 @@
   "g s" '(magit-stage-file :wk "Stage file")
   "g t" '(git-timemachine :wk "Time machine"))
 
+;; Dired vim-like navigation
+(user/leader-keys
+  :keymaps 'dired-mode-map
+  :prefix "g"
+  "h" '((lambda () (interactive) (dired "~/")) :wk "Go to Home")
+  "c" '((lambda () (interactive) (dired "~/.config/")) :wk "Go to .config")
+  "d" '((lambda () (interactive) (dired "~/.dotfiles")) :wk "Go to dotfiles")
+  "f" '((lambda () (interactive) (dired "~/..config/emacs/")) :wk "Go to Emacs config")
+  "e" '((lambda () (interactive) (dired "~Documents/Emacs/")) :wk "Go to Documents")
+  "s" '((lambda () (interactive) (dired "~/.local/src/")) :wk "Go to local src")
+  "t" '((lambda () (interactive) (dired "~/.local/share/Trash/")) :wk "Go to Trash")
+  ;; Nuevos atajos tipo Vim
+  ;; Nota: en general, "g g" crea una secuencia de teclas
+  "g" '(evil-goto-first-line :wk "Go to first line")
+  "G" '(evil-goto-line       :wk "Go to last line"))
+
 (user/leader-keys
   "h" '(:ignore t :wk "Help")
   "h b" '(describe-bindings :wk "Describe bindings")

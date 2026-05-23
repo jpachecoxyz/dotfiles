@@ -438,4 +438,9 @@ Marks lines as added, deleted, or changed."
 ;; When commit start in insert mode
 (add-hook 'git-commit-mode-hook #'evil-insert-state)
 
+;;; Undo-history mode
+(jp-emacs-configure
+  (jp-emacs-install undohist)
+  (undohist-initialize))
+
 (provide 'jp-emacs-git)
