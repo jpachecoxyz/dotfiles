@@ -156,7 +156,7 @@
   "c" '((lambda () (interactive) (dired "~/.config/")) :wk "Go to .config")
   "d" '((lambda () (interactive) (dired "~/.dotfiles")) :wk "Go to dotfiles")
   "f" '((lambda () (interactive) (dired "~/.config/emacs/")) :wk "Go to Emacs config")
-  "e" '((lambda () (interactive) (dired "~Documents/Emacs/")) :wk "Go to Documents")
+  "e" '((lambda () (interactive) (dired "~/Documents/Emacs/")) :wk "Go to Documents")
   "s" '((lambda () (interactive) (dired "~/.local/src/")) :wk "Go to local src")
   "t" '((lambda () (interactive) (dired "~/.local/share/Trash/")) :wk "Go to Trash")
   ;; Nuevos atajos tipo Vim
