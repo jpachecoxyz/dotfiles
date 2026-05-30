@@ -18,6 +18,12 @@
   (evil-define-key '(normal insert) lisp-interaction-mode-map
     (kbd "C-j") #'jp-elisp-eval-and-print-last-sexp))
 
+;;; Dired Binds
+(with-eval-after-load 'dired
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "l" 'dired-find-file
+    "h" 'dired-up-directory))
+
 ;; (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
 (setq evil-want-keybinding nil)
 (setq evil-vsplit-window-right t)
