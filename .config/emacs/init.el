@@ -9,7 +9,7 @@ directory as the init.el."
   :group 'file)
 
 (defcustom jp-emacs-load-theme-family 'ef
- "Set of themes to load.
+  "Set of themes to load.
 Valid values are the symbols `doric', `ef', `modus', and `standard',
 which reference the `doric-themes', `ef-themes', `modus-themes', and
 `standard-themes', respectively.
@@ -26,6 +26,7 @@ before all other modules of my setup."
                  (const :tag "The `ef-themes' module" ef)
                  (const :tag "The `modus-themes' module" modus)
                  (const :tag "The `standard-themes' module" standard)
+                 (const :tag "The `pixel-themes' module" pixel)
                  (const :tag "Do not load a theme module" nil)))
 
 (defcustom jp-emacs-completion-ui 'vertico

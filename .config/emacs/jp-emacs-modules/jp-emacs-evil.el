@@ -9,11 +9,6 @@
   (or (yas-expand)
       (org-cycle)))
 
-(with-eval-after-load 'org
-  (evil-define-key '(normal insert) org-mode-map
-    (kbd "TAB") #'jp/org-tab-dwim
-    (kbd "<backtab>") #'org-shifttab))
-
 (with-eval-after-load 'evil
   (evil-define-key '(normal insert) lisp-interaction-mode-map
     (kbd "C-j") #'jp-elisp-eval-and-print-last-sexp))
@@ -23,6 +18,18 @@
   (evil-collection-define-key 'normal 'dired-mode-map
     "l" 'dired-find-file
     "h" 'dired-up-directory))
+
+(with-eval-after-load 'org
+  (evil-define-key '(normal insert) org-mode-map
+    (kbd "TAB") #'jp/org-tab-dwim
+    (kbd "<backtab>") #'org-shifttab))
+
+(with-eval-after-load 'org-agenda
+  (evil-define-key 'normal org-agenda-mode-map
+    (kbd "<tab>")     #'org-agenda-next-item
+    (kbd "TAB")       #'org-agenda-next-item
+    (kbd "<backtab>") #'org-agenda-previous-item
+    (kbd "S-TAB")     #'org-agenda-previous-item))
 
 ;; (setq evil-want-integration t)  ;; This is optional since it's already set to t by default.
 (setq evil-want-keybinding nil)

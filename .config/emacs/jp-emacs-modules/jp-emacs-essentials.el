@@ -581,7 +581,8 @@
 
     ;; Hooks
     (add-hook 'after-init-hook #'jp/set-transparency)
-    (add-hook 'after-make-frame-functions #'jp/set-transparency)))
+    (add-hook 'after-make-frame-functions #'jp/set-transparency)
+    ))
 
 (defun jp-emacs-toggle-calendar ()
   "Si el calendario está visible, cierra su ventana. De lo contrario, lo abre."
