@@ -1,3 +1,5 @@
 ;;; -*- lisp-data -*-
 (("/home/javier/webdev/jpachecoxyz/")
- ("/home/javier/.local/src/mac_scan.py/") ("/home/javier/.dotfiles/"))
+ ("/home/javier/.local/src/mac_scan.py/")
+ ("/home/javier/.dotfiles/")
+ ("/home/javier/.local/src/guardcasting/"))

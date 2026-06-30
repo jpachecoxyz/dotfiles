@@ -83,34 +83,34 @@
   ;; The font family is my design: <https://github.com/protesilaos/aporetic>.
   (setq fontaine-presets
         '((small
-           :default-family "CaskaydiaMono Nerd Font"
+           :default-family "JetBrains Mono NF"
            :fixed-pitch-family "IBM Plex Mono"
-           :variable-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "JetBrains Mono NF"
            :default-height 80)
 
           (regular
-           :default-family "CaskaydiaMono Nerd Font"
+           :default-family "JetBrains Mono NF"
            :fixed-pitch-family "IBM Plex Mono"
-           :variable-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "JetBrains Mono NF"
            ;; :variable-pitch-family "Aporetic Serif Mono"
            :default-height 110)
 
           (medium
-           :default-family "CaskaydiaMono Nerd Font"
+           :default-family "JetBrains Mono NF"
            :fixed-pitch-family "IBM Plex Mono"
-           :variable-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "JetBrains Mono NF"
            :default-height 145)
 
           (large
-           :default-family "CaskaydiaMono Nerd Font"
+           :default-family "JetBrains Mono NF"
            :fixed-pitch-family "IBM Plex Mono"
-           :variable-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "JetBrains Mono NF"
            :default-height 160)
 
           (presentation
-           :default-family "CaskaydiaMono Nerd Font"
+           :default-family "JetBrains Mono NF"
            :fixed-pitch-family "IBM Plex Mono"
-           :variable-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "JetBrains Mono NF"
            :default-height 180)
 
           (jumbo
@@ -118,9 +118,9 @@
            :default-height 260)
 
           (t
-           :default-family "CaskaydiaMono Nerd Font"
+           :default-family "JetBrains Mono NF"
            :fixed-pitch-family "IBM Plex Mono"
-           :variable-pitch-family "CaskaydiaMono Nerd Font"
+           :variable-pitch-family "JetBrains Mono NF"
            :default-height 110)
           ))
 
