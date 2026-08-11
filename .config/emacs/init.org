@@ -4797,7 +4797,7 @@ Org-mode configuration including calendar, appt, agenda, capture, code blocks, e
     (setq org-agenda-confirm-kill t)
     (setq org-agenda-show-all-dates t)
     (setq org-agenda-show-outline-path nil)
-    (setq org-agenda-window-setup 'current-window)
+    (setq org-agenda-window-setup 'other-window)
     (setq org-agenda-skip-comment-trees t)
     (setq org-agenda-menu-show-matcher t)
     (setq org-agenda-menu-two-columns nil)

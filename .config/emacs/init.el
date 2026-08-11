@@ -401,6 +401,7 @@ transparency functions. Settings are in jp-emacs-modules/jp-emacs-essentials.el"
 (require 'jp-emacs-general)
 (require 'jp-emacs-code)
 (require 'jp-emacs-utils)
+(require 'jp-emacs-x0)
 (require 'jp-emacs-yasnippets)
 (when (not (eq system-type 'windows-nt))
   (require 'jp-emacs-telega))
