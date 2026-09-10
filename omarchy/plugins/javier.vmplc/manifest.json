@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "javier.vmplc",
+  "name": "VM PLC Setup",
+  "version": "1.0.0",
+  "author": "javier",
+  "license": "MIT",
+  "description": "Bar widget + popup assistant for the PLC network bridge (vm-set-ip) and the robotics VM (vm-plc).",
+  "kinds": [
+    "service",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "VM PLC",
+    "description": "Puente del PLC y lanzador de la VM",
+    "category": "System",
+    "defaultSection": "right",
+    "allowMultiple": false
+  }
+}

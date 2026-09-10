@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "javier.pomodoro",
+  "name": "Pomodoro",
+  "version": "1.0.0",
+  "author": "javier",
+  "license": "MIT",
+  "description": "Pomodoro timer for the Omarchy bar",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Pomodoro",
+    "description": "Focus and break cycle timer",
+    "category": "Productivity",
+    "defaultSection": "center",
+    "allowMultiple": false
+  }
+}
