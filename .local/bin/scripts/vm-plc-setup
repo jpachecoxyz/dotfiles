@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+SELF_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+exec quickshell -n -p "$SELF_DIR/quickshell/vm-plc-setup"

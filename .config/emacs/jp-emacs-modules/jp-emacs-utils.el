@@ -19,12 +19,21 @@
       )))
 
 ;; Toggle *scratch* buffer.
+(defun jp/scratch-buffer ()
+  "Return the *scratch* buffer, inserting a fresh welcome message if it is empty."
+  (let ((scratch (get-buffer-create "*scratch*")))
+    (with-current-buffer scratch
+      (when (string-empty-p (buffer-string))
+        (funcall (or initial-major-mode 'lisp-interaction-mode))
+        (insert (jp/scratch-message))))
+    scratch))
+
 (defun toggle-scratch-buffer ()
   "Toggle the *scratch* buffer"
   (interactive)
   (if (string= (buffer-name) "*scratch*")
 	  (bury-buffer)
-	(switch-to-buffer (get-buffer-create "*scratch*"))))
+	(switch-to-buffer (jp/scratch-buffer))))
 
 (defun toggle-org-buffer ()
   "Toggle the Org-scratch-buffer buffer"
@@ -273,7 +282,7 @@ If already in the buffer, bury it. Otherwise, switch to it or launch Eshell."
 (prog1 'my/transient-goto-file-buffer
   ;; List
   (setq my/goto-file-buffer-alist
-        '(("s" "*scratch*"    (switch-to-buffer "*scratch*"))
+        '(("s" "*scratch*"    (switch-to-buffer (jp/scratch-buffer)))
           ("h" "home.nix"       (find-file "~/.dotfiles/nix/home.nix"))
           ("c" "configuration.nix"       (find-file "~/.dotfiles/nix/configuration.nix"))
           ("u" "utilities.org"       (find-file "~/.emacs.d/lisp/utilities.org"))

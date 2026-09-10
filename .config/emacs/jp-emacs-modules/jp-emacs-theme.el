@@ -45,6 +45,26 @@
 
     (spacious-padding-mode 1)
 
+    ;; NOTE: In a PGTK/Wayland daemon, `spacious-padding-mode' breaks
+    ;; client frame creation for two reasons:
+    ;;
+    ;; 1. Its `server-after-make-frame-hook' runs
+    ;;    `spacious-padding-set-parameters-of-selected-frame' while the
+    ;;    daemon is realizing a client frame.  That frame then ends up
+    ;;    with `window-system' nil and never maps.
+    ;;
+    ;; 2. Its `enable-theme-functions' hook runs
+    ;;    `spacious-padding-set-faces' on the daemon's initial terminal
+    ;;    frame whenever a theme is enabled (e.g. fontaine enables its
+    ;;    theme at load time).  Applying `:underline (:color
+    ;;    unspecified :position t)' to `header-line' on a terminal
+    ;;    frame then raises `Invalid face underline'.
+    ;;
+    ;; The `after-make-frame-functions' hook alone is enough to keep
+    ;; the padding working.
+    (remove-hook 'server-after-make-frame-hook #'spacious-padding-set-parameters-of-selected-frame)
+    (remove-hook 'enable-theme-functions #'spacious-padding-set-faces)
+
     (setq spacious-padding-widths
           `( :internal-border-width 15
              :header-line-width 4

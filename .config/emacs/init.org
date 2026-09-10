@@ -221,17 +221,18 @@ These include the packages `marginalia', `consult', `corfu',
     "KISS: Keep It Simple, Stupid.")
   "A list of KISS-themed quotes.")
 
-(setq initial-scratch-message
-      (let ((chosen-quote (nth (random (length kiss-quotes)) kiss-quotes)))
-        (concat
-         ;; Part 1: Your original introduction
-         (format ";; This is `%s'. Type `%s' to evaluate and print results.\n\n"
-                 'lisp-interaction-mode
-                 (propertize
-                  (substitute-command-keys "\\<lisp-interaction-mode-map>\\[eval-print-last-sexp]")
-                  'face 'help-key-binding))
-         ;; Part 2: The empty line and the quote
-         (format ";; %s\n\n" chosen-quote))))
+(defun jp/scratch-message ()
+  "Return a welcome message for the *scratch* buffer with a random KISS quote."
+  (let ((chosen-quote (nth (random (length kiss-quotes)) kiss-quotes)))
+    (concat
+     ;; Part 1: Your original introduction
+     (format ";; This is `%s'. Type `%s' to evaluate and print results.\n\n"
+             'lisp-interaction-mode
+             (propertize "C-j" 'face 'help-key-binding))
+     ;; Part 2: The empty line and the quote
+     (format ";; %s\n\n" chosen-quote))))
+
+(setq initial-scratch-message (jp/scratch-message))
 
 (mapc
  (lambda (string)
@@ -4609,7 +4610,11 @@ Org-mode configuration including calendar, appt, agenda, capture, code blocks, e
     (setq org-crypt-tag-matcher "crypt")                    ; Tag used to encrypt entries
     (setq org-crypt-key "jpacheco@disroot.org")          ; Replace with your GPG key email
     (setq org-tags-exclude-from-inheritance '("crypt"))     ; Prevent inheritance of "crypt" tag
-    (setq epa-pinentry-mode 'loopback) ;; Ensures passphrase prompt in minibuffer
+    ;; Do NOT use `loopback' pinentry: it re-asks for the passphrase on
+    ;; every epa/epg operation, including the automatic encryption at save
+    ;; time.  With the default pinentry, gpg-agent caches the passphrase
+    ;; entered when decrypting, so encrypting on save is done silently.
+    (setq epa-pinentry-mode nil)
 
     ;; Automatically encrypt entries tagged with "crypt" before saving
     (add-hook 'before-save-hook 'org-crypt-use-before-save-magic)
@@ -5881,12 +5886,21 @@ Utility functions including scratch buffers, fzf, pdf-tools, presentation mode, 
       )))
 
 ;; Toggle *scratch* buffer.
+(defun jp/scratch-buffer ()
+  "Return the *scratch* buffer, inserting a fresh welcome message if it is empty."
+  (let ((scratch (get-buffer-create "*scratch*")))
+    (with-current-buffer scratch
+      (when (string-empty-p (buffer-string))
+        (funcall (or initial-major-mode 'lisp-interaction-mode))
+        (insert (jp/scratch-message))))
+    scratch))
+
 (defun toggle-scratch-buffer ()
   "Toggle the *scratch* buffer"
   (interactive)
   (if (string= (buffer-name) "*scratch*")
 	  (bury-buffer)
-	(switch-to-buffer (get-buffer-create "*scratch*"))))
+	(switch-to-buffer (jp/scratch-buffer))))
 
 (defun toggle-org-buffer ()
   "Toggle the Org-scratch-buffer buffer"
@@ -6135,7 +6149,7 @@ If already in the buffer, bury it. Otherwise, switch to it or launch Eshell."
 (prog1 'my/transient-goto-file-buffer
   ;; List
   (setq my/goto-file-buffer-alist
-        '(("s" "*scratch*"    (switch-to-buffer "*scratch*"))
+        '(("s" "*scratch*"    (switch-to-buffer (jp/scratch-buffer)))
           ("h" "home.nix"       (find-file "~/.dotfiles/nix/home.nix"))
           ("c" "configuration.nix"       (find-file "~/.dotfiles/nix/configuration.nix"))
           ("u" "utilities.org"       (find-file "~/.emacs.d/lisp/utilities.org"))

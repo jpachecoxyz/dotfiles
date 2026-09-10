@@ -88,17 +88,18 @@ These include the packages `marginalia', `consult', `corfu',
     "KISS: Keep It Simple, Stupid.")
   "A list of KISS-themed quotes.")
 
-(setq initial-scratch-message
-      (let ((chosen-quote (nth (random (length kiss-quotes)) kiss-quotes)))
-        (concat
-         ;; Part 1: Your original introduction
-         (format ";; This is `%s'. Type `%s' to evaluate and print results.\n\n"
-                 'lisp-interaction-mode
-                 (propertize
-                  (substitute-command-keys "\\<lisp-interaction-mode-map>\\[eval-print-last-sexp]")
-                  'face 'help-key-binding))
-         ;; Part 2: The empty line and the quote
-         (format ";; %s\n\n" chosen-quote))))
+(defun jp/scratch-message ()
+  "Return a welcome message for the *scratch* buffer with a random KISS quote."
+  (let ((chosen-quote (nth (random (length kiss-quotes)) kiss-quotes)))
+    (concat
+     ;; Part 1: Your original introduction
+     (format ";; This is `%s'. Type `%s' to evaluate and print results.\n\n"
+             'lisp-interaction-mode
+             (propertize "C-j" 'face 'help-key-binding))
+     ;; Part 2: The empty line and the quote
+     (format ";; %s\n\n" chosen-quote))))
+
+(setq initial-scratch-message (jp/scratch-message))
 
 (mapc
  (lambda (string)
@@ -371,7 +372,7 @@ making an abbreviation to a function."
 (defvar jp-display-graphic-p (display-graphic-p)
   "When non-nil, the display is graphical.")
 
-(defcustom jp-emacs-enable-transparency t
+(defcustom jp-emacs-enable-transparency nil
   "Non-nil means to enable transparency support for the Emacs frame.
 Setting this to nil forces a solid background, disabling any
 transparency functions. Settings are in jp-emacs-modules/jp-emacs-essentials.el" 

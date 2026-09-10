@@ -1,11 +1,77 @@
 #!/usr/bin/env bash
+#
+# vm-plc — Lanza la VM de robótica (Windows) con todo lo necesario:
+#   NIC 1 (tap/br0) : puerto Ethernet del host -> red del PLC.
+#                     La IP la configuras con: vm-set-ip 192.168.0.10/24
+#   NIC 2 (user NAT): internet a través de la red del host (WiFi).
+#                     En Windows esa NIC es 10.0.2.15 (DHCP) o estática 10.0.2.15/24,
+#                     GW 10.0.2.2, DNS 10.0.2.3.
+#   USB passthrough : dispositivos USB del host disponibles en la VM (xhci).
+#
+# Requiere: qemu-full (o qemu-system-x86_64), un bridge/TAP previo (vm-set-ip).
 
-qemu-system-x86_64 --enable-kvm -m 8G -smp 8 -cpu host -M q35 \
-  -drive file=/home/javier/vm/robotics/robotics.qcow2,media=disk,cache=unsafe \
+set -euo pipefail
+
+LOG=/tmp/vmplc-launch.log
+printf '=== vm-plc pid=%s %s ===\n' "$$" "$(date '+%F %T')" >> "$LOG"
+
+# ===== Configuración =====
+VM_IMAGE=${VM_IMAGE:-/home/javier/vm/robotics/robotics.qcow2}
+BRIDGE=${BRIDGE:-br0}
+TAP=${TAP:-tap0}
+# USB a pasar a la VM, formato "vendor:product". Agrega o quita líneas.
+USB_DEVICES=(
+    "048d:1172"
+    "0403:6001"
+    "0930:6545"
+    "346d:5678"
+)
+# Puerto del host para RDP hacia la VM (mstsc -> localhost)
+RDP_PORT=${RDP_PORT:-3389}
+MEMORY=${MEMORY:-8G}
+SMP=${SMP:-8}
+
+# Lee la config guardada por vm-set-ip (si existe)
+CONF=${CONF:-/tmp/vm-plc-net.conf}
+if [ -f "$CONF" ]; then
+    . "$CONF" 2>/dev/null || {
+        echo "Aviso: no se pudo leer $CONF; usando valores por defecto." >&2
+    }
+fi
+
+# La red del PLC debe estar configurada (bridge + TAP + conf) con vm-set-ip.
+# Si no, abre el asistente gráfico para fijar la IP antes de seguir.
+if [ ! -f "$CONF" ] || ! ip link show "$BRIDGE" &>/dev/null || ! ip link show "$TAP" &>/dev/null; then
+    echo "La red del PLC no está configurada. Abriendo el asistente para fijar IP y puente..."
+    printf 'salida: red-no-configurada (conf=%s br=%s tap=%s)\n' "$CONF" "$BRIDGE" "$TAP" >> "$LOG"
+    if omarchy shell javier.vmplc open >/dev/null 2>&1; then
+        exit 0
+    fi
+    if command -v vm-plc-setup &>/dev/null; then
+        setsid vm-plc-setup >/dev/null 2>&1 &
+        exit 0
+    fi
+    echo "Ejecuta primero: vm-set-ip 192.168.0.10/24"
+    exit 1
+fi
+
+[ -e /dev/net/tun ] || { echo "Falta /dev/net/tun."; printf 'salida: sin /dev/net/tun\n' >> "$LOG"; exit 1; }
+
+usbargs=()
+for d in "${USB_DEVICES[@]}"; do
+    usbargs+=(-device "usb-host,bus=usb-bus.0,vendorid=0x${d%%:*},productid=0x${d##*:}")
+done
+
+printf 'conf=%s br=%s tap=%s qemu=%s\n' "$CONF" "$BRIDGE" "$TAP" "$(command -v qemu-system-x86_64 || echo NOPATH)" >> "$LOG"
+env | rg -i "DISPLAY|WAYLAND_DISPLAY|XDG_RUNTIME_DIR|PULSE_SERVER|PIPEWIRE" | sed 's/^/env: /' >> "$LOG"
+
+exec qemu-system-x86_64 --enable-kvm -m "$MEMORY" -smp "$SMP" -cpu host -M q35 \
+  -drive file="$VM_IMAGE",media=disk,cache=unsafe \
   -full-screen -vga virtio \
   -audiodev pipewire,id=audiodev1 -device intel-hda -device hda-duplex,audiodev=audiodev1 \
   -rtc base=localtime \
   -device qemu-xhci,id=usb-bus \
-  -device usb-host,bus=usb-bus.0,vendorid=0x1f75,productid=0x0917 \
-  -net nic -net bridge,br=br0 \
-  -netdev user,id=net0 -device e1000,netdev=net0
+  "${usbargs[@]}" \
+  -netdev tap,id=plc0,ifname="$TAP",script=no,downscript=no -device e1000,netdev=plc0 \
+  -netdev user,id=wan0,hostfwd=tcp::"$RDP_PORT"-:3389 -device e1000,netdev=wan0 \
+  >> "$LOG" 2>&1

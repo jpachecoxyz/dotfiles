@@ -278,6 +278,7 @@
 
     ;; Enable epa-file for encryption/decryption of files
     (epa-file-enable)
+    (setq org-crypt-disable-auto-save t)
 
     (setq epa-file-encrypt-to '("jpacheco@disroot.org"))  ; Replace with your GPG key email
 
@@ -285,7 +286,11 @@
     (setq org-crypt-tag-matcher "crypt")                    ; Tag used to encrypt entries
     (setq org-crypt-key "jpacheco@disroot.org")          ; Replace with your GPG key email
     (setq org-tags-exclude-from-inheritance '("crypt"))     ; Prevent inheritance of "crypt" tag
-    (setq epa-pinentry-mode 'loopback) ;; Ensures passphrase prompt in minibuffer
+    ;; Do NOT use `loopback' pinentry: it re-asks for the passphrase on
+    ;; every epa/epg operation, including the automatic encryption at save
+    ;; time.  With the default pinentry, gpg-agent caches the passphrase
+    ;; entered when decrypting, so encrypting on save is done silently.
+    (setq epa-pinentry-mode nil)
 
     ;; Automatically encrypt entries tagged with "crypt" before saving
     (add-hook 'before-save-hook 'org-crypt-use-before-save-magic)

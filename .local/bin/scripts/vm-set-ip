@@ -1,51 +1,141 @@
 #!/usr/bin/env bash
+#
+# vm-set-ip — Configura el puerto Ethernet del host para conectar la VM a un PLC.
+#
+# Uso:
+#   vm-set-ip 192.168.0.10/24     Fija esa IP en el puente (host) y garantiza bridge+TAP
+#   vm-set-ip                     Pide la IP de forma interactiva
+#   vm-set-ip --show              Muestra el estado actual del puente
+#   vm-set-ip --delete            Elimina el puente y el TAP
+#   vm-set-ip -h | --help         Esta ayuda
+#
+#   Con IFACE=eth0 (env) se salta el selector interactivo y se usa esa interfaz.
+#   Útil para modo no interactivo (p.ej. con pkexec).
+#
+# El puente y el TAP se crean la primera vez. En ejecuciones siguientes solo se
+# cambia la IP, así puedes apuntar a otro PLC:
+#   vm-set-ip 192.168.0.10/24     -> PLC red 192.168.0.x
+#   vm-set-ip 172.16.5.20/24      -> otro PLC red 172.16.5.x
+#
+# La IP que pones es la del host sobre el puente. Dentro de Windows, la NIC de
+# PLC debe llevar una IP de la misma subred SIN gateway ni DNS (para no robar
+# la ruta de internet). Requiere: iproute2.
 
-# Script para crear Puente + TAP para Virtualización Industrial
-# Requiere: iproute2 y fzf
+set -euo pipefail
 
-if ! command -v fzf &>/dev/null; then
-    echo "❌ fzf no está instalado."
+BRIDGE=${BRIDGE:-br0}
+TAP=${TAP:-tap0}
+CONF=/tmp/vm-plc-net.conf
+
+usage() {
+    sed -n '2,20p' "$0"
+    exit 0
+}
+
+show() {
+    if ! ip link show "$BRIDGE" &>/dev/null; then
+        echo "No existe el puente $BRIDGE."
+        exit 1
+    fi
+    echo "Puente: $BRIDGE"
+    ip -br addr show dev "$BRIDGE"
+    echo "TAP: $TAP"
+    ip -br link show "$TAP" 2>/dev/null || echo "  (no existe)"
+    echo "Miembros del bridge:"
+    ip -br link show master "$BRIDGE"
+}
+
+pick_iface() {
+    if [ -n "${IFACE:-}" ]; then
+        [[ "$IFACE" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "IFACE inválida."; return 1; }
+        ip link show "$IFACE" &>/dev/null || { echo "La interfaz $IFACE no existe."; return 1; }
+        echo "$IFACE"
+        return
+    fi
+    local all eth list
+    all=$(ip -o link show | awk -F': ' '{print $2}' | grep -v -E "^(lo|br-|docker|veth|virbr|tap)")
+    eth=$(printf '%s\n' "$all" | grep -E -v '^wl')
+    list=${eth:-$all}
+    [ -n "$list" ] || { echo "No se encontraron interfaces físicas."; return 1; }
+    if [ -t 0 ] && command -v fzf &>/dev/null; then
+        printf '%s\n' "$list" | fzf --prompt="Interfaz del puerto PLC: "
+    else
+        printf '%s\n' "$list" | head -n 1
+    fi
+}
+
+ensure_bridge() {
+    local iface
+    if ip link show "$BRIDGE" &>/dev/null; then
+        echo "Puente $BRIDGE ya existe, reutilizando."
+        return
+    fi
+    iface=$(pick_iface)
+    [ -n "$iface" ] || exit 1
+    echo "Creando puente $BRIDGE con $iface..."
+    sudo ip link add name "$BRIDGE" type bridge
+    sudo ip link set dev "$BRIDGE" up
+    sudo ip addr flush dev "$iface"
+    sudo ip link set dev "$iface" master "$BRIDGE"
+    sudo ip link set dev "$iface" up
+}
+
+ensure_tap() {
+    if ip link show "$TAP" &>/dev/null; then
+        echo "TAP $TAP ya existe."
+    else
+        echo "Creando TAP $TAP..."
+        sudo ip tuntap add dev "$TAP" mode tap user "${TAP_USER:-$USER}"
+    fi
+    sudo ip link set "$TAP" master "$BRIDGE"
+    sudo ip link set "$TAP" up
+}
+
+delete_all() {
+    if ip link show "$BRIDGE" &>/dev/null; then
+        sudo ip link delete "$BRIDGE"
+        echo "Puente $BRIDGE eliminado."
+    else
+        echo "No existe el puente $BRIDGE."
+    fi
+    if ip link show "$TAP" &>/dev/null; then
+        sudo ip tuntap del dev "$TAP" mode tap
+        echo "TAP $TAP eliminado."
+    fi
+    rm -f "$CONF"
+}
+
+case "${1:-}" in
+    --show) show; exit 0 ;;
+    --delete) delete_all; exit 0 ;;
+    -h | --help) usage ;;
+    "")
+        read -rp "IP para el puente $BRIDGE (ej. 192.168.0.10/24): " ipaddr
+        ;;
+    *)
+        ipaddr=$1
+        ;;
+esac
+
+if ! [[ "$ipaddr" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$ ]]; then
+    echo "Formato inválido. Usa algo como: 192.168.0.10/24"
     exit 1
 fi
 
-echo "🔎 Buscando interfaces físicas..."
-iface=$(ip -o link show | awk -F': ' '{print $2}' \
-    | grep -v -E "lo|br-|docker|veth|virbr|tap" \
-    | fzf --prompt="Selecciona la interfaz física (Ethernet): ")
+ensure_bridge
+ensure_tap
 
-if [ -z "$iface" ]; then exit 1; fi
+sudo ip link set dev "$BRIDGE" up
+sudo ip addr replace "$ipaddr" dev "$BRIDGE"
 
-read -rp "📛 Nombre del puente (br0): " brname
-brname=${brname:-br0}
+cat > "$CONF" <<EOF
+BRIDGE=$BRIDGE
+TAP=$TAP
+HOST_IP=$ipaddr
+EOF
+chmod 644 "$CONF"
 
-read -rp "🌐 IP estática para el puente (ej. 192.168.0.10/24): " ipaddr
-if [ -z "$ipaddr" ]; then echo "❌ Necesitas una IP para el PLC"; exit 1; fi
-
-echo "⚙️ Configurando Bridge y TAP..."
-
-# Comandos de ejecución
-sudo ip link add name "$brname" type bridge
-sudo ip link set dev "$brname" up
-
-# Limpiar IP de la interfaz física y subirla al puente
-sudo ip addr flush dev "$iface"
-sudo ip link set dev "$iface" master "$brname"
-sudo ip link set dev "$iface" up
-
-# Asignar IP al puente (Esta será la IP de tu Linux)
-sudo ip addr add "$ipaddr" dev "$brname"
-
-# CREAR TAP PARA QEMU
-# Esto permite que la VM se conecte al puente
-sudo ip tuntap add dev tap0 mode tap user $USER
-sudo ip link set tap0 master "$brname"
-sudo ip link set tap0 up
-
-echo "✅ ¡Configuración lista!"
-echo "----------------------------------------"
-echo "🖥️  Host Linux (Bridge $brname): $ipaddr"
-echo "🔌 Interfaz Física: $iface"
-echo "🤖 Interfaz para QEMU: tap0"
-echo "----------------------------------------"
-echo "👉 En tu comando QEMU añade:"
-echo "   -netdev tap,id=n1,ifname=tap0,script=no,downscript=no -device virtio-net-pci,netdev=n1"
+echo "Listo."
+echo "  $BRIDGE -> $ipaddr  (TAP: $TAP)"
+echo "  Config guardada en $CONF"
+echo "  Ahora lanza: vm-plc"
